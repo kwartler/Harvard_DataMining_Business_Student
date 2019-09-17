@@ -30,7 +30,7 @@ _____ <- __[___(__$____, decreasing=_),]
 ___(____)
 # Answer: 
 
-# 6. Copy and paste the results of the 'summary()' stats for the 'caret' attribute below.  You can use either $ or the index to get the vector
+# 6. Copy and paste the results of the 'summary()' stats for the 'carat' attribute below.  You can use either $ or the index to get the vector
 
 
 # Introducing additional functions to try out, don't worry these are straight forward:
