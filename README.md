@@ -29,5 +29,5 @@ pacman::p_load(ggplot2, ggthemes, rbokeh, maps,
 
 # Additionally we will need this package from a different repo
 install.packages('openNLPmodels.en', 
-                  repo= 'http://datacube.wu.ac.at/')
+                  repos= 'http://datacube.wu.ac.at/')
 ```
