@@ -6,7 +6,7 @@
 # Libs
 
 # Setwd
-setwd("/cloud/project/lessons/4_Feb20_Regression_LogRegression/wk4_data")
+setwd("/cloud/project/Lessons/D_Regression_LogisticRegression/data")
 
 # Data
 houses <-read.csv('BostonHousing.csv')
