@@ -60,7 +60,7 @@ CMGma200 <- SMA(CMG$CMG.Close, 200)
 
 # Set up the indicator
 tradeSignal <- Lag(ifelse(CMGma50 > CMGma200  , 1, 0))
-ret         <- ROC(Cl(CMG))*tradeSignal #Rate of Change TTR::ROC()
+ret         <- ROC(Cl(CMG))*tradeSignal #Rate of Change TTR::ROC(); not receiever operating curve
 
 # Review your return
 charts.PerformanceSummary(ret)

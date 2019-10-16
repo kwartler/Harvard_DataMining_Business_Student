@@ -6,7 +6,7 @@
 options(scipen=999)
 
 # Wd
-setwd("C:/Users/Edward/Desktop/HarvardFallAdmin2018/lessons/7_Oct29_TimeSeries_TTR/data")
+setwd("/cloud/project/Lessons/G_TimeSeries_Equities/data")
 
 # library
 library(forecast)
@@ -23,9 +23,9 @@ wmt$date <- as.POSIXct(wmt$unixTime, origin = '1970-1-1')
 head(wmt)
 
 # Change to a time series
-stYr <- year(wmt$date[1])
+stYr  <- year(wmt$date[1])
 stQtr <- quarter(wmt$date[1])
-st<- c(stYr, stQtr)
+st    <- c(stYr, stQtr)
 qtrTS <- ts(wmt$revMill, start = st, frequency = 4)
 
 # Looks multiplicative
@@ -33,7 +33,7 @@ plot(qtrTS)
 
 # Apply HW
 # use hw() from forecast package to get prediction intervals, HoltWinters() is from stats package
-# Book Authors use ets from forecast with model='MAA
+# Book Authors use ets from forecast with model='MAA'
 qtrHW <- HoltWinters(qtrTS, seasonal = "mult") 
 #qtrHW2 <- hw(qtrTS,seasonal = "multiplicative")
 #qtrHW3 <- ets(qtrTS, model='MAA')
@@ -45,10 +45,10 @@ predict(qtrHW, 4)
 
 # Out of time partition
 trainWMT <- wmt[1:108,]
-trainTS <- ts(trainWMT$revMill, start = st, frequency = 4)
+trainTS  <- ts(trainWMT$revMill, start = st, frequency = 4)
 
 validationWMT <- wmt[109:120,]
-validationTS <- ts(validationWMT$revMill, start = c(2015, 3), frequency = 4)
+validationTS  <- ts(validationWMT$revMill, start = c(2015, 3), frequency = 4)
 
 # Re-Fit HW with training dta
 qtrHW <- HoltWinters(trainTS, seasonal = 'mult')

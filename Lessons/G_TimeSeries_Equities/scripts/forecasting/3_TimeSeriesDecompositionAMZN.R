@@ -7,7 +7,7 @@
 options(scipen=999)
 
 # Wd
-setwd("C:/Users/Edward/Desktop/HarvardFallAdmin2018/lessons/7_Oct29_TimeSeries_TTR/data")
+setwd("/cloud/project/Lessons/G_TimeSeries_Equities/data")
 
 # library
 library(forecast)
@@ -23,9 +23,9 @@ amzn$date <- as.POSIXct(amzn$unixTime, origin = '1970-1-1')
 head(amzn)
 
 # Change to a time series
-stYr <- year(amzn$date[1])
+stYr  <- year(amzn$date[1])
 stQtr <- quarter(amzn$date[1])
-st<- c(stYr, stQtr)
+st    <- c(stYr, stQtr)
 qtrTS <- ts(amzn$revMill, start = st, frequency = 4)
 
 # Now decompose the ts
@@ -40,7 +40,7 @@ plot(amznS <- amznDecomp$seasonal)
 # See the random
 plot(amznR <- amznDecomp$random)
 
-# What is Amazon's lrevenue without the impact of the holiday shopping season?
+# What is Amazon's revenue without the impact of the holiday shopping season?
 noSeasons <- qtrTS - amznS
 plot(noSeasons)
 
