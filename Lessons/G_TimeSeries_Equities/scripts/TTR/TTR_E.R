@@ -36,7 +36,7 @@ browsable(
 )
 
 # One more
-getSymbols("HAS") #"HAS_1_TTR_E.rds"
+getSymbols("HAS") 
 HAS <- HAS["/2019-08-30"]
 
 # Calc RSI

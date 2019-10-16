@@ -34,8 +34,8 @@ stockURL
 stockQtrRev <- fromJSON(stockURL)
 
 # Adjust time from Unix epoch
-unixTime <-  stockQtrRev[[2]][,1]/1000
-revDate <- as.POSIXct(unixTime, origin = '1970-1-1')
+unixTime <- stockQtrRev[[2]][,1]/1000
+revDate  <- as.POSIXct(unixTime, origin = '1970-1-1')
 
 # Organize the list into a DF, keep in mind this site is inconsistent with milllions and billions
 qtrDF <- data.frame(date = revDate, revMill = stockQtrRev[[2]][,2])
@@ -43,9 +43,9 @@ qtrDF <- data.frame(date = revDate, revMill = stockQtrRev[[2]][,2])
 head(qtrDF)
 
 # Change to a time series
-stYr <- year(qtrDF$date[1])
+stYr  <- year(qtrDF$date[1])
 stQtr <- quarter(qtrDF$date[1])
-st<- c(stYr, stQtr)
+st    <- c(stYr, stQtr)
 qtrTS <- ts(qtrDF$revMill, start = st, frequency = 4)
 
 # Visualize like site

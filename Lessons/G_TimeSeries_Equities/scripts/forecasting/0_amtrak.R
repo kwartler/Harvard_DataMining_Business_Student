@@ -4,7 +4,7 @@
 #'
 
 # WD
-setwd("C:/Users/Edward/Desktop/HarvardFallAdmin2018/book material/datasets")
+setwd("/cloud/project/Lessons/G_TimeSeries_Equities/data")
 
 # libs
 library(dygraphs)
@@ -40,13 +40,14 @@ dygraph(riders, main = "Amtrack Ridership") %>%
 library(lubridate)
 
 # Make a date obj
+df$Month[1]
 cleanDate <- dmy(df$Month)
 class(cleanDate)
 
 # Extract as standalone data vecs
-df$day <- day(cleanDate)
+df$day   <- day(cleanDate)
 df$month <- month(cleanDate)
-df$yr <- year(cleanDate)
+df$yr    <- year(cleanDate)
 
 head(df)
 
@@ -54,11 +55,12 @@ head(df)
 Sys.Date()
 cleanDate[1]
 difftime(Sys.Date(), cleanDate[1])
+difftime(Sys.Date(), cleanDate[1], units = 'weeks')
 
 # Nest difftime to engineer new data vectors
-df$daysPassed <- as.numeric(difftime(Sys.Date(), cleanDate))
+df$daysPassed   <- as.numeric(difftime(Sys.Date(), cleanDate))
 df$monthsPassed <- as.numeric(difftime(Sys.Date(), cleanDate, units="weeks")) /4
-df$yrsPassed <- as.numeric(difftime(Sys.Date(), cleanDate, unit="weeks"))/52.25
+df$yrsPassed    <- as.numeric(difftime(Sys.Date(), cleanDate, unit="weeks"))/52.25
 head(df)
 
 
