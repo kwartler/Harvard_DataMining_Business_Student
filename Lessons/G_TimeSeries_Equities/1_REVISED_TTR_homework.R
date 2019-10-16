@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Data: 3-13-2019
+#' Data: 10-16-19
 #' Purpose: Construct a financial dashboard and make a buy/sell recommendation
 
 # Function Parameters:
