@@ -4,7 +4,7 @@
 #' 
 
 # WD
-setwd("/cloud/project/lessons/8_Mar27_FinancialModeling/fall2019 update/consumerCredit_nonTraditionalMkts/data")
+setwd("/cloud/project/Lessons/H_Equity_Credit_nonTraditionalMkts/consumerCredit_nonTraditionalMkts/data")
 
 # Libraries
 library(rpart)
