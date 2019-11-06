@@ -12,7 +12,7 @@ setwd("/cloud/project/Lessons/I_APIs_NewDataSources_ReportingAutomation/data")
 
 # Youtube URL
 # https://www.youtube.com/watch?v=NYL-wPVzL64
-youtubeCaption <- 'https://www.youtube.com/api/timedtext?v=NYL-wPVzL64&asr_langs=de%2Cen%2Ces%2Cfr%2Cit%2Cja%2Cko%2Cnl%2Cpt%2Cru&caps=asr&hl=en&ip=0.0.0.0&ipbits=0&expire=1572487648&sparams=ip%2Cipbits%2Cexpire%2Cv%2Casr_langs%2Ccaps&signature=B3D22F5B5C27A7FB46FDB8570ADF88E237F47B78.EC7130F83C6DDA3D40703E563E81E2145714B57C&key=yt8&lang=en&name=en&fmt=srv3&xorb=2&xobt=3&xovt=3'
+youtubeCaption <- 'https://www.youtube.com/api/timedtext?v=NYL-wPVzL64&asr_langs=de%2Cen%2Ces%2Cfr%2Cit%2Cja%2Cko%2Cnl%2Cpt%2Cru&caps=asr&hl=en&ip=0.0.0.0&ipbits=0&expire=1572505909&sparams=ip%2Cipbits%2Cexpire%2Cv%2Casr_langs%2Ccaps&signature=17FAA1DE8B165BCFA99A5DAD82706D4F25D12178.1184F0ED35424F3426C49AC592C497E1AD24AA0C&key=yt8&lang=en&name=en&fmt=srv3&xorb=2&xobt=3&xovt=3'
 
 # Go get the data
 dat <- read_xml(youtubeCaption)

@@ -40,7 +40,7 @@ ratings <- cbind(disapprove, approve)
 ratings <- as.zoo(ratings)
 ratings <- as.xts(ratings, date_decimal(index(ratings)))
 
-dygraph(ratings, "Trump Approva") %>%
+dygraph(ratings, "Trump Approval") %>%
   dySeries("approve", label = "approve", color = 'green') %>%
   dySeries("disapprove", label = "disapprove", color = 'red') %>%
   dyRangeSelector()

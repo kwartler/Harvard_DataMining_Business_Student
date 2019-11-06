@@ -10,7 +10,7 @@ library(pbapply)
 options(stringsAsFactors = F)
 
 # www.newsapi.org Key
-apiKey <- 'XXXXXX'
+apiKey <- 'c6166540623e4588b2b8b53143c1299a'
 
 # Top headlines in the US endpoint:
 usURL <- paste0('https://newsapi.org/v2/top-headlines?country=us&apiKey=', apiKey)
