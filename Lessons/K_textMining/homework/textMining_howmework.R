@@ -3,7 +3,7 @@
 #' Author: Ted Kwartler
 #' email: ehk116@gmail.com
 #' License: GPL>=3
-#' Date: 2018-11-24
+#' Date: 2019-11-13
 #' Instructions:
 #' Fill in the rest of the script, and answer the questions inline.  Then upload to canvas.
 
@@ -51,7 +51,7 @@ cleanCorpus<-function(corpus){
 # Get your data
 text <- read.csv(______________)
 
-# 1. How many comments are there BEFORE the sample?
+# 1. How many comments are there BEFORE the sample step?
 # Answer:
 
 # Get a sample of 1000 to speed up time
@@ -62,6 +62,8 @@ text <- text[idx, ]
 # Examine
 dim(____)
 text$comments[1]
+
+# Review the last 6 comments
 
 # Define custom stopwords, add "apartment" and "boston" to the list
 customStopwords <- c(stopwords('english'), 'place', '_______', '__________')
@@ -81,8 +83,8 @@ txtDTM <- _____________(txtCorpus)
 # Convert TDM to a simple matrix; takes a moment
 txtDTMm <- _____________(txtDTM)
 
-# Get column Sums and sort decreasing =TRUE
-txtDTMv <- sort(______(txtDTMm),decreasing=TRUE)
+# Get column Sums and sort decreasing (hint its a T or F)
+txtDTMv <- sort(______(txtDTMm),decreasing = )
 
 # Organize the row sums
 txtDF <- data.frame(word = names(txtDTMv),freq=txtDTMv)
