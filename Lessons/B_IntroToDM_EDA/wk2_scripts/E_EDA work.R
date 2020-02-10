@@ -8,7 +8,7 @@ library(radiant.data)
 library(DataExplorer)
 
 # Set WD
-setwd("/cloud/project/Lessons/B_DataExploration_EDA/wk2_Data")
+setwd("/cloud/project/Lessons/B_IntroToDM_EDA/wk2_Data")
 
 # Data
 cereal <- read.csv('Cereals.csv')
@@ -69,5 +69,9 @@ plot_missing(cereal)
 # radiant.data
 radiant.data::radiant.data()
 
+## Remember you may want to save a copy of the data if you are using radiant.data:
+#library(okcupiddata)
+#data(profiles)
+#write.csv(profiles, 'okCupidProfiles.csv', row.names = F)
 
 # End

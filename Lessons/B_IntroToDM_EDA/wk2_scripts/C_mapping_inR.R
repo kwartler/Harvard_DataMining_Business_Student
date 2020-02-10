@@ -3,7 +3,7 @@
 #' Purpose: Load geospatial data, explore it and visualize it
 
 ## Set the working directory
-setwd("/cloud/project/Lessons/B_DataExploration_EDA/wk2_Data")
+setwd("/cloud/project/Lessons/B_IntroToDM_EDA/wk2_Data")
 
 # Libs
 library(maps)
