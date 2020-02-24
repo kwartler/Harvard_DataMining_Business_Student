@@ -3,7 +3,7 @@
 #' Purpose: Fundraising PreProcessing
 
 # Setwd
-setwd("/cloud/project/Lessons/C_DataMiningProcess_DataPrep/data")
+setwd("/cloud/project/Lessons/C_ModelingProcess_DataPrep/data")
 
 # Libs
 library(vtreat)
