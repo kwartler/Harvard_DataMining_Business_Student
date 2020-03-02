@@ -31,7 +31,7 @@ totalRecords <- 1:nrow(___)
 idx <- sample(_______, splitPercent)
 
 trainDat <- df[idx,]
-testDat <- df[-___,]
+testDat  <- df[-___,]
 
 # Treatment to account for dummies, although its a pretty clean data set, EDU could be a dummy but is still ordinal...so?
 xVars <- c("Age", "Experience", "Income", "Family", "CCAvg",
