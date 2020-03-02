@@ -6,7 +6,7 @@
 # Libs
 
 # Setwd
-setwd("/cloud/project/lessons/4_Feb20_Regression_LogRegression/wk4_data")
+setwd("~/Documents/Harvard_DataMining_Business_Student/Lessons/D_Regression/data")
 
 # Data
 wine <- read.csv('Wine.csv')
