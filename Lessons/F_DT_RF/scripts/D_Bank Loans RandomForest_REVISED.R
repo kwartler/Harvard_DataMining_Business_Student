@@ -5,7 +5,7 @@
 
 
 ## Set the working directory
-setwd("/cloud/project/lessons/6_Mar6_DT_RF/wk6_Data")
+setwd("/cloud/project/Lessons/F_DT_RF/Data")
 
 # Options
 options(scipen=999)
