@@ -6,7 +6,7 @@
 options(scipen=999)
 
 # Wd
-setwd("~/Documents/Harvard_DataMining_Business_Admin/lessons/G_TimeSeries/data")
+setwd("/cloud/project/Lessons/G_TimeSeries/data")
 
 # library
 library(forecast)
