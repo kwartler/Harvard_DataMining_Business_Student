@@ -8,12 +8,12 @@ library(triangle)
 library(dplyr)
 
 # Load custom functions
-source('~/Documents/Harvard_DataMining_Business_Student/Lessons/H_EquitiesInvestments/scripts/Z_openBox.R')
-source('~/Documents/Harvard_DataMining_Business_Student/Lessons/H_EquitiesInvestments/scripts/Z_crackPack.R')
-source('~/Documents/Harvard_DataMining_Business_Student/Lessons/H_EquitiesInvestments/scripts/Z_cardValues.R')
+source('/cloud/project/Lessons/H_EquitiesInvestments/scripts/Z_openBox.R')
+source('/cloud/project/Lessons/H_EquitiesInvestments/scripts/Z_crackPack.R')
+source('/cloud/project/Lessons/H_EquitiesInvestments/scripts/Z_cardValues.R')
 
 # Setwd
-setwd("~/Documents/Harvard_DataMining_Business_Student/Lessons/H_EquitiesInvestments/data")
+setwd("/cloud/project/Lessons/H_EquitiesInvestments/data")
 
 # We will use a CSV but...
 # Use this URL example to get a recent price list for a set
@@ -21,7 +21,7 @@ nam<-URLencode('war of the spark',reserved=T)
 paste0('http://magic.tcgplayer.com/db/search_result.asp?Set_Name=',nam)
 
 # Data Integrity! Review manually for outliers and correct.
-#cards <- read.csv("Guilds_10_16_18.csv" , fileEncoding="latin1")
+cards <- read.csv("Guilds_10_16_18.csv" , fileEncoding="latin1")
 #cards <- read.csv('IconicMasters_7_25_18.csv')
 
 # Examine

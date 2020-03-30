@@ -50,7 +50,7 @@ tail(wrongData, 10)
 
 # Recreate correctly
 df$Month[1:13]
-cleanData <- dmy(df$Month)
+cleanDate <- dmy(df$Month)
 tail(df$Month, 10)
 tail(cleanData, 10)
 

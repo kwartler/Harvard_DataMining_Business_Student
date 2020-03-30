@@ -4,7 +4,7 @@
 #' 
 
 # WD
-setwd("~/Documents/Harvard_DataMining_Business_Student/Lessons/H_EquitiesInvestments/data")
+setwd("/cloud/project/Lessons/H_EquitiesInvestments/data")
 
 # Libraries
 library(rpart)
