@@ -4,10 +4,10 @@
 #' 
 
 # WD
-setwd("~/Documents/Harvard_DataMining_Business_Student/Lessons/I_ConsumerCredit_NonTraditionalInvesting/data")
+setwd("/cloud/project/Lessons/I_ConsumerCredit_NonTraditionalInvesting/data")
 
 # Trimming Linear Model Function
-source('~/Documents/Harvard_DataMining_Business_Admin/lessons/I_ConsumerCredit_NonTraditionalInvesting/scripts/z_trimTrain.R')
+source('/cloud/project/Lessons/I_ConsumerCredit_NonTraditionalInvesting/scripts/z_trimTrain.R')
 
 # Libraries
 library(rpart)
@@ -41,7 +41,7 @@ dataPlan <- designTreatmentsC(dframe        = df,
                               varlist       = keeps,
                               outcomename   = 'y', 
                               outcometarget = 1)
-#saveRDS(dataPlan, 'consumerCredit_dataPlan.rds') #backup bc take a long time
+#saveRDS(dataPlan, 'consumerCredit_dataPlan.rds') #backup
 
 # Now apply the plan to the data
 treatedDF <- prepare(dataPlan, df)

@@ -15,10 +15,10 @@ library(rbokeh)
 library(MLmetrics)
 
 # Data Directory
-setwd("~/Documents/Harvard_DataMining_Business_Student/Lessons/I_ConsumerCredit_NonTraditionalInvesting/data")
+setwd("/cloud/project/Lessons/I_ConsumerCredit_NonTraditionalInvesting/data")
 
 # Custom Function
-source('~/Documents/Harvard_DataMining_Business_Student/Lessons/I_ConsumerCredit_NonTraditionalInvesting/scripts/z_trimTrain.R')
+source('/cloud/project/Lessons/I_ConsumerCredit_NonTraditionalInvesting/scripts/z_trimTrain.R')
 
 # Training Data
 originalNotes <- read.csv("20K_sampleLoans.csv")
@@ -127,7 +127,8 @@ head(scoredNotes, 10)
 
 # Subset to "A" & 20%; our and their best guess
 bestNotes <- subset(scoredNotes, 
-                    scoredNotes$LCgrade == "A" & scoredNotes$risk <= 0.2)
+                    scoredNotes$LCgrade == "A" & 
+                      scoredNotes$risk <= 0.2)
 
 # Make a mkt Plot
 mktPlot <- figure(legend_location = "bottom_right") %>% 

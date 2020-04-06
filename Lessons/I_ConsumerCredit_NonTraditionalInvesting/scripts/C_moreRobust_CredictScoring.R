@@ -15,10 +15,10 @@ library(MLmetrics)
 keeps <-c("loan_amnt", "term", "int_rate", "installment", "grade", "sub_grade", "emp_length" , "home_ownership", "annual_inc", "purpose", "title", "zip_code", "addr_state", "dti", "delinq_2yrs", "pub_rec_bankruptcies", "inq_last_6mths", "mths_since_last_delinq", "mths_since_last_record", "open_acc", "pub_rec", "revol_bal", "revol_util", "total_acc", "initial_list_status", "collections_12_mths_ex_med", "y")
 
 # setwd
-setwd("~/Documents/Harvard_DataMining_Business_Student/Lessons/I_ConsumerCredit_NonTraditionalInvesting/data")
+setwd("/cloud/project/Lessons/I_ConsumerCredit_NonTraditionalInvesting/data")
 
 # custom functions
-source('~/Documents/Harvard_DataMining_Business_Student/Lessons/I_ConsumerCredit_NonTraditionalInvesting/scripts/z_trimTrain.R')
+source('/cloud/project/Lessons/I_ConsumerCredit_NonTraditionalInvesting/scripts/z_trimTrain.R')
 
 # Data Prep
 allData <- read.csv('20K_sampleLoans.csv')
@@ -110,9 +110,9 @@ rfOutSample  <- predict(randomForestFit, treatedValidation, type = 'prob')
 Accuracy(ifelse(logOutSample[,2]>=cutoff,1,0),treatedTrain$y)
 Accuracy(ifelse(rfOutSample[,2]>=cutoff,1,0),treatedTrain$y)
 
-## What are the next steps?  RF overfit, but validation was ok.  More records, 3 partitions training, validation and holdout? More methods?  Examine the top 100 notes by probability for each method and compare accuracy since that is all you would invest at one time?  It all depends on your time, resources and risk tolerance.
+## What are the next steps?  RF overfit, but validation was ok.  More records?, 3 partitions training, validation and holdout? More algos?  Examine the top 100 notes by probability for each method and compare accuracy since that is all you would invest at one time anyway?  It all depends on your time, resources and risk tolerance.
 
 ## How would you score new notes...ie productionalize this?
-# Get new notes, variable treatment, score the new notes, select the notes for investment
+# Get new notes, apply variable treatment, score the new notes, select the notes for investment withg best probabilities
 
 # End
