@@ -15,10 +15,10 @@ library(rbokeh)
 library(MLmetrics)
 
 # Data Directory
-setwd("~/Documents/Harvard_DataMining_Business_Student/Lessons/H_EquitiesInvestments/data")
+setwd("~/Documents/Harvard_DataMining_Business_Student/Lessons/I_ConsumerCredit_NonTraditionalInvesting/data")
 
 # Custom Function
-source('~/Documents/Harvard_DataMining_Business_Admin/lessons/I_ConsumerCredit_NonTraditionalInvesting/scripts/z_trimTrain.R')
+source('~/Documents/Harvard_DataMining_Business_Student/Lessons/I_ConsumerCredit_NonTraditionalInvesting/scripts/z_trimTrain.R')
 
 # Training Data
 originalNotes <- read.csv("20K_sampleLoans.csv")
@@ -150,6 +150,4 @@ mktPlot2 <- mktPlot %>%
             color  = 'green', 
             legend = "historical 5yr T-bill")
 mktPlot2
-
-
 # End

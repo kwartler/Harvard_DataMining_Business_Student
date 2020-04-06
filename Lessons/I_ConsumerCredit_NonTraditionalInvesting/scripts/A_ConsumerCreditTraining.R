@@ -4,14 +4,10 @@
 #' 
 
 # WD
-<<<<<<< HEAD:Lessons/I_ConsumerCredit_NonTraditionalInvesting/scripts/A_ConsumerCreditTraining.R
-setwd("~/Documents/Harvard_DataMining_Business_Admin/lessons/I_ConsumerCredit_NonTraditionalInvesting/data")
+setwd("~/Documents/Harvard_DataMining_Business_Student/Lessons/I_ConsumerCredit_NonTraditionalInvesting/data")
 
 # Trimming Linear Model Function
 source('~/Documents/Harvard_DataMining_Business_Admin/lessons/I_ConsumerCredit_NonTraditionalInvesting/scripts/z_trimTrain.R')
-=======
-setwd("/cloud/project/Lessons/H_EquitiesInvestments/data")
->>>>>>> 32c3f3d6692e5c2727900b5c91722864cba0629a:Lessons/H_EquitiesInvestments/scripts/A_ConsumerCreditTraining.R
 
 # Libraries
 library(rpart)
