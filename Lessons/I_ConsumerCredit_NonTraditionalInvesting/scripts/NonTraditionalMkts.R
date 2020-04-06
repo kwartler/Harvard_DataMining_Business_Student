@@ -8,12 +8,21 @@ library(triangle)
 library(dplyr)
 
 # Load custom functions
+<<<<<<< HEAD:Lessons/I_ConsumerCredit_NonTraditionalInvesting/scripts/NonTraditionalMkts.R
 source('~/Documents/Harvard_DataMining_Business_Admin/lessons/I_ConsumerCredit_NonTraditionalInvesting/scripts/Z_cardValues.R')
 source('~/Documents/Harvard_DataMining_Business_Admin/lessons/I_ConsumerCredit_NonTraditionalInvesting/scripts/Z_crackPack.R')
 source('~/Documents/Harvard_DataMining_Business_Admin/lessons/I_ConsumerCredit_NonTraditionalInvesting/scripts/Z_openBox.R')
 
 # Setwd
 setwd("~/Documents/Harvard_DataMining_Business_Admin/lessons/I_ConsumerCredit_NonTraditionalInvesting/data")
+=======
+source('/cloud/project/Lessons/H_EquitiesInvestments/scripts/Z_openBox.R')
+source('/cloud/project/Lessons/H_EquitiesInvestments/scripts/Z_crackPack.R')
+source('/cloud/project/Lessons/H_EquitiesInvestments/scripts/Z_cardValues.R')
+
+# Setwd
+setwd("/cloud/project/Lessons/H_EquitiesInvestments/data")
+>>>>>>> 32c3f3d6692e5c2727900b5c91722864cba0629a:Lessons/H_EquitiesInvestments/scripts/NonTraditionalMkts.R
 
 # We will use a CSV but...
 # Use this URL example to get a recent price list for a set
