@@ -7,7 +7,7 @@
 #'
 
 # Set the working directory
-setwd("~/Documents/Harvard_DataMining_Business_Admin/lessons/archive/11A_Apr17_TextMining/wk11_data")
+setwd("/cloud/project/Lessons/J_textMining/data")
 
 # Libs
 library(qdap)

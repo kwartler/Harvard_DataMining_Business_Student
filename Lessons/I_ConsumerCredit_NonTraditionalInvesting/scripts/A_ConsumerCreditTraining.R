@@ -42,6 +42,7 @@ dataPlan <- designTreatmentsC(dframe        = df,
                               outcomename   = 'y', 
                               outcometarget = 1)
 #saveRDS(dataPlan, 'consumerCredit_dataPlan.rds') #backup
+dataPlan <- readRDS('consumerCredit_dataPlan.rds')
 
 # Now apply the plan to the data
 treatedDF <- prepare(dataPlan, df)
