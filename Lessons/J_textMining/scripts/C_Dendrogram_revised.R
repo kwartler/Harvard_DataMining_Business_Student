@@ -103,7 +103,11 @@ zombieDF
 ggplot(zombieDF, aes(y=terms)) +
   geom_point(aes(x=value), data=zombieDF, col='#c00c00') +
   theme_gdocs() + 
-  geom_text(aes(x=value,label=value), colour="red",hjust=-.25, size=3)
+  geom_text(aes(x=value,label=value), 
+            colour="red", 
+            hjust="inward", 
+            vjust ="inward", 
+            size=3)
 
 ############ Back to PPT
 
