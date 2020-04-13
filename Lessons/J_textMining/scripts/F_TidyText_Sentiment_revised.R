@@ -7,7 +7,7 @@
 #'
 
 # Set the working directory
-setwd("~/Documents/Harvard_DataMining_Business_Admin/lessons/archive/11A_Apr17_TextMining/wk11_data")
+setwd("/cloud/project/Lessons/J_textMining/data")
 
 # Libs
 library(tidytext)
@@ -83,26 +83,22 @@ head(afinn)
 afinnSent <- inner_join(tidyCorp,afinn, by=c('term'='word'))
 afinnSent
 
-# Quick Analysis as a timeline 
-summary(afinnSent$score)
-plot(afinnSent$value, 
-     type="n", 
-     main="Quick Timeline of Identified Words") 
-lines(afinnSent$value)
+# Quick Analysis
+summary(afinnSent$value) 
+plot(afinnSent$value, type="l", main="Quick Timeline of Identified Words") 
 
-# Get nrc lexicon
+# Get nrc lexicon; deprecated
 nrc <- get_sentiments(lexicon = c("nrc"))
 head(nrc)
 
 # Perform Inner Join
-nrcSent <- inner_join(tidyCorp,nrc, by=c('term'='word'))
+nrcSent <- inner_join(tidyCorp,nrc, by=c('term' = 'word'))
 nrcSent
 
 # Quick Analysis
 table(nrcSent$sentiment)
 emos <- data.frame(table(nrcSent$sentiment))
-emos <- emos[-c(6,7),] #drop the higher level positive/negative to get explicit emotion
-chartJSRadar(scores=emos)
+emos <- emos[-c(6,7),] #drop pos/neg
+chartJSRadar(scores = emos, labelSize = 10, showLegend = F)
 
 # End
-
