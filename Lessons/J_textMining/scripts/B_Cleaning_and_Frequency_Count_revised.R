@@ -42,7 +42,7 @@ customStopwords <- c(stopwords('english'), 'lol', 'smh')
 
 # Data
 text <- read.csv('coffee.csv', header=TRUE)
-View(text)
+#View(text)
 
 # As of tm version 0.7-3 tabular was deprecated
 names(text)[1] <- 'doc_id' #first 2 columns must be 'doc_id' & 'text'
