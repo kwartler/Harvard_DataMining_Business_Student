@@ -8,7 +8,7 @@ library(stringr)
 library(rvest)
 
 # WD
-setwd("/cloud/project/lessons/9_Apr3_APIs_ReportingAutomation/wk9_data")
+setwd("/cloud/project/Lessons/K_DataSources_Reporting/data")
 
 # Youtube URL
 #https://www.youtube.com/watch?v=Q-wRhzWaCac

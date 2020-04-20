@@ -8,7 +8,7 @@ library(stringr)
 library(plyr)
 
 # WD
-setwd("~/Documents/Harvard_DataMining_Business_Admin/lessons/K_DataSources_Reporting/data")
+setwd("/cloud/project/Lessons/K_DataSources_Reporting/data")
 
 # Youtube URL
 #https://www.youtube.com/watch?v=Q-wRhzWaCac
