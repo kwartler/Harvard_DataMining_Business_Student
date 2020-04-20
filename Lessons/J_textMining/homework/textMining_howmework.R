@@ -114,8 +114,8 @@ polarityScores <- ______(text$comments)
 
 # Using each document's polarity score segregate the comments into positive and negative corpora
 justScores    <- polarityScores$all$polarity # just the polarity values
-documentClass[is.na(documentClass)] <- 0 # clean up any NA values
 documentClass <- ifelse(justScores>0,TRUE,FALSE) # change to binary
+documentClass[is.na(documentClass)] <- 0 # clean up any NA values
 table(documentClass)
 
 # 6. What is the number of positive reviews versus negative reviews?
