@@ -95,7 +95,7 @@ associations
 
 # Organize the word associations
 zombieDF <- data.frame(terms=names(associations[[1]]),
-                     value=unlist(associations))
+                       value=unlist(associations))
 zombieDF$terms <- factor(zombieDF$terms, levels=zombieDF$terms)
 zombieDF
 

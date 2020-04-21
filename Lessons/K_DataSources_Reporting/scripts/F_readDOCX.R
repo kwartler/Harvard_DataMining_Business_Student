@@ -8,7 +8,7 @@ library(docxtractr)
 library(xml2)
 
 # wd
-setwd("~/Documents/Harvard_DataMining_Business_Admin/lessons/K_DataSources_Reporting/data")
+setwd("/cloud/project/Lessons/K_DataSources_Reporting/data")
 
 # file
 filePath <- 'exampleWord.docx'
