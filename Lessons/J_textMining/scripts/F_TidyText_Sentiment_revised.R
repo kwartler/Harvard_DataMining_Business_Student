@@ -88,6 +88,7 @@ summary(afinnSent$value)
 plot(afinnSent$value, type="l", main="Quick Timeline of Identified Words") 
 
 # Get nrc lexicon; deprecated
+# textdata::lexicon_nrc() this should download it just in case
 nrc <- get_sentiments(lexicon = c("nrc"))
 head(nrc)
 
