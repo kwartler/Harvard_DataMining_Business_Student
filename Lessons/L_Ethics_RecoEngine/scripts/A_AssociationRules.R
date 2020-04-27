@@ -6,7 +6,7 @@
 library(arules)
 
 # WD
-setwd("~/Documents/Harvard_DataMining_Business_Admin/lessons/L_Ethics_RecoEngine/data")
+setwd("/cloud/project/Lessons/L_Ethics_RecoEngine/data")
 
 # Data
 faceDF <- read.csv("Faceplate.csv")
