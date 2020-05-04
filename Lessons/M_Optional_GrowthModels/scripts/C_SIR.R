@@ -9,11 +9,6 @@
 #'https://www.thelancet.com/journals/langlo/article/PIIS2214-109X(20)30074-7/fulltext
 #'https://arxiv.org/pdf/2002.06563.pdf
 #'
-#'https://www.r-bloggers.com/sir-model-with-desolve-ggplot2/
-#'https://www.r-bloggers.com/covid-19-in-belgium/
-#'http://rstudio-pubs-static.s3.amazonaws.com/6852_c59c5a2e8ea3456abbeb017185de603e.html
-#'https://rpubs.com/choisy/sir
-
 # libs
 library(EpiDynamics)
 
