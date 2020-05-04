@@ -9,14 +9,7 @@
 #'https://www.thelancet.com/journals/langlo/article/PIIS2214-109X(20)30074-7/fulltext
 #'https://arxiv.org/pdf/2002.06563.pdf
 #'
-<<<<<<< HEAD
-#'https://www.r-bloggers.com/sir-model-with-desolve-ggplot2/
-#'https://www.r-bloggers.com/covid-19-in-belgium/
-#'http://rstudio-pubs-static.s3.amazonaws.com/6852_c59c5a2e8ea3456abbeb017185de603e.html
-#'https://rpubs.com/choisy/sir
 
-=======
->>>>>>> ff5560aee05c345a2a4c0faca9e082bf23b0cd84
 # libs
 library(EpiDynamics)
 
@@ -75,8 +68,4 @@ PlotMods(sirD)
 plot(sirC$results$I, col='red', type ='l')
 lines(sirD$results$I, col='red')
 
-<<<<<<< HEAD
 # End
-=======
-# End
->>>>>>> ff5560aee05c345a2a4c0faca9e082bf23b0cd84
