@@ -4,7 +4,11 @@
 #' 
 
 # Set the working directory
+<<<<<<< HEAD
 setwd("~/Documents/Harvard_DataMining_Business_Admin/lessons/M_Optional_GrowthModels/data")
+=======
+setwd("/cloud/project/Lessons/M_Optional_GrowthModels/data")
+>>>>>>> ff5560aee05c345a2a4c0faca9e082bf23b0cd84
 options(scipen=999)
 
 # libs
@@ -76,4 +80,8 @@ gompDF <- data.frame(yr=1999:2025,
 
 lines(x=gompDF$yr, y =gompDF$cumulativeSales, col='blue')
 
+<<<<<<< HEAD
 # End
+=======
+# End
+>>>>>>> ff5560aee05c345a2a4c0faca9e082bf23b0cd84
