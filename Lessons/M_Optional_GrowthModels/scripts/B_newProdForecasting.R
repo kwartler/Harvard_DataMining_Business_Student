@@ -4,7 +4,7 @@
 #' 
 
 # Set the working directory
-setwd("~/Documents/Harvard_DataMining_Business_Admin/lessons/M_Optional_GrowthModels/data")
+setwd("/cloud/project/Lessons/M_Optional_GrowthModels/data")
 options(scipen=999)
 
 # libs
