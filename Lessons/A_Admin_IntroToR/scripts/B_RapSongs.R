@@ -16,7 +16,7 @@ library(ggthemes)
 library(pbapply)
 
 # Multiple files as a list
-tmp <- list.files(path = "~/Documents/Harvard_DataMining_Business_Student/Lessons/A_Admin_IntroToR/data/z_rap_songs",
+tmp <- list.files(path = "/cloud/project/Lessons/A_Admin_IntroToR/data/z_rap_songs",
                   pattern = '*.csv')
 allSongs        <- pblapply(tmp, read.csv)
 names(allSongs) <- gsub('csv','', tmp)

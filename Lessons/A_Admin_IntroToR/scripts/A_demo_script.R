@@ -4,7 +4,7 @@
 #' Date: Aug 23-2020
 
 # Step 1 Set the working directory: where's the fruit?
-setwd("~/Documents/Harvard_DataMining_Business_Student/Lessons/A_Admin_IntroToR/data")
+setwd("/cloud/project/Lessons/A_Admin_IntroToR/data")
 
 # Step 2 Load some libraries: Make R a customized piece of software
 options(scipen = 999)
