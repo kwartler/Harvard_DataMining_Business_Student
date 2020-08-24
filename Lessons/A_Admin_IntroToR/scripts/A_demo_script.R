@@ -40,9 +40,9 @@ head(scenesDF$length)
 summary(scenesDF) 
 
 # Step 5: Consume our results: Plot/Eat the banana!
-ggplot(scenesDF, aes(colour=scenesDF$name)) + 
-  geom_segment(aes(x=scenesDF$start, xend=scenesDF$end,
-                   y=scenesDF$id, yend=scenesDF$id),size=3) +
-  geom_text(data=scenesDF, aes(x=scenesDF$end, y=scenesDF$id,  label = scenesDF$name), size = 2.25,color = 'black', alpha = 0.5, check_overlap = TRUE) + 
+ggplot(scenesDF, aes(colour=name)) + 
+  geom_segment(aes(x=start, xend=end,
+                   y=id, yend=id),size=3) +
+  geom_text(data=scenesDF, aes(x=end, y=id,  label = name), size = 2.25,color = 'black', alpha = 0.5, check_overlap = TRUE) + 
   theme_gdocs() + theme(legend.position="none")
 # End
