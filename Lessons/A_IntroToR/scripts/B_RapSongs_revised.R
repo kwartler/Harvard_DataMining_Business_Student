@@ -16,8 +16,8 @@ library(ggthemes)
 library(pbapply)
 
 # Multiple files as a list - instead of a single file, we create a list, think of this like a workbook in Excel with multiple worksheets.  In R these are "data frames"
-tmp <- list.files(path = "~/Documents/Harvard_DataMining_Business_Student/Lessons/A_IntroToR/data/z_rap_songs_revised",
-                  pattern = '*.csv')
+tmp <- list.files(path = "~/Documents/Harvard_DataMining_Business_Student/Lessons/A_IntroToR/data/z_rap_songs_revised/",
+                  pattern = '*.csv', full.names = T)
 allSongs        <- pblapply(tmp, read.csv)
 names(allSongs) <- gsub('csv','', tmp)
 
