@@ -10,6 +10,7 @@ library(maps)
 library(ggthemes)
 library(ggplot2)
 library(leaflet)
+library(mapproj)
 
 # Import
 cellTowers       <- read.csv('newEnglandCellTowers.csv')
