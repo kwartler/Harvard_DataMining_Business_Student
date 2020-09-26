@@ -74,7 +74,7 @@ leftData <- left_join(donors, thirdPartyData)
 
 # Bring donors to the new data points
 rightData <- right_join(donors, thirdPartyData) 
-rightData[c(2589:2590),] #NA automatically filled in
+rightData[c(3119:3122),] #NA automatically filled in
 
 # Find records in common
 innerData <- inner_join(donors, thirdPartyData) #here identical to leftData
@@ -85,7 +85,7 @@ plan <- designTreatmentsC(leftData,
                           'Y1_Donation',
                           'Yes')
 treatedLeftData <- prepare(plan, leftData)
-fit             <- glm(Y1_Donation ~ ., treatedLeftData, family='binomial')
+fit             <- glm(as.factor(Y1_Donation) ~ ., treatedLeftData, family='binomial')
 
 # Our first model!
 summary(fit)
