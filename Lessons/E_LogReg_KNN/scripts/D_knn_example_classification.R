@@ -70,11 +70,11 @@ resultsDF    <- data.frame(actual = trainDat$Reason.for.absence,
                         classes = trainClasses)
 head(resultsDF)
 
-confusionMatrix(trainClasses,trainDat$Reason.for.absence) #predictions then reference (actual)
+table(trainClasses,trainDat$Reason.for.absence) 
 
 # Testing set accuracy; PREDICT WILL CENTER THE NEW DATA FOR YOU!!
 testClasses <- predict(knnFit,testDat)
-confusionMatrix(testClasses,testDat$Reason.for.absence)
+table(testClasses,testDat$Reason.for.absence)
 
 # To see probabilities 
 trainProbs <- predict(knnFit, trainDat, type=c('prob'))
