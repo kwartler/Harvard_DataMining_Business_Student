@@ -3,7 +3,7 @@
 #' Purpose: Load data build a KNN Predictor
 
 ## Set the working directory
-setwd("/cloud/project/Lessons/E_KNN/data")
+setwd("/cloud/project/Lessons/E_LogReg_KNN/data")
 
 ## Load the libraries
 library(caret)

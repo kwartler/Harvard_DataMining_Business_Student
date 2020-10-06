@@ -8,7 +8,7 @@ library(ggplot2)
 library(dplyr)
 
 # wd
-setwd("~/Documents/Harvard_DataMining_Business_Admin/lessons/E_LogReg_KNN/data")
+setwd("/cloud/project/Lessons/E_LogReg_KNN/data")
 
 # Data
 data('diamonds')
