@@ -43,7 +43,7 @@ treatedTrain <- prepare(plan, trainDat)
 treatedTest  <- prepare(plan, testDat)
 
 # Decision Tree
-treeFit <- train(y ~., data = treatedTrain, 
+treeFit <- train(as.factor(y) ~., data = treatedTrain, 
              method = "rpart", 
              tuneGrid = data.frame(cp = c(0.01, 0.05)), 
              control = rpart.control(minsplit = 1, minbucket = 2)) 
@@ -51,7 +51,7 @@ saveRDS(treeFit, 'comparisonTree.rds')
 treeFit <- readRDS('comparisonTree.rds')
 
 # Knn Fit - Takes a LONG time; think about why this is.  Distances are measured from all points!  As a result, KNN is not used on large data sets.
-#knnFit  <- train(y ~ ., 
+#knnFit  <- train(as.factor(y) ~ ., 
 #                data = treatedTrain, 
 #                method = "knn", 
 #                preProcess = c("center","scale"),
