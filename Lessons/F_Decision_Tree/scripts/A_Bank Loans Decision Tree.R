@@ -5,7 +5,7 @@
 
 
 ## Set the working directory
-setwd("/cloud/project/lessons/6_Mar6_DT_RF/wk6_Data")
+setwd("/cloud/project/Lessons/F_Decision_Tree/data")
 options(scipen=999)
 
 ## Load the libraries
@@ -29,7 +29,7 @@ trainDat <- dat[idx,]
 testDat  <- dat[-idx,]
 
 # Force a full tree (override default parameters)
-overFit <- rpart(y ~ ., 
+overFit <- rpart(as.factor(y) ~ ., 
                  data = trainDat, 
                  method = "class", 
                  minsplit = 1, 
@@ -44,12 +44,12 @@ overFit
 
 # Look at training probabilities
 trainProbs <- predict(overFit, trainDat) 
-head(trainProbs)
+head(trainProbs, 10)
 
 # Get the final class and actuals
 trainClass <- data.frame(class = colnames(trainProbs)[max.col(trainProbs)],
                        actual = trainDat$y)
-head(trainClass)
+head(trainClass, 10)
 
 # Confusion Matrix
 confMat <- table(trainClass$class,trainClass$actual)
@@ -94,7 +94,7 @@ testDat  <- dat[-idx,]
 
 # Fit a decision tree with caret
 set.seed(1234)
-fit <- train(y ~., #formula based
+fit <- train(as.factor(y) ~., #formula based
              data = trainDat, #data in
              #instead of knn, caret does "recursive partitioning (trees)
              method = "rpart", 
@@ -130,6 +130,6 @@ confusionMatrix(trainCaret, trainDat$y)
 
 # Now more consistent accuracy & fewer rules!
 testCaret <- predict(fit,testDat)
-confusionMatrix(testCaret,testDat$y)
+confusionMatrix(testCaret,as.factor(testDat$y))
 
 # End

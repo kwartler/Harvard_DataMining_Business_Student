@@ -5,7 +5,7 @@
 
 
 ## Set the working directory
-setwd("/cloud/project/lessons/6_Mar6_DT_RF/wk6_Data")
+setwd("/cloud/project/Lessons/F_Decision_Tree/data")
 options(scipen=999)
 
 ## Load the libraries
