@@ -1,12 +1,12 @@
 #' Author: Ted Kwartler
-#' Data: 3-23-2020
+#' Data: 10-26-2020
 #' Purpose: Exponential Smoothing (Holt Winters) on WalMart Revenue Data
 
 # Options
 options(scipen=999)
 
 # Wd
-setwd("~/Documents/Harvard_DataMining_Business_Admin/lessons/G_TimeSeries/data")
+setwd("/cloud/project/Lessons/G_RF_TimeSeries/data")
 
 # library
 library(forecast)
