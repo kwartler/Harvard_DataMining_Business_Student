@@ -20,7 +20,7 @@ joinData <- left_join(joinData, ...)
 joinData <- left_join(joinData, ...)
 
 # This is a classification problem so ensure R knows Y isn't 0/1 as integers
-joinData$Y_AccetpedOffer <- as.factor(joinData$Y_AccetpedOffer)
+joinData$Y_AcceptedOffer <- as.factor(joinData$Y_AcceptedOffer)
 
 ## SAMPLE: Partition schema
 set.seed(1234)
@@ -40,7 +40,7 @@ treatedTrain <- prepare(..., trainData)
 treatedTest  <- prepare(plan, ...)
 
 ## MODEL: caret etc.
-fit <- train(Y_AccetpedOffer ~., data = ..., method = ...)
+fit <- train(Y_AcceptedOffer ~., data = ..., method = ...)
 
 ## ASSESS: Predict & calculate the KPI appropriate for classification
 trainingPreds <- predict(..., ...)
