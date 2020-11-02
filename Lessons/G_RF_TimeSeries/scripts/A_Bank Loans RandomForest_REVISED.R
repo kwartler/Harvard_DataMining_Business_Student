@@ -5,7 +5,7 @@
 
 
 ## Set the working directory
-setwd("~/Documents/Harvard_DataMining_Business_Student/Lessons/G_RF_TimeSeries/data")
+setwd("/cloud/project/Lessons/G_RF_TimeSeries/data")
 
 # Options
 options(scipen=999)
@@ -59,21 +59,21 @@ predProbs   <- predict(downSampleFit,
 predClasses <- predict(downSampleFit,  treatedTrain)
 
 # Confusion Matrix; MLmetrics has the same function but use CARET!!
-caret::confusionMatrix(predClasses, treatedTrain$Class)
+caret::confusionMatrix(predClasses, as.factor(treatedTrain$Class))
 
 # Other interesting model artifacts
 varImp(downSampleFit)
 plot(varImp(downSampleFit), top = 20)
 
 # Add more trees to the forest with the randomForest package (caret takes a long time bc its more thorough)
-moreVoters <- randomForest(Class ~ .,
+moreVoters <- randomForest(as.factor(Class) ~ .,
                            data  = treatedTrain, 
                            ntree = 500,
                            mtry  = 1)
 
 # Confusion Matrix, compare to 3 trees ~63% accuracy
 trainClass <- predict(moreVoters, treatedTrain)
-confusionMatrix(trainClass, treatedTrain$Class)
+confusionMatrix(trainClass, as.factor(treatedTrain$Class))
 
 # Look at improved var importance
 varImpPlot(moreVoters)
@@ -93,14 +93,14 @@ legend("top", colnames(moreVoters$err.rate),col=1:4,cex=0.8,fill=1:4)
 
 
 # Let's optimize # of trees 
-someVoters <- randomForest(Class ~ .,
+someVoters <- randomForest(as.factor(Class) ~ .,
                            data = treatedTrain, 
                            ntree=100,
                            mtyr = 1)
 
 # Confusion Matrix
 trainClass <- predict(someVoters, treatedTrain)
-confusionMatrix(trainClass, treatedTrain$Class)
+confusionMatrix(trainClass, as.factor(treatedTrain$Class))
 
 ### Now let's apply to the validation test set
 threeVotes        <- predict(downSampleFit, treatedTest)

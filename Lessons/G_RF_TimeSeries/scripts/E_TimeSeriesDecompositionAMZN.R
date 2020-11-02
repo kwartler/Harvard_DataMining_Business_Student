@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Data: 3-23-2020
+#' Data: 10-26-2020
 #' Purpose: Decompose Amazon Quarterly Revenue
 #' Notes: Students may like this ppt: https://robjhyndman.com/eindhoven/1-3-Seasonality.pdf
 
@@ -7,7 +7,7 @@
 options(scipen=999)
 
 # Wd
-setwd("~/Documents/Harvard_DataMining_Business_Admin/lessons/G_TimeSeries/data")
+setwd("/cloud/project/Lessons/G_RF_TimeSeries/data")
 
 # library
 library(forecast)

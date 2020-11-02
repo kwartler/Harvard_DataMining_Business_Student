@@ -126,7 +126,7 @@ trainCaret <- predict(fit, trainDat)
 head(trainCaret)
 
 # Get the conf Matrix
-confusionMatrix(trainCaret, trainDat$y)
+confusionMatrix(trainCaret, as.factor(trainDat$y))
 
 # Now more consistent accuracy & fewer rules!
 testCaret <- predict(fit,testDat)

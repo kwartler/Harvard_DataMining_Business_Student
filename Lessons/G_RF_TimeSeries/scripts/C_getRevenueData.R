@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Data: 3-23-2020
+#' Data: 10-26-2020
 #' Purpose: Grab some time series revenue data and visualize it
 #' 
 

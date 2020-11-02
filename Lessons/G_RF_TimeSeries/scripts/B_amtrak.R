@@ -1,10 +1,10 @@
 #' Author: Ted Kwartler
-#' Date: 3-23-2020
+#' Date: 10-26-2020
 #' Purpose: Forecasting Basics
 #'
 
 # WD
-setwd("~/Documents/Harvard_DataMining_Business_Admin/lessons/G_TimeSeries/data")
+setwd("/cloud/project/Lessons/G_RF_TimeSeries/data")
 
 # libs
 library(dygraphs)
@@ -52,7 +52,7 @@ tail(wrongData, 10)
 df$Month[1:13]
 cleanDate <- dmy(df$Month)
 tail(df$Month, 10)
-tail(cleanData, 10)
+tail(cleanDate, 10)
 
 # Chk class
 class(cleanDate)
