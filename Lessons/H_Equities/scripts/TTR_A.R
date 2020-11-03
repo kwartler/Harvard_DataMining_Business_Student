@@ -64,7 +64,7 @@ head(Lo(AAPL),5)
 # Volume for the session
 head(Vo(AAPL),5)
 
-# Simple detlas
+# Simple deltas
 head(OpCl(AAPL),5)
 ?Cl
 
