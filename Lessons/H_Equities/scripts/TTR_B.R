@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Date: 9-2-2018
+#' Date: 11-2-2020
 #' Purpose: Simple Moving Avg Example
 #'
 
@@ -33,3 +33,4 @@ plot(CMG$CMG.Close)
 lines(CMGma30, col='red')
 
 # End
+
