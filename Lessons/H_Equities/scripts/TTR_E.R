@@ -76,6 +76,7 @@ charts.PerformanceSummary(ret)
 plot(Cl(stk))
 
 # But how many days was capital at risk?
+table(rsiIndicator)
 table(STKcompoundRule)
 
 # End
