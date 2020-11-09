@@ -85,7 +85,7 @@ boxAVG <- mean(indBoxes[,2])
 
 # Plot and Review 
 boxPrice <- 83.5 #$190 for Iconic Masters & $83.50 for Guilds, Throne
-hist(unlist(indBoxes[,2]), main='Iconic Masters')
+hist(unlist(indBoxes[,2]), main='Guilds of Ravnica')
 abline(v=boxPrice,col="red")
 text(boxPrice,10,'cost', col='red', pos=1,srt=90, cex=1)
 abline(v=boxAVG,col="blue")
