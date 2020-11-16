@@ -7,7 +7,7 @@
 #'
 
 # Set the working directory
-setwd("~/Documents/Harvard_DataMining_Business_Admin/lessons/archive/11A_Apr17_TextMining/wk11_data")
+setwd("/cloud/project/Lessons/J_textMining/data")
 
 # Libs
 library(tm)
@@ -52,7 +52,7 @@ for (i in 1:length(txtFiles)){
 } 
 
 # If you are ok with lists, use lapply so each is a list element
-all<-pblapply(txtFiles,read.csv)
+all <- pblapply(txtFiles,read.csv)
 rm(all)
 
 # Vector Corpus
@@ -61,9 +61,9 @@ chardonnay <- VCorpus(VectorSource(chardonnayVector.csv))
 coffee     <- VCorpus(VectorSource(coffeeVector.csv))
 
 # Cleaning
-beer       <-cleanCorpus(beer)
-chardonnay <-cleanCorpus(chardonnay)
-coffee     <-cleanCorpus(coffee)
+beer       <- cleanCorpus(beer)
+chardonnay <- cleanCorpus(chardonnay)
+coffee     <- cleanCorpus(coffee)
 
 # Extract plain clean text out of each corpus same as calling content() on an individual tweet
 beer       <- unlist(sapply(beer, `[`, "content"))
@@ -76,7 +76,8 @@ chardonnay <- paste(chardonnay, collapse=" ")
 coffee     <- paste(coffee, collapse=" ")
 
 # To make it clear we now have a single document of all drink tweets
-head(beer)
+beer
+length(beer)
 
 # Make a combined corpus of 3 subject matters
 allDrinks   <- c(beer, chardonnay, coffee)

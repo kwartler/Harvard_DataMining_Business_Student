@@ -7,7 +7,7 @@
 #'
 
 # Set the working directory
-setwd("~/Documents/Harvard_DataMining_Business_Admin/lessons/J_textMining/data/")
+setwd("/cloud/project/Lessons/J_textMining/data")
 
 # Libs
 library(tidytext)
@@ -86,7 +86,8 @@ polarity(text[2])
 polarity(text[3])
 
 # Get afinn lexicon
-afinn <- get_sentiments(lexicon = c("afinn"))
+#afinn <- get_sentiments(lexicon = c("afinn")) # causes a crash on rstudio.cloud, lexicon provided in data folder
+afinn <- read.csv('/cloud/project/Lessons/J_textMining/data/AFINN/afinn.csv')
 head(afinn)
 
 # Word Sequence
@@ -117,8 +118,9 @@ plotDF <- subset(afinnSent, afinnSent$document=='happy')
 ggplot(plotDF, aes(x=idx, y=ValueCount, group=document, color=document)) +
   geom_line()
 
-# Get nrc lexicon
-nrc <- textdata::lexicon_nrc() # should download it
+# Get nrc lexicon, again causes probs on rstudio cloud
+#nrc <- textdata::lexicon_nrc() # should download it
+nrc <- read.csv('/cloud/project/Lessons/J_textMining/data/NRC/nrc.csv')
 head(nrc)
 
 # Perform Inner Join
@@ -129,7 +131,7 @@ nrcSent
 nrcSent <- nrcSent[-grep('positive|negative',nrcSent$sentiment),]
 
 # Quick chk
-table(nrcSent$document, nrcSent$sentiment)
+table(nrcSent$sentiment,nrcSent$document)
 
 # Manipulate for radarchart
 nrcSentRadar <- as.data.frame.matrix(table(nrcSent$sentiment, nrcSent$document))
@@ -138,6 +140,7 @@ colnames(nrcSentRadar) <- docNames
 
 # Normalize for length; prop.table needs a "matrix" class...annoying!
 nrcSentRadar <- prop.table(as.matrix(nrcSentRadar),2)
+nrcSentRadar
 colSums(nrcSentRadar)
 
 # Organize

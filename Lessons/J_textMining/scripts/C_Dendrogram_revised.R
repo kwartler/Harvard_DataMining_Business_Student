@@ -7,7 +7,7 @@
 #'
 
 # Set the working directory
-setwd("~/Documents/Harvard_DataMining_Business_Admin/lessons/archive/11A_Apr17_TextMining/wk11_data")
+setwd("/cloud/project/Lessons/J_textMining/data")
 
 # Libs
 library(qdap)
@@ -39,7 +39,7 @@ cleanCorpus <- function(corpus){
 }
 
 # Create custom stop words
-customStopwords <- c(stopwords('english'), 'lol', 'smh', 'beer')
+customStopwords <- c(stopwords('english'), 'lol', 'smh', 'beer', 'amp')
 
 # Dendogram coloring function
 colLab <- function(n) {
@@ -85,7 +85,7 @@ ggplot(topWords, aes(x=word, y=frequency)) +
   geom_text(aes(label=frequency), colour="white",hjust=1.25, size=5.0)
 
 # qdap version, will not work if there is a java issue
-plot(freq_terms(text$text, top=35, at.least=2))
+plot(freq_terms(text$text, top=35, at.least=2, stopwords = customStopwords))
 
 ############ Back to PPT
 

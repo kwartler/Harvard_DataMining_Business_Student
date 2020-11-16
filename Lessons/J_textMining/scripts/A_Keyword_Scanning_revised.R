@@ -7,7 +7,7 @@
 #'
 
 # Set the working directory
-setwd("/cloud/project/lessons/11_Apr17_TextMining/wk11_data")
+setwd("/cloud/project/Lessons/J_textMining/data")
 
 # Libs
 library(stringi)
