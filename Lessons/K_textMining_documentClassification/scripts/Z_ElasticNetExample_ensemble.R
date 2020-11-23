@@ -7,7 +7,7 @@
 #'
 
 # Wd
-setwd("~/Documents/Harvard_DataMining_Business_Admin/lessons/K_textMining_documentClassification/data")
+setwd("/cloud/project/Lessons/K_textMining_documentClassification/data")
 
 # Libs
 library(text2vec)

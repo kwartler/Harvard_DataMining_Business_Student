@@ -5,7 +5,7 @@
 #' License: GPL>=3
 #' Date: Nov 23-2020
 #'
-setwd("~/Documents/Harvard_DataMining_Business_Student/Lessons/K_textMining_documentClassification/data/LSAVersion")
+setwd("/cloud/project/Lessons/K_textMining_documentClassification/data/LSAVersion")
 
 # Libs
 library(lsa)
