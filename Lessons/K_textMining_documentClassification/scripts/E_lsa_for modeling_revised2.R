@@ -77,7 +77,7 @@ modelingMatrix <- data.frame(doc_id = allTxt$doc_id,
 lsaTrain <- subset(modelingMatrix, modelingMatrix$status=='training')
 lsaTest  <- subset(modelingMatrix, modelingMatrix$status=='test')
 
-### SAMPLE : Patritioning
+### SAMPLE : Partitioning
 idx           <- sample(1:2000,.7*2000) 
 trainTxt      <- lsaTrain[idx,]
 validationTxt <- lsaTrain[-idx,]
