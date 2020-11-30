@@ -5,7 +5,7 @@
 #' License: GPL>=3
 #' Date: Nov 23-2020
 #'
-setwd("~/Documents/Harvard_DataMining_Business_Student/Lessons/K_textMining_documentClassification/data/LSAVersion")
+setwd("/cloud/project/Lessons/K_textMining_documentClassification/data/LSAVersion")
 
 # Libs
 library(lsa)
@@ -77,7 +77,7 @@ modelingMatrix <- data.frame(doc_id = allTxt$doc_id,
 lsaTrain <- subset(modelingMatrix, modelingMatrix$status=='training')
 lsaTest  <- subset(modelingMatrix, modelingMatrix$status=='test')
 
-### SAMPLE : Patritioning
+### SAMPLE : Partitioning
 idx           <- sample(1:2000,.7*2000) 
 trainTxt      <- lsaTrain[idx,]
 validationTxt <- lsaTrain[-idx,]

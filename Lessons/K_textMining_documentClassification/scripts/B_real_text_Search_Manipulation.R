@@ -7,7 +7,7 @@
 #'
 
 # Set the working directory
-setwd("~/Documents/Harvard_DataMining_Business_Student/Lessons/K_textMining_documentClassification/data")
+setwd("/cloud/project/Lessons/K_textMining_documentClassification/data")
 
 # Libs
 library(stringi)
@@ -43,7 +43,7 @@ head(text$text[idxOR], 1)
 # Logical Search AND operator, regular expression
 keywordsAND <- "(?=.*lebron)(?=.*james)"
 idxAND      <- grepl(keywordsAND, text$text,perl=TRUE)
-head(text$text[idx],1)
+head(text$text[idxAND],1)
 
 # Calculate the % of times among all tweets
 sum(cavs) / nrow(text)

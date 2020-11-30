@@ -7,7 +7,7 @@
 #'
 
 # Set the working directory
-setwd("~/Documents/Harvard_DataMining_Business_Student/Lessons/K_textMining_documentClassification/data")
+setwd("/cloud/project/Lessons/K_textMining_documentClassification/data")
 
 # Libs
 library(tm)
@@ -38,7 +38,7 @@ cleanCorpus<-function(corpus, customStopwords){
 }
 
 # Create custom stop words
-stops <- c(stopwords('english'), 'lol', 'smh')
+stops <- c(stopwords('SMART'), 'lol', 'smh', 'amp')
 
 # Data
 text <- read.csv('coffee.csv', header=TRUE)
