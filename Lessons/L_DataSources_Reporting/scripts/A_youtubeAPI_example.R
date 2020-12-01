@@ -11,11 +11,11 @@ library(plyr)
 Sys.setlocale("LC_CTYPE", "en_US.UTF-8")
 
 # WD
-setwd("~/Documents/Harvard_DataMining_Business_Admin/lessons/K_DataSources_Reporting/data")
+setwd("/cloud/project/Lessons/L_DataSources_Reporting/data")
 
 # Youtube URL
 #https://www.youtube.com/watch?v=Q-wRhzWaCac
-youtubeCaption <- 'https://www.youtube.com/api/timedtext?v=Q-wRhzWaCac&asr_langs=de%2Cen%2Ces%2Cfr%2Cit%2Cja%2Cko%2Cnl%2Cpt%2Cru&caps=asr&xorp=true&xoaf=5&hl=en&ip=0.0.0.0&ipbits=0&expire=1606781366&sparams=ip%2Cipbits%2Cexpire%2Cv%2Casr_langs%2Ccaps%2Cxorp%2Cxoaf&signature=69998EF81B07E7C69C49871BD02160E0BCA1C1B1.E67329D46FB833F521730DAADFB976498370FA16&key=yt8&kind=asr&lang=en&fmt=json3&xorb=2&xobt=3&xovt=3'
+youtubeCaption <- 'https://www.youtube.com/api/timedtext?v=Q-wRhzWaCac&asr_langs=de%2Cen%2Ces%2Cfr%2Cit%2Cja%2Cko%2Cnl%2Cpt%2Cru&caps=asr&xorp=true&xoaf=5&hl=en&ip=0.0.0.0&ipbits=0&expire=1606807242&sparams=ip%2Cipbits%2Cexpire%2Cv%2Casr_langs%2Ccaps%2Cxorp%2Cxoaf&signature=C2899F3F69DDF222DE8FDBEF6B4F65822D893A2C.ACAEE548314AA2357A2590F8AB2C4AE6BBCF0F0C&key=yt8&kind=asr&lang=en&fmt=json3&xorb=2&xobt=3&xovt=3'
 
 # Go get the data
 dat <- fromJSON(youtubeCaption)

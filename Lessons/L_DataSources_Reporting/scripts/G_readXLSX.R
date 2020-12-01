@@ -6,7 +6,7 @@
 library(readxl)
 
 # wd
-setwd("~/Documents/Harvard_DataMining_Business_Admin/lessons/L_DataSources_Reporting/data")
+setwd("/cloud/project/Lessons/L_DataSources_Reporting/data")
 
 # File Path
 filePath <- 'exampleExcel.xlsx'

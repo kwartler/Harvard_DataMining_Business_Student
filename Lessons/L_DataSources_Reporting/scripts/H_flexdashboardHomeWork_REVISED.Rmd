@@ -13,7 +13,7 @@ library(ggplot2)
 library(DT)
 
 # set wd
-setwd("~/Documents/Harvard_DataMining_Business_Admin/lessons/L_DataSources_Reporting/data")
+setwd("/cloud/project/Lessons/L_DataSources_Reporting/data")
 
 # Identify the file in the directory
 searchPattern <- 'Wk1'
@@ -73,7 +73,7 @@ Row
 ### basic table info
 
 ```{r table1, message=FALSE}
-knitr::kable(as.matrix(table(df$race)) )
+knitr::kable(as.matrix(table(df$race)))
 ```
 
 ### better formatted table info
