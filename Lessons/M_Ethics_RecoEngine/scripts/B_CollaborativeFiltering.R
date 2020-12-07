@@ -1,6 +1,10 @@
 #' Author: Ted Kwartler
-#' Date: Apr 26-2020
+#' Date: Dec 7-2020
 #' Purpose: Collaborative Filtering Example
+
+### RecoLab 0.2-6 has some unusual code, in the UBCF so instead install the older version
+#pth <- '/cloud/project/Lessons/M_Ethics_RecoEngine/recommenderlab_0.2-5.tar.gz'
+#install.packages(pth, repos = NULL, type="source")
 
 # Libraries
 library(fst)
@@ -9,7 +13,7 @@ library(recommenderlab)
 library(reshape2)
 
 # wd
-setwd("~/Documents/Harvard_DataMining_Business_Admin/lessons/L_Ethics_RecoEngine/data")
+setwd("/cloud/project/Lessons/M_Ethics_RecoEngine/data")
 
 # Raw Data In & EDA
 songListens <- read_fst('10000Songs.fst')
