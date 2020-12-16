@@ -1,7 +1,7 @@
 #' Author: Ted Kwartler
 #' Data: 5-3-2020
 #' Purpose: Susceptible Infected Removed SIR modeling
-#' 
+#' Some additional resources
 #'https://alhill.shinyapps.io/COVID19seir/
 #'http://www.public.asu.edu/~hnesse/classes/sir.html
 #'https://www.who.int/bulletin/online_first/20-255158.pdf
