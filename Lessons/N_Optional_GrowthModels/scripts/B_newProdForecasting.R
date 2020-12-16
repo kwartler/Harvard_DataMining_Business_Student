@@ -37,6 +37,7 @@ finalDF <- data.frame(yr=1999:2025,
 
 finalDF
 
+# Plot with the 4 known values and a green line for the modeled behavior
 plot(finalDF$cumulativeSales, type ='l', col='darkgreen')
 points(finalDF$cumulativeSales[1:4], col='red')
 
@@ -56,6 +57,7 @@ hdTVgomPreds$frc
 gompDF <- data.frame(yr=1999:2025, 
                       cumulativeSales = c(hdTV[,3], hdTVgomPreds$frc[,1]))
 
+# Plot not as good a fit but the high point is similar so there is expected variance in adoption given some mkt saturation point.  Planning would probably be something in between unless there is a definate reason to pick one over the other.
 lines(gompDF$cumulativeSales, col='blue')
 
 # End

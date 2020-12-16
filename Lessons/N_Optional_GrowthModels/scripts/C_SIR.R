@@ -21,9 +21,9 @@ library(EpiDynamics)
 options(scipen = 999)
 
 # Starting inputs
-susceptible <- .999999
-infected    <- .000001
-removed     <- 1-susceptible-infected #sometimes Recovered
+susceptible <- .999999 #basically everyone is susceptible
+infected    <- .000001 #basically no one is infected
+removed     <- 1-susceptible-infected #sometimes Recovered, these are people that will not be reinfected again, i.e. who is left for the virus to infect
 totalDays   <- 70
 
 # Virus Behavior
@@ -44,15 +44,17 @@ sir <- SIR(pars = parameters, init = initials, time = 0:totalDays)
 head(sir$results)
 
 # Plot the curves
-plot(sir$results$S, type='l')
-lines(sir$results$I, col='red')
-lines(sir$results$R, col='blue')
-#PlotMods(sir)
+plot(sir$results$S, type='l') #at any given point in time who is left to infect
+lines(sir$results$I, col='red') #at any given point in time how many are infected
+lines(sir$results$R, col='blue') #at any given point how many are recovered or died ie. removed state
 
-# Using Covid infection & recovery from papers
+# Another view
+PlotMods(sir)
+
+# Using Covid infection & recovery from papers as of May 2020
 betaVal  <- 1.75
-gammaVal <- .5 #R0 = beta/gamma; 3.5 = 1.75/gamma;3.5g =1.75
-# China recovered minus death div infected =(47367-2945)/80151  
+gammaVal <- .5 #R0 was said to be 3.5 and is beta/gamma; therefore 3.5 = 1.75/gamma;3.5g =1.75
+# China recovered minus death div infected =(47367-2945)/80151 cited in a paper from May 
 
 sirC <- SIR(pars = c(beta = betaVal, gamma = gammaVal), 
            init = initials, time = 0:totalDays)
@@ -68,8 +70,12 @@ sirD <- SIR(pars = c(beta = betaVal, gamma = gammaVal),
            init = initials, time = 0:totalDays)
 PlotMods(sirD)
 
-# Plot the infection curves next to each other
+# Plot the infection curves next to each other, the social distanced one is lower meaning hospitals aren't overwhelmed and more people will recover vs die in the removed state.
 plot(sirC$results$I, col='red', type ='l')
 lines(sirD$results$I, col='red')
+
+# Conclusion
+# Keep in mind this a toy example to show how these factors interact.
+# Issues of personal behavior like distancing and not traveling/going to gatherings, spreading in different locations (coastal, south, upper midwest basically starts the process over in three+ waves), uneven access to healthcare in rural vs urban and systemic issues related to race all impact these curves. 
 
 # End
