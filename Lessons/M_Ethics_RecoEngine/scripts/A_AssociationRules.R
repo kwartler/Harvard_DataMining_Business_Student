@@ -6,7 +6,7 @@
 library(arules)
 
 # WD
-setwd("~/Documents/Harvard_DataMining_Business_Admin/lessons/L_Ethics_RecoEngine/data")
+setwd("/cloud/project/Lessons/M_Ethics_RecoEngine/data")
 
 # Data
 faceDF <- read.csv("Faceplate.csv")
@@ -98,5 +98,4 @@ head(booksApr, 10)
 
 # Checking math
 nrow(subset(books, books[,2]>0)) / 4000 # = .23825
-itemFrequencyPlot(booksTrans)
 # End
