@@ -10,6 +10,9 @@ movieURL <- 'https://www.imdb.com/title/tt0058331'
 movie <- read_html(movieURL)
 movie
 
+# See all childen nodes
+movie %>% html_nodes("*") %>% html_attr("class") %>% unique()
+
 # In case you want to get all nodes you could explore
 movie %>% 
   html_nodes("*") %>% 

@@ -1,0 +1,31 @@
+﻿var,description,Source,Type
+ dataID          ,uniqie identifier used within the company,internal,Administrative
+ HHuniqueID      ,a unique household identifier,internal,Administrative
+ Communication   ,contact communication type,internal,Operational
+ LastContactDay  ,Day of last contact,internal,Operational
+ LastContactMonth,Month of last contact,internal,Operational
+ NoOfContacts    ,number of contacts performed during this campaign ,internal,Operational
+ DaysPassed      ,number of days that passed by after the client was last contacted from a previous campaign (-1 means the client was never previously contacted),internal,Operational
+ PrevAttempts    ,number of previous contacts ,internal,Operational
+ Outcome         ,outcome of a previous marketing campaign,internal,Operational
+ CallStart       ,start time of the last call if reached,internal,Operational
+ CallEnd         ,end time of the last call if reached,internal,Operational
+ Y_AccetpedOffer,"The dependent variable, 1= the marketing offer was acepted",internal,Operational
+headOfhouseholdGender,Estimated gender of the main purchaser in the house; based on loyalty program data and public available information,3rd party,socio-demographic
+annualDonations,"amt of public donations to non profits, candidates etc",3rd party,socio-demographic
+EstIncome-OMITTED,estimated household income; removed for case ,3rd party,socio-demographic
+EstRace,"estimated household race based on buying patterns, and census block data",3rd party,socio-demographic
+PetsPurchases,T/F if in the last 12months the household purchased pet related products ,3rd party,socio-demographic
+DigitalHabits_5_AlwaysOn,1-5 scale for amount of time is spent on web relative to other national households,3rd party,socio-demographic
+AffluencePurchases,T/F if in the last 12 months the household purchased luxury items (even on credit),3rd party,socio-demographic
+Age,head of household age,3rd party,socio-demographic
+Job,head of household job,3rd party,socio-demographic
+Marital,head of household marital status,3rd party,socio-demographic
+Education,head of household completed education level,3rd party,socio-demographic
+carMake,Make of a vehicle at the household,3rd party,purchasing behavior
+carModel,Make of a vehicle at the household,3rd party,purchasing behavior
+carYr,Year of production for a vehicle at the household,3rd party,purchasing behavior
+DefaultOnRecord,"On credit report, is there a default",3rd party,credit worthiness
+RecentBalance,,3rd party,credit worthiness
+HHInsurance,,3rd party,credit worthiness
+CarLoan,,3rd party,credit worthiness
