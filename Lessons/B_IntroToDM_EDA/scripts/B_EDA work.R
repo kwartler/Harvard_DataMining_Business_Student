@@ -8,26 +8,28 @@ library(radiant.data)
 library(DataExplorer)
 
 # Set WD
-setwd("~/Documents/Harvard_DataMining_Business_Student/Lessons/B_IntroToDM_EDA/wk2_Data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/B_IntroToDM_EDA/data")
 
 # Data
-cereal <- read.csv('Cereals.csv')
+cereal <- ----.---('Cereals.csv')
 
 # What's the overall structure  & dimensions of the data?
 str(   )
 dim(   )
 
 # Data set class
-class( )
+class(    )
 
 # Classes for each column
-sapply(cereal, class)
+sapply(     , class)
 
 # Look at the top 6 rows
 head(   )
 
 # How many differnt brand names?
-nlevels(    )
+nlevels( as.factor(      ))
+# Or
+length(unique(     ))
 
 # What are the column names?
 names(     )
@@ -36,9 +38,9 @@ names(     )
 summary(      )
 
 # What's the relationship between protein and sugar?
-cor(cereal$   , cereal$   , use = 'complete.obs')
+cor(   ,   , use = 'complete.obs')
 
-# How many unique manufacturers?
+# Who are the unique manufacturers?
 unique(     )
 
 # Avg calories?
@@ -56,8 +58,8 @@ cereal[idx, ]
 # Sample 10 rows
 # What is the first name with seed 1234
 set.seed(    )
-idx <- sample(1:nrow(     ),   )
-cereal[    , ]
+idx <- sample(1:nrow(_____   ),   1)
+     [    , ]
 
 # DataExplorer
 plot_str(cereal)
@@ -69,6 +71,7 @@ plot_density(cereal)#time consuming
 plot_scatterplot(cereal, by='rating') #time consuming 
 
 # radiant.data
+# example video: https://radiant-rstats.github.io/radiant.data/
 radiant.data::radiant.data()
 
 # End

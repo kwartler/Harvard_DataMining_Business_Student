@@ -3,7 +3,7 @@
 #' Purpose: Load data, explore it and visualize it
 
 ## Set the working directory
-setwd("~/Documents/Harvard_DataMining_Business_Student/Lessons/B_IntroToDM_EDA/wk2_Data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/B_IntroToDM_EDA/data")
 
 ## Load the libraries; 1st time use install.packages('ggplot2')
 library(ggplot2)

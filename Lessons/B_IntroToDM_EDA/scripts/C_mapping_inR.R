@@ -3,7 +3,7 @@
 #' Purpose: Load geospatial data, explore it and visualize it
 
 ## Set the working directory
-setwd("~/Documents/Harvard_DataMining_Business_Student/Lessons/B_IntroToDM_EDA/wk2_Data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/B_IntroToDM_EDA/data")
 
 # Libs
 library(maps)
@@ -24,7 +24,9 @@ map()
 map('usa')	# national boundaries
 map("state", interior = FALSE)
 map("state", interior = T)
+dev.off() #sometimes the graphics driver needs to be reset!
 map('county', 'new jersey') # reminder clear graphics device
+dev.off() #sometimes the graphics driver needs to be reset!
 map('state', region = c('mass', 'maine', 'vermont', 'new hampshire'))
 points(NEtowers$lon,NEtowers$lat, col='red')
 
@@ -43,19 +45,22 @@ gg
 # Subset to multiple states
 ne <- stateData[ stateData$region %in% c("massachusetts","maine", "vermont", "new hampshire"), ]
 ne <- fortify(ne, region = 'region')
+head(ne)
 ne <-ggplot() + geom_map(data  =  ne, map = ne,
                          aes(x = long, y = lat, map_id = region, group = group),
                          fill = 'white', color = 'black', size = 0.25) +
   coord_map('albers', lat0 = 39, lat1 = 45) +
   theme_map()
 ne 
-ne +
+ne + #add the data points with lon/lat declaring the columns
   geom_point(data=NEtowers, aes(x=lon, y=lat), color='red', alpha=0.15)
 
 # County and single state
 counties <- map_data("county")
 MAcounty <- subset(counties, region == "massachusetts")
+head(MAcounty)
 onlyMA   <- subset(NEtowers,NEtowers$state=='MA')
+head(onlyMA)
 
 # Now build layer by layer State and county outlines then cell
 ma <-ggplot() + geom_map(data  =  MAcounty, map = MAcounty,
@@ -63,7 +68,13 @@ ma <-ggplot() + geom_map(data  =  MAcounty, map = MAcounty,
                          fill = 'white', color = 'black', size = 0.25) + 
   
   coord_map('albers', lat0 = 39, lat1 = 45) +
-  theme_map() + geom_point(data=onlyMA, aes(x=lon, y=lat, group=1), color='red', alpha=0.15)
+  theme_map() 
+ma
+# Add the points
+ma + geom_point(data=onlyMA, aes(x=lon, y=lat, group=1), 
+             color='red', alpha=0.15)
+
+# Notice how the original layer has no dots because we didn't declar an object above
 ma
 
 # Leaflet layers using %>% pipe
