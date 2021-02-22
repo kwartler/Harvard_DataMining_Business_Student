@@ -1,10 +1,10 @@
 #' Title: A_demo_script.R
 #' Purpose: Get some R time!
 #' Author: TK
-#' Date: Aug 23-2020
+#' Date: 1-25-2020
 
 # Step 1 Set the working directory: where's the fruit?
-setwd("~/Documents/Harvard_DataMining_Business_Student/Lessons/A_Admin_IntroToR/data")
+setwd("~/Documents/Harvard_DataMining_Business_Admin/lessons/Wk1_Admin_IntroToR/data")
 
 # Step 2 Load some libraries: Make R a customized piece of software
 options(scipen = 999)
@@ -43,6 +43,7 @@ summary(scenesDF)
 ggplot(scenesDF, aes(colour=name)) + 
   geom_segment(aes(x=start, xend=end,
                    y=id, yend=id),size=3) +
-  geom_text(data=scenesDF, aes(x=end, y=id,  label = name), size = 2.25,color = 'black', alpha = 0.5, check_overlap = TRUE) + 
+  geom_text(data=scenesDF, aes(x=end, y=id,  label = name), 
+            size = 2.25,color = 'black', alpha = 0.5, check_overlap = TRUE) + 
   theme_gdocs() + theme(legend.position="none")
 # End
