@@ -5,7 +5,7 @@
 
 
 ## Set the working directory
-setwd("/cloud/project/Lessons/F_Decision_Tree/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/F_KNN_Decision_Tree/data")
 options(scipen=999)
 
 ## Load the libraries

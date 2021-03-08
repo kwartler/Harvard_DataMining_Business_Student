@@ -3,7 +3,7 @@
 #' Purpose: Load data build a KNN Predictor
 
 ## Set the working directory
-setwd("/cloud/project/Lessons/E_LogReg_KNN/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/F_KNN_Decision_Tree/data")
 
 ## Load the libraries
 library(caret)
