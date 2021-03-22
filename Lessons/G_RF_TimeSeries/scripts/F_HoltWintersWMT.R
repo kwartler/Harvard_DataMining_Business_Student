@@ -6,7 +6,7 @@
 options(scipen=999)
 
 # Wd
-setwd("/cloud/project/Lessons/G_RF_TimeSeries/data")
+setwd("/Users/edwardkwartler/Desktop/Harvard_DataMining_Business_Student/Lessons/G_RF_TimeSeries/data")
 
 # library
 library(forecast)
@@ -27,6 +27,7 @@ stYr  <- year(wmt$date[1])
 stQtr <- quarter(wmt$date[1])
 st    <- c(stYr, stQtr)
 qtrTS <- ts(wmt$revMill, start = st, frequency = 4)
+qtrTS
 
 # Looks multiplicative
 plot(qtrTS)

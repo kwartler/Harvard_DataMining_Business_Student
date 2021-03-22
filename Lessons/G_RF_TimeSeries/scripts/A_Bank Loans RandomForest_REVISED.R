@@ -5,7 +5,7 @@
 
 
 ## Set the working directory
-setwd("/cloud/project/Lessons/G_RF_TimeSeries/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/G_RF_TimeSeries/data")
 
 # Options
 options(scipen=999)
@@ -21,6 +21,8 @@ library(vtreat)
 dat <- read.csv('bank-downSampled.csv')
 
 # EDA
+names(dat)
+head(dat)
 summary(dat)
 
 # To save time in class, we are only training on 20% of the data

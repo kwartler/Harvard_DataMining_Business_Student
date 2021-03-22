@@ -4,7 +4,7 @@
 #'
 
 # WD
-setwd("/cloud/project/Lessons/G_RF_TimeSeries/data")
+setwd("/Users/edwardkwartler/Desktop/Harvard_DataMining_Business_Student/Lessons/G_RF_TimeSeries/data")
 
 # libs
 library(dygraphs)

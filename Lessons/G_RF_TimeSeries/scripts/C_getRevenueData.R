@@ -44,6 +44,7 @@ st    <- c(stYr, stQtr)
 
 # Base R time series
 qtrTS2 <- ts(qtrDF$revBill, start = st, frequency = 4)
+qtrTS2
 
 # Basic ggplot2
 p <- ggplot(qtrDF, aes(x=date, y=revBill)) +

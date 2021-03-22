@@ -7,7 +7,7 @@
 options(scipen=999)
 
 # Wd
-setwd("/cloud/project/Lessons/G_RF_TimeSeries/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/G_RF_TimeSeries/data")
 
 # library
 library(forecast)
@@ -27,6 +27,7 @@ stYr  <- year(amzn$date[1])
 stQtr <- quarter(amzn$date[1])
 st    <- c(stYr, stQtr)
 qtrTS <- ts(amzn$revMill, start = st, frequency = 4)
+qtrTS
 
 # Now decompose the ts
 amznDecomp <- decompose(qtrTS)
@@ -37,7 +38,7 @@ plot(amznT <- amznDecomp$trend)
 # See the seasonal
 plot(amznS <- amznDecomp$seasonal)
 
-# See the random
+# See the random; does this really look random?!
 plot(amznR <- amznDecomp$random)
 
 # What is Amazon's revenue without the impact of the holiday shopping season?
@@ -60,31 +61,10 @@ ggplot(amznGG) +
   theme_bw() + theme(legend.position="none")
 
 # ggseas & ggplot which uses seas, is a form of ARIMA forecasting usually for improved results - captures additive nature
+# Does the "random" irregular look more like noise?
 ggsdc(amznGG, aes(x = x, y = y), method = "seas") + geom_line() + theme_bw()
+# Compare
 ggsdc(amznGG, aes(x = x, y = y), method = "decompose") + geom_line() + theme_bw()
 
-# Getting a forecast can be done in a naive manner from the components
-# Drift the trend component ahead
-driftF <- rwf(amznT, drift=T, h=4)
 
-# Naive Seasonal the seasonal component
-seasonalF <- snaive(amznS, h=4)
-
-# Then add them together (additive de-seasoning)
-naiveComponents  <- as.numeric(seasonalF$mean) + as.numeric(driftF$mean)
-
-revenue <- c(amzn$revMill, naiveComponents)
-newDF <- data.frame(indx = seq_along(revenue), 
-                    rev = revenue, 
-                    type = c(rep('actual', 89), rep('forecast',4)))
-tail(newDF, 8)
-
-# Naive Additive
-ggplot(newDF, aes(x=indx, y=rev)) + 
-  geom_line() +  
-  geom_point(aes(colour=type)) + 
-  theme_bw()
-
-# Zoom in
-ggplot(tail(newDF,12), aes(x=indx, y=rev)) + geom_line() +  geom_point(aes(colour=type)) + theme_bw()
 # End

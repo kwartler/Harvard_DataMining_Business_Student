@@ -33,6 +33,7 @@ stYr  <- year(qtrDF$date[1])
 stQtr <- quarter(qtrDF$date[1])
 st    <- c(stYr, stQtr)
 qtrTS <- ts(qtrDF$revMill, start = st, frequency = 4)
+qtrTS
 
 # Visualize
 dygraph(qtrTS, main = paste('Quarterly Rev for', stock, '1000M = 1B')) %>% 
@@ -40,6 +41,7 @@ dygraph(qtrTS, main = paste('Quarterly Rev for', stock, '1000M = 1B')) %>%
 
 # Naive -  Mean forecast 12 quarters ahead
 meanTS <- meanf(qtrTS, h=12) 
+dev.off()
 plot(meanTS)
 
 # Compare to actual mean avg
