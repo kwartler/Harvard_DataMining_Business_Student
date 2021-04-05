@@ -7,7 +7,7 @@
 #' 
 
 # Wd
-setwd("/cloud/project/Lessons/K_textMining_documentClassification/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/I_textMining_documentClassification/data")
 
 # library
 library(stringi)
