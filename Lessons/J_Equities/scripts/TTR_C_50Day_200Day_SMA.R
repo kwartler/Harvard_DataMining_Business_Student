@@ -66,5 +66,6 @@ ret         <- ROC(Cl(stk))*tradeSignal #Rate of Change TTR::ROC()
 
 # Review your return
 charts.PerformanceSummary(ret)
+plot(Cl(stk))
 
 # End

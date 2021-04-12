@@ -10,6 +10,7 @@ options(scipen=999)
 library(TTR)
 library(quantmod)
 library(PerformanceAnalytics)
+library(dygraphs)
 
 # Get Symbol
 stk <- getSymbols("IVZ", auto.assign = F) 

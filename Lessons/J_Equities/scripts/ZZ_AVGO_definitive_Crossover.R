@@ -23,6 +23,6 @@ names(df) <- c('AVGOlose', 'sma50', 'sma200')
 
 df$Lag.1 <- Lag(ifelse(df$sma50 > df$sma200, 1, 0), k = 1) 
 
-plot(tail(df$AVGOlose,150), type = 'l')
-lines(tail(df$sma50, 150), col = 'blue')
-lines(tail(df$sma200, 150), col = 'red')
+plot(df$AVGOlose, type = 'l')
+lines(df$sma50, col = 'blue')
+lines(df$sma200, col = 'red')

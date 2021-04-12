@@ -15,7 +15,7 @@ library(htmltools)
 
 # Get Chipotle
 getSymbols("CMG") #"CMG_1_TTR_D.rds"
-CMG <- CMG['2018-01-01/2018-10-26']
+CMG <- CMG['2018-01-01/2019-01-01']
 
 # Manual MACD
 # FAST MA
