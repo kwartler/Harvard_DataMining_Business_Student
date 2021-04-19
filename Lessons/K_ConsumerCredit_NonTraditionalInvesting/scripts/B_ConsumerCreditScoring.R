@@ -15,10 +15,10 @@ library(rbokeh)
 library(MLmetrics)
 
 # Data Directory
-setwd("~/Documents/Harvard_DataMining_Business_Student/Lessons/I_ConsumerCredit_NonTraditionalInvesting/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/K_ConsumerCredit_NonTraditionalInvesting/data")
 
 # Custom Function
-source('~/Documents/Harvard_DataMining_Business_Student/Lessons/I_ConsumerCredit_NonTraditionalInvesting/scripts/z_trimTrain.R')
+source('~/Desktop/Harvard_DataMining_Business_Student/Lessons/K_ConsumerCredit_NonTraditionalInvesting/scripts/z_trimTrain.R')
 
 # Training Data
 originalNotes <- read.csv("20K_sampleLoans.csv")

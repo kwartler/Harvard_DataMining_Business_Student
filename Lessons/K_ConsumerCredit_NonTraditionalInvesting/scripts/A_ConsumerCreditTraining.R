@@ -4,14 +4,14 @@
 #' 
 
 # WD
-setwd("~/Documents/Harvard_DataMining_Business_Student/Lessons/I_ConsumerCredit_NonTraditionalInvesting/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/K_ConsumerCredit_NonTraditionalInvesting/data")
 
 # Trimming Linear Model Function
-source('~/Documents/Harvard_DataMining_Business_Student/Lessons/I_ConsumerCredit_NonTraditionalInvesting/scripts/z_trimTrain.R')
+source('~/Desktop/Harvard_DataMining_Business_Student/Lessons/K_ConsumerCredit_NonTraditionalInvesting/scripts/z_trimTrain.R')
 
 # Libraries
-library(rpart)
-library(randomForest)
+#library(rpart) # you can try any of the methods from our class to improve performance
+#library(randomForest)
 library(dplyr)
 library(caret)
 library(e1071)
@@ -84,6 +84,27 @@ newPreds <- predict(fit3, df)
 newPreds <- predict(fit3, validationDF)
 
 table(newPreds, validationDF$y)
+
+# Let's explore pred=1, actual=0 because equal accuracy isn't appropriate
+# Organize
+losingMoney <- data.frame( probs = predict(fit3, validationDF, type = 'prob'),
+                           actuals = validationDF$y)
+head(losingMoney) 
+
+# Subset to preds =1, and actual = 0
+chk <- subset(losingMoney, losingMoney$probs.1>=0.5 & actuals == 0)
+nrow(chk)
+table(newPreds, validationDF$y)
+
+# What is the probability distribution of these misclassifications
+hist(chk$probs.1)
+summary(chk$probs.1)
+
+# Depending on the amount of your portfolio and what we learned you may want to increase the cutoff to optimize payoff not overall accuracy
+losingMoney$highCutoff <- ifelse(losingMoney$probs.1 > 0.81,1,0)
+table(losingMoney$highCutoff, validationDF$y) #638 is now 160, much less chance of getting it wrong
+sum(diag(table(losingMoney$highCutoff, validationDF$y))) / 
+  sum(table(losingMoney$highCutoff, validationDF$y))
 
 # Save the model
 # In R GLM model objects are huge, saving a lot of extra info.  This gets rid of a lot of it but retains the ability to make predictions.

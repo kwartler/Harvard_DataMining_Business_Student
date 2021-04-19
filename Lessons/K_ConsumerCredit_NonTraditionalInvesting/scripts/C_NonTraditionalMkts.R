@@ -8,12 +8,12 @@ library(triangle)
 library(dplyr)
 
 # Load custom functions
-source('~/Documents/Harvard_DataMining_Business_Student/Lessons/I_ConsumerCredit_NonTraditionalInvesting/scripts/Z_cardValues.R')
-source('~/Documents/Harvard_DataMining_Business_Student/Lessons/I_ConsumerCredit_NonTraditionalInvesting/scripts/Z_crackPack.R')
-source('~/Documents/Harvard_DataMining_Business_Student/Lessons/I_ConsumerCredit_NonTraditionalInvesting/scripts/Z_openBox.R')
+source('~/Desktop/Harvard_DataMining_Business_Student/Lessons/K_ConsumerCredit_NonTraditionalInvesting/scripts/Z_cardValues.R')
+source('~/Desktop/Harvard_DataMining_Business_Student/Lessons/K_ConsumerCredit_NonTraditionalInvesting/scripts/Z_crackPack.R')
+source('~/Desktop/Harvard_DataMining_Business_Student/Lessons/K_ConsumerCredit_NonTraditionalInvesting/scripts/Z_openBox.R')
 
 # Setwd
-setwd("~/Documents/Harvard_DataMining_Business_Student/Lessons/I_ConsumerCredit_NonTraditionalInvesting/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/K_ConsumerCredit_NonTraditionalInvesting/data")
 
 # We will use a CSV but...
 # Use this URL example to get a recent price list for a set
@@ -91,7 +91,7 @@ text(boxPrice,10,'cost', col='red', pos=1,srt=90, cex=1)
 abline(v=boxAVG,col="blue")
 text(boxAVG,10,'AvgReturn',col='blue', pos=1,srt=90, cex=1)
 
-# Percent of boxes below cost
+# Percent of boxes below cost; usually between 0-2.5%
 length(subset(indBoxes[,2],indBoxes[,2]<=boxPrice)) / nBox
 
 # End
