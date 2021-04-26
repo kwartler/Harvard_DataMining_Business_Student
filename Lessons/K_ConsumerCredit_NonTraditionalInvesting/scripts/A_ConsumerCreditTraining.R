@@ -101,7 +101,7 @@ hist(chk$probs.1)
 summary(chk$probs.1)
 
 # Depending on the amount of your portfolio and what we learned you may want to increase the cutoff to optimize payoff not overall accuracy
-losingMoney$highCutoff <- ifelse(losingMoney$probs.1 > 0.81,1,0)
+losingMoney$highCutoff <- ifelse(losingMoney$probs.1 > 0.999,1,0)
 table(losingMoney$highCutoff, validationDF$y) #638 is now 160, much less chance of getting it wrong
 sum(diag(table(losingMoney$highCutoff, validationDF$y))) / 
   sum(table(losingMoney$highCutoff, validationDF$y))
