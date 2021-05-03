@@ -16,7 +16,7 @@ library(DT)
 setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/L_APIs_webscraping_dashboarding/data")
 
 # Identify the file in the directory
-searchPattern <- 'Wk1'
+searchPattern <- 'Wk4'
 pth <- list.files(pattern = searchPattern, full.names = T)
 pth <- pth[grep('*.csv', pth)]
 df  <- read.csv(pth)

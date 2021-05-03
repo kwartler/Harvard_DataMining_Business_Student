@@ -18,7 +18,7 @@ library(ggplot2)
 # Get API data
 historicalURL <- 'https://projects.fivethirtyeight.com/trump-approval-ratings/historical-approval.json'
 trumpURL      <- 'https://projects.fivethirtyeight.com/trump-approval-ratings/approval.json'
-tableURL      <-  'https://projects.fivethirtyeight.com/trump-approval-ratings/polls.json'
+tableURL      <- 'https://projects.fivethirtyeight.com/trump-approval-ratings/polls.json'
 
 approvalRatings <- fromJSON(historicalURL)
 trumpApproval   <- fromJSON(trumpURL)

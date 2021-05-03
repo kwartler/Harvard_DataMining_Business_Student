@@ -13,7 +13,7 @@ library(recommenderlab)
 library(reshape2)
 
 # wd
-setwd("/cloud/project/Lessons/M_Ethics_RecoEngine/data")
+setwd("/Users/edwardkwartler/Desktop/Harvard_DataMining_Business_Student/Lessons/M_RecoEngine_Ethics/data")
 
 # Raw Data In & EDA
 songListens <- read_fst('10000Songs.fst')

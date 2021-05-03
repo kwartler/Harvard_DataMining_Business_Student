@@ -6,7 +6,7 @@
 library(arules)
 
 # WD
-setwd("/cloud/project/Lessons/M_Ethics_RecoEngine/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/M_RecoEngine_Ethics/data")
 
 # Data
 faceDF <- read.csv("Faceplate.csv")
@@ -88,7 +88,7 @@ head(booksApr, 10)
 # Antecedent: If someone buys children's, cooking and geography books, 
 # Consequent: then suggest a youth book.
 # support (% of time the transaction appeared): 253 / 4000 = .06325
-# confidence (when the transaction appeared how many times did the consequent appear): .57.7% of the time {ChildBks,CookBks,GeogBks} transactions also had a youth book
+# confidence (when the transaction appeared how many times did the consequent appear): 57.7% of the time {ChildBks,CookBks,GeogBks} transactions also had a youth book
 # lift (confidence/(benchmark confidence): 2.424452
 # 0.5776256 / x = 2.424452
 # 0.5776256  = 2.424452x
