@@ -1,10 +1,10 @@
 #' Author: Ted Kwartler
-#' Data: 5-3-2020
+#' Data: 5-10-2021
 #' Purpose: Diffusion Modeling for Forecasting 
 #' 
 
 # Set the working directory
-setwd("/cloud/project/Lessons/N_Optional_GrowthModels/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/N_Optional_GrowthModels/data")
 options(scipen=999)
 
 # libs
@@ -12,6 +12,7 @@ library(diffusion)
 
 # Data
 hdTV <- read.csv("HDTV_shipments.csv")
+hdTV
 
 # Biz Understanding 
 #285m US TVs
@@ -29,17 +30,16 @@ hdTVpreds <- predict(fitBass, h = (26-nrow(hdTV)))
 
 # Examine
 hdTVpreds$frc
+hdTV
 
-# Organize
-finalDF <- data.frame(yr=1999:2025, 
-                      cumulativeSales = c(hdTV[,3], hdTVpreds$frc[,1]),
-                      totalSales      = c(hdTV[,2], hdTVpreds$frc[,2]))
+# Visuals
+plot(c(hdTV$HDTV.Shipments, hdTVpreds$frc[,2]), type = 'l', 
+     main = 'Annual Shipments Bass')
+points(hdTV$HDTV.Shipments, col = 'red')
 
-finalDF
-
-# Plot with the 4 known values and a green line for the modeled behavior
-plot(finalDF$cumulativeSales, type ='l', col='darkgreen')
-points(finalDF$cumulativeSales[1:4], col='red')
+plot(c(hdTV$Cumulative.HDTV.Shipments, hdTVpreds$frc[,1]), type = 'l', 
+     main = 'Total Cumulative Market (saturation) Bass')
+points(hdTV$Cumulative.HDTV.Shipments, col = 'red')
 
 # Gompertz
 #For the Gompertz curve, vector w needs to be in the form of ("a", "b", "m"). Where "a" is the x-axis displacement coefficient, "b" determines the growth rate and "m" sets, similarly to Bass model, the market potential (saturation point).
@@ -53,11 +53,16 @@ hdTVgomPreds <- predict(fitGomp, h = (26-nrow(hdTV)))
 # Examine
 hdTVgomPreds$frc
 
-# Organize
-gompDF <- data.frame(yr=1999:2025, 
-                      cumulativeSales = c(hdTV[,3], hdTVgomPreds$frc[,1]))
+# Visuals
+plot(c(hdTV$HDTV.Shipments, hdTVgomPreds$frc[,2]), type = 'l', 
+     main = 'Annual Shipments Gompertz')
+points(hdTV$HDTV.Shipments, col = 'red')
 
-# Plot not as good a fit but the high point is similar so there is expected variance in adoption given some mkt saturation point.  Planning would probably be something in between unless there is a definate reason to pick one over the other.
-lines(gompDF$cumulativeSales, col='blue')
+plot(c(hdTV$Cumulative.HDTV.Shipments, hdTVgomPreds$frc[,1]), type = 'l', 
+     main = 'Total Cumulative Market (saturation) Gompertz')
+points(hdTV$Cumulative.HDTV.Shipments, col = 'red')
+
+# Plot not as good a fit but the high point is similar so there is expected variance in adoption given some mkt saturation point.  Planning would probably be something in between unless there is a definite reason to pick one over the other.
+
 
 # End

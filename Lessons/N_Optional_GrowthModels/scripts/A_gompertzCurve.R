@@ -1,15 +1,15 @@
 #' Author: Ted Kwartler
-#' Data: 5-3-2020
+#' Data: May 10-2020
 #' Purpose: Gompertz Curve Examples
 #' 
 
 # Set the working directory
-setwd("/cloud/project/Lessons/N_Optional_GrowthModels/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/N_Optional_GrowthModels/data")
 options(scipen=999)
 
 # libs
 library(growthmodels)
-library(easynls)
+library(easynls) #easy non linear modeling
 
 # Get some data
 colorTV <- read.csv('colorTV_adoption.csv')
@@ -54,7 +54,7 @@ plot(amzn$revB, type = 'l')
 points(amznGrowth, col='red')
 
 ## Alpha is the  asymptote or upper limit
-# since amzn revenue doesn't appear to be slowing down it is quite high 
+# since amzn revenue doesn't appear to be slowing down it is quite high; obviously marco-factors like the pandemic change this type of forcasting so rolling forward and refitting can be useful.
 model3$Parameters[1,]
 
 
