@@ -1,10 +1,10 @@
 #' Title: A_demo_script.R
 #' Purpose: Get some R time!
 #' Author: TK
-#' Date: 1-25-2020
+#' Date: Aug 30 2021
 
 # Step 1 Set the working directory: where's the fruit?
-setwd("~/Documents/Harvard_DataMining_Business_Admin/lessons/Wk1_Admin_IntroToR/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/A_IntroToR/data")
 
 # Step 2 Load some libraries: Make R a customized piece of software
 options(scipen = 999)
