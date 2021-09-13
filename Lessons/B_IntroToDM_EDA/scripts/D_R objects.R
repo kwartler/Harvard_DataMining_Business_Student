@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Date: 9-11-2019
+#' Date: 9-13-2021
 #' Purpose: R Data Types
 #' 
 
@@ -53,7 +53,7 @@ listA[[3]][1]
 # Get the 2nd element, second column
 listA[[2]][,2]
 
-# Get the 2nd element, 1sr row
+# Get the 2nd element, 1st row
 listA[[2]][1,]
 
 # Its a best practice to name each element as the list complexity grows

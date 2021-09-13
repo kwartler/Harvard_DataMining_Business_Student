@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Data: 9-11-2020
+#' Data: 9-13-2021
 #' Purpose: Load data, explore it and visualize it
 
 ## Set the working directory
@@ -96,7 +96,7 @@ ggsave("character_scenes.pdf")
 ggsave("character_scenes.png")
 ggsave("character_scenes.jpg")
 
-# ggplot2: Nonsense result but no comment ggplot w/geom_point
+# ggplot2: Nonsense result but shows example ggplot w/geom_point
 p <- ggplot(scenes, aes(colour = defined.scenes)) +
   geom_point(aes(x = start, 
                  y = end), size=3) + 

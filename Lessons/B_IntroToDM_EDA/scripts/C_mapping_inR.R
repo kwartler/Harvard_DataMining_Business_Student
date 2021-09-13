@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Date: 9-11-2020
+#' Date: 9-13-2021
 #' Purpose: Load geospatial data, explore it and visualize it
 
 ## Set the working directory
@@ -21,10 +21,12 @@ NEtowers <- cellTowers[ cellTowers$state %in% c("MA","ME", "VT", "NH"), ]
 
 # A basic map library
 map()
+dev.off() #sometimes the graphics driver needs to be reset!
 map('usa')	# national boundaries
 map("state", interior = FALSE)
+dev.off() 
 map("state", interior = T)
-dev.off() #sometimes the graphics driver needs to be reset!
+dev.off() 
 map('county', 'new jersey') # reminder clear graphics device
 dev.off() #sometimes the graphics driver needs to be reset!
 map('state', region = c('mass', 'maine', 'vermont', 'new hampshire'))
@@ -74,10 +76,11 @@ ma
 ma + geom_point(data=onlyMA, aes(x=lon, y=lat, group=1), 
              color='red', alpha=0.15)
 
-# Notice how the original layer has no dots because we didn't declar an object above
+# Notice how the original layer has no dots because we didn't declare an layer when making `ma`
 ma
 
 # Leaflet layers using %>% pipe
+#https://techcrunch.com/2017/01/19/in-the-future-ai-could-also-mean-auto-insurance/
 webMap <- leaflet(data=onlyMA) %>%
   addTiles() %>%
   addMarkers( popup = paste("Owner:", onlyMA$Owner, "<br>",

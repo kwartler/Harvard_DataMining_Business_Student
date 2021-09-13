@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Date: 9-11-2020
+#' Date: 9-13-2021
 #' Purpose: Cereal EDA
 #' 
 
@@ -26,7 +26,7 @@ sapply(     , class)
 # Look at the top 6 rows
 head(   )
 
-# How many differnt brand names?
+# How many different brand names?
 nlevels( as.factor(      ))
 # Or
 length(unique(     ))
@@ -45,10 +45,10 @@ unique(     )
 
 # Avg calories?
 mean(     )
+median(     )
 
 # Number missing values?
 colSums(is.na(     ))
-
 
 # Sampling 5 row example (nonsense w/data this size but good to know how):
 set.seed(123)
@@ -58,8 +58,8 @@ cereal[idx, ]
 # Sample 10 rows
 # What is the first name with seed 1234
 set.seed(    )
-idx <- sample(1:nrow(_____   ),   1)
-     [    , ]
+idx <- sample(1:nrow(_____   ),   )
+-------[------, ]
 
 # DataExplorer
 plot_str(cereal)
