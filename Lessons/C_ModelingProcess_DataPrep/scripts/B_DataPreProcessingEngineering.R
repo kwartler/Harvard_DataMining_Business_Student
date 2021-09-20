@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Date: 9-18-2019
+#' Date: 9-20-21
 #' Purpose: Fundraising PreProcessing
 
 # Setwd
@@ -25,7 +25,7 @@ successClass        <- 'Yes'
 # Automated variable processing
 # for **categorical** outcomes 
 # i. e.will the prospective donor give Y/N
-# DATA, NAMES OF INFORMATIVE VARS, RESPONSE VAR, SUCCESS CLASS
+# inputs: DATA, NAMES OF INFORMATIVE VARS, RESPONSE VAR, SUCCESS CLASS
 plan <- designTreatmentsC(donors, 
                           informativeFeatures,
                           targetVariable, 
@@ -70,10 +70,10 @@ head(thirdPartyData)
 
 # Perform a join to the existing data
 # Bring new data to the 3120 donors
-leftData <- left_join(donors, thirdPartyData) 
+leftData <- left_join(donors, thirdPartyData, by = c("uniqueID"))
 
 # Bring donors to the new data points
-rightData <- right_join(donors, thirdPartyData) 
+rightData <- right_join(donors, thirdPartyData, by = c("uniqueID"))
 rightData[c(3119:3122),] #NA automatically filled in
 
 # Find records in common
