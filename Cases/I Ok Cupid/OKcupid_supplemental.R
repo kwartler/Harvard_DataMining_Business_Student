@@ -14,7 +14,7 @@ setwd()
 dir()
 
 # Get the okcupid data as `profiles`
-data('profiles')
+profiles <- read.csv('profiles.csv')
 latlon<- read.csv('LatLon.csv')
 
 ##### I would do some basic EDA and plotting of individual vars then move to more complex interactions
