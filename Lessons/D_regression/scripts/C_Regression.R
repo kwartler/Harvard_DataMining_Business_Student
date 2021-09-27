@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Date: 9-27-20
+#' Date: 9-27-2021
 #' Purpose: Regressions
 #' 
 
@@ -7,7 +7,7 @@
 options(scipen = 999)
 
 # Setwd
-setwd("/cloud/project/Lessons/D_regression/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/D_regression/data")
 
 # Data
 houses <-read.csv('BostonHousing.csv')
@@ -51,7 +51,7 @@ fit2
 
 # Add the function line
 abline(a = coefficients(fit2)[1], #intercept
-       b = coefficients(fit2)[2] , col='blue') #slope
+       b = coefficients(fit2)[2] , col='blue', lwd = 5) #slope
 
 # Get some predictions on the training set
 manualPreds <- trainSet$RM*1000 #slope is 1 so beta =1 X the actual value

@@ -9,7 +9,7 @@ options(scipen=999)
 library(vtreat)
 
 # SetWD
-setwd("/cloud/project/lessons/4_Feb20_Regression_LogRegression/wk4_data")
+setwd("/Users/edwardkwartler/Desktop/Harvard_DataMining_Business_Student/Lessons/D_regression/data")
 
 # Dat
 cars <- read.csv('oldCar.csv')
@@ -31,7 +31,7 @@ treatedTest  <- prepare(dataPlan, testSet)
 fit <- lm(Price ~ ., treatedTrain)
 
 # Step
-backFit <- step(fit,direction = 'backward')
+backFit <- step(fit,direction = 'backward', trace = 5)
 summary(backFit)
 
 

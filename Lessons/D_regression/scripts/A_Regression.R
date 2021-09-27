@@ -1,9 +1,10 @@
 #' Author: Ted Kwartler
-#' Date: 9-24-2018
+#' Date: 9-27-2021
 #' Purpose: Build a regression model
 #' 
 
 # libs
+library(tidyverse)
 library(ggplot2)
 library(dplyr)
 

@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Date: 9-27-2020
+#' Date: 9-27-2021
 #' Purpose: OldCar Toyota Corolla Regression
 #' 
 
@@ -12,7 +12,7 @@ library(ModelMetrics)
 options(scipen=999)
 
 # SetWD
-setwd("/cloud/project/Lessons/D_regression/data")
+setwd("/Users/edwardkwartler/Desktop/Harvard_DataMining_Business_Student/Lessons/D_regression/data")
 
 # Dat
 cars <- read.csv('oldCar.csv')
@@ -65,7 +65,7 @@ summary(fit)
 # Drop uninformative vars
 drops                 <- c('CC', 'Automatic', 'Met_Color','Fuel_Type_catN',
                            'Fuel_Type_catD', 'Fuel_Type_lev_x_Diesel',
-                           'Fuel_Type_lev_x_Petro')
+                           'Fuel_Type_lev_x_Petrol')
 treatedTrainParsimony <- treatedTrain[, !(names(treatedTrain) %in% drops)]
 
 fit2 <- lm(Price ~ ., treatedTrainParsimony)
