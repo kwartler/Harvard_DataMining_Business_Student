@@ -50,7 +50,7 @@ ___(____)
 # 10. Find the 347th diamond in the data set using row indexing.  Copy paste the single row below.
 
 
-# 11. Create a barplot of the diamonds' cut and name it barplot.jpg
+# 11. Create a barplot of the diamonds' cut column.  Using jpeg() as the function create a file "barplot.jpg" then create the bar plot so it is saved to disk.
 
 
 
