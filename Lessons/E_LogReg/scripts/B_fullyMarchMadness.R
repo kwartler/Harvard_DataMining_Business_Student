@@ -10,7 +10,7 @@ library(pROC)
 library(ggplot2)
 
 # wd
-setwd("/cloud/project/Lessons/E_LogReg_KNN/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/E_LogReg/data")
 
 # Data
 bball <- read.csv('ncaa.csv')
@@ -46,6 +46,7 @@ length(coefficients(bestFit))
 
 # Get predictions
 teamPreds <- predict(bestFit,  treatedX, type='response')
+tail(teamPreds)
 
 # Classify 
 cutoff      <- 0.5
@@ -53,6 +54,8 @@ teamClasses <- ifelse(teamPreds >= cutoff, 1,0)
 
 # Organize w/Actual
 results <- data.frame(actual  = bball$R1.Class.1.win,
+                      team    = bball$Name,
+                      seed    = bball$Seeds,
                       classes = teamClasses,
                       probs   = teamPreds)
 head(results)
@@ -79,5 +82,27 @@ plot(ROCobj)
 
 # AUC
 AUC(results$actual,results$classes)
+
+# Increase the cutoff to improve balanced accuracy
+newCutoff <- .55
+newClasses <- ifelse(teamPreds >= newCutoff, 1,0)
+(confMat <- ConfusionMatrix(newClasses, results$actual))
+Accuracy(newClasses, results$actual)
+
+# Something more absurd; remember in games 50% is a coin flip
+absurdCutoff <- .95
+absurdClasses <- ifelse(teamPreds >= absurdCutoff, 1,0)
+(confMat <- ConfusionMatrix(absurdClasses, results$actual))
+Accuracy(absurdClasses, results$actual)
+ROCobj <- roc(absurdClasses, results$actual)
+plot(ROCobj)
+
+absurdCutoff <- .001
+absurdClasses <- ifelse(teamPreds >= absurdCutoff, 1,0)
+(confMat <- ConfusionMatrix(absurdClasses, results$actual))
+Accuracy(absurdClasses, results$actual)
+ROCobj <- roc(absurdClasses, results$actual)
+plot(ROCobj)
+
 
 # End

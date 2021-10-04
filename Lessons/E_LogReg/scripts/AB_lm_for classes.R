@@ -6,9 +6,10 @@
 # libs
 library(ggplot2)
 library(dplyr)
+library(tidyverse)
 
 # wd
-setwd("/cloud/project/Lessons/E_LogReg_KNN/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/E_LogReg/data")
 
 # Data
 data('diamonds')
