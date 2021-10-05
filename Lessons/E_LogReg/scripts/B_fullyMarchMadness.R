@@ -15,7 +15,7 @@ setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/E_LogReg/data")
 # Data
 bball <- read.csv('ncaa.csv')
 
-# Idenfity the informative and target
+# Identify the informative and target
 names(bball)
 targetVar       <- names(bball)[51]
 informativeVars <- names(bball)[3:47]
@@ -35,7 +35,7 @@ summary(fit)
 # Backward Variable selection to reduce chances of multi-colinearity
 # See chap6 for an explanation
 # Takes 5-10m  to run so load a pre-saved copy that I already made 
-#bestFit <- step(fit, direction='backward')
+bestFit <- step(fit, direction='backward')
 #saveRDS(bestFit, 'bestFit.rds')
 bestFit <- readRDS('bestFit.rds')
 summary(bestFit)
@@ -72,7 +72,7 @@ sum(diag(confMat)) / sum(confMat)
 Accuracy(results$classes, results$actual)
 
 # Visually how well did we separate our classes?
-ggplot(results, aes(x=teamPreds, color=as.factor(actual))) +
+ggplot(results, aes(x=probs, color=as.factor(actual))) +
   geom_density() + 
   geom_vline(aes(xintercept = cutoff), color = 'green')
 
