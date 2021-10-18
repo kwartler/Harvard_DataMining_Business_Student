@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Data: Oct 19 2020
+#' Data: Oct 17, 2021
 #' Purpose: Compare 2 algos DT & KNN
 #' https://archive.ics.uci.edu/ml/datasets/bank+marketing
 
@@ -67,8 +67,8 @@ trainPredsKNN  <- predict(knnFit, treatedTrain)
 trainingResults <- data.frame(tree   = trainPredsTREE,
                               knn    = trainPredsKNN,
                               actual = treatedTrain$y)
-
-head(trainingResults, 6)
+# Examine a section
+trainingResults[84:90,]
 
 # Conf Matrices Accuracy from the MLmetrics Library
 table(trainingResults$tree,trainingResults$actual)

@@ -30,7 +30,7 @@ knnFit <- train(Absenteeism.time.in.hours ~ .,
                 data = trainDat, 
                 method = "knn", 
                 preProcess = c("center","scale"), 
-                tuneLength = 10)
+                tuneLength = 15)
 
 # Evaluation
 knnFit

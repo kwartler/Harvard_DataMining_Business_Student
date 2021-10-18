@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Data: 2-27-2019
+#' Data: Oct 17, 2021
 #' Purpose: Load data build a KNN classifier
 
 ## Set the working directory
@@ -38,6 +38,7 @@ dat$ID <- NULL
 
 #  Tally reason codes
 table(dat$Reason.for.absence)
+prop.table(table(dat$Reason.for.absence))
 
 # Data partitioning
 set.seed(1234)
@@ -45,8 +46,8 @@ splitPercent <- round(nrow(dat) %*% .9)
 totalRecords <- 1:nrow(dat)
 idx          <- sample(totalRecords, splitPercent)
 
-trainDat <- dat[idx,]
-testDat  <- dat[-idx,]
+trainDat <- dat[idx,-c(1,21)]
+testDat  <- dat[-idx,-c(1,21)]
 
 # The caret package is robust and lets you apply the needed scaling during the fit
 knnFit <- train(Reason.for.absence ~ ., #similar formula to lm
@@ -89,15 +90,15 @@ names(trainProbs)[topProb]
 # Is this the same as predicting the classes directly?
 head(as.character(trainClasses))
 
-# And now the clunky knn book version!  Used if your k is less than 5 or needs to be specified.  From the class library
+# And now the clunky knn book version!  Used if your k is less than 5 or needs to be specified vs the length parameter.  This is needed for a book exercise
 y                           <- as.factor(trainDat$Reason.for.absence)
 trainDat$Reason.for.absence <- NULL
 testDat$Reason.for.absence  <- NULL
 results                     <- knn(trainDat, testDat, 
                                    cl = y , k = 3, prob=F)
 head(results)
-#results                     <- knn(trainDat, testDat, 
-#                                   cl = y , k = 3, prob=TRUE)
-#head(attributes(results)$prob)
+results                     <- knn(trainDat, testDat, 
+                                   cl = y , k = 3, prob=TRUE)
+head(attributes(results)$prob)
 
 # End

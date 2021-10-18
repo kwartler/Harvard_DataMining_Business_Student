@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Data: Oct 19 2020
+#' Data: Oct 17, 2021 
 #' Purpose: Load data build a decision tree
 #' https://archive.ics.uci.edu/ml/datasets/bank+marketing
 
@@ -15,10 +15,6 @@ library(rpart.plot) #visualizing
 ## Bring in some data
 dat <- read.csv('bank.csv', sep=';') 
 
-## EDA
-summary(dat)
-head(dat)
-
 # Partitioning
 splitPercent <- round(nrow(dat) %*% .9)
 totalRecords <- 1:nrow(dat)
@@ -27,6 +23,10 @@ idx <- sample(totalRecords, splitPercent)
 
 trainDat <- dat[idx,]
 testDat  <- dat[-idx,]
+
+## EDA
+summary(trainDat)
+head(testDat)
 
 # Force a full tree (override default parameters)
 overFit <- rpart(as.factor(y) ~ ., 
@@ -78,10 +78,6 @@ rm(list=ls())
 ##########
 dat <- read.csv('bank-full_v2.csv') # now a bit more data to approximate real scenario 
 
-## EDA
-summary(dat)
-head(dat)
-
 
 # To save time in class, we are only training on 20% of the data
 splitPercent <- round(nrow(dat) %*% .2)
@@ -91,6 +87,13 @@ idx <- sample(totalRecords, splitPercent)
 
 trainDat <- dat[idx,]
 testDat  <- dat[-idx,]
+
+
+## EDA
+summary(trainDat)
+head(trainDat)
+
+# No modification needed in this cleaned up data set.  One could engineer some interactions though.
 
 # Fit a decision tree with caret
 set.seed(1234)
