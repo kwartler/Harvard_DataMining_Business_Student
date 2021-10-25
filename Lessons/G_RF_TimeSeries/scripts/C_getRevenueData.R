@@ -11,6 +11,7 @@ library(jsonlite)
 library(lubridate)
 library(xts)
 library(ggplot2)
+library(ggthemes)
 
 # Choose a single stock ticker
 stock <-'AMZN' #CVS 
@@ -49,7 +50,9 @@ qtrTS2
 # Basic ggplot2
 p <- ggplot(qtrDF, aes(x=date, y=revBill)) +
   geom_line() + 
-  xlab("")
+  xlab("") + 
+  theme_hc() + 
+  ggtitle('amzn qtr rev')
 p
 
 # End

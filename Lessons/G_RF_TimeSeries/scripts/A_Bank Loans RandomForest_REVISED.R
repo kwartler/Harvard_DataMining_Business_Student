@@ -28,7 +28,7 @@ summary(dat)
 # To save time in class, we are only training on 20% of the data
 splitPercent <- round(nrow(dat) %*% .2)
 totalRecords <- 1:nrow(dat)
-set.seed(1234)
+set.seed(2021)
 idx <- sample(totalRecords, splitPercent)
 
 trainDat <- dat[idx,]
@@ -52,7 +52,7 @@ downSampleFit <- train(Class ~ .,
                       method = "rf",
                       verbose = FALSE,
                       ntree = 3,
-                      tuneGrid = data.frame(mtry = 1))
+                      tuneGrid = data.frame(mtry = 1)) #num of vars used in each tree
 downSampleFit
 
 predProbs   <- predict(downSampleFit,  
@@ -98,7 +98,7 @@ legend("top", colnames(moreVoters$err.rate),col=1:4,cex=0.8,fill=1:4)
 someVoters <- randomForest(as.factor(Class) ~ .,
                            data = treatedTrain, 
                            ntree=100,
-                           mtyr = 1)
+                           mtry = 1)
 
 # Confusion Matrix
 trainClass <- predict(someVoters, treatedTrain)
