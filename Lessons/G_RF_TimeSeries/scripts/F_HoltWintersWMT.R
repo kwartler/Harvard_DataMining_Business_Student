@@ -6,7 +6,7 @@
 options(scipen=999)
 
 # Wd
-setwd("/Users/edwardkwartler/Desktop/Harvard_DataMining_Business_Student/Lessons/G_RF_TimeSeries/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/G_RF_TimeSeries/data")
 
 # library
 library(forecast)
