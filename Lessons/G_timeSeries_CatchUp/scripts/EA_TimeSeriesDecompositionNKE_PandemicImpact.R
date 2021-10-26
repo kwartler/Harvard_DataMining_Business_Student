@@ -1,6 +1,6 @@
 #' Author: Ted Kwartler
-#' Data: 10-26-2020
-#' Purpose: Naive Forecast for Nike
+#' Data: 10-25-2021
+#' Purpose: Decompose the impact of the pandemic
 #' 
 
 # Options
@@ -52,11 +52,20 @@ plot(nkeS <- nkeDecomp$seasonal)
 # See the random; does this really look random?!
 plot(nkeR <- nkeDecomp$random)
 
+# Trend+Seasonal and actual
+# turn the ts back into a DF
+nkeDF <- tsdf(qtrTS)
+ggplot(nkeDF) +
+  geom_line(aes(x=x, y=y), colour='black') +
+  geom_line(aes(x=x, y=(nkeS+nkeT)), colour ='red') +
+  theme_bw() + theme(legend.position="none")
 
-# 
-nkeS + nkeT #9423.7842 Expected 2020 Q2
-qtrTS - (nkeS + nkeT)   #Actual outcome - Expected in that quarter -3110.784159 $3B
+nkeDF$seasonal <- nkeS
+nkeDF$trend    <- nkeT
+nkeDF$SeasonalTrendDecompose <- nkeS + nkeT
+badQtr <- subset(nkeDF, nkeDF$x==2020.25 )
 
+# Impact to Rev from Covid from seasonally adjusted forecast
+badQtr$seasonal + badQtr$trend #9423.7842 Expected 2020 Q2
+badQtr$y - (badQtr$seasonal + badQtr$trend)#$3.110784B, in Q2 the seasonality is ~-25
 # End
-
-

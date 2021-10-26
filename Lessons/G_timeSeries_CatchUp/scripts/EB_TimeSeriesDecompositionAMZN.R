@@ -7,7 +7,7 @@
 options(scipen=999)
 
 # Wd
-setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/G_RF_TimeSeries/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/G_timeSeries_CatchUp/data")
 
 # library
 library(forecast)
@@ -46,25 +46,25 @@ noSeasons <- qtrTS - amznS
 plot(noSeasons)
 
 # turn the ts back into a DF
-amznGG <- tsdf(qtrTS)
+amznDF <- tsdf(qtrTS)
 
 # Trend and actual
-ggplot(amznGG) +
+ggplot(amznDF) +
   geom_line(aes(x=x, y=y), colour='black') +
   geom_line(aes(x=x, y=amznT), colour='blue') +
   theme_bw() + theme(legend.position="none")
 
 # Trend+Seasonal and actual
-ggplot(amznGG) +
+ggplot(amznDF) +
   geom_line(aes(x=x, y=y), colour='black') +
   geom_line(aes(x=x, y=(amznS+amznT)), colour ='red') +
   theme_bw() + theme(legend.position="none")
 
 # ggseas & ggplot which uses seas, is a form of ARIMA forecasting usually for improved results - captures additive nature
 # Does the "random" irregular look more like noise?
-ggsdc(amznGG, aes(x = x, y = y), method = "seas") + geom_line() + theme_bw()
+ggsdc(amznDF, aes(x = x, y = y), method = "seas") + geom_line() + theme_bw()
 # Compare
-ggsdc(amznGG, aes(x = x, y = y), method = "decompose") + geom_line() + theme_bw()
+ggsdc(amznDF, aes(x = x, y = y), method = "decompose") + geom_line() + theme_bw()
 
 
 # End
