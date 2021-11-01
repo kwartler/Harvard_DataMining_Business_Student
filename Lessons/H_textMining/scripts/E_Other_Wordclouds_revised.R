@@ -3,11 +3,11 @@
 #' Author: Ted Kwartler
 #' email: edwardkwartler@fas.harvard.edu
 #' License: GPL>=3
-#' Date: 2020-Arp-13
+#' Date: Nov 1, 2021
 #'
 
 # Set the working directory
-setwd("/cloud/project/Lessons/J_textMining/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/H_textMining/data")
 
 # Libs
 library(tm)
@@ -24,7 +24,7 @@ tryTolower <- function(x){
   y = NA
   try_error = tryCatch(tolower(x), error = function(e) e)
   if (!inherits(try_error, 'error'))
-    y = tolower(x)
+  y = tolower(x)
   return(y)
 }
 
@@ -66,9 +66,9 @@ chardonnay <- cleanCorpus(chardonnay)
 coffee     <- cleanCorpus(coffee)
 
 # Extract plain clean text out of each corpus same as calling content() on an individual tweet
-beer       <- unlist(sapply(beer, `[`, "content"))
-chardonnay <- unlist(sapply(chardonnay, `[`, "content"))
-coffee     <- unlist(sapply(coffee, `[`, "content"))
+beer       <- sapply(beer, content)
+chardonnay <- sapply(chardonnay, content)
+coffee     <- sapply(coffee, content)
 
 # Combine all subject matter tweets (1000) into single document encompassing all tweets
 beer       <- paste(beer, collapse=" ")
@@ -107,7 +107,7 @@ commonality.cloud(drinkTDMm,
 comparison.cloud(drinkTDMm, 
                  max.words=75, 
                  random.order=FALSE,
-                 title.size=0.5,
+                 title.size=1.5,
                  colors=brewer.pal(ncol(drinkTDMm),"Dark2"),
                  scale=c(3,0.1))
 

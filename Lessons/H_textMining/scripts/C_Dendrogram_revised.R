@@ -3,18 +3,18 @@
 #' Author: Ted Kwartler
 #' email: edwardkwartler@fas.harvard.edu
 #' License: GPL>=3
-#' Date: 2020-Arp-13
+#' Date: Nov 1, 2021
 #'
 
 # Set the working directory
-setwd("/cloud/project/Lessons/J_textMining/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/H_textMining/data")
 
 # Libs
-library(qdap)
 library(tm)
+library(qdap)
 library(ggplot2)
 library(ggthemes)
-library(dendextend)
+library(ggdendro)
 
 # Options & Functions
 options(stringsAsFactors = FALSE)
@@ -40,16 +40,6 @@ cleanCorpus <- function(corpus){
 
 # Create custom stop words
 customStopwords <- c(stopwords('english'), 'lol', 'smh', 'beer', 'amp')
-
-# Dendogram coloring function
-colLab <- function(n) {
-  if (is.leaf(n)) {
-    a <- attributes(n)
-    labCol <- labelColors[clusMember[which(names(clusMember) == a$label)]]
-    attr(n, "nodePar") <- c(a$nodePar, lab.col = labCol)
-  }
-  n
-}
 
 # Data 
 text <- read.csv('beer.csv', header=TRUE)
@@ -119,15 +109,6 @@ hc <- hclust(dist(beerTDM2))
 plot(hc,yaxt='n')
 
 # Improved visual
-hcd         <- as.dendrogram(hc)
-clusMember  <- cutree(hc, 4)
-labelColors <- c("#CDB380", "#036564", "#EB6841", "#EDC951")
-clusDendro <- dendrapply(hcd, colLab)
-
-plot(clusDendro, 
-     main = "Hierarchical Dendrogram", 
-     type = "triangle",
-     yaxt='n')
-rect.dendrogram(hcd, k = 5, border = "grey50")
+ggdendrogram(hc, rotate=FALSE) + ggtitle('Dendrogram - word frequency clusters')
 
 # End

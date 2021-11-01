@@ -3,11 +3,11 @@
 #' Author: Ted Kwartler
 #' email: edwardkwartler@fas.harvard.edu
 #' License: GPL>=3
-#' Date: 2020-Arp-13
+#' Date: 2020-Apr-13
 #'
 
 # Set the working directory
-setwd("/cloud/project/Lessons/J_textMining/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/H_textMining/data")
 
 # Libs
 library(tm)
@@ -62,7 +62,7 @@ content(txtCorpus[4])
 content(txtCorpus[[4]])
 
 # Need to plain text cleaned copy?
-df <- data.frame(text = unlist(sapply(txtCorpus, `[`, "content")),
+df <- data.frame(text = sapply(txtCorpus, content),
                  stringsAsFactors=F)
 #write.csv(df,'plain_coffee.csv',row.names = F)
 

@@ -3,11 +3,11 @@
 #' Author: Ted Kwartler
 #' email: edwardkwartler@fas.harvard.edu
 #' License: GPL>=3
-#' Date: 2020-Arp-13
+#' Date: 2020-Apr-13
 #' 
 
 # Set the working directory
-setwd("/cloud/project/Lessons/J_textMining/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/H_textMining/data")
 
 # Libs
 library(tm)
