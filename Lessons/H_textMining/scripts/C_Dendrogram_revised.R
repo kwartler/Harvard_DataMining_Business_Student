@@ -28,7 +28,7 @@ tryTolower <- function(x){
   return(y)
 }
 
-cleanCorpus <- function(corpus){
+cleanCorpus <- function(corpus, customStopwords){
   corpus <- tm_map(corpus, content_transformer(qdapRegex::rm_url))
   corpus <- tm_map(corpus, removePunctuation)
   corpus <- tm_map(corpus, stripWhitespace)
@@ -51,7 +51,7 @@ names(text)[1] <- 'doc_id'
 txtCorpus <- VCorpus(DataframeSource(text))
 
 # Preprocess the corpus
-txtCorpus <- cleanCorpus(txtCorpus)
+txtCorpus <- cleanCorpus(txtCorpus, customStopwords)
 
 # Make TDM
 beerTDM  <- TermDocumentMatrix(txtCorpus)
@@ -59,7 +59,9 @@ beerTDMm <- as.matrix(beerTDM)
 
 # Frequency Data Frame
 beerFreq <- rowSums(beerTDMm)
-beerFreq <- data.frame(word=names(beerFreq),frequency=beerFreq)
+beerFreq <- data.frame(word=names(beerFreq),
+                       frequency=beerFreq, 
+                       row.names = NULL)
 
 # Simple barplot; values greater than 90 
 topWords      <- subset(beerFreq, beerFreq$frequency >= 90) 
