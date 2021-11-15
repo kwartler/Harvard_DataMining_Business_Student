@@ -18,7 +18,7 @@ library(htmltools)
 #allTickers[idx,]
 
 ## Get historical stock pricing
-getSymbols("AAPL", src = "yahoo") #"AAPL_1_TTR_A.rds"
+getSymbols("AAPL", src = "yahoo", auto.assign = T) #"AAPL_1_TTR_A.rds"
 #RobjectName <- getSymbols('AAPL', auto.assign=F)
 
 # Review
