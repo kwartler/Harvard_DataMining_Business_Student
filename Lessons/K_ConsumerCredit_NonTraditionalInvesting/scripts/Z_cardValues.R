@@ -7,14 +7,14 @@ cardValues <- function (cards, worthlessCommons = T, verbose = F){
     if (worthlessCommons == T) {
       commonsP <- 0
       } else {
-        commonsDistribution <- Map(rtriangle, 1000, 
+        commonsDistribution <- Map(rtriangle, 1000, #
                                    commons$Low, 
                                    commons$Med, 
                                    commons$Low)
         commonsP <- lapply(commonsDistribution, mean) %>% unlist()
         }
   
-  uncommonsDistribution <- Map(rtriangle, 
+  uncommonsDistribution <- Map(rtriangle, #
                                1000, 
                                uncommons$Low, 
                                uncommons$Med, 
@@ -23,7 +23,7 @@ cardValues <- function (cards, worthlessCommons = T, verbose = F){
     if (nrow(rares) == 0) {
       raresP <- 0
     } else {
-      raresDistribution <- Map(rtriangle, 
+      raresDistribution <- Map(rtriangle, # 
                                1000, 
                                rares$Low, 
                                rares$Med, 
@@ -33,7 +33,7 @@ cardValues <- function (cards, worthlessCommons = T, verbose = F){
     if (nrow(mythics) == 0) {
       mythicsP <- 0
     } else {
-      mythicsDistribution <- Map(rtriangle, 
+      mythicsDistribution <- Map(rtriangle, # 
                                  1000, 
                                  mythics$Low, 
                                  mythics$Med, 
@@ -50,7 +50,7 @@ cardValues <- function (cards, worthlessCommons = T, verbose = F){
   if (nrow(commonsF) == 0) {
     commonsFP <- 0
     } else {
-      commonsFoilDist <- Map(rtriangle, 
+      commonsFoilDist <- Map(rtriangle, # 
                              1000, 
                              commonsF$Low, 
                              commonsF$Med, 
@@ -61,7 +61,7 @@ cardValues <- function (cards, worthlessCommons = T, verbose = F){
     if (nrow(uncommonsF) == 0) {
       uncommonsFP <- 0
     } else {
-      uncommonsFoilDist <- Map(rtriangle, 
+      uncommonsFoilDist <- Map(rtriangle, # 
                                1000, 
                                uncommonsF$Low, 
                                uncommonsF$Med, 
@@ -71,7 +71,7 @@ cardValues <- function (cards, worthlessCommons = T, verbose = F){
     if (nrow(raresF) == 0) {
       raresFP <- 0
     } else {
-      raresFoilDist <- Map(rtriangle, 
+      raresFoilDist <- Map(rtriangle, # 
                            1000, 
                            raresF$Low, 
                            raresF$Med, 
@@ -81,7 +81,7 @@ cardValues <- function (cards, worthlessCommons = T, verbose = F){
     if (nrow(mythicsF) == 0) {
       mythicsFP <- 0
     } else {
-      mythicFoilsDist <- Map(rtriangle, 
+      mythicFoilsDist <- Map(rtriangle, # 
                              1000, 
                              mythicsF$Med, 
                              mythicsF$High, 

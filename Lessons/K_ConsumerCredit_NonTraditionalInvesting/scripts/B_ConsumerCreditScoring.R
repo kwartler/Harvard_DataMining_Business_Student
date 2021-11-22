@@ -93,9 +93,10 @@ table(treatedTest$y, cutoffProbsTest)
 
 ## Suppose you want to review "A" and low risk notes 20% chance of default
 # Organize
-testSetComparison <- data.frame(y     = treatedTest$y,
-                                grade = validationDF$grade,
-                                risk  = testProbs[,1])
+testSetComparison <- data.frame(y     = treatedTest$y, #actual outcome
+                                grade = validationDF$grade, #lending club guess
+                                risk  = testProbs[,1]) #probability of 0 in model
+head(testSetComparison)
 
 # Get their best guess
 onlyA <- subset(testSetComparison, testSetComparison$grade == "A")
@@ -137,7 +138,7 @@ mktPlot <- figure(legend_location = "bottom_right") %>%
             hover = list(id, risk, reward, LCgrade)) 
 mktPlot
 
-# Make a CAPM Plot
+# Make a CAPM-style Plot
 mktPlot2 <- mktPlot %>% 
   ly_abline(a      = 7.0, 
             b      = 0,
