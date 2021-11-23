@@ -73,7 +73,7 @@ finalFit <- trimTrain(finalFit)
 #saveRDS(finalFit, 'glm_finalFit_10Fold.rds')
 finalFit <- readRDS('glm_finalFit_10Fold.rds')
 
-# Make predictions for 3 paritions
+# Make predictions for 3 partitions
 trainProbs    <- predict(finalFit, treatedTrain, type = 'prob')
 testProbs     <- predict(finalFit, treatedTest, type = 'prob')
 newNotesProbs <- predict(finalFit, treatedNew, type = 'prob')
