@@ -1,5 +1,5 @@
 ---
-title: "This is a presentation"
+title: "Example PPTX"
 output: powerpoint_presentation
 ---
 
@@ -15,15 +15,14 @@ When you click the **Knit** button a document will be generated that includes bo
 
 ## Slide with Bullets
 
-- this is a piece of information
+- Bullet 1
 - Bullet 2
 - Bullet 3
 
 ## Slide with R Output
 
 ```{r cars, echo = TRUE}
-x <- cars
-summary(x)
+summary(cars)
 ```
 
 ## Slide with Plot

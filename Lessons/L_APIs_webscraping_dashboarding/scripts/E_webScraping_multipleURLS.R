@@ -11,7 +11,7 @@ library(rvest)
 library(stringi)
 
 # wd
-setwd("~/Desktop/LUX_NLP_student/lessons/oct21/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/L_APIs_webscraping_dashboarding/data")
 
 # Instructor Page
 webpage <- 'http://www.gserm.ch/stgallen/instructors/'

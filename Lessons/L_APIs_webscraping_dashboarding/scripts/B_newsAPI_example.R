@@ -1,28 +1,24 @@
-#' Title: News API
-#' Purpose: Get data from JSON
 #' Author: Ted Kwartler
-#' email: edwardkwartler@fas.harvard.edu
-#' License: GPL>=3
-#' Date: Oct 20, 2021
-#'
+#' Date: Apr 25 2021
+#' Purpose: Demonstrate getting json API information
 
 # Libraries
 library(jsonlite)
 library(pbapply)
+#install.packages(“newsanchor“)# now there is a package but its worth exploring manually to learn APIs
 
 # Options
 options(stringsAsFactors = F)
 
-# www.newsapi.org Key
-#apiKey <- readLines('~/Desktop/GSERM_Text_Remote_admin/newsAPI.txt')
-#apiKey <- 'XXXXXXXXXXXXXXXXXXXXXXX'
+# https://newsapi.org/ Key
+apiKey <- 'b6d9f96c78b34ee98bd84a23d3f74bfb'
 
 # Top headlines in the US endpoint:
 usURL <- paste0('https://newsapi.org/v2/top-headlines?country=us&apiKey=', apiKey)
 usURL
 
 # Endpoint for all news sources
-#https://newsapi.org/v2/sources?apiKey=####################
+#https://newsapi.org/v2/sources?apiKey=b6d9f96c78b34ee98bd84a23d3f74bfb
 
 # Get last weeks information
 to   <- Sys.Date()
@@ -42,21 +38,15 @@ apiURL
 newsInfo <- fromJSON(apiURL)
 
 # Organize the API response and save
+newsInfo$status
 newsInfo$status           <- NULL
+newsInfo$totalResults 
 newsInfo$totalResults     <- NULL
+newsInfo$articles$source
 newsInfo$articles$source  <- NULL
 
 finalContent <- newsInfo[[1]]
 finalContent
-#write.csv(finalContent, 'finalNewsContent.csv', row.names = F)
+#write.csv(finalContent, '~/finalNewsContent.csv', row.names = F)
 
-# 
-source <- 'wsj.com'
-allArticles <- fromJSON(paste0('https://newsapi.org/v2/everything?domains=',
-                        source,
-                        '&apiKey=b6d9f96c78b34ee98bd84a23d3f74bfb'))
-
-allArticles$status
-allArticles$totalResults
-allArticles$articles[1,]
 # End

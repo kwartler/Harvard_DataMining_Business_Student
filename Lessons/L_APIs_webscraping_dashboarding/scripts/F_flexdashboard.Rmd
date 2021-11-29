@@ -1,0 +1,97 @@
+---
+title: "Weekly Patient Report"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    vertical_layout: scroll
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(rbokeh)
+library(ggplot2)
+library(DT)
+
+# set wd
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/L_APIs_webscraping_dashboarding/data")
+
+# Identify the file in the directory
+searchPattern <- 'Wk4'
+pth <- list.files(pattern = searchPattern, full.names = T)
+pth <- pth[grep('*.csv', pth)]
+df  <- read.csv(pth)
+```
+
+Row 
+-----------------------------------------------------------------------
+
+### Report Date
+
+```{r date}
+valueBox(Sys.Date(), 
+         icon = "fa-calendar-check-o", #http://fontawesome.io/icon/calendar-check-o/
+         color = "#bada55")
+
+```
+
+Row
+-----------------------------------------------------------------------
+
+### Age Distribution
+
+```{r histogram, message=FALSE}
+ggplot(data = df) + geom_histogram(aes(age))
+```
+
+Row {data-height=350}
+-------------------------------------
+   
+### Relationships Age Num Meds
+
+```{r scatter1, message=FALSE}
+figure(height=350) %>%
+  ly_points(x=age, y=num_medications,data=df ,
+            hover = list(patient_id, age, num_medications)) %>%
+  x_axis(label='age') %>%
+  y_axis(label='number meds') %>%
+  theme_axis("x", major_label_orientation = 90) 
+```   
+    
+### Relationships Age Num Procedures
+
+```{r scatter2, message=FALSE}
+figure(height=350) %>%
+  ly_points(x=age, y=num_lab_procedures,data=df ,hover = list(patient_id)) %>%
+  x_axis(label='age') %>%
+  y_axis(label='number meds') %>%
+  theme_axis("x", major_label_orientation = 90) 
+```
+
+Row 
+-------------------------------------
+
+### basic table info
+
+```{r table1, message=FALSE}
+knitr::kable(as.matrix(table(df$race)))
+```
+
+### better formatted table info
+
+```{r table2, message=FALSE}
+wgt <- as.matrix(summary(df$weight))
+wgt <- data.frame(amt = rownames(wgt),
+                  freq = wgt[,1])
+rownames(wgt) <- NULL
+knitr::kable(wgt)
+```
+
+Row 
+-------------------------------------
+
+### dynamic table info
+
+```{r table3, message=FALSE}
+DT::datatable(df[1:100,1:5], 
+              options = list(bPaginate = TRUE))
+```
