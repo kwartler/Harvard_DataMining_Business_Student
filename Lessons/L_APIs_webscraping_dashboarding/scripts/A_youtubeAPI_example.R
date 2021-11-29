@@ -1,6 +1,10 @@
+#' Title: Grab Youtube JSON
+#' Purpose: Demonstrate f12 in Chrome for API
 #' Author: Ted Kwartler
-#' Date: Apr 25 2021
-#' Purpose: Demonstrate getting JSON API information
+#' email: edwardkwartler@fas.harvard.edu
+#' License: GPL>=3
+#' Date: Oct 20, 2021
+#'
 
 # Libraries
 library(jsonlite)
@@ -10,10 +14,12 @@ library(plyr)
 # Options; google api returns UTF-8 text
 Sys.setlocale("LC_CTYPE", "en_US.UTF-8")
 
+# WD
+setwd("~/Desktop/LUX_NLP_student/lessons/oct21/data")
+
 # Youtube URL
 #https://www.youtube.com/watch?v=Q-wRhzWaCac
-#https://www.unixtimestamp.com/index.php
-youtubeCaption <- 'https://www.youtube.com/api/timedtext?v=Q-wRhzWaCac&asr_langs=de%2Cen%2Ces%2Cfr%2Cit%2Cja%2Cko%2Cnl%2Cpt%2Cru&caps=asr&exp=xftt&xorp=true&xoaf=5&hl=en&ip=0.0.0.0&ipbits=0&expire=1619501999&sparams=ip%2Cipbits%2Cexpire%2Cv%2Casr_langs%2Ccaps%2Cexp%2Cxorp%2Cxoaf&signature=BF28EB6F76143B9B7E37D78801212B62555A9BF3.D081A8B16DC8CFBF2C715E56684DFC0AD5E55EA3&key=yt8&kind=asr&lang=en&fmt=json3&xorb=2&xobt=3&xovt=3'
+youtubeCaption <- 'https://www.youtube.com/api/timedtext?v=5F-o2_AC-Wo&asr_langs=de%2Cen%2Ces%2Cfr%2Cid%2Cit%2Cja%2Cko%2Cnl%2Cpt%2Cru%2Ctr%2Cvi&caps=asr&exp=xftt%2Cxctw&xoaf=5&hl=en&ip=0.0.0.0&ipbits=0&expire=1634845852&sparams=ip%2Cipbits%2Cexpire%2Cv%2Casr_langs%2Ccaps%2Cexp%2Cxoaf&signature=0CC45CE748F42330F037FB99E63A9F3FCD6E227C.D85D8EDE42E6581A8A9AE4449E49B8487BC139F6&key=yt8&kind=asr&lang=en&fmt=json3&xorb=2&xobt=3&xovt=3'
 
 # Go get the data
 dat <- fromJSON(youtubeCaption)
@@ -41,13 +47,12 @@ head(rawTxt,10)
 rawTxt <- str_squish(rawTxt)
 head(rawTxt,10)
 rawTxt <- paste(rawTxt, collapse = ' ')
-rawTxt
+
 # Save as a text file
 #writeLines(rawTxt, 'sometext.txt')
 
 # If you want to retain the meta data
 timedTxt <- lapply(dat$events$segs, "[", 'utf8')
-timedTxt[[2]]
 
 allTxt <- list()
 for (i in 1:length(timedTxt)){
@@ -64,7 +69,7 @@ textDF <- data.frame(startTime = dat$events$tStartMs/1000,
                      text = text)
 
 # 
-textDF<-  textDF[nchar(as.character(textDF$text)) !=0,]
+textDF<-  textDF[nchar(textDF$text) !=0,]
 
 # Examine to make sure format is ok
 head(textDF, 10)
