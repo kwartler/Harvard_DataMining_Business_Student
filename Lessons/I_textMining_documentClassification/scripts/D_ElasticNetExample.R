@@ -88,7 +88,7 @@ bestTerms <- subset(as.matrix(coefficients(textFit)),
 bestTerms <- data.frame(tokens = rownames(bestTerms),
                         coeff  = bestTerms)
 rownames(bestTerms) <- NULL
-head(bestTerms[order(bestTerms$X1, decreasing = T),])
+head(bestTerms[order(bestTerms$s1, decreasing = T),])
 nrow(bestTerms)
 ncol(diabetesDTM)
 
