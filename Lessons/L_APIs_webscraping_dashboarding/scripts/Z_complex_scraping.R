@@ -8,8 +8,8 @@ library(fst)
 library(stringr)
 
 # Query
-searchQ <- URLencode('machine vision') #machine learning
-savePth <- '~/Desktop/Harvard_NLP_Student/lessons/L_apis_scraping/data/PR_collections/' # remember the trailing slash!
+searchQ <- URLencode('Series A') #machine learning
+savePth <- "~/Desktop/HULT/hult_NLP_admin/Jan Prep/" # remember the trailing slash!
 testing <- F
 fileFormat <- 'csv' #or fst
 
