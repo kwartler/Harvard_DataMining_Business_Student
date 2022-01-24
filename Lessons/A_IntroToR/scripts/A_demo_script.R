@@ -1,7 +1,7 @@
 #' Title: A_demo_script.R
 #' Purpose: Get some R time!
 #' Author: TK
-#' Date: Aug 30 2021
+#' Date: Jan 23, 2022
 
 # Step 1 Set the working directory: where's the fruit?
 setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/A_IntroToR/data")
@@ -39,11 +39,17 @@ head(scenesDF$length)
 # Basic statistics
 summary(scenesDF) 
 
+# Adjust the duration and time for minutes not milliseconds
+scenesDF$start  <- (scenesDF$start/1000) /60
+scenesDF$end    <- (scenesDF$end/1000) /60
+scenesDF$length <- (scenesDF$length/1000) /60
+
 # Step 5: Consume our results: Plot/Eat the banana!
-ggplot(scenesDF, aes(colour=name)) + 
+# We removed the bonus features and are only looking at the first 38 scenes
+ggplot(scenesDF[1:38,], aes(colour=name)) + 
   geom_segment(aes(x=start, xend=end,
                    y=id, yend=id),size=3) +
-  geom_text(data=scenesDF, aes(x=end, y=id,  label = name), 
+  geom_text(data=scenesDF[1:38,], aes(x=end, y=id,  label = name), 
             size = 2.25,color = 'black', alpha = 0.5, check_overlap = TRUE) + 
   theme_gdocs() + theme(legend.position="none")
 # End
