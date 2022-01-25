@@ -114,7 +114,8 @@ mplot<- leaflet(data=onlyMA) %>%
   addTiles() %>%
   addMarkers( popup = paste("Loc:", onlyMA$Location, "<br>",
                             "SqFt:", onlyMA$Sq..Feet,"<br>",
-                            "Type:", onlyMA$Type)) 
+                            "Type:", onlyMA$Type),
+              clusterOptions = markerClusterOptions()) 
 mplot
 
 # End
