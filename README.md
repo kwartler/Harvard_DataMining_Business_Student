@@ -24,7 +24,7 @@ pacman::p_load(ggplot2, ggthemes, rbokeh, maps,
                PerformanceAnalytics,rpart, data.table,
                pbapply, rbokeh, stringi, tm, qdap,
                dendextend, wordcloud, RColorBrewer,
-               tidytext, radarchart, openNLP, xml2, stringr,
+               tidytext, radarchart, RCurl, openNLP, xml2, stringr,
                devtools, flexdashboard, rmarkdown, httr)
 
 # Additionally we will need this package from a different repo
