@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Data: 9-13-2021
+#' Data: Jan 30 2022
 #' Purpose: Load data, explore it and visualize it
 
 ## Set the working directory
@@ -40,13 +40,13 @@ subset(characters,characters$char.name=='Admiral Ackbar')
 # Random sample
 set.seed(1234) #just for consistency in class
 idx <- sample(1:nrow(screenTime),5) # Take 5 rows from the data set, notice the nested function
-screenTime[idx,]
+sampledData <- screenTime[idx,]
 
 # scenes
 scenes$length <- scenes$end - scenes$start # add new column by taking the difference between vectors
 
 # More EDA
-summary(scenes$length) #base summary stats, quartile
+summary(scenes$length) #base summary stats, quartile of a named vector
 
 # Sort to find longest scenes
 scenes <- scenes[order(scenes$length, decreasing=T),] #reorder the data frame by the new length column
@@ -95,16 +95,6 @@ ggplot(screenTime,
 ggsave("character_scenes.pdf")
 ggsave("character_scenes.png")
 ggsave("character_scenes.jpg")
-
-# ggplot2: Nonsense result but shows example ggplot w/geom_point
-p <- ggplot(scenes, aes(colour = defined.scenes)) +
-  geom_point(aes(x = start, 
-                 y = end), size=3) + 
-  theme_gdocs() + 
-  theme(legend.position="none") 
-
-p
-
 
 # HTMLwidgets:rbokeh; 
 # note the tidy style programming is recommended by the author but not necessary
