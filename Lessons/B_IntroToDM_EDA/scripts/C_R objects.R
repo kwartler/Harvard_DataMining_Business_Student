@@ -30,7 +30,7 @@ attributes(warpbreaks[1:10,])
 
 # List craziness!
 singleVal  <- 123
-singleDF   <- data.frame(vec=c(1,2,3), vec2=c(4,5,6))
+singleDF   <- data.frame(vec1=c(1,2,3), vec2=c(4,5,6))
 singleVec  <- c(T,T,F,F,F)
 
 # Construct list
