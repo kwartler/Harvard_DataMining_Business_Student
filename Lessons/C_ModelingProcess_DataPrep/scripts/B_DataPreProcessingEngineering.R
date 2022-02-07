@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Date: 9-20-21
+#' Date: Feb 6 2022
 #' Purpose: Fundraising PreProcessing
 
 # Setwd
@@ -19,7 +19,15 @@ summary(donors)
 # Examine names for vtreat usage
 names(donors)
 informativeFeatures <- names(donors)[3:19]
+informativeFeatures
+
 targetVariable      <- names(donors)[20]
+targetVariable
+
+# Examine the levels of Y
+levels(as.factor(donors$Y1_Donation))
+
+# Declare the correct level for success for the use case
 successClass        <- 'Yes'
 
 # Automated variable processing
@@ -32,6 +40,7 @@ plan <- designTreatmentsC(donors,
                           successClass)
 
 # Apply the plan
+# WARNING's dont really impact us in class but this is caused since we use the original designTreatment data and are now preparing it so the a priori rule is broken
 treatedData <- prepare(plan, donors)
 
 # Lots more appended vars; still need to drop redundant flags but much faster and robust!
@@ -42,10 +51,12 @@ rm(list=ls())
 
 # Data
 donors <- read.csv('fakeDonorBureau_v2.csv')
+plot(density(donors$Y2_DonatedAmt))
 
 # for **numeric** outcomes 
 # how much will the prospective donor give?
 # DATA, NAMES OF INFORMATIVE VARS, RESPONSE VAR
+# For numeric Y we don't need to declare the "success class"
 plan <- designTreatmentsN(donors, 
                           names(donors)[3:19],
                           'Y2_DonatedAmt')
@@ -72,13 +83,6 @@ head(thirdPartyData)
 # Bring new data to the 3120 donors
 leftData <- left_join(donors, thirdPartyData, by = c("uniqueID"))
 
-# Bring donors to the new data points
-rightData <- right_join(donors, thirdPartyData, by = c("uniqueID"))
-rightData[c(3119:3122),] #NA automatically filled in
-
-# Find records in common
-innerData <- inner_join(donors, thirdPartyData) #here identical to leftData
-
 ## A taste of whats to come...for those in the know, yes we are skipping a lot of steps.
 plan <- designTreatmentsC(leftData,
                           names(leftData)[4:20],
@@ -94,5 +98,6 @@ summary(fit)
 donationProbability <- predict(fit, treatedLeftData, type='response')
 
 head(donationProbability)
+plot(density(donationProbability))
 
 # End

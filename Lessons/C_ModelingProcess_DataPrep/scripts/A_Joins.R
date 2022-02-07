@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Date: 2-13-2019
+#' Date: Feb 6 2022
 #' Purpose: Joins
 #'
 
@@ -17,16 +17,27 @@ grades <-  data.frame(name = c(instruments$name[1:3],"Jim"),
 grades
 
 # Left join; bring information from grades to instruments; no "Jim" & no grade for "Sarah"
-left_join(instruments, grades, by = c('name'))
+leftData <- left_join(instruments, grades, by = c('name'))
+leftData
 
 # Right Join;bring infromation from instruments to grades;  no "Sarah" & no "Jim" unstrument 
-right_join(instruments, grades, by = c('name'))
+rightData <- right_join(instruments, grades, by = c('name'))
+rightData
 
 # Inner Join; drop Sarah and Jim as incomplete records
-inner_join(instruments, grades, by = c('name'))
+innerData <- inner_join(instruments, grades, by = c('name'))
+innerData
 
 # Full join; everything is included
-full_join(instruments, grades, by = c('name'))
+fullData <- full_join(instruments, grades, by = c('name'))
+fullData
+
+# All joins can be done with column names that are different names
+names(instruments)[1] <- 'student'
+instruments
+
+leftDataNewColName <- left_join(instruments, grades, by = c('student'='name'))
+leftDataNewColName
 
 
 # End
