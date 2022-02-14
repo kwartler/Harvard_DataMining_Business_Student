@@ -87,12 +87,9 @@ trainingResults <-data.frame(actuals        = treatedTrainParsimony$Price,
 head(trainingResults)
 
 # What is the RMSE? 
-# Be careful!  Different libraries have subtle differences
+# Be careful!  Different libraries have subtle differences, but shouldn't be an issue with RMSE but can cause issues with other KPI
 # library(ModelMetrics) has rmse(a, p)
 # library(MLmetrics) has RMSE(p, a)
-ModelMetrics::rmse(trainingResults$actuals, 
-                   trainingResults$predicted)
-
 (trainRMSE <- MLmetrics::RMSE(trainingResults$predicted, 
                               trainingResults$actuals))
 

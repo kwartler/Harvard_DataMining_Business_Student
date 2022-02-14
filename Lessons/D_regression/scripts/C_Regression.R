@@ -12,7 +12,7 @@ setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/D_regression/data")
 # Data
 houses <-read.csv('BostonHousing.csv')
 houses <- houses[order(houses$MEDV), ]
-houses$realValue <- houses$MEDV*1000
+houses$realValue <- houses$MEDV*10000
 houses$MEDV <- NULL #original variable
 houses$CAT..MEDV <-NULL #not used categorical Y var
 
@@ -30,7 +30,7 @@ plot(houses$RM, houses$realValue)
 
 # Let's make up a model; medianValue = 0 + 1*rooms
 # This means for every room it adds 1 (actually 10,000) to the median value
-abline(0,1000, col='red') #intercept, then slope
+abline(0,10000, col='red') #intercept, then slope
 
 # Fit a model (univariate) with no intercept
 # The equation of this model is the Y ~ the variable RM and with +0 we are forcing there to be NO beta-naught
@@ -54,7 +54,7 @@ abline(a = coefficients(fit2)[1], #intercept
        b = coefficients(fit2)[2] , col='blue', lwd = 5) #slope
 
 # Get some predictions on the training set
-manualPreds <- trainSet$RM*1000 #slope is 1 so beta =1 X the actual value
+manualPreds <- trainSet$RM*10000 #slope is 1 so beta =1 X the actual value
 preds1      <- predict(fit, trainSet) 
 preds2      <- predict(fit2, trainSet)
 
@@ -71,7 +71,7 @@ sqrt(mean(fitErr))
 sqrt(mean(fit2Err))
 
 # Now validation
-manualPreds <- testSet$RM*1000 # Again beta = 1 X actual values
+manualPreds <- testSet$RM*10000 # Again beta = 1 X actual values
 preds1      <- predict(fit, testSet)
 preds2      <- predict(fit2, testSet)
 
