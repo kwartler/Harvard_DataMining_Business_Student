@@ -27,8 +27,8 @@ testDat  <- dat[-idx,]
 
 # We don't have to tell train to do something different, because the target is continuous the KNN algorithm will automatically get avg neighbor values not categories
 knnFit <- train(Absenteeism.time.in.hours ~ ., 
-                data = trainDat, 
-                method = "knn", 
+                data       = trainDat, 
+                method     = "knn", 
                 preProcess = c("center","scale"), 
                 tuneLength = 15)
 
