@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Data: Oct 17, 2021 
+#' Data: Mar 7, 2022
 #' Purpose: Load data build a decision tree
 #' https://archive.ics.uci.edu/ml/datasets/bank+marketing
 
@@ -79,8 +79,8 @@ rm(list=ls())
 dat <- read.csv('bank-full_v2.csv') # now a bit more data to approximate real scenario 
 
 
-# To save time in class, we are only training on 20% of the data
-splitPercent <- round(nrow(dat) %*% .2)
+# To save time in class, we are only training on 50% of the data
+splitPercent <- round(nrow(dat) %*% .5)
 totalRecords <- 1:nrow(dat)
 set.seed(1234)
 idx <- sample(totalRecords, splitPercent)
@@ -102,7 +102,7 @@ fit <- train(as.factor(y) ~., #formula based
              #instead of knn, caret does "recursive partitioning (trees)
              method = "rpart", 
              #Define a range for the CP to test
-             tuneGrid = data.frame(cp = c(0.1, 0.01, 0.05, 0.07)), 
+             tuneGrid = data.frame(cp = c(0.0001, 0.001,0.01, 0.05, 0.07)), 
              #ie don't split if there are less than 1 record left and only do a split if there are at least 2+ records
              control = rpart.control(minsplit = 1, minbucket = 2)) 
 
