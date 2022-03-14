@@ -72,7 +72,4 @@ rmse(testSet$realValue, manualPredsTest)
 rmse(testSet$realValue, preds1Test)
 rmse(testSet$realValue, preds2Test)
 
-
-
-
 # End

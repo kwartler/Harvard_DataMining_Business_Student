@@ -34,7 +34,7 @@ summary(fit)
 
 # Backward Variable selection to reduce chances of multi-colinearity
 # See chap6 for an explanation
-# Takes 5-10m  to run so load a pre-saved copy that I already made 
+# Takes 1m  to run so load a pre-saved copy that I already made 
 bestFit <- step(fit, direction='backward')
 #saveRDS(bestFit, 'bestFit.rds')
 bestFit <- readRDS('bestFit.rds')

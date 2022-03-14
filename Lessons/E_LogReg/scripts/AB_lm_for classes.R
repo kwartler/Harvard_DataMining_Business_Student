@@ -37,10 +37,10 @@ p
 
 # Suppose you *could* get a 12 carat diamond
 hopeDiamond  <- data.frame(carat = 12)
-gettingCrunk <- predict(fit, hopeDiamond)
+bigRock <- predict(fit, hopeDiamond)
 
 # 1= Yes, the diamonds is more than $11k; 0 means no.  What does this mean?  We must have used the wrong method!
-gettingCrunk
+bigRock
 
 # End
 
