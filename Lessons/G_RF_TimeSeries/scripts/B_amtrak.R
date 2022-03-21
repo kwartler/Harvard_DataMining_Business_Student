@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Date: 10-26-2020
+#' Date: 3-21-2022
 #' Purpose: Forecasting Basics
 #'
 
@@ -45,8 +45,8 @@ df$Month
 wrongData <- mdy(df$Month) ##HINT: WRONG!
 
 # Now Check
-tail(df$Month, 10) #why would it just be the first 12 days of a month?
-tail(wrongData, 10)
+tail(df$Month, 10) #why would it just be the first 12 days of a month?  The ORDER is different!
+tail(wrongData, 10)  #Here you see 12 days, then nothing for a month, so be careful!
 
 # Recreate correctly
 df$Month[1:13]

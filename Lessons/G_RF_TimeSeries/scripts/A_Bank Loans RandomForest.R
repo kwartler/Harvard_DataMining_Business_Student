@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Data: Oct 26
+#' Data: Mar 21, 2022
 #' Purpose: Load data build a random forest tree; this version uses more equally balanced target classes
 #' https://archive.ics.uci.edu/ml/datasets/bank+marketing
 
@@ -60,8 +60,9 @@ predProbs   <- predict(downSampleFit,
                        type = c("prob"))
 predClasses <- predict(downSampleFit,  treatedTrain)
 
-# Confusion Matrix; MLmetrics has the same function but use CARET!!
-caret::confusionMatrix(predClasses, as.factor(treatedTrain$Class))
+# Confusion Matrix
+caret::confusionMatrix(predClasses, 
+                       as.factor(treatedTrain$Class))
 
 # Other interesting model artifacts
 varImp(downSampleFit)

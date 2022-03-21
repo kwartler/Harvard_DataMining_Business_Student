@@ -1,4 +1,12 @@
 #' Author: Ted Kwartler
+#' Data: 3-21-2022
+#' Purpose: Naive Forecast for Nike
+#' 
+
+# Options
+options(scipen=999)
+
+#' Author: Ted Kwartler
 #' Data: 10-26-2020
 #' Purpose: Naive Forecast for Nike
 #' 
@@ -7,36 +15,24 @@
 options(scipen=999)
 
 # library
-library(jsonlite)
 library(lubridate)
 library(dygraphs)
 library(forecast)
 
-stock <-'NKE'
-
-# Construct the JSON URL and get the data
-stockURL <- paste0('https://www.gurufocus.com/modules/chart/interactive_chart_json_morn.php?symbol=',
-                   'NYSE:',stock,'&fp=q&ser=Revenue')
-stockQtrRev <- fromJSON(stockURL)
-
-# Adjust time from Unix epoch
-unixTime <-  stockQtrRev[[2]][,1]/1000
-revDate  <- as.POSIXct(unixTime, origin = '1970-1-1')
-
-# Organize the list into a DF, keep in mind this site is inconsistent with milllions and billions
-qtrDF <- data.frame(date = revDate, revMill = stockQtrRev[[2]][,2])
-
-head(qtrDF)
+# Data
+stockQtrRev <- read.csv('nike_qtr_rev.csv')
+stockQtrRev$date <- gsub(' 1:00','',stockQtrRev$date)
+stockQtrRev$date <- mdy(stockQtrRev$date)
 
 # Change to a time series
-stYr  <- year(qtrDF$date[1])
-stQtr <- quarter(qtrDF$date[1])
+stYr  <- year(stockQtrRev$date[1])
+stQtr <- quarter(stockQtrRev$date[1])
 st    <- c(stYr, stQtr)
-qtrTS <- ts(qtrDF$revMill, start = st, frequency = 4)
+qtrTS <- ts(stockQtrRev$revMill, start = st, frequency = 4)
 qtrTS
 
 # Visualize
-dygraph(qtrTS, main = paste('Quarterly Rev for', stock, '1000M = 1B')) %>% 
+dygraph(qtrTS, main = 'Quarterly Rev for Nike') %>% 
   dyRangeSelector(height = 20, strokeColor = "") 
 
 # Naive -  Mean forecast 12 quarters ahead
@@ -45,7 +41,7 @@ dev.off()
 plot(meanTS)
 
 # Compare to actual mean avg
-mean(qtrDF$revMill)
+mean(stockQtrRev$revMill)
 tail(meanTS$fitted)
 
 # Naive - Drift "random walk forecast"; just get the trend
