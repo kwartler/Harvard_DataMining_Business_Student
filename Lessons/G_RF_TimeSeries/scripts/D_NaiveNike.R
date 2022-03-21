@@ -6,18 +6,13 @@
 # Options
 options(scipen=999)
 
-#' Author: Ted Kwartler
-#' Data: 10-26-2020
-#' Purpose: Naive Forecast for Nike
-#' 
-
-# Options
-options(scipen=999)
-
 # library
 library(lubridate)
 library(dygraphs)
 library(forecast)
+
+# WD
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/G_RF_TimeSeries/data")
 
 # Data
 stockQtrRev <- read.csv('nike_qtr_rev.csv')
@@ -37,8 +32,9 @@ dygraph(qtrTS, main = 'Quarterly Rev for Nike') %>%
 
 # Naive -  Mean forecast 12 quarters ahead
 meanTS <- meanf(qtrTS, h=12) 
-dev.off()
 plot(meanTS)
+dev.off()
+
 
 # Compare to actual mean avg
 mean(stockQtrRev$revMill)
