@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Date: Nov 1 2020
+#' Date: Mar 28, 2022
 #' Purpose: MACD Example As Indicator
 #'
 
@@ -31,7 +31,7 @@ SMAdiff <- CMGsma12 - CMGsma26
 tail(SMAdiff, 5) 
 tail(CMGsma12, 1) - tail(CMGsma26, 1) #same as above
 
-# Another MA of the difference
+# 3rd Moving Avg of the difference between the two
 manualSig <- SMA(SMAdiff,9)
 
 # Calculate the moving Avgs with a TTR function

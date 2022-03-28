@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Date: 11-1-2020
+#' Date: Mar 28, 2022
 #' Purpose: Simple Moving Avg Example As Indicator
 #'
 
@@ -32,11 +32,10 @@ df$Lag.1 <- Lag(ifelse(df$sma50 > df$sma200, 1, 0), k = 1)
 df[199:205,] # row 200 is NA for `Lag.1` due to Lag()
 
 # Examine part2
-df[235:240,]
+df[234:240,]
 
 # Examine more 
 tail(df, 25)
-summary(df$Lag.1)
 table(df$Lag.1)
 
 # Now let's do it for a longer backtest with a different stock
@@ -56,7 +55,7 @@ charts.PerformanceSummary(ret)
 # Compare to buy & hold
 plot(Cl(stk))
 
-# Now let's be knight cap and switch a sign!
+# Now let's be knight cap and switch the logic!
 stk      <- getSymbols("X", auto.assign = F) 
 stk      <- stk['2019-01-01/']
 ma50     <- SMA(Cl(stk), 50)

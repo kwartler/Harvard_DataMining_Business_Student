@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Data: 03-30-2020
+#' Data: Mar 28, 2022
 #' Purpose: Construct a financial dashboard and make a buy/sell recommendation
 
 # Function Parameters:
@@ -92,6 +92,6 @@ stockChk('goog')
 stockChk('amzn', lookBack = 34) 
 stockChk('CMG', kpi = 'rsi', lookBack = 365)
 stockChk('CMG', kpi= 'sma', lookBack = 365)
-stockChk('CMG', kpi='macd', lookBack = 365, recommendation='sell')
+stockChk('CMG', kpi='macd', lookBack = 365, recommendation='buy')
 
 # End

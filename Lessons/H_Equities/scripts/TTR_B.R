@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Date: 11-2-2020
+#' Date: Mar 28, 2022
 #' Purpose: Simple Moving Avg Example
 #'
 
@@ -21,6 +21,7 @@ plot(CMG$CMG.Close)
 CMGma3  <- SMA(CMG$CMG.Close, 3)
 CMGma10 <- SMA(CMG$CMG.Close, 10)
 CMGma30 <- SMA(CMG$CMG.Close, 30)
+CMGma100 <- SMA(CMG$CMG.Close, 100)
 
 # Plot different MA windows
 plot(CMG$CMG.Close)
@@ -31,6 +32,9 @@ lines(CMGma10, col='red')
 
 plot(CMG$CMG.Close)
 lines(CMGma30, col='red')
+
+plot(CMG$CMG.Close)
+lines(CMGma100, col='red')
 
 # End
 

@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Date: Oct-2019
+#' Date: Mar 28, 2022
 #' Purpose: Stock API request & Manipulate a Time Series Object
 #' 
 
@@ -33,8 +33,8 @@ oneYr <- AAPL["2017"]
 head(oneYr)
 tail(oneYr)
 
-# Extract data from Jan 2017 to May 2018 
-yrToMonth <- AAPL["2017/2018-05"]
+# Extract data from 1st trading day to Jan 2020 to Jan 2022
+yrToMonth <- AAPL["2020/2022-01"]
 head(yrToMonth)
 tail(yrToMonth)
 
@@ -43,8 +43,8 @@ dateToDate <- AAPL["2018-01-03/2018-06-21"]
 head(dateToDate)
 tail(dateToDate)
 
-#Get all data until Dec 2016 
-upUntil <- AAPL["/2016-12"] 
+#Get all data until Dec 2021 
+upUntil <- AAPL["/2021-12"] 
 head(upUntil)
 tail(upUntil)
 
