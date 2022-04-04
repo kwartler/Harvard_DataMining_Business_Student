@@ -1,61 +1,63 @@
 #' Author: Ted Kwartler
-#' Date: 10-30-2020
+#' Date: April 4, 2022
 #' Purpose: Lending Club score notes and visualize
 #' 
 
-# Options
-options(scipen=999)
+# WD
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/I_ConsumerCredit_NonTraditionalInvesting/data")
 
-# libs
+# Options
+options(scipen = 999)
+
+# Libraries
+#library(rpart) # you can try any of the methods from our class to improve performance
+#library(randomForest)
+library(dplyr)
 library(caret)
 library(e1071)
 library(vtreat)
-library(dplyr)
-library(rbokeh)
-library(MLmetrics)
 
-# Data Directory
-setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/K_ConsumerCredit_NonTraditionalInvesting/data")
+# I/O
+df <- read.csv('20K_sampleLoans.csv') 
+newNotes <- read.csv('OpenNotesJune18_v2.csv')
 
-# Custom Function
-source('~/Desktop/Harvard_DataMining_Business_Student/Lessons/K_ConsumerCredit_NonTraditionalInvesting/scripts/z_trimTrain.R')
+# Keep the pertinent information
+keeps <- c("loan_amnt", "term", "int_rate", "installment", "grade", "sub_grade", "emp_length" , "home_ownership", "annual_inc", "purpose", "title", "zip_code", "addr_state", "dti", "delinq_2yrs", "pub_rec_bankruptcies", "inq_last_6mths", "mths_since_last_delinq", "mths_since_last_record", "open_acc", "pub_rec", "revol_bal", "revol_util", "total_acc", "initial_list_status", "collections_12_mths_ex_med", "mths_since_last_major_derog","y")
+df    <- df[,keeps]
 
-# Training Data
-originalNotes <- read.csv("20K_sampleLoans.csv")
-newNotes      <- read.csv("OpenNotesJune18_v2.csv")
+## Sample
+set.seed(2022)
+idx        <- sample(1:nrow(df), 18000) #now we feel more comfortable with our model so we increase traning set
+training   <- df[idx,]
+validation <- df[-idx,]
 
-# Keep the pertinent information; as you explore you can add others or delete
-keeps <-c("loan_amnt", "term", "int_rate", "installment", "grade", "sub_grade", "emp_length" , "home_ownership", "annual_inc", "purpose", "title", "zip_code", "addr_state", "dti", "delinq_2yrs", "pub_rec_bankruptcies", "inq_last_6mths", "mths_since_last_delinq", "mths_since_last_record", "open_acc", "pub_rec", "revol_bal", "revol_util", "total_acc", "initial_list_status", "collections_12_mths_ex_med", "y")
+## Explore
+head(training)
 
-originalNotes <- originalNotes[,keeps]
+## Modify
+#Make % a numeric
+training$revol_util <- as.numeric(gsub('%', '', training$revol_util))
+training$int_rate   <- as.numeric(gsub('%', '', training$int_rate))
+training$term       <- as.numeric(gsub(' months','',training$term))
 
-## Data Prep
-originalNotes$term <- gsub('months', '', originalNotes$term) %>% 
-  as.character() %>% 
-  as.integer()
-originalNotes$revol_util <- gsub('%', '', originalNotes$revol_util) %>% 
-  as.character() %>% 
-  as.numeric()
-originalNotes$int_rate   <- gsub('%', '', originalNotes$int_rate) %>%
-  as.character() %>% 
-  as.numeric()
+validation$revol_util <- as.numeric(gsub('%', '', validation$revol_util))
+validation$int_rate   <- as.numeric(gsub('%', '', validation$int_rate))
+validation$term       <- as.numeric(gsub(' months','',validation$term))
 
-# Partition 10% for evaluating 
-set.seed(1234)
-num          <- (nrow(originalNotes) %/% 10) * 9
-idx          <- sample(1:nrow(originalNotes), num)
-trainingDF   <- originalNotes[idx, ]
-validationDF <- originalNotes[-idx,]
+newNotes$revol_util <- as.numeric(gsub('%', '', newNotes$revol_util))
+newNotes$int_rate   <- as.numeric(gsub('%', '', newNotes$int_rate))
+newNotes$mths_since_last_major_derog <- as.numeric(newNotes$mths_since_last_major_derog)
 
-# Make a plan on all the data
-dataPlan <-designTreatmentsC(dframe  = trainingDF, 
-                             varlist = keeps,
-                             outcomename = 'y', 
-                             outcometarget = 1)
 
-# Prepare all partitions
-treatedTrain <- prepare(dataPlan, trainingDF)
-treatedTest  <- prepare(dataPlan, validationDF)
+# Now easy variable treatment plan
+dataPlan <- designTreatmentsC(dframe        = training, 
+                              varlist       = keeps,
+                              outcomename   = 'y', 
+                              outcometarget = 1)
+
+# Now apply the plan to the data
+treatedTrain <- prepare(dataPlan, training)
+treatedValid <- prepare(dataPlan, validation)
 treatedNew   <- prepare(dataPlan, newNotes)
 
 # Model w/increased CV
@@ -69,13 +71,10 @@ finalFit <- train(as.factor(y) ~ .,
                   method    = "glm", 
                   family    = "binomial",
                   trControl = crtl)
-finalFit <- trimTrain(finalFit)
-#saveRDS(finalFit, 'glm_finalFit_10Fold.rds')
-finalFit <- readRDS('glm_finalFit_10Fold.rds')
 
 # Make predictions for 3 partitions
 trainProbs    <- predict(finalFit, treatedTrain, type = 'prob')
-testProbs     <- predict(finalFit, treatedTest, type = 'prob')
+testProbs     <- predict(finalFit, treatedValid, type = 'prob')
 newNotesProbs <- predict(finalFit, treatedNew, type = 'prob')
 
 # Change the cutoff threshold
@@ -86,15 +85,15 @@ cutoffProbsNewNotes <- ifelse(newNotesProbs[,2]>=cutoff, 1, 0)
 
 # Accuracy
 Accuracy(treatedTrain$y, cutoffProbsTrain)
-Accuracy(treatedTest$y, cutoffProbsTest)
+Accuracy(treatedValid$y, cutoffProbsTest)
 
 table(treatedTrain$y, cutoffProbsTrain)
-table(treatedTest$y, cutoffProbsTest)
+table(treatedValid$y, cutoffProbsTest)
 
 ## Suppose you want to review "A" and low risk notes 20% chance of default
 # Organize
-testSetComparison <- data.frame(y     = treatedTest$y, #actual outcome
-                                grade = validationDF$grade, #lending club guess
+testSetComparison <- data.frame(y     = validation$y, #actual outcome
+                                grade = validation$grade, #lending club guess
                                 risk  = testProbs[,1]) #probability of 0 in model
 head(testSetComparison)
 
@@ -106,13 +105,13 @@ testSetBEST <- subset(testSetComparison,
                       testSetComparison$grade == "A" & 
                         testSetComparison$risk <= 0.2 )
 
-# How many were 0 in the ENTIRE test set?  
+# How many were 0 in the ENTIRE test set? Random Selection 
 sum(testSetComparison$y==0) / nrow(testSetComparison)
 
-# How many were 0 among "A" (their best guess)?
+# How many were 0 among "A" (their best guess)? Accept their model
 sum(onlyA$y==0)/nrow(onlyA)
 
-# How many were "A" and 20% default risk for comparison (our best guess)?
+# How many were "A" and 20% default risk for comparison (our best guess)? Combine their expertise & our model
 sum(testSetBEST$y==0) / nrow(testSetBEST)
 
 # Using "A" & "20%" now apply to open/new loans
@@ -138,7 +137,7 @@ mktPlot <- figure(legend_location = "bottom_right") %>%
             hover = list(id, risk, reward, LCgrade)) 
 mktPlot
 
-# Make a CAPM-style Plot
+# Make a CAPM-style Risk/Reward Plot
 mktPlot2 <- mktPlot %>% 
   ly_abline(a      = 7.0, 
             b      = 0,

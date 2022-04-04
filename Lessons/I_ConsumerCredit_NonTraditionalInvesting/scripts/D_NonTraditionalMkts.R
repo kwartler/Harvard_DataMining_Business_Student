@@ -7,13 +7,13 @@
 library(triangle)
 
 # Setwd
-setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/K_ConsumerCredit_NonTraditionalInvesting/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/I_ConsumerCredit_NonTraditionalInvesting/data")
 
 # "Open" a pack with the correct card rarities function
-source('~/Desktop/Harvard_DataMining_Business_Student/Lessons/K_ConsumerCredit_NonTraditionalInvesting/scripts/Z_crackPack.R')
+source('~/Desktop/Harvard_DataMining_Business_Student/Lessons/I_ConsumerCredit_NonTraditionalInvesting/scripts/Z_crackPack.R')
 
 # Get card values accounting for distribution by rarity type
-source('~/Desktop/Harvard_DataMining_Business_Student/Lessons/K_ConsumerCredit_NonTraditionalInvesting/scripts/Z_cardValues.R')
+source('~/Desktop/Harvard_DataMining_Business_Student/Lessons/I_ConsumerCredit_NonTraditionalInvesting/scripts/Z_cardValues.R')
 
 # Card list obtained online
 cards <- read.csv("Guilds_10_16_18.csv" , fileEncoding="latin1")
@@ -45,7 +45,7 @@ sum(eachPackValue)
 # How much profit?
 boxPrice <- 83.5
 shippingHandling <- 20
-(sum(eachPackValue) - (boxPrice+shippingHandling)) / boxPrice
+boxPrice / (sum(eachPackValue) - (boxPrice+shippingHandling)) 
 
 # There is variability so let's open 100 boxes to understand the likelihood of making money
 boxes <- list()
@@ -78,12 +78,13 @@ plot(density(totalRevenue$packVal), main='Guilds of Ravnica')
 abline(v = boxPrice + shippingHandling, col = "red")
 abline(v = mean(totalRevenue$packVal), col = "blue")
 
-# Percent of boxes below cost; usually ~14% therefore 86% of making money
+# Percent of boxes below cost; usually ~19% therefore ~80% of making money
 length(subset(totalRevenue$packVal,
               totalRevenue$packVal <= (boxPrice + shippingHandling))) / nrow(totalRevenue)
-zScore <- ((boxPrice + shippingHandling) - mean(totalRevenue$packVal)) / sd(totalRevenue$packVal)
-pnorm(zScore)
-pnorm((boxPrice + shippingHandling), 
-      mean(totalRevenue$packVal),
-      sd(totalRevenue$packVal))
+redLeft <- ((boxPrice + shippingHandling) - mean(totalRevenue$packVal)) / sd(totalRevenue$packVal)
+redLeft
+pnorm(redLeft) #probability of left of Red assuming normal distribution
+pnorm(q    = (boxPrice + shippingHandling), 
+      mean = mean(totalRevenue$packVal),
+      sd   = sd(totalRevenue$packVal))
 # End
