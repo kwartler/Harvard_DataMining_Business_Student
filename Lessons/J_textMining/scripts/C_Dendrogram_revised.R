@@ -7,7 +7,7 @@
 #'
 
 # Set the working directory
-setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/H_textMining/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/J_textMining/data")
 
 # Libs
 library(tm)
@@ -84,10 +84,11 @@ plot(freq_terms(text$text, top=35, at.least=2, stopwords = customStopwords))
 # Inspect word associations
 associations <- findAssocs(beerTDM, 'zombie', 0.30)
 associations
+t(t(unlist(associations)))
 
 # Organize the word associations
-zombieDF <- data.frame(terms=names(associations[[1]]),
-                     value=unlist(associations))
+zombieDF <- data.frame(terms = names(associations[[1]]),
+                       value = unlist(associations))
 zombieDF$terms <- factor(zombieDF$terms, levels=zombieDF$terms)
 zombieDF
 
@@ -100,7 +101,7 @@ ggplot(zombieDF, aes(y=terms)) +
 ############ Back to PPT
 
 # Reduce TDM
-beerTDM2 <- removeSparseTerms(beerTDM, sparse=0.97) #shoot for ~50 terms; higher sparse = higher # of terms ie 97% of terms can have 0 and still be included.  98+% 0s not allowed or another way 3% of cells have a value  
+beerTDM2 <- removeSparseTerms(beerTDM, sparse=0.97) #shoot for ~50 terms;  i.e.  3% of cells have a non-zero value in a row.  If the row has 100 columns (terms) then 3 or more have a value.  Lowering to 0.96 sparsity means 4 or more cells have a value and so on.  
 beerTDM2
 
 # Organize the smaller TDM

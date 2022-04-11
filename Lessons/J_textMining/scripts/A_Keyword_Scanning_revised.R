@@ -3,21 +3,20 @@
 #' Author: Ted Kwartler
 #' email: edwardkwartler@fas.harvard.edu
 #' License: GPL>=3
-#' Date: 2020-Apr-13
+#' Date: APRIL 10 2022
 #'
 
 # Set the working directory
-setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/H_textMining/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/J_textMining/data")
 
 # Libs
 library(stringi)
 
 # Options & Functions
-options(stringsAsFactors = FALSE) #text strings will not be factors of categories
 Sys.setlocale('LC_ALL','C') #some tweets are in different languages so you may get an error
 
 # Get Data
-text <- read.csv('coffee.csv', header=TRUE)
+text <- read.csv('coffee.csv')
 
 # Logical T/F vector that a string appears at least ONCE
 coffee    <- grepl("coffee", text$text, ignore.case=TRUE)
@@ -39,7 +38,7 @@ sum(coffee) / nrow(text)
 sum(starbucks) / nrow(text)
 sum(mugGlassCup) / nrow(text)
 
-# Count occurences of words per tweet
+# Count occurrences of words per tweet
 theCoffee <- stri_count(text$text, fixed="the")
 sum(theCoffee) / nrow(text)
 

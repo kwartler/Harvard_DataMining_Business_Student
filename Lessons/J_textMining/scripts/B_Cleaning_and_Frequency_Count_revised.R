@@ -3,17 +3,16 @@
 #' Author: Ted Kwartler
 #' email: edwardkwartler@fas.harvard.edu
 #' License: GPL>=3
-#' Date: 2020-Apr-13
+#' Date: April 10 2022
 #'
 
 # Set the working directory
-setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/H_textMining/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/J_textMining/data")
 
 # Libs
 library(tm)
 
 # Options & Functions
-options(stringsAsFactors = FALSE)
 Sys.setlocale('LC_ALL','C')
 
 tryTolower <- function(x){
@@ -51,14 +50,10 @@ names(text)[1] <- 'doc_id' #first 2 columns must be 'doc_id' & 'text'
 txtCorpus <- VCorpus(DataframeSource(text))
 
 # Preprocess the corpus
-txtCorpus <- cleanCorpus(txtCorpus)
+txtCorpus <- cleanCorpus(txtCorpus, customStopwords)
 
 # Check Meta Data; brackets matter!!
-txtCorpus[[4]]
-meta(txtCorpus[[4]])
-meta(txtCorpus[4])
-
-content(txtCorpus[4])
+t(meta(txtCorpus[4]))
 content(txtCorpus[[4]])
 
 # Need to plain text cleaned copy?

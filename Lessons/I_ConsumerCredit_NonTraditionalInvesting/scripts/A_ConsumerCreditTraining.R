@@ -55,7 +55,6 @@ treatedValid <- prepare(dataPlan, validation)
 ncol(training)
 ncol(treatedTrain)
 names(treatedTrain)
-names(treatedTrain)
 
 ## Model
 # Now let's do a logistic regression with a 3 fold CV
