@@ -78,6 +78,7 @@ ggplot(topWords, aes(x=word, y=frequency)) +
 
 # qdap version, will not work if there is a java issue
 plot(freq_terms(text$text, top=35, at.least=2, stopwords = customStopwords))
+x <- freq_terms(text$text, top=35, at.least=2, stopwords = customStopwords)
 
 ############ Back to PPT
 

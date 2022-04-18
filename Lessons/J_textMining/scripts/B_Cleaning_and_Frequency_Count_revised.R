@@ -37,7 +37,7 @@ cleanCorpus<-function(corpus, customStopwords){
 }
 
 # Create custom stop words
-customStopwords <- c(stopwords('english'), 'lol', 'smh')
+customStopwords <- c(stopwords('english'), 'lol', 'smh', 'rofl')
 
 # Data
 text <- read.csv('coffee.csv', header=TRUE)
