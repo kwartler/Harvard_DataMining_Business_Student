@@ -116,7 +116,7 @@ emos <- data.frame(table(nrcSent$emotion))
 names(emos) <- c('emotion', 'termsCt')
 emos %>% 
   e_charts(emotion) %>% 
-  e_radar(termsCt, max = max(emos$termsCt), name = "President Trump 565 Articles Emotions") %>%
+  e_radar(termsCt, max = max(emos$termsCt), name = "565 Articles Emotions") %>%
   e_tooltip(trigger = "item") %>% e_theme("dark-mushroom")
 
 # Other Emotion Lexicons Exist
