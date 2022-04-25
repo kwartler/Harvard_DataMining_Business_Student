@@ -18,8 +18,8 @@ Sys.setlocale("LC_CTYPE", "en_US.UTF-8")
 setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/L_APIs_webscraping_dashboarding/data")
 
 # Youtube URL
-#https://www.youtube.com/watch?v=Q-wRhzWaCac
-youtubeCaption <- 'https://www.youtube.com/api/timedtext?v=5F-o2_AC-Wo&asr_langs=de%2Cen%2Ces%2Cfr%2Cid%2Cit%2Cja%2Cko%2Cnl%2Cpt%2Cru%2Ctr%2Cvi&caps=asr&exp=xftt%2Cxctw&xoaf=5&hl=en&ip=0.0.0.0&ipbits=0&expire=1638245284&sparams=ip%2Cipbits%2Cexpire%2Cv%2Casr_langs%2Ccaps%2Cexp%2Cxoaf&signature=4CC3FCA3BEA19AFEBC44EE8AE52D767B5563017C.0FAB89F1907DCD1B07ACCA6217D8697B1F241066&key=yt8&kind=asr&lang=en&fmt=json3&xorb=2&xobt=3&xovt=3'
+#https://www.youtube.com/watch?v=5F-o2_AC-Wo
+youtubeCaption <- 'https://www.youtube.com/api/timedtext?v=5F-o2_AC-Wo&caps=asr&xoaf=5&hl=en&ip=0.0.0.0&ipbits=0&expire=1650941452&sparams=ip%2Cipbits%2Cexpire%2Cv%2Ccaps%2Cxoaf&signature=6F3C40AAD2A1824BE66ECC57B7A3B7E45A5173CE.3F52295766BF06DE4C1E9DC9A304982FFF661DF9&key=yt8&kind=asr&lang=en&fmt=json3&xorb=2&xobt=3&xovt=3'
 
 # Go get the data
 dat <- fromJSON(youtubeCaption)

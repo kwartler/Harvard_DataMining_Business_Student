@@ -9,8 +9,8 @@ library(stringr)
 
 # Query
 searchQ <- URLencode('Series A') #machine learning
-savePth <- "~/Desktop/HULT/hult_NLP_admin/Jan Prep/" # remember the trailing slash!
-testing <- F
+savePth <- "~/Desktop/Harvard_DataMining_Business_Student/Lessons/L_APIs_webscraping_dashboarding/data/tmp/" # remember the trailing slash!
+testing <- T
 fileFormat <- 'csv' #or fst
 
 # Initialize

@@ -3,7 +3,7 @@
 #' Author: Ted Kwartler
 #' email: edwardkwartler@fas.harvard.edu
 #' License: GPL>=3
-#' Date: Oct 20, 2021
+#' Date: Apr 25, 2022
 #'
 
 # libraries
@@ -21,9 +21,10 @@ rating <- movie %>%
   as.numeric()
 rating
 
-# _somtimes_ helpful to see all nodes
-castURL <- paste0(movieURL,'/fullcredits')
 # https://www.imdb.com/title/tt0058331/fullcredits
+castURL <- paste0(movieURL,'/fullcredits')
+
+# _somtimes_ helpful to see all nodes
 castURL %>%
   read_html() %>%
   html_nodes("*") %>% 
@@ -38,7 +39,7 @@ cast <- castURL %>%
   html_text()
 cast
 
-# Webscraping is messy!
+# Webscraping can be messy!
 cast  <- gsub("[\r\n]", "", cast)
 cast  <- lapply(cast, trimws)
 cast  <- unlist(cast)
@@ -57,7 +58,6 @@ allURLS
 mediaURLS <- allURLS[ grep('mediaviewer',allURLS, ignore.case = T)]
 mediaURLS[1]
 movieURL
-gsub('/title/tt0058331','',mediaURLS[1])
 postURL <- paste0(movieURL,gsub('/title/tt0058331','',mediaURLS[1]))
 postURL
 
