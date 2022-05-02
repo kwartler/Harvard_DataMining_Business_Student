@@ -4,7 +4,7 @@
 #'Megacorp is a hypothetical large and successful corporation that makes modern high-tech products. Whenever Megacorp advertises new job vacancies, their human resources team are overwhelmed by the many people who apply for a role. They want an automated process to filter through the resumes, to give them a short list of applicants who match best. Megacorp has a database containing the resumes and hiring results of applicants from the past few years. They track variables like age, gender, education and other details around the job applicant’s profile, and they want to use the text from the resume, including participation in extracurricular activities.
 
 # Set WD
-setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/M_GrowthModels/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/M_GrowthModels_Ethics/data")
 options(scipen = 999)
 
 
@@ -182,6 +182,5 @@ bestTerms <- bestTerms[order(bestTerms$value, decreasing=T), ] #proxies
 
 # Indicative of "male"
 head(bestTerms, 15)
-
 
 # End

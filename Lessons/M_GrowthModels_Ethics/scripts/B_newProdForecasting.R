@@ -4,7 +4,7 @@
 #' 
 
 # Set the working directory
-setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/M_GrowthModels/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/M_GrowthModels_Ethics/data")
 options(scipen=999)
 
 # libs
@@ -45,7 +45,7 @@ plot(hdTVpreds$frc[,3],  type = 'l', main = 'Imitators', col = 'blue')
 # TV Sets sold among imitators
 plot(hdTVpreds$frc[,4],  type = 'l', main = 'Imitators', col = 'red')
 
-# 
+# total by yr
 tmpAnnualSales <- data.frame(yr = 1:length(hdTVpreds$frc[,3]), 
                              inno = hdTVpreds$frc[,3], 
                              imit = hdTVpreds$frc[,4])

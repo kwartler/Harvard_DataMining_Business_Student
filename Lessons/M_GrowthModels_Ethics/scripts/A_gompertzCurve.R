@@ -4,7 +4,7 @@
 #' 
 
 # Set the working directory
-setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/M_GrowthModels/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/M_GrowthModels_Ethics/data")
 options(scipen=999)
 
 # libs
@@ -53,7 +53,7 @@ amznGrowth <- gompertz(t      = 1:22,
                        beta   = model3$Parameters[2,], 
                        k      = model3$Parameters[3,])
 plot(amzn$revB, type = 'l')
-points(amznGrowth, col='red')
+lines(amznGrowth, col='red')
 
 ## Alpha is the  asymptote or upper limit
 # since amzn revenue doesn't appear to be slowing down it is quite high; obviously marco-factors like the pandemic change this type of forecasting so rolling forward and refitting can be useful.

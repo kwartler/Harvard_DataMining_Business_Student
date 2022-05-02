@@ -13,7 +13,6 @@
 #'https://www.r-bloggers.com/covid-19-in-belgium/
 #'http://rstudio-pubs-static.s3.amazonaws.com/6852_c59c5a2e8ea3456abbeb017185de603e.html
 #'https://rpubs.com/choisy/sir
-
 # libs
 library(EpiDynamics)
 
@@ -54,15 +53,14 @@ PlotMods(sir)
 # Using Covid infection & recovery from papers as of May 2020
 betaVal  <- 1.75 #10 infected people will infect 17.5 people "how much movement is going on"
 gammaVal <- .5 #R0 (Rate of recovery) = beta/gamma 
-#R0 was said to be ~3.5 and means
-#3.5 susceptible people get exposed per infected person; 
+# A paper said China recovered minus death div infected =(47367-2945)/80151 cited in a paper from May21 = 0.5542289; 
+## Gamma of 0.5 means 1/2 of an infected person is recovering each day
+#R0 was said to be ~3.5 in papers and means
 # beta/gamma = R0
 # 1.75 / gamma = 3.5
 # 1.75 = 3.5 * gamma
 # 1.75 / 3.5 = gamma
 # 0.5 = gamma
-# Another paper said China recovered minus death div infected =(47367-2945)/80151 cited in a paper from May21 = 0.5542289; 
-## Gamma of 0.5 means  12 of an infected person is recovering each day
 
 sirC <- SIR(pars = c(beta = betaVal, gamma = gammaVal), 
            init = initials, time = 0:totalDays)
@@ -71,7 +69,7 @@ PlotMods(sirC)
 
 # Let's apply some social distancing to decrease the infection rate
 betaVal  <- 1.1 #when a person is infected they will infect 1.1 more people instead of 1.75
-gammaVal <- .5 
+gammaVal <- .5 #recovery is the same, but in reality new treatments improve this over time
 sirD <- SIR(pars = c(beta = betaVal, gamma = gammaVal), 
            init = initials, time = 0:totalDays)
 PlotMods(sirD)
