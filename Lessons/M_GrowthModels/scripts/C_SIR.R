@@ -52,16 +52,17 @@ plot(sir$results$R, col='blue', type='l') #at any given point how many are recov
 PlotMods(sir)
 
 # Using Covid infection & recovery from papers as of May 2020
-betaVal  <- 1.75 #10 infected people will infect 17.5 people
+betaVal  <- 1.75 #10 infected people will infect 17.5 people "how much movement is going on"
 gammaVal <- .5 #R0 (Rate of recovery) = beta/gamma 
 #R0 was said to be ~3.5 and means
-#3.5 susceptible people get exposed per infected person
+#3.5 susceptible people get exposed per infected person; 
 # beta/gamma = R0
 # 1.75 / gamma = 3.5
 # 1.75 = 3.5 * gamma
 # 1.75 / 3.5 = gamma
 # 0.5 = gamma
-# Anoter paper said China recovered minus death div infected =(47367-2945)/80151 cited in a paper from May = 0.5542289; 
+# Another paper said China recovered minus death div infected =(47367-2945)/80151 cited in a paper from May21 = 0.5542289; 
+## Gamma of 0.5 means  12 of an infected person is recovering each day
 
 sirC <- SIR(pars = c(beta = betaVal, gamma = gammaVal), 
            init = initials, time = 0:totalDays)
@@ -69,21 +70,23 @@ sirC <- SIR(pars = c(beta = betaVal, gamma = gammaVal),
 PlotMods(sirC)
 
 # Let's apply some social distancing to decrease the infection rate
-betaVal  <- 1.1 #when a person is infect they will infect 1.1 more people instead of 1.75
+betaVal  <- 1.1 #when a person is infected they will infect 1.1 more people instead of 1.75
 gammaVal <- .5 
 sirD <- SIR(pars = c(beta = betaVal, gamma = gammaVal), 
            init = initials, time = 0:totalDays)
 PlotMods(sirD)
 
 # Plot the infection curves next to each other, the social distanced one is lower meaning hospitals aren't overwhelmed and more people will recover vs die in the removed state.
-plot(sirC$results$R, col='green', type ='l')
-lines(sirD$results$R, col='green')
+# Recovery line is stretched out on x-axis
+plot(sirC$results$R, col='darkred', type ='l',  lwd = 5)
+lines(sirD$results$R, col='darkgreen',  lwd = 5)
 
-plot(sirC$results$I, col='red', type ='l')
-lines(sirD$results$I, col='red')
+# Infected line is not as high, meaning the capacity for care is less strained
+plot(sirC$results$I, col='darkred', type ='l',  lwd = 5)
+lines(sirD$results$I, col='darkgreen',  lwd = 5)
 
 # Conclusion
 # Keep in mind this a toy example to show how these factors interact.
-# Issues of personal behavior like distancing and not traveling/going to gatherings, spreading in different locations (coastal, south, upper midwest basically starts the process over in three+ waves), uneven access to healthcare in rural vs urban and systemic issues related to race all impact these curves. 
+# Issues of personal behavior like distancing, masking and not traveling/going to gatherings, spreading in different locations (coastal, south, upper midwest basically starts the process over in three+ waves), uneven access to healthcare in rural vs urban and systemic issues related to race all impact these curves. 
 
 # End

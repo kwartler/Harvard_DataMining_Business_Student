@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Data: 5-10-2021
+#' Data: May 2, 2022
 #' Purpose: Diffusion Modeling for Forecasting 
 #' 
 
@@ -9,6 +9,9 @@ options(scipen=999)
 
 # libs
 library(diffusion)
+library(ggplot2)
+library(tidyr)
+library(ggthemes)
 
 # Data
 hdTV <- read.csv("HDTV_shipments.csv")
@@ -26,43 +29,29 @@ bassParam <- c(.005,.84,318) #p,q for color TV; these values are often found onl
 fitBass   <- diffusion(hdTV[, 2], type = "bass",w = bassParam)
 
 # Predict
-hdTVpreds <- predict(fitBass, h = (26-nrow(hdTV)))
+hdTVpreds <- predict(fitBass, h = (26-(nrow(hdTV)+1))) #account for yr0 and first 4 yrs in data
 
 # Examine
+hdTVpreds$fit
 hdTVpreds$frc
 hdTV
 
-# Visuals
-plot(c(hdTV$HDTV.Shipments, hdTVpreds$frc[,2]), type = 'l', 
-     main = 'Annual Shipments Bass')
-points(hdTV$HDTV.Shipments, col = 'red')
+# Total Market adoption by year
+plot(hdTVpreds$frc[,1], type = 'l', main = 'total market')
 
-plot(c(hdTV$Cumulative.HDTV.Shipments, hdTVpreds$frc[,1]), type = 'l', 
-     main = 'Total Cumulative Market (saturation) Bass')
-points(hdTV$Cumulative.HDTV.Shipments, col = 'red')
+# TV Sets sold among innovators
+plot(hdTVpreds$frc[,3],  type = 'l', main = 'Imitators', col = 'blue')
 
-# Gompertz
-#For the Gompertz curve, vector w needs to be in the form of ("a", "b", "m"). Where "a" is the x-axis displacement coefficient, "b" determines the growth rate and "m" sets, similarly to Bass model, the market potential (saturation point).
-# from nlsfit(alpha=99.32796, beta=3.785561, k=0.2043271) for color TV
-gompParams <- c(a=3.785561, b=0.2043271, m=318)
-fitGomp <- diffusion(hdTV[, 2], type = "gompertz", w =gompParams)
+# TV Sets sold among imitators
+plot(hdTVpreds$frc[,4],  type = 'l', main = 'Imitators', col = 'red')
 
-# Predict
-hdTVgomPreds <- predict(fitGomp, h = (26-nrow(hdTV)))
+# 
+tmpAnnualSales <- data.frame(yr = 1:length(hdTVpreds$frc[,3]), 
+                             inno = hdTVpreds$frc[,3], 
+                             imit = hdTVpreds$frc[,4])
 
-# Examine
-hdTVgomPreds$frc
-
-# Visuals
-plot(c(hdTV$HDTV.Shipments, hdTVgomPreds$frc[,2]), type = 'l', 
-     main = 'Annual Shipments Gompertz')
-points(hdTV$HDTV.Shipments, col = 'red')
-
-plot(c(hdTV$Cumulative.HDTV.Shipments, hdTVgomPreds$frc[,1]), type = 'l', 
-     main = 'Total Cumulative Market (saturation) Gompertz')
-points(hdTV$Cumulative.HDTV.Shipments, col = 'red')
-
-# Plot not as good a fit but the high point is similar so there is expected variance in adoption given some mkt saturation point.  Planning would probably be something in between unless there is a definite reason to pick one over the other.
+tmpAnnualSales <- tidyr::pivot_longer(tmpAnnualSales, -yr)
+ggplot(data = tmpAnnualSales, aes(x = yr, y = value, fill = name)) + geom_col() + theme_gdocs()
 
 
 # End

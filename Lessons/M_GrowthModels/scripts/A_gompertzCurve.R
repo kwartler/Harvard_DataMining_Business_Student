@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Data: Dec 13-2021
+#' Data: May 2, 2022
 #' Purpose: Gompertz Curve Examples
 #' 
 
@@ -29,10 +29,12 @@ plot(colorTV$PercentAdoptions, type = 'l')
 lines(colorGrowth, col='red')
 
 # Not great so let's have the computer optimize the parameters using OLS
-model2 <- nlsfit(colorTV, model = 10, start = c(a = 100, b = 2, c = .1))
+model2 <- nlsfit(data  = colorTV, 
+                 model = 10, #10 = "y~a*exp(-b*exp(-c*x)" gompertz; others in docs
+                 start = c(a = 100, b = 2, c = .1)) #iterations of the inputs
 model2
 
-colorGrowth <- gompertz(t      = 1:26,
+colorGrowth <- gompertz(t      = 1:nrow(colorTV),
                         alpha  = model2$Parameters[1,], 
                         beta   = model2$Parameters[2,], 
                         k      = model2$Parameters[3,])
@@ -40,7 +42,7 @@ colorGrowth <- gompertz(t      = 1:26,
 plot(colorTV$PercentAdoptions, type = 'l')
 lines(colorGrowth, col='red')
 
-# What about another phenom
+# What about another product
 amzn <- read.csv("AMZN_Ann_Rev.csv")
 amzn$revB <- amzn$revMill/1000
 model3 <- nlsfit(data.frame(yr=1:22,revB=amzn$revB), 
