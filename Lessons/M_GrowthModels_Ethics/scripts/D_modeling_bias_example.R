@@ -7,6 +7,7 @@
 setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/M_GrowthModels/data")
 options(scipen = 999)
 
+
 # Libs
 library(text2vec)
 library(caret)
@@ -124,17 +125,17 @@ testCandidateData <- testCandidateData[,-grep('Hired|_catP',
 
 # Get Test preds
 testPreds   <- predict(candidateFit,
-                        as.matrix(testCandidateData),
-                        type = 'class',
-                        s    = candidateFit$lambda.min)
+                       as.matrix(testCandidateData),
+                       type = 'class',
+                       s    = candidateFit$lambda.min)
 table(testPreds, testCandidates$Hired)
 Accuracy(testPreds, testCandidates$Hired)
 
 # Let's investigate further
 trainDF <- data.frame(Preds  = trainPreds[,1], 
-                     actuals    = trainCandidates$Hired,
-                     AgeBracket = trainCandidates$AgeBracket,
-                     Gender     = trainCandidates$Gender)
+                      actuals    = trainCandidates$Hired,
+                      AgeBracket = trainCandidates$AgeBracket,
+                      Gender     = trainCandidates$Gender)
 testDF <- data.frame(Preds  = testPreds[,1], 
                      actuals    = testCandidates$Hired,
                      AgeBracket = testCandidates$AgeBracket,
@@ -166,12 +167,12 @@ dem_parity(data = testDF,
 
 # Since gender was removed, let's figure out whats happening.
 genderFit <- cv.glmnet(as.matrix(allCandidateData),
-                          y=as.factor(trainCandidates$Gender), #predicting "male"
-                          alpha=0.9,
-                          family='binomial',
-                          type.measure='auc',
-                          nfolds=3,
-                          intercept=F)
+                       y=as.factor(trainCandidates$Gender), #predicting "male"
+                       alpha=0.9,
+                       family='binomial',
+                       type.measure='auc',
+                       nfolds=3,
+                       intercept=F)
 
 # Subset to impacting terms to identify issues for rebuilding the model
 bestTerms <- subset(as.matrix(coefficients(genderFit)), 
