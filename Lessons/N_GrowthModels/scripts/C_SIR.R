@@ -51,9 +51,9 @@ plot(sir$results$R, col='blue', type='l') #at any given point how many are recov
 PlotMods(sir)
 
 # Using Covid infection & recovery from papers as of May 2020
-betaVal  <- 1.75 #10 infected people will infect 17.5 people "how much movement is going on"
+betaVal  <- 1.75 #10 infected people will infect 17.5 people "how much movement is going on" & "how virulent"
 gammaVal <- .5 #R0 (Rate of recovery) = beta/gamma 
-# A paper said China recovered minus death div infected =(47367-2945)/80151 cited in a paper from May21 = 0.5542289; 
+# A paper said China recovered minus death div infected =(47367-2945)/80151 cited in May21 = 0.5542289; 
 ## Gamma of 0.5 means 1/2 of an infected person is recovering each day
 #R0 was said to be ~3.5 in papers and means
 # beta/gamma = R0
@@ -85,6 +85,6 @@ lines(sirD$results$I, col='darkgreen',  lwd = 5)
 
 # Conclusion
 # Keep in mind this a toy example to show how these factors interact.
-# Issues of personal behavior like distancing, masking and not traveling/going to gatherings, spreading in different locations (coastal, south, upper midwest basically starts the process over in three+ waves), uneven access to healthcare in rural vs urban and systemic issues related to race all impact these curves. 
+# Issues of personal behavior like distancing, masking and not traveling/going to gatherings, spreading in different locations (coastal, south, upper midwest basically starts the process over in three+ waves), uneven access to healthcare in rural vs urban and systemic issues related to race, income and access to healthcare all impact these curves. 
 
 # End

@@ -4,7 +4,7 @@
 #' 
 
 # Set the working directory
-setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/M_GrowthModels_Ethics/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/N_GrowthModels/data")
 options(scipen=999)
 
 # libs
@@ -29,15 +29,15 @@ plot(colorTV$PercentAdoptions, type = 'l')
 lines(colorGrowth, col='red')
 
 # Not great so let's have the computer optimize the parameters using OLS
-model2 <- nlsfit(data  = colorTV, 
+model2 <- nlsfit(data  = colorTV, #1st col is "explanatory" ie just time passing yr1,2...
                  model = 10, #10 = "y~a*exp(-b*exp(-c*x)" gompertz; others in docs
                  start = c(a = 100, b = 2, c = .1)) #iterations of the inputs
 model2
 
 colorGrowth <- gompertz(t      = 1:nrow(colorTV),
-                        alpha  = model2$Parameters[1,], 
-                        beta   = model2$Parameters[2,], 
-                        k      = model2$Parameters[3,])
+                        alpha  = model2$Parameters[1,], #maximum of the curve ie 99.3279%
+                        beta   = model2$Parameters[2,], #maximum displacement 
+                        k      = model2$Parameters[3,]) #max growth rate
 
 plot(colorTV$PercentAdoptions, type = 'l')
 lines(colorGrowth, col='red')

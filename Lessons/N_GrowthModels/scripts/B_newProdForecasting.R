@@ -4,7 +4,7 @@
 #' 
 
 # Set the working directory
-setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/M_GrowthModels_Ethics/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/N_GrowthModels/data")
 options(scipen=999)
 
 # libs
@@ -24,17 +24,17 @@ hdTV
 #color tv data was 26yrs to 98%
 
 # Fit a bass model
-# bassParam <- c(p = .008,q = .421, m = 318) #from textbook
-bassParam <- c(.005,.84,318) #p,q for color TV; these values are often found online
+bassParam <- c(p = .008,q = .421, m = 318) #from textbook
+#bassParam <- c(.005,.84,318) #p,q for color TV; these values are often found online
 fitBass   <- diffusion(hdTV[, 2], type = "bass",w = bassParam)
 
 # Predict
 hdTVpreds <- predict(fitBass, h = (26-(nrow(hdTV)+1))) #account for yr0 and first 4 yrs in data
 
 # Examine
-hdTVpreds$fit
+hdTVpreds$fit[,3] #innovator sales 
+hdTV$HDTV.Shipments
 hdTVpreds$frc
-hdTV
 
 # Total Market adoption by year
 plot(hdTVpreds$frc[,1], type = 'l', main = 'total market')
