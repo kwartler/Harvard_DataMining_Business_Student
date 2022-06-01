@@ -165,6 +165,28 @@ dem_parity(data = testDF,
            group = 'Gender',
            preds = 'Preds', base = 'Male')
 
+# What about by probability
+trainDF$trainProbs <- predict(candidateFit,
+                      as.matrix(allCandidateData),
+                      type = 'response',
+                      s    = candidateFit$lambda.min)
+dem_parity(data = trainDF, 
+           outcome = 'actuals', 
+           group = 'Gender',
+           probs = 'trainProbs',
+           preds = 'Preds', base = 'Male')
+
+testDF$trainProbs <- predict(candidateFit,
+                             as.matrix(testCandidateData),
+                              type = 'response',
+                              s    = candidateFit$lambda.min)
+dem_parity(data = testDF, 
+           outcome = 'actuals', 
+           group = 'Gender',
+           probs = 'trainProbs',
+           preds = 'Preds', base = 'Male')
+
+
 # Since gender was removed, let's figure out whats happening.
 genderFit <- cv.glmnet(as.matrix(allCandidateData),
                        y=as.factor(trainCandidates$Gender), #predicting "male"

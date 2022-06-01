@@ -39,10 +39,10 @@ barplot(table(trainingTablesSectionA$NetWorth), las = 2)
 
 ## Modify 
 # Choose which variables are ethical to use, and others which may not be useful; here I just chose 5 variables
-informativeFeatures <- names(trainingTablesSectionA)[c(6,7,8,16,66)]
+informativeFeatures <- names(trainingTablesSectionA)[c(2:40,43,44,53:58,60:79)]
 plan  <- designTreatmentsN(trainingTablesSectionA, 
                            informativeFeatures,
-                           'yHat')
+                           'y_householdSpend')
 
 # Prepare all sections of the data
 train      <- prepare(plan, trainingTablesSectionA)
@@ -51,7 +51,7 @@ testing    <- prepare(plan, testingTables)
 prospects  <- prepare(plan, prospectTables)
 
 ## Model(s)
-fitLM <- lm(yHat ~ ., train)
+fitLM <- lm(y_householdSpend ~ ., train)
 
 ## Assess all models
 summary(fitLM)
@@ -61,8 +61,8 @@ validationPreds <- predict(fitLM, validation)
 testingPreds    <- predict(fitLM, testing)
 
 # Choose the best model; evaluate all models and look for consistency among training, validation and test sets.  You dont know the propsect yHat so you can't evaluate that.
-rmse(train$yHat, trainPreds)
-
+rmse(train$y_householdSpend, trainPreds)
+rmse(validation$y_householdSpend,validationPreds)
 
 # Make predictions on the prospect file
 prospectsPreds  <- predict(fitLM, prospects)
