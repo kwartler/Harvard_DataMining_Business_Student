@@ -22,7 +22,7 @@ pacman::p_load(ggplot2, ggthemes, rbokeh, maps,
                arules,fst, recommenderlab,reshape2,
                TTR,quantmod, htmltools,
                PerformanceAnalytics,rpart, data.table,
-               pbapply, rbokeh, stringi, tm, qdap,
+               pbapply, rbokeh, stringi, tm, qdap, readr,
                dendextend, wordcloud, RColorBrewer,
                tidytext, radarchart, RCurl, openNLP, xml2, stringr,
                devtools, flexdashboard, rmarkdown, httr)
