@@ -8,7 +8,7 @@
 #'
 
 ## Set the working directory
-setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/A_IntroToR/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 
 # Libs
 library(maps)
@@ -16,12 +16,13 @@ library(ggthemes)
 library(ggplot2)
 library(leaflet)
 library(mapproj)
-library(RCurl)
+library(readr)
 
 # Import
-gitFile <- url('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/A_IntroToR/data/amznWarehouses.csv')
-amzn <- read.csv(gitFile)
 #amzn <- read.csv('amznWarehouses.csv')
+gitFile <- url('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/A_IntroToR/data/amznWarehouses.csv')
+amzn <- read_csv(gitFile)
+
 
 # This is messy webscraped data, check out the state.
 tail(amzn$STATE,25)
@@ -87,7 +88,6 @@ ggNE +
              color = 'red', alpha=0.5) 
 
 # County and single state
-#ma       <- subset(us, us$region=='massachusetts') # Other way to get just a state
 counties <- map_data("county")
 MAcounty <- subset(counties, region == "massachusetts")
 onlyMA   <- subset(NEwarehouses,NEwarehouses$stateAbb=='MA')
