@@ -1,25 +1,31 @@
 #' Author: Ted Kwartler
-#' Data: Jan 30 2022
+#' Data: 9-05-2022
 #' Purpose: Load data, explore it and visualize it
 
 ## Set the working directory
-setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/B_IntroToDM_EDA/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 
 ## Load the libraries; 1st time use install.packages('ggplot2')
 library(ggplot2)
 library(ggthemes)
 library(rbokeh)
+library(readr)
 
 ## Bring in some data
-screenTime <- read.csv('on_screen_time.csv')
-scenes     <- read.csv('force_awakens_scenes.csv')
-characters <- read.csv('force_awakens_character_info.csv',stringsAsFactors = F)
+screenTime <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/B_IntroToDM_EDA/data/on_screen_time.csv')
+scenes     <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/B_IntroToDM_EDA/data/force_awakens_scenes.csv')
+characters <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/B_IntroToDM_EDA/data/force_awakens_character_info.csv')
+
+# For new R programmers, let's change from a "tibble" to a simple data frame, this isn't really needed but simplifies things for class
+screenTime <- as.data.frame(screenTime)
+scenes     <- as.data.frame(scenes)
+characters <- as.data.frame(characters)
 
 ## Exploratory Data Analysis, and indexing
 head(screenTime)
 
 # New Column
-screenTime$duration <- screenTime$end - screenTime$start
+screenTime$length <- screenTime$end - screenTime$start  # add new column by taking the difference between vectors
 head(screenTime)
 
 # Dimensions
@@ -42,13 +48,19 @@ set.seed(1234) #just for consistency in class
 idx <- sample(1:nrow(screenTime),5) # Take 5 rows from the data set, notice the nested function
 sampledData <- screenTime[idx,]
 
-# scenes
-scenes$length <- scenes$end - scenes$start # add new column by taking the difference between vectors
+# Create a new column for each scene
+scenes$length <- scenes$end - scenes$start # same as before but different data frame
 
 # More EDA
 summary(scenes$length) #base summary stats, quartile of a named vector
 
 # Sort to find longest scenes
+# Example in two lines
+reorderedIndex <- order(scenes$length, decreasing=T) # get the numeric re-order
+reorderedIndex # examine results
+scenes <- scenes[reorderedIndex,] #remember "rows, then columns" so place as the row index left of the comma
+
+# Example in 1 line nesting functions
 scenes <- scenes[order(scenes$length, decreasing=T),] #reorder the data frame by the new length column
 
 # Examine the 10 longest scenes, more EDA
@@ -66,7 +78,6 @@ characterTally <- as.matrix(table(screenTime$character)) #nesting functions oper
 head(characterTally)
 
 # Reorder the rows
-order(characterTally, decreasing=T)
 characterTally <- characterTally[order(characterTally, decreasing=T),] # order the data frame
 head(characterTally)
 
@@ -77,7 +88,7 @@ barplot(characterTally[1:5],
 
 plot(characterTally, main='Force Awakens: Character Scene Tally')
 
-# Save a basic plot to disk 
+# Save a basic plot to disk in the personal folder since it was set as the "working directory"
 png("characterTally_plot.png")
 plot(characterTally, main='Force Awakens: Character Scene Tally')
 dev.off()

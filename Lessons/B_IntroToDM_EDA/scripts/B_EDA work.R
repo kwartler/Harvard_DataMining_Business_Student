@@ -1,17 +1,19 @@
 #' Author: Ted Kwartler
-#' Date: 9-13-2021
+#' Date: 9-05-2022
 #' Purpose: Cereal EDA
 #' 
 
 # libs
 library(radiant.data)
 library(DataExplorer)
+library(readr)
 
 # Set WD
-setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/B_IntroToDM_EDA/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 
-# Data
-cereal <- ----.---('Cereals.csv')
+# Data look up on github
+cereal <- ----_---('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/B_IntroToDM_EDA/data/Cereals.csv')
+cereal <- as.data.frame(cereal) # again, just to make it easier in class but not a requirement
 
 # What's the overall structure  & dimensions of the data?
 str(   )
