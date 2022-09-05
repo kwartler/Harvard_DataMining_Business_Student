@@ -1,17 +1,18 @@
 #' Author: Ted Kwartler
-#' Date: Feb 6 2022
+#' Date: Sept 5 2022
 #' Purpose: Fundraising PreProcessing
 
 # Setwd
-setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/C_ModelingProcess_DataPrep/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 
 # Libs
 library(vtreat)
 library(dplyr)
+library(readr)
 options(scipen = 999)
 
 # Read in the data
-donors<- read.csv('fakeDonorBureau_v2.csv')
+donors<- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/D_DM_Workflow/data/fakeDonorBureau_v2.csv')
 
 # Examine; Here you would perform EDA
 summary(donors)
@@ -24,7 +25,7 @@ informativeFeatures
 targetVariable      <- names(donors)[20]
 targetVariable
 
-# Examine the levels of Y
+# Examine the levels of Y1_Donation
 levels(as.factor(donors$Y1_Donation))
 
 # Declare the correct level for success for the use case
@@ -33,7 +34,7 @@ successClass        <- 'Yes'
 # Automated variable processing
 # for **categorical** outcomes 
 # i. e.will the prospective donor give Y/N
-# inputs: DATA, NAMES OF INFORMATIVE VARS, RESPONSE VAR, SUCCESS CLASS
+# inputs: DATA FRAME, NAMES OF INFORMATIVE VARS, RESPONSE VAR, SUCCESS CLASS
 plan <- designTreatmentsC(donors, 
                           informativeFeatures,
                           targetVariable, 
@@ -50,7 +51,7 @@ summary(treatedData)
 rm(list=ls())
 
 # Data
-donors <- read.csv('fakeDonorBureau_v2.csv')
+donors <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/D_DM_Workflow/data/fakeDonorBureau_v2.csv')
 plot(density(donors$Y2_DonatedAmt))
 
 # for **numeric** outcomes 
@@ -71,10 +72,10 @@ summary(treatedData)
 rm(list=ls())
 
 # Data
-donors <- read.csv('fakeDonorBureau_v2.csv')
+donors <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/D_DM_Workflow/data/fakeDonorBureau_v2.csv')
 
 # Fictitious Data Enrichment
-thirdPartyData <- read.csv( 'fakeDataEnrichment.csv')
+thirdPartyData <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/D_DM_Workflow/data/fakeDataEnrichment.csv')
 
 # Examine
 head(thirdPartyData)
@@ -99,5 +100,30 @@ donationProbability <- predict(fit, treatedLeftData, type='response')
 
 head(donationProbability)
 plot(density(donationProbability))
+
+# let's examine some records
+resultsDF <- data.frame(actualOutcome  = treatedLeftData$Y1_Donation,
+                        modelProbabilities = donationProbability)
+head(resultsDF, 10)
+
+# Create a cutoff
+resultsDF$predictedClass <- ifelse(resultsDF$modelProbabilities >= 0.50, "Yes", "No")
+head(resultsDF, 10)
+
+# When did the actual and predicted class agree?
+agreement <- ifelse(resultsDF$actualOutcome==resultsDF$predictedClass, T, F)
+sum(agreement) / nrow(resultsDF)
+
+#### of course there are better ways to look at this using a confusion matrix, Accuracy, ROC (covered later) and in business context for the top demi-decile accuracy
+
+# An example of top decile, meaning when the model is MOST sure how accurate is it?
+# get top demi-decile
+deciles <- quantile(resultsDF$modelProbabilities, probs = seq(.05,.95, by = .05))
+deciles
+deciles[19]
+
+topDemi <- subset(resultsDF, resultsDF$modelProbabilities >=deciles[19])
+demiDecileAgreement <- ifelse(topDemi$actualOutcome==topDemi$predictedClass, T, F)
+sum(demiDecileAgreement) / nrow(topDemi)
 
 # End
