@@ -13,7 +13,7 @@ install.packages('ggplot2')
 
 # or 
 install.packages('pacman')
-pacman::p_load(ggplot2, ggthemes, rbokeh, maps, 
+pacman::p_load(ggplot2, ggthemes, ggdark, rbokeh, maps, 
                ggmap, leaflet, radiant.data, DataExplorer,
                vtreat, dplyr, ModelMetrics, pROC,
                MLmetrics, caret, e1071, plyr, 

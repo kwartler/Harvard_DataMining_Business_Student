@@ -70,34 +70,48 @@ totalNights
 ggplot(data = totalNights, aes(x = yr, y = NightOccupied)) + geom_col() + 
   theme_few() + geom_text(aes(label = NightOccupied), color = 'white',vjust = 1.5)
 
-# If the data is "atomic" can't be broken down further  you can use geom_bar to get a count.
+# If the data is "atomic" i.e. can't be broken down further  you can use geom_bar to get a count.
 # Our data is not atomic so each bar represents the number of times it appears ie two months in our data set had 10 nights occupied, like the histogram
 ggplot(data = possiblePurchase, aes(x = NightOccupied)) + geom_bar() + 
   theme_few() 
 
-# Side by side bar chart to compare values by category
-ggplot(data = possiblePurchase, aes(x = Month, y = Avg.Price.Per.Night, fill = yr)) +
-  geom_bar(stat = "identity", position = position_dodge(), alpha = 0.75) + 
-  geom_text(aes(label = Avg.Price.Per.Night), fontface = "bold", vjust = 1.5,
+# Side by side bar chart to compare values by category; month is really a class or a month not a numeric so factor() is used
+df <- subset(possiblePurchase, possiblePurchase$yr != '2020') #d yrrop 2020 incomplete
+ggplot(data = df, aes(x = factor(month), y = NightOccupied, fill = yr)) +
+  geom_bar(position=position_dodge(), stat="identity") + 
+  geom_text(aes(label = NightOccupied), fontface = "bold", vjust = 1.5,
             position = position_dodge(.9), size = 2) + 
   theme_few()
 
-# Stacked bar chart: used to compare proportional values within a category
-# month occupied vs not each month
+# Stacked bar chart: used to compare  values within a category, 
+dataStack <- data.frame(month  = as.factor(df$month),
+                        yr     = df$yr,
+                        vacant = df$closingDate-df$NightOccupied,
+                        occupied= df$NightOccupied)
+
+ggplot(data = dataStack, aes(fill=yr, y=vacant, x=month)) + 
+  geom_bar(position="stack", stat="identity") + 
+  theme_few()
 
 # filled stacked:  used to compare proportion only within a category
-# Since this example occupancy has to do with tourist seasons the proportion and not value may be more valuable
-# month occupied vs not each month
+# Make a "goodMonth" indicator as an example
+possiblePurchase$goodMonth <- ifelse(possiblePurchase$NightOccupied>15, "good", "bad")
+ggplot(possiblePurchase, aes(x = factor(month), fill = goodMonth)) +
+  geom_bar(position = "fill") +
+  scale_y_continuous(labels = scales::percent) +
+  theme_few()
 
 
-# Pareto charts let you see the values and rate of change.  Maybe against Few's principles though!
+# Pareto charts let you see the values and rate of change, linear, exponential etc.  Maybe against Few's principles though!
 # Simpler to rearrange the data
-df <- data.frame(history = 1:nrow(possiblePurchase),
+df <- data.frame(history            = 1:nrow(possiblePurchase),
                  Operating.Expenses = possiblePurchase$Operating.Expenses,
-                 cumSumExp = cumsum(Operating.Expenses = possiblePurchase$Operating.Expenses))
+                 cumSumExp          = cumsum(Operating.Expenses = possiblePurchase$Operating.Expenses))
 ggplot(data = df, aes(x= history, y = Operating.Expenses)) +
   geom_col() + 
-  geom_line(data = df, aes(x=history, y =cumSumExp)) + 
+  geom_line(data = df, aes(x=history, y =cumSumExp, color = 'red'))  + 
+  theme_few() +
+  theme(legend.position = "none") 
 
 # Or a convenient package for it
 pareto.chart(df$Operating.Expenses)
