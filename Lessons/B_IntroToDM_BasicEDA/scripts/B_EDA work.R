@@ -12,7 +12,7 @@ library(readr)
 setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 
 # Data look up on github
-cereal <- ----_---('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/B_IntroToDM_EDA/data/Cereals.csv')
+cereal <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/B_IntroToDM_BasicEDA/data/Cereals.csv')
 cereal <- as.data.frame(cereal) # again, just to make it easier in class but not a requirement
 
 # What's the overall structure  & dimensions of the data?
