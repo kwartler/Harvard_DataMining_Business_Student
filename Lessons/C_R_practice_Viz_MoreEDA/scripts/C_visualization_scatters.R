@@ -4,20 +4,21 @@
 #' Good resource: https://r-graphics.org/
 
 # wd
-setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/C_R_practice_Viz_MoreEDA/data")
+setwd("~/Documents/Harvard_DataMining_Business_Student/personalFiles")
+
 
 # libs
 library(ggplot2)
 library(ggthemes)
 library(readr)
 library(lubridate)
-library(ggdark) # ok ok, I forgot this one ;)
+#library(ggdark) # ok ok, I forgot this one ;)
+#library(CalledStrike)  # ok ok,my bad!
 library(dplyr)
 
 # Load
 possiblePurchase <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/C_R_practice_Viz_MoreEDA/data/MarthasVineyardCondo.csv')
 possiblePurchase <- as.data.frame(possiblePurchase)
-names(possiblePurchase) <- make.names(names(possiblePurchase))
 
 # Clean it up - column names
 names(possiblePurchase) <- make.names(names(possiblePurchase))
@@ -53,7 +54,7 @@ possiblePurchase$Month <- as.Date(paste(possiblePurchase$yr,possiblePurchase$mon
 head(possiblePurchase)
 
 # Simple Scatter: relationship between two variables
-scatterPlotBase <- ggplot(data = possiblePurchase, aes(x=NightOccupied, y=EffectiveGrossIncome)) + geom_point() 
+scatterPlotBase <- ggplot(data = possiblePurchase, aes(x=NightOccupied, y=EffectiveGrossIncome)) + geom_point() + theme_gdocs()
 scatterPlotBase
 
 # Now add a trend line, linear regression 
@@ -73,14 +74,16 @@ ggplot(data = possiblePurchase, aes(x=NightOccupied, y=EffectiveGrossIncome, siz
 # a Cleveland Dot plot, xy both class levels, color and size can be other dimensions but this shows only 3
 df <- subset(possiblePurchase, possiblePurchase$yr !='2020')
 ggplot(data = df, aes(x=yr, y=factor(month), size = NetOperatingIncome, color = NetOperatingIncome)) + 
-  geom_point() +  scale_colour_viridis_c(option = "magma")  + dark_theme_gray() + 
+  geom_point() +  scale_colour_viridis_c(option = "magma")  + 
+  ggdark::dark_theme_gray() + 
   theme(legend.position = "none") +
   labs(x="year", y = "month", title= "Operating Income MV Condo")
 
 # Another view with 4 different continuous, the difference is subtle, here larger circles show more occupied nights, color is income.  If you could have a single very expensie night it could show up as a small dot but still be bright
 df <- subset(possiblePurchase, possiblePurchase$yr !='2020')
 ggplot(data = df, aes(x=yr, y=factor(month), size = NightOccupied, color = NetOperatingIncome)) + 
-  geom_point() +  scale_colour_viridis_c(option = "magma")  + dark_theme_gray() + 
+  geom_point() +  scale_colour_viridis_c(option = "magma")  + 
+  ggdark::dark_theme_gray() + 
   theme(legend.position = "none") +
   labs(x="year", y = "month", title= "Operating Income MV Condo")
 
@@ -104,19 +107,19 @@ ggplot(incomes) +
 
 # Deal w over-plotting
 # Load other data, use the EXACT path on your computer
-pth <- '~/Desktop/Harvard_DataMining_Business_Student/Lessons/C_R_practice_Viz_MoreEDA/data/player_copy.rds'
+pth <- '~/Documents/Harvard_DataMining_Business_Student/Lessons/C_R_practice_Viz_MoreEDA/data/player_copy.rds'
 player <- readRDS(pth)
 head(data.frame(player$plate_x, player$plate_z))
 pitchingLocations <- data.frame(plate_x = player$plate_x, plate_z = player$plate_z)
-basePlot <- ggplot(data = pitchingLocations, aes(x = plate_x, y = plate_z)) + theme_wsj() + ggtitle("Miguel Castro's Pitch Locations")
-basePlot+ geom_point()
+basePlot <- ggplot(data = pitchingLocations, aes(x = plate_x, y = plate_z)) + ggtitle("Miguel Castro's Pitch Locations")
+basePlot + geom_point() + ggdark::dark_theme_classic()
 
 # Jitter, move dots slightly
-basePlot + geom_jitter(width = 0.2, height = 0.20)
-basePlot + geom_jitter(width = 0.7, height = 0.70)
+basePlot + geom_point(color = 'red') + ggdark::dark_theme_classic() + geom_jitter(width = 0.7, height = 0.20)
+basePlot + geom_jitter(width = 0.7, height = 0.70)  + ggdark::dark_theme_classic()
 
 # Alpha, make semi-transparent
-basePlot + geom_point(alpha = 0.25)
+basePlot + geom_point(alpha = 0.25)  + ggdark::dark_theme_classic()
 
 # Make a 2d Density plot 
 basePlot + geom_density_2d_filled(contour_var = 'ndensity') + theme(legend.position = "none") 

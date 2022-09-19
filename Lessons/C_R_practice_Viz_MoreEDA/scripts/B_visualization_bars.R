@@ -4,7 +4,7 @@
 #' Good resource: https://r-graphics.org/
 
 # wd
-setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/C_R_practice_Viz_MoreEDA/data")
+setwd("~/Documents/Harvard_DataMining_Business_Student/personalFiles")
 
 # libs
 library(ggplot2)

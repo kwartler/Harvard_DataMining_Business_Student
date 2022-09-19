@@ -1,3 +1,9 @@
+#' Author: Ted Kwartler
+#' Date: Sept 5 2022
+#' Purpose: R popular visuals
+#' Good resource: https://r-graphics.org/
+
+library(stringr)
 #Mixed Media
 #https://github.com/tashapiro/tanya-data-viz/tree/main/dicaprio-gfs
 df<-data.frame(
@@ -144,4 +150,4 @@ ggplot(df, aes(x= gdp, y = 0)) +
        caption = "Data source: twitter@MaxCRoser, https://ourworldindata.org/carbon-price") 
   ggtitle(bquote('Decoupling: Countries that achieved economic growth while reducing' ~CO[2]~ 'emissions, 2005-19'))
 
-# Animate: https://twitter.com/bill_gross/status/1564848640492838912?s=11&t=HkA6eJkLiuMHr3y7nobRWQ; https://svs.gsfc.nasa.gov/4975; https://www.climate-lab-book.ac.uk/spirals/
+# End

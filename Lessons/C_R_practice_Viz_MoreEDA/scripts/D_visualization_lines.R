@@ -1,14 +1,11 @@
 #' Author: Ted Kwartler
 #' Date: Sept 5 2022
-#' Purpose: R bar visual ggplot line chart examples
-#' Good resource: https://r-graphics.org/
-#' Author: Ted Kwartler
-#' Date: Sept 5 2022
-#' Purpose: R bar visual ggplot bars examples
+#' Purpose: R ggplot line chart examples
 #' Good resource: https://r-graphics.org/
 
+
 # wd
-setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/C_R_practice_Viz_MoreEDA/data")
+setwd("~/Documents/Harvard_DataMining_Business_Student/personalFiles")
 
 # libs
 library(ggplot2)
@@ -64,45 +61,30 @@ ggplot(data = possiblePurchase, aes(x=month, y=NightOccupied, group=yr, color=yr
   labs(fill="")
 
 # Here we see all data points, although not continuous we can see the peak to trough 
-totalTimeline <- ggplot(data = possiblePurchase, aes(x=Month, y=NightOccupied)) +
+totalTimeline <- ggplot(data = possiblePurchase, aes(x=month, y=NightOccupied, group=yr, color=yr)) +
   geom_line() + 
   theme_few() +
   labs(fill="")
 totalTimeline
 
-# For emphasis you can add points & labels to interesting points
-topN <- subset(possiblePurchase, possiblePurchase$NightOccupied > 20)
-totalTimeline + geom_point(data = topN,aes(x=Month, y=NightOccupied), color = 'red', size = 2) + 
-  geom_text(data = topN, aes(label = NightOccupied,x=Month, y=NightOccupied), hjust = 1.25)
 
 # cumsum by group, really compelling with many groups and time component, could be a "line chart" also though
 rap <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/C_R_practice_Viz_MoreEDA/data/rapSongsTimeline_wrangledData.csv')
 rap <- as.data.frame(rap)
 head(rap)
-ggplot(songTimeline,  aes(x     = endTime,
-                          y     = cumulativeWords, 
+totalWords <- rap %>% group_by(song) %>% summarise(maxWords = max(cumulativeWords, na.rm=TRUE))
+totalTime <- rap %>% group_by(song) %>% summarise(endTime = max(endTime, na.rm=TRUE))
+rapStats <- left_join(totalWords, totalTime,  by = "song")
+rapStats$eminem <- grepl('Eminem', rapStats$song, ignore.case = T)
+ggplot(rap,  aes(x = endTime,
+                y  = cumulativeWords, 
                           group = song, 
                           color = eminem)) +
   geom_line(alpha = 0.25) +
-  geom_point(data =totalWords, aes(x     = endTime,
-                                   y     = cumulativeWords, 
-                                   group = song, 
-                                   color = eminem), size = 2) +
-  dark_theme_minimal()+
+  geom_point(data =rapStats, aes(x     = endTime,
+                                 y   = maxWords, 
+                                 group = endTime,
+                                 color = eminem), size = 2) +
+  theme_minimal() +
   ggtitle('30 Rap Songs, Eminem Rate of Speech Vs Others')
-
-# Or Facet Wrap
-ggplot(songTimeline,  aes(x     = endTime,
-                          y     = cumulativeWords, 
-                          group = song)) +
-  geom_line(alpha = 0.25) +
-  geom_point(data =totalWords, aes(x     = endTime,
-                                   y     = cumulativeWords, 
-                                   group = song), color = 'red',size = 2) +
-  geom_text(data  = totalWords, aes(label=song),
-            hjust = "inward", vjust = "inward", size = 1.5) +
-  dark_theme_minimal()  + facet_wrap(~eminem) +
-  ggtitle('30 Rap Songs, Eminem Rate of Speech Vs Others')
-
-
 # End
