@@ -4,8 +4,7 @@
 #' Good resource: https://r-graphics.org/
 
 # wd
-setwd("~/Documents/Harvard_DataMining_Business_Student/personalFiles")
-
+setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 # libs
 library(ggplot2)
 library(ggthemes)
