@@ -4,7 +4,7 @@
 #' Good resource: https://r-graphics.org/
 
 # wd
-setwd("~/Documents/Harvard_DataMining_Business_Student/personalFiles")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 
 
 # libs
@@ -107,7 +107,7 @@ ggplot(incomes) +
 
 # Deal w over-plotting
 # Load other data, use the EXACT path on your computer
-pth <- '~/Documents/Harvard_DataMining_Business_Student/Lessons/C_R_practice_Viz_MoreEDA/data/player_copy.rds'
+pth <- '~/Desktop/Harvard_DataMining_Business_Student/Lessons/C_R_practice_Viz_MoreEDA/data/player_copy.rds'
 player <- readRDS(pth)
 head(data.frame(player$plate_x, player$plate_z))
 pitchingLocations <- data.frame(plate_x = player$plate_x, plate_z = player$plate_z)
