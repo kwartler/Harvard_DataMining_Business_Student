@@ -60,13 +60,6 @@ ggplot(data = possiblePurchase, aes(x=month, y=NightOccupied, group=yr, color=yr
   theme_few() +
   labs(fill="")
 
-# Here we see all data points, although not continuous we can see the peak to trough 
-totalTimeline <- ggplot(data = possiblePurchase, aes(x=month, y=NightOccupied, group=yr, color=yr)) +
-  geom_line() + 
-  theme_few() +
-  labs(fill="")
-totalTimeline
-
 
 # cumsum by group, really compelling with many groups and time component, could be a "line chart" also though
 rap <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/C_R_practice_Viz_MoreEDA/data/rapSongsTimeline_wrangledData.csv')

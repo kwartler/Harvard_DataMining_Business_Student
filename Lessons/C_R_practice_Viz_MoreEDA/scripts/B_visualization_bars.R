@@ -54,7 +54,7 @@ head(possiblePurchase)
 
 #  density: numeric and distribution matters; this isn't a great dataset for it, similar to a histogram, from the same variable
 ggplot(data = possiblePurchase, aes(x=NightOccupied)) +
-  geom_density( color="red", alpha=0.6, position = 'identity', bins = 20) + 
+  geom_density( color="red", alpha=0.6, position = 'identity') + 
   theme_few() 
 
 # histogram: buckets similar values to see the distribution from the same variable
