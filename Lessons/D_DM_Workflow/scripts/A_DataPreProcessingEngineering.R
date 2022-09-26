@@ -9,6 +9,8 @@ setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 library(vtreat)
 library(dplyr)
 library(readr)
+library(ggplot2)
+library(ggthemes)
 options(scipen = 999)
 
 # Read in the data
@@ -31,18 +33,25 @@ levels(as.factor(donors$Y1_Donation))
 # Declare the correct level for success for the use case
 successClass        <- 'Yes'
 
+# Select 10% for your preparation learning
+set.seed(1234)
+idx         <- sample(1:nrow(donors),.1*nrow(donors))
+prepData    <- donors[idx,]
+nonPrepData <- donors[-idx,]
+
 # Automated variable processing
 # for **categorical** outcomes 
 # i. e.will the prospective donor give Y/N
 # inputs: DATA FRAME, NAMES OF INFORMATIVE VARS, RESPONSE VAR, SUCCESS CLASS
-plan <- designTreatmentsC(donors, 
+plan <- designTreatmentsC(prepData, 
                           informativeFeatures,
                           targetVariable, 
                           successClass)
 
 # Apply the plan
+# If you apply prepare to the donors dataframe you trigger a warning about over fitting.  Overall not a huge deal in class but something to avoid in real application
 # WARNING's dont really impact us in class but this is caused since we use the original designTreatment data and are now preparing it so the a priori rule is broken
-treatedData <- prepare(plan, donors)
+treatedData <- prepare(plan, nonPrepData)
 
 # Lots more appended vars; still need to drop redundant flags but much faster and robust!
 summary(treatedData)
@@ -54,16 +63,23 @@ rm(list=ls())
 donors <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/D_DM_Workflow/data/fakeDonorBureau_v2.csv')
 plot(density(donors$Y2_DonatedAmt))
 
+# Select 10% for your preparation learning
+set.seed(2022)
+idx         <- sample(1:nrow(donors),.1*nrow(donors))
+prepData    <- donors[idx,]
+nonPrepData <- donors[-idx,]
+
+
 # for **numeric** outcomes 
 # how much will the prospective donor give?
 # DATA, NAMES OF INFORMATIVE VARS, RESPONSE VAR
 # For numeric Y we don't need to declare the "success class"
-plan <- designTreatmentsN(donors, 
+plan <- designTreatmentsN(prepData, 
                           names(donors)[3:19],
                           'Y2_DonatedAmt')
 
 # Apply the plan
-treatedData <- prepare(plan, donors)
+treatedData <- prepare(plan, nonPrepData)
 
 # Lots more appended vars; still need to drop redundant flags but much faster and robust!
 summary(treatedData)
@@ -84,12 +100,19 @@ head(thirdPartyData)
 # Bring new data to the 3120 donors
 leftData <- left_join(donors, thirdPartyData, by = c("uniqueID"))
 
+# 10% of the JOINED data used to prepare; prepare _after_ its all together
+set.seed(2023)
+idx         <- sample(1:nrow(leftData),.1*nrow(leftData))
+prepData    <- leftData[idx,]
+nonPrepData <- leftData[-idx,]
+
+
 ## A taste of whats to come...for those in the know, yes we are skipping a lot of steps.
-plan <- designTreatmentsC(leftData,
+plan <- designTreatmentsC(prepData,
                           names(leftData)[4:20],
                           'Y1_Donation',
                           'Yes')
-treatedLeftData <- prepare(plan, leftData)
+treatedLeftData <- prepare(plan, nonPrepData)
 fit             <- glm(as.factor(Y1_Donation) ~ ., treatedLeftData, family='binomial')
 
 # Our first model!
@@ -97,17 +120,19 @@ summary(fit)
 
 # Make some real predictions
 donationProbability <- predict(fit, treatedLeftData, type='response')
-
 head(donationProbability)
-plot(density(donationProbability))
 
 # let's examine some records
 resultsDF <- data.frame(actualOutcome  = treatedLeftData$Y1_Donation,
                         modelProbabilities = donationProbability)
 head(resultsDF, 10)
 
+# visualize the separation ie the distribution of probabilities for YES and NO groups.  This shows _small_ lift bc the "YES" is to the right of the "NO" distribution
+ggplot(data = resultsDF, aes(x = modelProbabilities, group = actualOutcome, fill = actualOutcome)) + 
+  geom_density(adjust = 1.5, alpha= 0.4) + theme_gdocs()
+
 # Create a cutoff
-resultsDF$predictedClass <- ifelse(resultsDF$modelProbabilities >= 0.50, "Yes", "No")
+resultsDF$predictedClass <- ifelse(resultsDF$modelProbabilities >= 0.5, "Yes", "No")
 head(resultsDF, 10)
 
 # When did the actual and predicted class agree?
