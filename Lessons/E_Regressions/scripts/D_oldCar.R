@@ -7,15 +7,16 @@
 library(vtreat)
 library(dplyr)
 library(ModelMetrics)
+library(readr)
 
 # Options
 options(scipen=999)
 
 # SetWD
-setwd("/Users/edwardkwartler/Desktop/Harvard_DataMining_Business_Student/Lessons/D_regression/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 
 # Dat
-cars <- read.csv('oldCar.csv')
+cars <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/E_Regressions/data/oldCar.csv')
 
 # Partitioning 20% test set
 splitPercent <- round(nrow(cars) %*% .8)

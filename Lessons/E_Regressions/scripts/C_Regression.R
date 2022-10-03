@@ -4,13 +4,14 @@
 #' 
 
 # Libs
+library(readr)
 options(scipen = 999)
 
 # Setwd
-setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/D_regression/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 
 # Data
-houses <-read.csv('BostonHousing.csv')
+houses <-read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/E_Regressions/data/BostonHousing.csv')
 houses <- houses[order(houses$MEDV), ]
 houses$realValue <- houses$MEDV*10000
 houses$MEDV <- NULL #original variable
