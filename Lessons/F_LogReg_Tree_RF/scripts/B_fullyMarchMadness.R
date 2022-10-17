@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Date: 9-23-19
+#' Date: Oct 17 2022
 #' Purpose: Fit a robust logistic regression on basketball data
 #' 
 
@@ -8,34 +8,48 @@ library(vtreat)
 library(MLmetrics)
 library(pROC)
 library(ggplot2)
+library(readr)
 
 # wd
-setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/E_LogReg/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 
 # Data
-bball <- read.csv('ncaa.csv')
+bball <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/F_LogReg_Tree_RF/data/ncaa.csv')
 
 # Identify the informative and target
 names(bball)
 targetVar       <- names(bball)[51]
 informativeVars <- names(bball)[3:47]
 
+# Segment the prep data
+set.seed(1234)
+idx         <- sample(1:nrow(bball),.1*nrow(bball))
+prepData    <- bball[idx,]
+nonPrepData <- bball[-idx,]
+nameKeeps <- bball$Name[-idx] #tracking team name for later
+
 # Design a "C"ategorical variable plan 
-plan <- designTreatmentsC(bball, 
+plan <- designTreatmentsC(prepData, 
                           informativeVars,
                           targetVar, 1)
 
 # Apply to xVars
-treatedX <- prepare(plan, bball)
+treatedX <- prepare(plan, nonPrepData)
+
+# Partition to avoid over fitting
+set.seed(2022)
+idx        <- sample(1:nrow(treatedX),.8*nrow(treatedX))
+train      <- treatedX[idx,]
+validation <- treatedX[-idx,]
 
 # Fit a logistic regression model
-fit <- glm(R1.Class.1.win ~., data = treatedX, family ='binomial')
+fit <- glm(R1.Class.1.win ~., data = train, family ='binomial')
 summary(fit)
 
 # Backward Variable selection to reduce chances of multi-colinearity
 # See chap6 for an explanation
 # Takes 1m  to run so load a pre-saved copy that I already made 
-bestFit <- step(fit, direction='backward')
+#bestFit <- step(fit, direction='backward')
 #saveRDS(bestFit, 'bestFit.rds')
 bestFit <- readRDS('bestFit.rds')
 summary(bestFit)
@@ -45,7 +59,7 @@ length(coefficients(fit))
 length(coefficients(bestFit))
 
 # Get predictions
-teamPreds <- predict(bestFit,  treatedX, type='response')
+teamPreds <- predict(bestFit,  validation, type='response')
 tail(teamPreds)
 
 # Classify 
@@ -53,9 +67,9 @@ cutoff      <- 0.5
 teamClasses <- ifelse(teamPreds >= cutoff, 1,0)
 
 # Organize w/Actual
-results <- data.frame(actual  = bball$R1.Class.1.win,
-                      team    = bball$Name,
-                      seed    = bball$Seeds,
+results <- data.frame(actual  = validation$R1.Class.1.win,
+                      team    = nameKeeps[-idx],
+                      seed    = validation$Seeds,
                       classes = teamClasses,
                       probs   = teamPreds)
 head(results)
@@ -84,25 +98,9 @@ plot(ROCobj)
 AUC(results$actual,results$classes)
 
 # Increase the cutoff to improve balanced accuracy
-newCutoff <- .55
+newCutoff <- .65
 newClasses <- ifelse(teamPreds >= newCutoff, 1,0)
 (confMat <- ConfusionMatrix(newClasses, results$actual))
 Accuracy(newClasses, results$actual)
-
-# Something more absurd; remember in games 50% is a coin flip
-absurdCutoff <- .95
-absurdClasses <- ifelse(teamPreds >= absurdCutoff, 1,0)
-(confMat <- ConfusionMatrix(absurdClasses, results$actual))
-Accuracy(absurdClasses, results$actual)
-ROCobj <- roc(absurdClasses, results$actual)
-plot(ROCobj)
-
-absurdCutoff <- .001
-absurdClasses <- ifelse(teamPreds >= absurdCutoff, 1,0)
-(confMat <- ConfusionMatrix(absurdClasses, results$actual))
-Accuracy(absurdClasses, results$actual)
-ROCobj <- roc(absurdClasses, results$actual)
-plot(ROCobj)
-
 
 # End

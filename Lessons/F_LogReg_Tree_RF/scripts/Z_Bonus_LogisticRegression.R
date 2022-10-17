@@ -3,7 +3,7 @@
 #' Goal: Build a default model using logistic regression
 
 # WD
-setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/E_LogReg/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 
 # Libraries
 library(ggplot2)
@@ -11,9 +11,10 @@ library(ggthemes)
 library(vtreat)
 library(MLmetrics)
 library(ROSE)
+library(readr)
 
 # Data
-ccData <- read.csv('UCI_Credit_Card.csv')
+ccData <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/F_LogReg_Tree_RF/data/UCI_Credit_Card.csv')
 
 idx <- sample(1:nrow(ccData), 30000*0.8)
 
@@ -42,6 +43,7 @@ plan <- designTreatmentsC(training,
                           targetVariable, 
                           successClass)
 
+# In reality you would partition the prepData as shown previously
 treatedTrain <- prepare(plan, training)
 treatedValidation <- prepare(plan, validation)
 
