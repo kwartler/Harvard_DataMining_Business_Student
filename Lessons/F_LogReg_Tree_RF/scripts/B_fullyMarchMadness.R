@@ -43,7 +43,7 @@ train      <- treatedX[idx,]
 validation <- treatedX[-idx,]
 
 # Fit a logistic regression model
-fit <- glm(R1.Class.1.win ~., data = train, family ='binomial')
+fit <- glm(`R1 Class 1=win` ~., data = train, family ='binomial')
 summary(fit)
 
 # Backward Variable selection to reduce chances of multi-colinearity
