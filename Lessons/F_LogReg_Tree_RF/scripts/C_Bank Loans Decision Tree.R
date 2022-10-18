@@ -49,7 +49,7 @@ head(trainProbs, 10)
 
 # Get the final class and actuals
 trainClass <- data.frame(class = colnames(trainProbs)[max.col(trainProbs)],
-                       actual = trainDat$y)
+                         actual = trainDat$y)
 head(trainClass, 10)
 
 # Confusion Matrix

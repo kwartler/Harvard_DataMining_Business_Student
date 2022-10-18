@@ -67,7 +67,7 @@ cutoff      <- 0.5
 teamClasses <- ifelse(teamPreds >= cutoff, 1,0)
 
 # Organize w/Actual
-results <- data.frame(actual  = validation$R1.Class.1.win,
+results <- data.frame(actual  = validation$`R1 Class 1=win`,
                       team    = nameKeeps[-idx],
                       seed    = validation$Seeds,
                       classes = teamClasses,
