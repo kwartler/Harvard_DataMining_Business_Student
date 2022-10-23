@@ -36,7 +36,6 @@ browsable(
 
 # One more
 stk <- getSymbols("HAS", auto.assign = F) 
-#stk <- stk["/2019-08-30"] #example of time subsetting 
 
 # Calc RSI
 STKrsi <- RSI(Cl(stk),
@@ -56,6 +55,7 @@ browsable(
 
 # Make it an indicator and back test
 rsiIndicator <- Lag(ifelse(STKrsi > 30 & STKrsi < 70,1,0))
+table(rsiIndicator)
 ret          <- ROC(Cl(stk))*rsiIndicator 
 charts.PerformanceSummary(ret)
 

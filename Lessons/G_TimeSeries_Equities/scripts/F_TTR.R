@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Date: Mar 28, 2022
+#' Date: Oct 21, 2022
 #' Purpose: Stock API request & Manipulate a Time Series Object
 #' 
 
@@ -71,6 +71,9 @@ head(OpCl(AAPL),5)
 # D3 Viz
 dygraph(AAPL$AAPL.Close)  %>% dyRangeSelector()
 
+
+# Example Candlestick & MANY TTR!
+# https://www.investing.com/equities/apple-computer-inc-candlestick
 candleAAPL <- AAPL[,1:4]
 dygraph(candleAAPL) %>%
   dyCandlestick() %>% dyRangeSelector()

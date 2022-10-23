@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Date: Mar 28, 2022
+#' Date: Oct 21, 2022
 #' Purpose: MACD Example As Indicator
 #'
 
@@ -42,18 +42,20 @@ CMGmacd <- MACD(CMG$CMG.Close,
                 maType="SMA", #Usually EMA
                 percent = F) # Values or Percents
 
-# Examine
-tail(CMGmacd,3)
-tail(manualSig,3)
+# Examine to ensure the underlying math is understood
+data.frame(manualSignal = as.vector(tail(manualSig,5)),
+           ttrSignal    = tail(CMGmacd$signal, 5),
+           manualMACD   = as.vector(tail(SMAdiff, 5)),
+           ttrMACD      = tail(CMGmacd$macd, 5))
 
-# Easier to interpret as a percent
+# For some it's easier to interpret as a percent of share price
 CMGmacdPer <- MACD(CMG$CMG.Close,
                 nFast = 12, 
                 nSlow = 26, 
                 nSig = 9, 
                 maType="SMA", 
                 percent = T)
-
+tail(CMGmacdPer)
 
 # As a trading indicator
 signal <- Lag(ifelse(CMGmacdPer$macd > CMGmacdPer$signal, 1, 0))
@@ -81,7 +83,7 @@ browsable(
   )
 )
 
-# Now let's visualize in a stacked dynamic plot
+# Now let's visualize in a stacked dynamic plot; anytime signal value is positive buy
 browsable(
   tagList(
     dygraph(CMG$CMG.Close, 

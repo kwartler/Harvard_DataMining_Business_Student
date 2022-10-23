@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Date: Mar 28, 2022
+#' Date: Oct 21, 2022
 #' Purpose: Simple Moving Avg Example As Indicator
 #'
 
@@ -39,7 +39,7 @@ tail(df, 25)
 table(df$Lag.1)
 
 # Now let's do it for a longer backtest with a different stock
-stk   <- getSymbols("X", auto.assign = F) 
+stk   <- getSymbols("NVDA", auto.assign = F) 
 stk   <- stk['2019-01-01/']
 ma50  <- SMA(Cl(stk), 50)
 ma200 <- SMA(Cl(stk), 200)
@@ -56,15 +56,10 @@ charts.PerformanceSummary(ret)
 plot(Cl(stk))
 
 # Now let's be knight cap and switch the logic!
-stk      <- getSymbols("X", auto.assign = F) 
-stk      <- stk['2019-01-01/']
-ma50     <- SMA(Cl(stk), 50)
-ma200    <- SMA(Cl(stk), 200)
 tradeSignal <- Lag(ifelse(ma50 > ma200  , 0, 1), k = 1)
 ret         <- ROC(Cl(stk))*tradeSignal #Rate of Change TTR::ROC()
 
 # Review your return
 charts.PerformanceSummary(ret)
-plot(Cl(stk))
 
 # End
