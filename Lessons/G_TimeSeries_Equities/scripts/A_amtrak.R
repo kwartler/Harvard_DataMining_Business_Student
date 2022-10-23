@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Date: 3-21-2022
+#' Date: 10-21-2022
 #' Purpose: Forecasting Basics
 #'
 
@@ -9,12 +9,15 @@ setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 # libs
 library(dygraphs)
 library(readr)
+library(dygraphs)
+library(lubridate)
 
 # Data
-df <- read.csv('Amtrak.csv')
+df <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/G_TimeSeries_Equities/data/Amtrak.csv')
 
 # Examine
 head(df, 10)
+tail(df,2)
 class(df)
 class(df$Month)
 
@@ -38,12 +41,10 @@ abline(a = riderLev, b = 0, col='red')
 dygraph(riders, main = "Amtrack Ridership") %>% 
   dyRangeSelector()
 
-# Bonus: Dealing with Dates
-library(lubridate)
-
+## Dealing with Dates
 # Make a date obj
 df$Month
-wrongData <- mdy(df$Month) ##HINT: WRONG!
+wrongData <- mdy(df$Month) ##HINT: WRONG! Be sure to know the month, day, yr order!
 
 # Now Check
 tail(df$Month, 10) #why would it just be the first 12 days of a month?  The ORDER is different!
