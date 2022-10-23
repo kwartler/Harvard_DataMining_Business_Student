@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Data: 3-21-2022
+#' Data: 10-21-2022
 #' Purpose: Naive Forecast for Nike
 #' 
 
@@ -10,14 +10,17 @@ options(scipen=999)
 library(lubridate)
 library(dygraphs)
 library(forecast)
+library(readr)
 
 # WD
-setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/G_RF_TimeSeries/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 
 # Data
-stockQtrRev <- read.csv('nike_qtr_rev.csv')
+stockQtrRev <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/G_TimeSeries_Equities/data/nike_qtr_rev.csv')
 stockQtrRev$date <- gsub(' 1:00','',stockQtrRev$date)
 stockQtrRev$date <- mdy(stockQtrRev$date)
+
+head(stockQtrRev)
 
 # Change to a time series
 stYr  <- year(stockQtrRev$date[1])
@@ -35,9 +38,8 @@ meanTS <- meanf(qtrTS, h=12)
 plot(meanTS)
 dev.off()
 
-
 # Compare to actual mean avg
-mean(stockQtrRev$revMill)
+mean(stockQtrRev$revMill, na.rm = T)
 tail(meanTS$fitted)
 
 # Naive - Drift "random walk forecast"; just get the trend
@@ -50,6 +52,11 @@ plot(naiveTS)
 
 # Naive - seasonal, repeat the last periodic pattern
 seasonalNaive <- snaive(qtrTS, h=12)
+plot(seasonalNaive)
+
+# Of course shocks to the system are problematic for naive methods
+fakeTS <- window(qtrTS, end = c(2020,4))
+seasonalNaive <- snaive(fakeTS, h=12)
 plot(seasonalNaive)
 
 # End

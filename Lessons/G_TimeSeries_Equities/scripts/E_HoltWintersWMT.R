@@ -6,16 +6,17 @@
 options(scipen=999)
 
 # Wd
-setwd("~/Users/edwardkwartler/Desktop/Harvard_DataMining_Business_Student/Lessons/G_RF_TimeSeries/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 
 # library
 library(forecast)
 library(lubridate)
 library(ggplot2)
 library(MLmetrics)
+library(readr)
 
 # Data
-wmt <- read.csv('WMT_Qtr_Rev.csv')
+wmt <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/G_TimeSeries_Equities/data/WMT_Qtr_Rev.csv')
 
 # Time formatting
 wmt$date <- as.POSIXct(wmt$unixTime, origin = '1970-1-1')
@@ -42,27 +43,24 @@ plot(qtrHW)
 predict(qtrHW, 4)
 
 # Out of time partition
-trainWMT <- wmt[1:108,]
-trainTS  <- ts(trainWMT$revMill, start = st, frequency = 4)
-
-validationWMT <- wmt[109:120,]
-validationTS  <- ts(validationWMT$revMill, start = c(2015, 3), frequency = 4)
+trainTS <- window(qtrTS, end = c(2014,4))
+validationTS <- window(qtrTS, start = c(2015,1))
 
 # Re-Fit HW with training dta
 qtrHW <- HoltWinters(trainTS, seasonal = 'mult')
 plot(qtrHW)
 
 # Make predictions on validation
-validForecasts <- predict(qtrHW, 12)
+validForecasts <- predict(qtrHW, length(validationTS))
 
 # Organize & Compare
 (validationDF <- data.frame(idx = seq_along(validForecasts),
-                            original = validationWMT$revMill,
+                            original = as.vector(validationTS),
                             fit = validForecasts))
 
 # Examine visual fit
 ggplot(validationDF) +
-  geom_line(aes(x=idx, y=original)) +
+  geom_line(aes(x=idx, y=original), color = 'black', alpha = 0.5) +
   geom_line(aes(x=idx, y=fit), colour='red') + theme_bw()
 
 # Get RMSE
