@@ -10,7 +10,7 @@ library(readr)
 library(lpSolve)
 
 # Suppose you built a model to predict points for football players for a given week
-playerInfo <- read_csv('playerInfo.csv')
+playerInfo <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/I_nonTraditionalMkt_LPsolve_RealEstate/data/playerInfo.csv')
 playerInfo <- as.data.frame(playerInfo)
 head(playerInfo)
 table(playerInfo$Position)
