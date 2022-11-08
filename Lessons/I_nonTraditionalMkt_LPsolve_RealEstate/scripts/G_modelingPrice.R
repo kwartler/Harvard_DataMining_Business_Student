@@ -67,7 +67,7 @@ fitDT <- train(PRICE ~., data = reducedTraining,
 fitLM <- lm(PRICE ~., data = reducedTraining) #remove URL from informative features)
 
 
-## Asses
+## Assess
 
 # DT
 fitDT
