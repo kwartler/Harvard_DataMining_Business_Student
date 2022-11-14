@@ -3,7 +3,7 @@
 #' Author: Ted Kwartler
 #' email: edwardkwartler@fas.harvard.edu
 #' License: GPL>=3
-#' Date: 2020-Apr-13
+#' Date: Nov 14 2022
 #' 
 
 # Set the working directory
@@ -50,7 +50,7 @@ bigramTokens <-function(x){
   }
   
 # Data
-text <- read.csv('chardonnay.csv', header=TRUE)
+text <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/chardonnay.csv', locale = locale(encoding = "Latin1"))
 
 # As of tm version 0.7-3 tabular was deprecated
 names(text)[1]<-'doc_id' 
@@ -67,8 +67,8 @@ wineTDM  <- TermDocumentMatrix(txtCorpus,
 wineTDMm <- as.matrix(wineTDM)
 
 # See a bi-gram
-grep('wine country', rownames(wineTDMm))
-wineTDMm[4440:4442,870:871]
+findTerm <- grep('wine country', rownames(wineTDMm)):(grep('wine country', rownames(wineTDMm))+5)
+wineTDMm[findTerm,870:871]
 
 # Get Row Sums & organize
 wineTDMv <- sort(rowSums(wineTDMm), decreasing = TRUE)

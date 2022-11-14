@@ -3,7 +3,7 @@
 #' Author: Ted Kwartler
 #' email: edwardkwartler@fas.harvard.edu
 #' License: GPL>=3
-#' Date: April 10 2022
+#' Date: Nov 14, 2022
 #'
 
 # Set the working directory
@@ -41,10 +41,11 @@ cleanCorpus<-function(corpus, customStopwords){
 customStopwords <- c(stopwords('english'), 'lol', 'smh', 'rofl')
 
 # Data
-text <- read.csv('coffee.csv', header=TRUE)
+text <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/coffee.csv', locale = locale(encoding = "Latin1")) # sometimes text encoding causes problems so declaring it as latin
 View(text)
 
 # As of tm version 0.7-3 tabular was deprecated
+?DataframeSource
 names(text)[1] <- 'doc_id' #first 2 columns must be 'doc_id' & 'text'
 
 # Make a volatile corpus
@@ -73,7 +74,8 @@ txtDtmM <- as.matrix(txtDtm)
 txtTdmM <- as.matrix(txtTdm)
 
 # Examine
-txtDtmM[610:611,491:493]
-txtTdmM[491:493,610:611]
+findTerm <- grep('^coffee$', colnames(txtDtmM)):(grep('^coffee$', colnames(txtDtmM))+5)
+txtDtmM[610:611,findTerm]
+txtTdmM[findTerm,610:611]
 
 # End

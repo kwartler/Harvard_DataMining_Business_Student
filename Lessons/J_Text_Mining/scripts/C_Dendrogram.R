@@ -3,7 +3,7 @@
 #' Author: Ted Kwartler
 #' email: edwardkwartler@fas.harvard.edu
 #' License: GPL>=3
-#' Date: Nov 1, 2021
+#' Date: Nov 14, 2022
 #'
 
 # Set the working directory
@@ -44,7 +44,7 @@ cleanCorpus <- function(corpus, customStopwords){
 customStopwords <- c(stopwords('english'), 'lol', 'smh', 'beer', 'amp')
 
 # Data 
-text <- read.csv('beer.csv', header=TRUE)
+text <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/beer.csv', locale = locale(encoding = "Latin1"))
 
 # As of tm version 0.7-3 tabular was deprecated
 names(text)[1] <- 'doc_id' 
@@ -81,6 +81,7 @@ ggplot(topWords, aes(x=word, y=frequency)) +
 # qdap version, will not work if there is a java issue
 plot(freq_terms(text$text, top=35, at.least=2, stopwords = customStopwords))
 x <- freq_terms(text$text, top=35, at.least=2, stopwords = customStopwords)
+head(x)
 
 ############ Back to PPT
 
@@ -91,7 +92,8 @@ t(t(unlist(associations)))
 
 # Organize the word associations
 zombieDF <- data.frame(terms = names(associations[[1]]),
-                       value = unlist(associations))
+                       value = unlist(associations),
+                       row.names = NULL)
 zombieDF$terms <- factor(zombieDF$terms, levels=zombieDF$terms)
 zombieDF
 

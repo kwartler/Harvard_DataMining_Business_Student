@@ -3,7 +3,7 @@
 #' Author: Ted Kwartler
 #' email: edwardkwartler@fas.harvard.edu
 #' License: GPL>=3
-#' Date: Nov 1, 2021
+#' Date: Nov 14, 2022
 #'
 
 # Set the working directory
@@ -46,10 +46,16 @@ customStopwords <- c(stopwords('english'), 'lol', 'smh',
                      'amp','drink', 'chardonnay', 'beer','coffee')
 
 # Read in multiple files as individuals
-txtFiles<-c('chardonnay.csv','coffee.csv','beer.csv') #use list.files() for a lot
+txtFiles<-c('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/chardonnay.csv',
+            'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/coffee.csv',
+            'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/beer.csv') #use list.files() for a lot
+
+# Object Names
+objNames <- c('chardonnay.csv','coffee.csv','beer.csv')
+
 
 for (i in 1:length(txtFiles)){
-  assign(txtFiles[i], read.csv(txtFiles[i]))
+  assign(objNames[i], read_csv(txtFiles[i], locale = locale(encoding = "Latin1")))
   cat(paste('read completed:',txtFiles[i],'\n'))
 } 
 
