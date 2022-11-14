@@ -44,9 +44,9 @@ cleanCorpus<-function(corpus,customStopwords){
 
 
 # Data
-text <- c(readLines('starboy.txt'), 
-          readLines('in_your_eyes.txt'),
-          readLines('pharrell_williams_happy.txt'))
+text <- c(readLines('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/starboy.txt'), 
+          readLines('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/in_your_eyes.txt'),
+          readLines('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/pharrell_williams_happy.txt'))
 cat(text)
 
 docNames <- c("starboy", "eyes", "happy") 
@@ -87,10 +87,11 @@ polarity(text[2])
 polarity(text[3])
 
 # Sometimes text and sentiment can be temporal
-coffee <- read.csv('coffee.csv')
+coffee <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/coffee.csv', locale = locale(encoding = "Latin1"))
 head(coffee$created) 
 tail(coffee$created)
-coffee <- coffee[order(coffee$X, decreasing = T),]
+coffee <- coffee[order(coffee$created, decreasing = F),]
+head(coffee$created)
 
 # Corp and Join
 coffeeCorpus <- VCorpus(VectorSource(coffee$text))
@@ -99,10 +100,7 @@ coffeeCorpus <- DocumentTermMatrix(coffeeCorpus)
 coffeeCorpus <- tidy(coffeeCorpus)
 
 # Get the AFINN lexicon
-pth <- list.files(pattern    = 'afinn.csv',
-                  full.names = T,
-                  recursive  = T)
-afinn <- read.csv(pth)
+afinn <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/AFINN/afinn.csv')
 head(afinn)
 
 # Join
@@ -118,7 +116,7 @@ plot(TTR::SMA(coffeeAfinnAgg$value,10), type = 'l')
 
 # Get nrc lexicon, again causes probs on rstudio cloud
 #nrc <- textdata::lexicon_nrc() # should download it
-nrc <- read.csv('nrc.csv')
+nrc <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/nrc.csv')
 head(nrc)
 
 # Perform Inner Join
@@ -143,8 +141,8 @@ colSums(nrcSentRadar)
 
 # Organize
 nrcSentRadar <- data.frame(labels = rownames(nrcSentRadar),
-                           nrcSentRadar)
-rownames(nrcSentRadar) <- NULL
+                           nrcSentRadar, 
+                           row.names = NULL)
 nrcSentRadar
 
 # Chart
