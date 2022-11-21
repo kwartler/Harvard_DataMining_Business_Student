@@ -3,7 +3,7 @@
 #' Author: Ted Kwartler
 #' email: edwardkwartler@fas.harvard.edu
 #' License: GPL>=3
-#' Date: Jan 18 2022
+#' Date: Nov 21, 2022
 #'
 
 # Set the working directory
@@ -14,6 +14,7 @@ library(tm)
 library(qdap)
 library(wordcloud)
 library(RColorBrewer)
+library(readr)
 
 # Options & Functions
 options(stringsAsFactors = FALSE)
@@ -41,11 +42,16 @@ cleanCorpus<-function(corpus, customStopwords){
 # Create custom stop words
 stops <- c(stopwords('english'), 'lol', 'amp', 'chardonnay', 'coffee')
 
-# Read in multiple files as individuals
-txtFiles <- list.files(pattern = 'chardonnay|coffee', full.names = T)
+# Read in multiple files as a list if local files
+#txtFiles <- list.files(path = '~/Desktop/Harvard_DataMining_Business_Student/Lessons/K_More_TM_DocClass/data',
+#                       pattern = 'chardonnay|coffee', full.names = T) 
+# Read in multiple files as a list if on github
+txtFiles<-c('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/K_More_TM_DocClass/data/chardonnay.csv',
+            'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/K_More_TM_DocClass/data/coffee.csv',
+            'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/K_More_TM_DocClass/data/beer.csv')
 
 # Make a list of DFs
-txtLst <- lapply(txtFiles, read.csv)
+txtLst <- lapply(txtFiles, read_csv,  locale = locale(encoding = "Latin1"))
 sapply(txtLst, nrow)
 
 #  Apply steps to each list element

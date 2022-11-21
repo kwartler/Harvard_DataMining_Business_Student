@@ -3,7 +3,7 @@
 #' Author: Ted Kwartler
 #' email: edwardkwartler@fas.harvard.edu
 #' License: GPL>=3
-#' Date: May 23-2020
+#' Date: Nov 21, 2022
 #'
 
 # Set the working directory
@@ -11,6 +11,7 @@ setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 
 # Libs
 library(tm)
+library(readr)
 
 # Options & Functions
 options(stringsAsFactors = FALSE)
@@ -41,7 +42,7 @@ cleanCorpus<-function(corpus, customStopwords){
 stops <- c(stopwords('SMART'), 'lol', 'smh', 'amp')
 
 # Data
-text <- read.csv('coffee.csv', header=TRUE)
+text <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/K_More_TM_DocClass/data/coffee.csv', locale = locale(encoding = "Latin1"))
 
 # As of tm version 0.7-3 tabular was deprecated
 names(text)[1] <- 'doc_id' #first 2 columns must be 'doc_id' & 'text'
@@ -63,7 +64,8 @@ cleanText <- do.call(rbind, cleanText)
 # Compare a single tweet
 text$text[4]
 df[4,]
-cleanText[4]
+
+
 
 # Make a Document Term Matrix or Term Document Matrix depending on analysis
 txtDtm  <- DocumentTermMatrix(txtCorpus)
@@ -72,7 +74,7 @@ txtDtmM <- as.matrix(txtDtm)
 txtTdmM <- as.matrix(txtTdm)
 
 # Examine
-txtDtmM[610:611,491:493]
-txtTdmM[491:493,610:611]
+txtDtmM[4:6,480:486] #text$text[4] cleanText[4]
+txtTdmM[480:486,4:6] #text$text[6] cleanText[6]
 
 # End

@@ -3,7 +3,7 @@
 #' Author: Ted Kwartler
 #' email: edwardkwartler@fas.harvard.edu
 #' License: GPL>=3
-#' Date: Jan 18 2022
+#' Date: Nov 21, 2022
 
 # Set the working directory
 setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
@@ -17,6 +17,7 @@ library(qdap)
 library(wordcloud)
 library(RColorBrewer)
 library(pbapply)
+library(readr)
 
 # Options & Functions
 options(stringsAsFactors = FALSE)
@@ -44,11 +45,13 @@ cleanCorpus<-function(corpus, customStopwords){
 # Create custom stop words
 stops <- c(stopwords('english'), 'lol', 'amp', 'chardonnay', 'beer', 'coffee')
 
-# Read in multiple files as individuals
-txtFiles <- list.files(pattern = 'beer|chardonnay|coffee', full.names = T)
+# Read in multiple files as a list
+txtFiles<-c('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/K_More_TM_DocClass/data/chardonnay.csv',
+                        'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/K_More_TM_DocClass/data/coffee.csv',
+                        'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/K_More_TM_DocClass/data/beer.csv')
 
 # Make a list of DFs
-txtLst <- lapply(txtFiles, read.csv)
+txtLst <- lapply(txtFiles, read_csv,  locale = locale(encoding = "Latin1"))
 
 #  Apply steps to each list element
 for(i in 1:length(txtLst)){
@@ -83,6 +86,7 @@ colnames(drinkTDMm) <- txtNames
 head(drinkTDMm)
 
 # Make comparison cloud
+dev.off()
 comparison.cloud(drinkTDMm, 
                  max.words=75, 
                  random.order=FALSE,

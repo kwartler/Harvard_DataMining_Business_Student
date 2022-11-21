@@ -3,7 +3,7 @@
 #' Author: Ted Kwartler
 #' email: edwardkwartler@fas.harvard.edu
 #' License: GPL>=3
-#' Date: Apr 18 2022
+#' Date: Nov 21, 2022
 #'
 
 # Wd
@@ -18,6 +18,7 @@ library(qdap)
 library(echarts4r)
 library(tidyr)
 library(corpus)
+library(readr)
 
 # Functions
 tryTolower <- function(x){
@@ -43,7 +44,7 @@ cleanCorpus<-function(corpus, customStopwords){
 stops <- c(stopwords('english'))
 
 # Clean and Organize the old way instead of cleanMatrix
-txt <- read.csv('news.csv')
+txt <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/K_More_TM_DocClass/data/news.csv')
 table(txt$doc_id) #565 news articles mentioning President Trump
 
 
@@ -76,8 +77,11 @@ table(bingSent$sentiment, bingSent$count) #only a few with more than 1 term
 aggregate(count~sentiment,bingSent, sum) #correct way to sum them
 
 # Compare original with qdap::Polarity
-polarity(read.csv('news.csv')$text)
+polarity(txt$text)
 # avg. polarity  -0.014 vs about even pos/neg terms
+
+# Polarity can also do analysis by group
+polarity(text.var = txt$text, grouping.var = txt$doc_id)
 
 # Get afinn lexicon
 afinn<-get_sentiments(lexicon = c("afinn"))
@@ -96,7 +100,7 @@ plot(density(afinnSent$afinnAmt))
  
 # Check with the pptx for a reminder.
 # Get nrc lexicon; deprecated in tidytext, use library(lexicon) or load from wd()
-#nrc <- read.csv('nrcSentimentLexicon.csv')
+#nrc <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/K_More_TM_DocClass/data/nrcSentimentLexicon.csv')
 nrc <- nrc_emotions
 head(nrc)
 
