@@ -44,7 +44,7 @@ cleanCorpus<-function(corpus, customStopwords){
 stops <- c(stopwords('english'))
 
 # Clean and Organize the old way instead of cleanMatrix
-txt <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/K_More_TM_DocClass/data/news.csv')
+txt <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/K_More_TM_DocClass/data/news.csv', locale = locale(encoding = "Latin1"))
 table(txt$doc_id) #565 news articles mentioning President Trump
 
 
