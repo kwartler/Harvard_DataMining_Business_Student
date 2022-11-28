@@ -9,7 +9,7 @@ library(stringr)
 
 # Query
 searchQ <- URLencode('machine learning')
-savePth <- '~/Desktop/GSERM_Text_Remote_student/personal/tmp/'# # remember the trailing slash!
+savePth <- '~/Desktop/Harvard_DataMining_Business_Student/personalFiles/tmp/'# # remember the trailing slash!
 testing <- T
 fileFormat <- 'csv' #csv or fst
 
@@ -86,10 +86,19 @@ for(i in 1:length(tmp)){
   write_fst(resp, make.names(paste0(Sys.time(),'.fst')))
 }
 allInfo <- do.call(rbind, allInfo)
-#names(allInfo) <- make.names(names(allInfo))
+names(allInfo) <- make.names(names(allInfo))
 #nam <- paste0('allPRs for term ', searchQ, ' captured ',Sys.time(),'.fst')
 #write_fst(allInfo, paste0(savePth, nam)) # could also use fst for large data
 #write.csv(allInfo, 'test.csv', row.names = F)
+
+# Examine
+allInfo$source[1]
+allInfo$timestamp[1]
+allInfo$newsProvider[1]
+allInfo$x.prHeadline[1]
+allInfo$x.headlineTxt[1]
+allInfo$x.namedEntity[1]
+allInfo$completeTxt[1]
 
 if(fileFormat=='csv'){
   print('saving as csv')

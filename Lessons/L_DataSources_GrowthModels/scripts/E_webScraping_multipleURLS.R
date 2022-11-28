@@ -3,32 +3,30 @@
 #' Author: Ted Kwartler
 #' email: edwardkwartler@fas.harvard.edu
 #' License: GPL>=3
-#' Date: June 17, 2021
+#' Date: Nov 27, 2022
 #' 
 
 # Library
 library(rvest)
 library(stringi)
 
-# wd
-setwd("~/Desktop/GSERM_Text_Remote_student/student_lessons/E_SyntacticParsing_DataSources/data")
-
 # Instructor Page
-webpage <- 'http://www.gserm.ch/stgallen/instructors/'
+webpage <- 'https://gserm.org/instructors/'
 
 # Get all links
-getLinks <- read_html(webpage) %>% 
-  html_nodes(".instructor") %>% 
+getLinks <- read_html(webpage) %>% html_nodes('*') %>%
   html_attr('href')
-getLinks
+getLinks[975:980]
+
+# Extract the relevant instructor URLS;
+# Regular Expression, /instructors/ plus any alpha-numeric afterwards
+# this excludes three instances on the page of 
+# https://gserm.org/instructors/
+getLinks <- getLinks[grep('/instructors/*[0-9a-z]', getLinks)]
 
 # Extract and clean names
-instructorNames <- gsub('https://www.gserm.ch/stgallen/instructor/',
-                        '', 
-                        getLinks) 
+instructorNames <- lapply(strsplit(getLinks, '/'), tail, 1)
 instructorNames
-
-instructorNames <- gsub("/", "", instructorNames)
 instructorNames <- gsub("-", " ", instructorNames)
 instructorNames <- stri_trans_totitle(instructorNames)
 instructorNames
@@ -38,14 +36,16 @@ allBios <- list()
 for (i in 1:length(instructorNames)){
   # Progress Msg
   cat(instructorNames[i])
+  pg <- read_html(getLinks[i])
   
   # Get the bio text
-  x <- read_html(getLinks[i]) %>% 
-    html_nodes(".text") %>% html_text()
+  x <- pg %>% 
+    html_nodes(xpath = '/html/body/div[2]/section[2]/div/div/div/div/div') %>% html_text()
   cat('...')
   # Get the photo URL
-  y <- read_html(getLinks[i]) %>% 
-    html_nodes(".instructor-photo") %>% html_attr("src")
+  y <- pg %>% 
+    html_nodes(".size-large") %>% html_attr("src")
+  y <- y[!grepl('Logo', y)]
   cat('...')
   df <- data.frame(instructorName = instructorNames[i],
                    bio            = x,
@@ -59,11 +59,6 @@ allBios     <- do.call(rbind, allBios)
 
 # Drop the line returns 
 allBios$bio <- gsub("[\r\n\t]", "", allBios$bio)
-allBios[21,]
-
-write.csv(allBios, 
-          'allBios.csv',
-          row.names = F)
-
+allBios[15,]
 
 # End
