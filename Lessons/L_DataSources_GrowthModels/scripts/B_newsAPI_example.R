@@ -3,7 +3,7 @@
 #' Author: Ted Kwartler
 #' email: edwardkwartler@fas.harvard.edu
 #' License: GPL>=3
-#' Date: Dec 28 2020
+#' Date: Nov 27, 2022
 #'
 
 # Libraries
@@ -14,17 +14,14 @@ library(pbapply)
 options(stringsAsFactors = F)
 
 # www.newsapi.org Key
-#apiKey <- readLines('~/Desktop/newsAPI.txt')
-#apiKey <- 'XXXXXXXXXXXXXXXXXXXXXXX'
+#apiKey <- 'XXXX'
 
 # Top headlines in the US endpoint:
 usURL <- paste0('https://newsapi.org/v2/top-headlines?country=us&apiKey=', apiKey)
 usURL
 
-# Endpoint for all news sources
-#https://newsapi.org/v2/sources?apiKey=####################
-
-# Get last weeks information
+# The documentation has other sources
+# Get last weeks information from Al Jazeera English
 to   <- Sys.Date()
 from <- to-7
 
@@ -48,6 +45,5 @@ newsInfo$articles$source  <- NULL
 
 finalContent <- newsInfo[[1]]
 finalContent
-#write.csv(finalContent, '~/finalNewsContent.csv', row.names = F)
 
 # End
