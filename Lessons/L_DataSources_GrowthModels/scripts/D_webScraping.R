@@ -3,14 +3,14 @@
 #' Author: Ted Kwartler
 #' email: edwardkwartler@fas.harvard.edu
 #' License: GPL>=3
-#' Date: Jan 14, 2022
+#' Date: Nov 27, 2022
 #'
 
 #### Reminder restart R because of readxl conflicts
 
 # libraries
 library(rvest)
-library(json)
+library(jsonlite)
 
 # Get the webpage
 movieURL <- 'https://www.imdb.com/title/tt0058331'
@@ -24,7 +24,7 @@ rating <- movie %>%
   as.numeric()
 rating
 
-# _somtimes_ helpful to see all nodes
+# Get the cast on the follow-up page; this returns all nodes so you can explore.  It's sometimes helpful
 castURL <- paste0(movieURL,'/fullcredits')
 # https://www.imdb.com/title/tt0058331/fullcredits
 castURL %>%
@@ -33,7 +33,7 @@ castURL %>%
   html_attr("class") %>% 
   unique()
 
-# Get the cast names
+# Found the right one! fullcredits_content: Get the cast names
 cast <- castURL %>%
   read_html() %>%
   html_nodes('#fullcredits_content') %>%
@@ -62,25 +62,16 @@ mediaURLS[1]
 movieURL
 gsub('/title/tt0058331','',mediaURLS[1])
 postURL <- paste0(movieURL,gsub('/title/tt0058331','',mediaURLS[1]))
-postURL
+justJPG <- postURL %>% read_html() %>% html_nodes(xpath = '/html/body/div[2]/main/div[2]/div[3]/div[4]/img') %>% html_attr("src")
+justJPG
+# download the file to the working directory
+#download.file(justJPG,'downloadedImage.jpg', mode = 'wb')
 
-# Storyline; this was moved to a graphDB so loads slowly!  this code is now broken
-#storyline <- movie %>%
-#  html_nodes('/html/body/div[2]/main/div/section[1]/div/section/div/div[1]/section[6]/div[2]/div[1]/div[1]/div/text()') %>%
-#  html_text() 
-#storyline
+# Storyline; this was moved to a graphDB and you could use rSelenium but this is faster for this exercise 
+# Get it using "inspect" and "copy response" then saving as json
+storyLine <- fromJSON('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/L_DataSources_GrowthModels/data/maryPoppins_storyline.json')
 
-# But you can still get it using "inspect" and "copy response" then saving as json
-storyLine <- fromJSON('storyline.json')
 storyLine$data$title$summaries$edges$node$plotText$plaidHtml
 storyLine$data$title$synopses$edges$node$plotText$plaidHtml
 
-# More mess!
-movieGross <- movie %>%
-  html_nodes(xpath = '/html/body/div[2]/main/div/section[1]/div/section/div/div[1]/section[10]/div[2]/ul/li[2]') %>% html_text()
-movieGross
-
-movieGross <- gsub('Gross US & Canada|[$]|,','',movieGross)
-movieGross <- as.numeric(movieGross)
-movieGross
 # End
