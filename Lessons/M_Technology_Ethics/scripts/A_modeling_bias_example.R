@@ -1,10 +1,10 @@
 #' Author: Ted Kwartler
-#' Date: May 2, 2022
+#' Date: Dec 5, 2022
 #' Purpose: Biased Modeling Example
 #'Megacorp is a hypothetical large and successful corporation that makes modern high-tech products. Whenever Megacorp advertises new job vacancies, their human resources team are overwhelmed by the many people who apply for a role. They want an automated process to filter through the resumes, to give them a short list of applicants who match best. Megacorp has a database containing the resumes and hiring results of applicants from the past few years. They track variables like age, gender, education and other details around the job applicant’s profile, and they want to use the text from the resume, including participation in extracurricular activities.
 
 # Set WD
-setwd("~/Desktop/HES Lessons/M_Ethics/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 options(scipen = 999)
 
 
@@ -16,6 +16,7 @@ library(glmnet)
 library(MLmetrics)
 library(vtreat)
 library(fairness)
+library(readr)
 
 # Custom cleaning function
 resumeClean<-function(xVec, stops=stopwords("SMART")){
@@ -27,7 +28,7 @@ resumeClean<-function(xVec, stops=stopwords("SMART")){
 }
 
 # Data
-candidates <- read.csv('HR Hiring (Bias & Fairness).csv')
+candidates <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/M_Technology_Ethics/data/HR%20Hiring%20(Bias%20%26%20Fairness).csv')
 
 ### SAMPLE : Patritioning
 set.seed(1234)
@@ -36,7 +37,7 @@ trainCandidates <- candidates[idx,]
 testCandidates  <- candidates[-idx,]
 
 ### EXPLORE
-head(trainCandidates,2)
+head(as.data.frame(trainCandidates),2)
 
 table(trainCandidates$Hired)
 
@@ -72,12 +73,12 @@ drops <- c('ApplicationID', 'AgeBracket', 'Gender', 'Summary')
 allCandidateData <- allCandidateData[, !(names(allCandidateData) %in% drops)]
 
 # Now let's prepare for modeling by making dummy variables
-#plan <- designTreatmentsC(allCandidateData, #data
-#                          names(allCandidateData), #x-var columns
-#                          'Hired', # y-var name
-#                          'Yes') #success factor level
+plan <- designTreatmentsC(allCandidateData, #data
+                          names(allCandidateData), #x-var columns
+                          'Hired', # y-var name
+                          'Yes') #success factor level
 #saveRDS(plan, 'variable_treatment_plan.rds')
-plan <- readRDS('variable_treatment_plan.rds')
+#plan <- readRDS('variable_treatment_plan.rds')
 allCandidateData <- prepare(plan, allCandidateData)
 
 # Separate the y var & engineered variables
@@ -176,16 +177,6 @@ dem_parity(data = trainDF,
            probs = 'trainProbs',
            preds = 'Preds', base = 'Male')
 
-testDF$trainProbs <- predict(candidateFit,
-                             as.matrix(testCandidateData),
-                              type = 'response',
-                              s    = candidateFit$lambda.min)
-dem_parity(data = testDF, 
-           outcome = 'actuals', 
-           group = 'Gender',
-           probs = 'trainProbs',
-           preds = 'Preds', base = 'Male')
-
 
 # Since gender was removed, let's figure out whats happening.
 genderFit <- cv.glmnet(as.matrix(allCandidateData),
@@ -203,6 +194,23 @@ bestTerms <- data.frame(term = rownames(bestTerms), value = bestTerms[,1])
 bestTerms <- bestTerms[order(bestTerms$value, decreasing=T), ] #proxies
 
 # Indicative of "male"
+head(bestTerms, 15)
+
+# What about for age?
+ageFit <- cv.glmnet(as.matrix(allCandidateData),
+                       y=as.factor(trainCandidates$AgeBracket), #predicting "40 and Over"
+                       alpha=0.9,
+                       family='binomial',
+                       type.measure='auc',
+                       nfolds=3,
+                       intercept=F)
+
+# Subset to impacting terms to identify issues for rebuilding the model
+bestTerms <- subset(as.matrix(coefficients(ageFit)), 
+                    as.matrix(coefficients(ageFit)) !=0)
+bestTerms <- data.frame(term = rownames(bestTerms), value = bestTerms[,1])
+bestTerms <- bestTerms[order(bestTerms$value, decreasing=T), ] #proxies
+# Indicative of "40 and Over"
 head(bestTerms, 15)
 
 # End
