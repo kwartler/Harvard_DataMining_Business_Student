@@ -1,5 +1,7 @@
 library(readr)
 library(stringr)
+library(officer)
+library(rvg)
 
 Sys.setenv(OPENAI_KEY = "sk-XXXXXX")
 
@@ -168,8 +170,10 @@ for(i in 1:length(allCSV)){
   
   # Organize
   finalInfo <- c(csvMETA, 
-                 paste(unlist(gptDescriptions), collapse = '\n'))
+                 paste('Data set summary information and description:\n',unlist(gptDescriptions), collapse = '\n'))
   finalInfo <- capture.output(cat(finalInfo))
+  # Drop values with zero character length
+  finalInfo <- finalInfo[nchar(finalInfo) > 0]
   
   # Save
   nam <- tail(unlist(strsplit(allCSVPaths[i],'/')),1)
@@ -179,10 +183,92 @@ for(i in 1:length(allCSV)){
   
   
   # Write to txt file
-  write_lines(tmp, full_file_path)
+  write_lines(finalInfo, full_file_path)
+}
+
+# Now do it for powerPoints both meta and pdf save
+get_all_PPTX_Files <- function(path) {
+  r_files <- list.files(path, pattern = "*.pptx$", full.names = F, recursive = TRUE)
+  return(r_files)
+}
+# Function to recursively get all file paths of .r files
+get_all_PPTX_Paths <- function(path) {
+  r_files <- list.files(path, pattern = "*.pptx$", full.names = TRUE, recursive = TRUE)
+  return(r_files)
+}
+  
+allPPTXpaths <- get_all_PPTX_Paths(path)
+allPPTX <- get_all_PPTX_Files(path)
+
+for(i in 1:length(allPPTX)){
+  print(paste('meta',i))
+  doc <- read_pptx(allPPTXpaths[i])
+  content <- pptx_summary(doc)
+  pptxTXT <- content$text
+  pptxTXT <- pptxTXT[complete.cases(pptxTXT)]
+  pptxTXT <- paste(pptxTXT, collapse = '\n')
+  # Collapse it all
+  pptxTXT <- paste('The following text is extracted from a computer science lesson powerpoint slide deck. The slide deck is called:\n',
+                  allPPTX[i],'\n', pptxTXT,collapse = '\n\n')
+  
+  # Chunk size and overlap
+  chunkSize <- 4000
+  overlap <- 200
+  
+  # Calculate the number of chunks
+  numChunks <- ceiling(nchar(pptxTXT) / (chunkSize - overlap))
+  
+  # Get each chunk
+  chunks <- list()
+  # Loop through the input string and create chunks
+  for (j in 1:numChunks) {
+    start <- 1 + (j - 1) * (chunkSize - overlap)
+    end <- min(start + chunkSize - 1, nchar(pptxTXT))
+    chunk <- substr(pptxTXT, start, end)
+    chunks[[j]] <- chunk
   }
   
+  # get descriptions
+  gptDescriptions <- list()
+  for(j in 1:length(chunks)){
+    print(j)
+    oneSection <- chunks[[j]]
+    gptMeta <- anyPrompt(userPrompt = paste('Please summarize this information from text obtained from a powerpoint presentation slides in a computer science class lesson:',oneSection, collapse = '\n'))
+    gptDescriptions[[j]] <- gptMeta
+  }
+  gptDescriptions <- unlist(gptDescriptions)
+  gptDescriptions <- paste(gptDescriptions, collapse = '\n')
   
+  # Organize
+  finalInfo <- c(paste('Lesson Powerpoint name:\n',allPPTX[i], '\n' ,collapse = '\n'), 
+                 paste('Lesson Powerpoint description and summary:\n',gptDescriptions, collapse = '\n'))
+  finalInfo <- capture.output(cat(finalInfo))
+  # Drop values with zero character length
+  finalInfo <- finalInfo[nchar(finalInfo) > 0]
+  
+  # Save
+  nam <- tail(unlist(strsplit(allPPTXpaths[i],'/')),1)
+  nam <- paste0(nam, '_metaInformation.txt')
+  full_file_path <- file.path(new_path, nam)
+  
+  # Write to txt file
+  write_lines(finalInfo, full_file_path)
+  
+  # Now save a copy as a pdf using libreoffice
+  # Terminal: brew install libreoffice
+  # The command to convert
+  cleanFullPth <- allPPTXpaths[i]
+  cleanNewPth <- gsub('~','/Users/edwardkwartler',new_path)
+  cleanNewPth <-  "/Users/edwardkwartler/Desktop/Harvard_DataMining_Business_Student 2/Lessons/Lessons_TXT/"
+  
+  #cleanNewPth <- new_path
+  sysCommand <- paste0('soffice --headless --convert-to pdf "',
+                       cleanFullPth, '" --outdir "',
+                       cleanNewPth, '"')
+  
+  system(sysCommand)
+  
+}
 
 
 
