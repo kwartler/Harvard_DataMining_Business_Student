@@ -31,7 +31,4 @@ pacman::p_load(ggplot2, ggthemes, ggdark, rbokeh, maps,
                tidytext, radarchart, RCurl, openNLP, xml2, stringr,
                devtools, flexdashboard, rmarkdown, httr)
 
-# Additionally we will need this package from a different repo
-install.packages('openNLPmodels.en', 
-                  repos= 'http://datacube.wu.ac.at/')
 ```
