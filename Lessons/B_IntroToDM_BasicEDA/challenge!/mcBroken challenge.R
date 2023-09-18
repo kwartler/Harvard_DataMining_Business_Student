@@ -19,7 +19,7 @@ options(scipen = 999)
 
 
 # Read in Data
-iceCream <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/B_IntroToDM_BasicEDA/challenge!/mcBroken_august_12_2022.csv')
+iceCream <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/B_IntroToDM_BasicEDA/challenge!/mcBroken_august_12_2022.csv')
 
 # Look at the bottom 6 rows
 
@@ -27,14 +27,14 @@ iceCream <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMin
 
 # how many rows are there?  These are machine sensors indications so there are usually a lot
 
-# Subset to just 8-12
+# Subset the date to just 8-12
 iceCream <- subset(________, ________$____=='2022-08-12')
 
 # how many rows are there now?  Was there noise in the data query?
 
 # get a table() of the unique states.  How many machines are found in each location?
 
-# Overall how many broken machines are there?
+# Overall how many unique broken machines are there?
 
 # what state has the highest _percentage_ of broken machines? This is a tough one, requiring you to know the total machines in a state, the total broken and to get the proportion.
 # hint, you can do this stepwise or you can employ the function prop.table()

@@ -6,14 +6,12 @@
 # libs
 library(radiant.data)
 library(DataExplorer)
-library(readr)
 
 # Set WD
 setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 
 # Data look up on github
-cereal <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/B_IntroToDM_BasicEDA/data/Cereals.csv')
-cereal <- as.data.frame(cereal) # again, just to make it easier in class but not a requirement
+cereal <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/B_IntroToDM_BasicEDA/data/Cereals.csv')
 
 # What's the overall structure  & dimensions of the data?
 str(   )

@@ -9,17 +9,11 @@ setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 library(ggplot2)
 library(ggthemes)
 library(rbokeh)
-library(readr)
 
 ## Bring in some data
-screenTime <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/B_IntroToDM_BasicEDA/data/on_screen_time.csv')
-scenes     <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/B_IntroToDM_BasicEDA/data/force_awakens_scenes.csv')
-characters <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/B_IntroToDM_BasicEDA/data/force_awakens_character_info.csv')
-
-# For new R programmers, let's change from a "tibble" to a simple data frame, this isn't really needed but simplifies things for class
-screenTime <- as.data.frame(screenTime)
-scenes     <- as.data.frame(scenes)
-characters <- as.data.frame(characters)
+screenTime <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/B_IntroToDM_BasicEDA/data/on_screen_time.csv')
+scenes     <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/B_IntroToDM_BasicEDA/data/force_awakens_scenes.csv')
+characters <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/B_IntroToDM_BasicEDA/data/force_awakens_character_info.csv')
 
 ## Exploratory Data Analysis, and indexing
 head(screenTime)
