@@ -78,6 +78,7 @@ ggplot(data = df, aes(x=yr, y=factor(month), size = NetOperatingIncome, color = 
   ggdark::dark_theme_gray() + 
   theme(legend.position = "none") +
   labs(x="year", y = "month", title= "Operating Income MV Condo")
+#invert_geom_defaults()
 
 # Another view with 4 different continuous, the difference is subtle, here larger circles show more occupied nights, color is income.  If you could have a single very expensie night it could show up as a small dot but still be bright
 df <- subset(possiblePurchase, possiblePurchase$yr !='2020')

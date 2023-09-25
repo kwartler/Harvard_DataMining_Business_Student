@@ -10,9 +10,11 @@ setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 # libs
 library(ggplot2)
 library(ggthemes)
-library(readr)
 library(lubridate)
 library(qcc)
+
+# Options
+options(scipen = 999)
 
 # Load
 possiblePurchase <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/C_R_practice_Viz_MoreEDA/data/MarthasVineyardCondo.csv')
@@ -62,19 +64,18 @@ ggplot(data = possiblePurchase, aes(x=month, y=NightOccupied, group=yr, color=yr
 
 
 # cumsum by group, really compelling with many groups and time component, could be a "line chart" also though
-rap <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/C_R_practice_Viz_MoreEDA/data/rapSongsTimeline_wrangledData.csv')
-rap <- as.data.frame(rap)
+rap <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/C_R_practice_Viz_MoreEDA/data/rapSongsTimeline_wrangledData.csv')
 head(rap)
 totalWords <- rap %>% group_by(song) %>% summarise(maxWords = max(cumulativeWords, na.rm=TRUE))
 totalTime <- rap %>% group_by(song) %>% summarise(endTime = max(endTime, na.rm=TRUE))
 rapStats <- left_join(totalWords, totalTime,  by = "song")
 rapStats$eminem <- grepl('Eminem', rapStats$song, ignore.case = T)
-ggplot(rap,  aes(x = endTime,
+ggplot(rap,  aes(x = endTime/1000/60,
                 y  = cumulativeWords, 
                           group = song, 
                           color = eminem)) +
   geom_line(alpha = 0.25) +
-  geom_point(data =rapStats, aes(x     = endTime,
+  geom_point(data =rapStats, aes(x     = endTime/1000/60,
                                  y   = maxWords, 
                                  group = endTime,
                                  color = eminem), size = 2) +
