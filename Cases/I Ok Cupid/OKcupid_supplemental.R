@@ -4,7 +4,6 @@
 #' 
 
 # Libs
-library(okcupiddata)
 library(dplyr)
 
 # Set WD
