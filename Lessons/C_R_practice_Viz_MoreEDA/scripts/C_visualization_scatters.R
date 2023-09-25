@@ -6,22 +6,16 @@
 # wd
 setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 
-
 # libs
 library(ggplot2)
 library(ggthemes)
-library(readr)
 library(lubridate)
 #library(ggdark) # ok ok, I forgot this one ;)
 #library(CalledStrike)  # ok ok,my bad!
 library(dplyr)
 
 # Load
-possiblePurchase <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/C_R_practice_Viz_MoreEDA/data/MarthasVineyardCondo.csv')
-possiblePurchase <- as.data.frame(possiblePurchase)
-
-# Clean it up - column names
-names(possiblePurchase) <- make.names(names(possiblePurchase))
+possiblePurchase <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/C_R_practice_Viz_MoreEDA/data/MarthasVineyardCondo.csv')
 
 # Clean $ signs
 possiblePurchase$Avg.Price.Per.Night <- as.numeric(gsub('[$]', '', possiblePurchase$Avg.Price.Per.Night))
@@ -54,11 +48,14 @@ possiblePurchase$Month <- as.Date(paste(possiblePurchase$yr,possiblePurchase$mon
 head(possiblePurchase)
 
 # Simple Scatter: relationship between two variables
-scatterPlotBase <- ggplot(data = possiblePurchase, aes(x=NightOccupied, y=EffectiveGrossIncome)) + geom_point() + theme_gdocs()
+scatterPlotBase <- ggplot(data = possiblePurchase, aes(x=NightOccupied, y=EffectiveGrossIncome)) + 
+  geom_point() + 
+  theme_gdocs()
 scatterPlotBase
 
 # Now add a trend line, linear regression 
-scatterPlotBase + geom_smooth(method = "lm", se = TRUE) + 
+scatterPlotBase + 
+  geom_smooth(method = "lm", se = TRUE) + 
   theme_gdocs() + 
   labs(x="Occupied Nights", y = "Gross Income", title= "MV Motel Condo")
 
@@ -69,7 +66,8 @@ ggplot(data = possiblePurchase, aes(x=NightOccupied, y=EffectiveGrossIncome, col
 
 # Add another dimension size; number of nights occupied has a relationship to income and so does price to night.  no shocker there bc of "high season" has high occupancy and high rates, but a good example still
 ggplot(data = possiblePurchase, aes(x=NightOccupied, y=EffectiveGrossIncome, size = Avg.Price.Per.Night)) + 
-  geom_point() + theme_wsj()
+  geom_point() + 
+  theme_wsj()
 
 # a Cleveland Dot plot, xy both class levels, color and size can be other dimensions but this shows only 3
 df <- subset(possiblePurchase, possiblePurchase$yr !='2020')
@@ -78,15 +76,7 @@ ggplot(data = df, aes(x=yr, y=factor(month), size = NetOperatingIncome, color = 
   ggdark::dark_theme_gray() + 
   theme(legend.position = "none") +
   labs(x="year", y = "month", title= "Operating Income MV Condo")
-#invert_geom_defaults()
-
-# Another view with 4 different continuous, the difference is subtle, here larger circles show more occupied nights, color is income.  If you could have a single very expensie night it could show up as a small dot but still be bright
-df <- subset(possiblePurchase, possiblePurchase$yr !='2020')
-ggplot(data = df, aes(x=yr, y=factor(month), size = NightOccupied, color = NetOperatingIncome)) + 
-  geom_point() +  scale_colour_viridis_c(option = "magma")  + 
-  ggdark::dark_theme_gray() + 
-  theme(legend.position = "none") +
-  labs(x="year", y = "month", title= "Operating Income MV Condo")
+#ggdark::invert_geom_defaults()
 
 # dumb bell plot to compare extremes by group, data wrangling you can use group_by but this is to be clear for new R programmers
 minIncomes <- aggregate(NetOperatingIncome~month, data = df, FUN= min)
@@ -113,21 +103,26 @@ player <- readRDS(pth)
 head(data.frame(player$plate_x, player$plate_z))
 pitchingLocations <- data.frame(plate_x = player$plate_x, plate_z = player$plate_z)
 basePlot <- ggplot(data = pitchingLocations, aes(x = plate_x, y = plate_z)) + ggtitle("Miguel Castro's Pitch Locations")
-basePlot + geom_point() + ggdark::dark_theme_classic()
+basePlot + geom_point()
 
-# Jitter, move dots slightly
-basePlot + geom_point(color = 'red') + ggdark::dark_theme_classic() + geom_jitter(width = 0.7, height = 0.20)
-basePlot + geom_jitter(width = 0.7, height = 0.70)  + ggdark::dark_theme_classic()
+# Jitter, move dots slightly w/new color to see what jitter does
+basePlot + geom_point(color = 'red') +
+  geom_jitter(width = 0.7, height = 0.20)
+
+# Now apply it for real
+basePlot + geom_jitter(width = 0.7, height = 0.70)
 
 # Alpha, make semi-transparent
-basePlot + geom_point(alpha = 0.25)  + ggdark::dark_theme_classic()
+basePlot + geom_point(alpha = 0.25) + theme_few()
 
 # Make a 2d Density plot 
 basePlot + geom_density_2d_filled(contour_var = 'ndensity') + theme(legend.position = "none") 
 
 # Or use a facet to subset the visual by a group
+head(player)
 ggplot(data = player) + theme_hc() +
-  geom_density_2d_filled( aes(x = plate_x, y = plate_z), contour_var = 'ndensity') + 
+  geom_density_2d_filled( aes(x = plate_x, y = plate_z), 
+                          contour_var = 'ndensity') + 
   CalledStrike::add_zone(Color = "red") + # Comment this line if you don't have library(CalledStrike) installed
   theme(legend.position = 'none',
         axis.title.x = element_blank(),

@@ -8,19 +8,17 @@ setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 # libs
 library(ggplot2)
 library(ggthemes)
-library(readr)
 library(lubridate)
 library(qcc)
 
 # Load
-possiblePurchase <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/C_R_practice_Viz_MoreEDA/data/MarthasVineyardCondo.csv')
-possiblePurchase <- as.data.frame(possiblePurchase)
+possiblePurchase <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/C_R_practice_Viz_MoreEDA/data/MarthasVineyardCondo.csv')
 
 # Examine
 head(possiblePurchase)
 
 # Clean it up - column names
-names(possiblePurchase) <- make.names(names(possiblePurchase))
+#names(possiblePurchase) <- make.names(names(possiblePurchase))
 
 # Clean $ signs
 possiblePurchase$Avg.Price.Per.Night <- as.numeric(gsub('[$]', '', possiblePurchase$Avg.Price.Per.Night))
@@ -42,7 +40,7 @@ head(possiblePurchase)
 tmpDates <- as.Date(paste(possiblePurchase$yr,possiblePurchase$month, '1', sep = '-'), "%Y-%m-%d")
 tmpDates
 
-# But this date is monthly stats _after_ the month is done so concatenate to the last day of the month ; notice the leap year!
+# But this date is monthly stats _after_ the month is done so concatenate to the last day of the month ; notice the leap year is accounted for!
 possiblePurchase$closingDate <- days_in_month(tmpDates) # from lubridate
 
 # Now put the Month column into a closing month Date class by overwriting it
@@ -64,18 +62,24 @@ ggplot(data = possiblePurchase, aes(x=NightOccupied)) +
              position=position_stack(vjust = 0.5)) + theme_few() 
 
 # barchart for comparing quantities.  I prefer geom_col so its not an automatic count of the observations
-totalNights <- aggregate(NightOccupied ~ yr, data = possiblePurchase, FUN = sum)
+totalNights <- aggregate(NightOccupied ~ yr, 
+                         data = possiblePurchase, 
+                         FUN  = sum)
 totalNights
-ggplot(data = totalNights, aes(x = yr, y = NightOccupied)) + geom_col() + 
-  theme_few() + geom_text(aes(label = NightOccupied), color = 'white',vjust = 1.5)
+
+ggplot(data = totalNights, aes(x = yr, y = NightOccupied)) + 
+  geom_col() + 
+  theme_few() + 
+  geom_text(aes(label = NightOccupied), color = 'white',vjust = 1.5)
 
 # If the data is "atomic" i.e. can't be broken down further  you can use geom_bar to get a count.
 # Our data is not atomic so each bar represents the number of times it appears ie two months in our data set had 10 nights occupied, like the histogram
-ggplot(data = possiblePurchase, aes(x = NightOccupied)) + geom_bar() + 
+ggplot(data = possiblePurchase, aes(x = NightOccupied)) + 
+  geom_bar() + 
   theme_few() 
 
 # Side by side bar chart to compare values by category; month is really a class or a month not a numeric so factor() is used
-df <- subset(possiblePurchase, possiblePurchase$yr != '2020') #d yrrop 2020 incomplete
+df <- subset(possiblePurchase, possiblePurchase$yr != '2020') #drop 2020 incomplete
 ggplot(data = df, aes(x = factor(month), y = NightOccupied, fill = yr)) +
   geom_bar(position=position_dodge(), stat="identity") + 
   geom_text(aes(label = NightOccupied), fontface = "bold", vjust = 1.5,
@@ -94,25 +98,11 @@ ggplot(data = dataStack, aes(fill=yr, y=vacant, x=month)) +
 
 # filled stacked:  used to compare proportion only within a category
 # Make a "goodMonth" indicator as an example
-possiblePurchase$goodMonth <- ifelse(possiblePurchase$NightOccupied>15, "good", "bad")
+possiblePurchase$goodMonth <- ifelse(possiblePurchase$NightOccupied>15,
+                                     "good", "bad")
 ggplot(possiblePurchase, aes(x = factor(month), fill = goodMonth)) +
   geom_bar(position = "fill") +
   scale_y_continuous(labels = scales::percent) +
   theme_few()
-
-
-# Pareto charts let you see the values and rate of change, linear, exponential etc.  Maybe against Few's principles though!
-# Simpler to rearrange the data
-df <- data.frame(history            = 1:nrow(possiblePurchase),
-                 Operating.Expenses = possiblePurchase$Operating.Expenses,
-                 cumSumExp          = cumsum(Operating.Expenses = possiblePurchase$Operating.Expenses))
-ggplot(data = df, aes(x= history, y = Operating.Expenses)) +
-  geom_col() + 
-  geom_line(data = df, aes(x=history, y =cumSumExp, color = 'red'))  + 
-  theme_few() +
-  theme(legend.position = "none") 
-
-# Or a convenient package for it
-pareto.chart(df$Operating.Expenses)
 
 # End

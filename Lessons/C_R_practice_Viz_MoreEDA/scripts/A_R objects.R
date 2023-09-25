@@ -60,11 +60,11 @@ listA[[2]][1,]
 
 # Its a best practice to name each element as the list complexity grows
 listA$singleVec
-listA$singleDF$vec
+listA$singleDF$vec1
 listA$singleVal
 
 
-#### JOINS FOR THE UPCOMINH CASE REFERENCE ####
+#### JOINS FOR THE UPCOMING CASE REFERENCE ####
 # There are times you have data sets with information that need to be combined
 # For example, a table of customers and a table of their purchases
 # SQL and R have "table joins" which aid this merger

@@ -3,7 +3,6 @@
 #' Purpose: R ggplot line chart examples
 #' Good resource: https://r-graphics.org/
 
-
 # wd
 setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 
@@ -11,20 +10,15 @@ setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 library(ggplot2)
 library(ggthemes)
 library(lubridate)
-library(qcc)
 
 # Options
 options(scipen = 999)
 
 # Load
-possiblePurchase <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/C_R_practice_Viz_MoreEDA/data/MarthasVineyardCondo.csv')
-possiblePurchase <- as.data.frame(possiblePurchase)
+possiblePurchase <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/C_R_practice_Viz_MoreEDA/data/MarthasVineyardCondo.csv')
 
 # Examine
 head(possiblePurchase)
-
-# Clean it up - column names
-names(possiblePurchase) <- make.names(names(possiblePurchase))
 
 # Clean $ signs
 possiblePurchase$Avg.Price.Per.Night <- as.numeric(gsub('[$]', '', possiblePurchase$Avg.Price.Per.Night))
@@ -57,10 +51,13 @@ possiblePurchase$Month <- as.Date(paste(possiblePurchase$yr,possiblePurchase$mon
 head(possiblePurchase)
 
 # A line chart helps associate linkages between points for easier comparisons; note the 2019 early year lack of occupancy 
+possiblePurchase$month <- factor(month.name[possiblePurchase$month],
+                                 levels = month.name)
 ggplot(data = possiblePurchase, aes(x=month, y=NightOccupied, group=yr, color=yr)) +
   geom_line() + 
   theme_few() +
-  labs(fill="")
+  labs(fill="") +
+  theme(axis.text.x = element_text(angle = 90))
 
 
 # cumsum by group, really compelling with many groups and time component, could be a "line chart" also though
