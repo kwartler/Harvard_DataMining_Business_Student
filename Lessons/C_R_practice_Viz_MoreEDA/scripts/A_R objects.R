@@ -3,6 +3,9 @@
 #' Purpose: R Data Types
 #' 
 
+# set working directory
+setwd('~/Desktop/Harvard_DataMining_Business_Student/personalFiles')
+
 # libs
 library(dplyr)
 
@@ -38,7 +41,8 @@ singleVec  <- c(T,T,F,F,F)
 # Construct list
 listA <- list(singleVal=singleVal,
               singleDF=singleDF,
-              singleVec=singleVec)
+              singleVec=singleVec,
+              anotherElement  = 'this is natural language')
 
 # Get the first element of the list
 listA[[1]]
