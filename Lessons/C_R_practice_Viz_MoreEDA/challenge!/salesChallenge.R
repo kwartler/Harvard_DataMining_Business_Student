@@ -21,9 +21,39 @@ options(scipen = 999)
 salesData <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/C_R_practice_Viz_MoreEDA/challenge!/salesData.csv')
 
 # Get a summary of the data
+str(salesData)
+summary(salesData)
+
+# change Price.Each column to numeric
+salesData$Price.Each <- as.numeric(salesData$Price.Each)
 
 # Make sure the sales column is numeric
 salesData$Price.Each <- as.numeric(salesData$Price.Each)
+
+# Make sure the number ordered is numeric
+salesData$Quantity.Ordered <- as.numeric(salesData$Quantity.Ordered)
+
+# Density plot of Price.Each
+ggplot(data = salesData, aes(x = Price.Each)) + 
+  geom_density() +
+  theme_gdocs() +
+  ggtitle("Distribution of Unit Price")
+
+# Tally the products
+prodTally <- as.data.frame(table(salesData$Product))
+
+# Order the tally
+prodTally <- prodTally[order(prodTally$Freq, decreasing = T),]
+
+# Select the top 5 products
+topFive <- prodTally[1:5,]
+topFive <- head(prodTally, 5)
+
+# Create a col chart
+ggplot(data = topFive, aes(x = Var1, y = Freq)) +
+  geom_col() + theme_few() +
+  ggtitle('top 5 product sales') + 
+  theme(axis.text.x = element_text(angle = 90))
 
 # Engineer variables from days
 salesData$Order.Date  <- mdy_hm(salesData$Order.Date) #overwrite as a data object
