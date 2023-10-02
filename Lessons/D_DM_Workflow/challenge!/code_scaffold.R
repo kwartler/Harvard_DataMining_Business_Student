@@ -7,7 +7,7 @@
 
 # Load libraries
 
-# Datya Munge: Joins!
+# Data Munge: Joins!
 
 # Sample
 
