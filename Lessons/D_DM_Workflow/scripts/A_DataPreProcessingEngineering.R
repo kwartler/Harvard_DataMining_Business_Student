@@ -8,13 +8,12 @@ setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 # Libs
 library(vtreat)
 library(dplyr)
-library(readr)
 library(ggplot2)
 library(ggthemes)
 options(scipen = 999)
 
 # Read in the data
-donors<- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/D_DM_Workflow/data/fakeDonorBureau_v2.csv')
+donors<- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/D_DM_Workflow/data/fakeDonorBureau_v2.csv')
 
 # Examine; Here you would perform EDA
 summary(donors)
@@ -60,7 +59,7 @@ summary(treatedData)
 rm(list=ls())
 
 # Data
-donors <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/D_DM_Workflow/data/fakeDonorBureau_v2.csv')
+donors <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/D_DM_Workflow/data/fakeDonorBureau_v2.csv')
 plot(density(donors$Y2_DonatedAmt))
 
 # Select 10% for your preparation learning
@@ -88,10 +87,10 @@ summary(treatedData)
 rm(list=ls())
 
 # Data
-donors <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/D_DM_Workflow/data/fakeDonorBureau_v2.csv')
+donors <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/D_DM_Workflow/data/fakeDonorBureau_v2.csv')
 
 # Fictitious Data Enrichment
-thirdPartyData <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/D_DM_Workflow/data/fakeDataEnrichment.csv')
+thirdPartyData <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/D_DM_Workflow/data/fakeDataEnrichment.csv')
 
 # Examine
 head(thirdPartyData)
