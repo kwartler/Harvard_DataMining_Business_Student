@@ -83,14 +83,6 @@ renderForm <- function(df, backgroundColor = 'black', fontColor = 'white',
   save_html(htmlBody, fileName)
 }
 
-# Your data
-df <- data.frame(x =c('\\(Intercept\\)','balance','duration',
-                      'poutcome_lev_x_success','month_lev_x_nov','ignoredCharacterVar','booleanVar'),
-                 beta = c(-3.95,0.000018,0.005675,2.4766581,-1.2201,2.1,-.371),
-                 type = c('intercept','numeric','numeric','dummy', 'dummy','character','Boolean'),
-                 stringsAsFactors = FALSE)
 
-# Call the function
-renderForm(df, backgroundColor = 'grey', fontColor = 'white', submitButtonColor = 'blue', submitButtonFontColor = 'orange', font = 'arial', fileName = 'tmp.html')
 
 # fonts can be arial, arial black, helvetics, verdana, tahoma, trebuchet MS, Georgia, Palatino, Times New Roman, Times, Courier
