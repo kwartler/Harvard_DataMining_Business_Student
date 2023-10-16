@@ -1,17 +1,17 @@
 #' Author: Ted Kwartler
-#' Date: 9-27-2021
+#' Date: 10-10-2023
 #' Purpose: Regressions
 #' 
 
-# Libs
-library(readr)
+# Libs & options
+library(MLmetrics)
 options(scipen = 999)
 
 # Setwd
 setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 
 # Data
-houses <-read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/E_Regressions/data/BostonHousing.csv')
+houses <-read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/E_Regressions/data/BostonHousing.csv')
 houses <- houses[order(houses$MEDV), ]
 houses$realValue <- houses$MEDV*10000
 houses$MEDV <- NULL #original variable
@@ -60,29 +60,37 @@ preds1      <- predict(fit, trainSet)
 preds2      <- predict(fit2, trainSet)
 
 # Examine predictions since this is one of the first times we did predict() & compare to the actual values
-cbind(head(preds1),head(trainSet$realValue))
+data.frame(predicted = head(preds1),actual = head(trainSet$realValue))
 
-# Get sum of squared errors
+# Get sum of squared errors manually for "heuristic model" 
 manualErr <- (trainSet$realValue - manualPreds)^2
+sqrt(mean(manualErr))
+
+# Get RMSE for "heuristic model" 
+RMSE(y_pred = manualPreds, y_true = trainSet$realValue)
+
+# Get sum of squared errors manually for "ok model" 
 fitErr    <- (trainSet$realValue - preds1)^2
+sqrt(mean(fitErr))
+
+# Get RMSE for "ok model" 
+RMSE(y_pred = preds1, y_true = trainSet$realValue)
+
+# Get sum of squared errors manually for "best model" 
 fit2Err   <- (trainSet$realValue - preds2)^2 
-
-sqrt(mean(manualErr))
-sqrt(mean(fitErr))
 sqrt(mean(fit2Err))
 
-# Now validation
-manualPreds <- testSet$RM*10000 # Again beta = 1 X actual values
-preds1      <- predict(fit, testSet)
-preds2      <- predict(fit2, testSet)
+# Get RMSE for "best model" 
+RMSE(y_pred = preds2, y_true = trainSet$realValue)
 
-# Get sum of squared errors
-manualErr <- (testSet$realValue - manualPreds)^2
-fitErr    <- (testSet$realValue - preds1)^2
-fit2Err   <- (testSet$realValue - preds2)^2 
+# Now let's do the test set, remember to look for consistency <5-10% change is ideal
+manualPredsTest <- testSet$RM*10000 # Again beta = 1 X actual values
+preds1Test      <- predict(fit, testSet)
+preds2Test      <- predict(fit2, testSet)
 
-sqrt(mean(manualErr))
-sqrt(mean(fitErr))
-sqrt(mean(fit2Err))
+# RMSE for each "model"
+RMSE(y_pred = manualPredsTest, y_true = testSet$realValue)
+RMSE(y_pred = preds1Test, y_true = testSet$realValue)
+RMSE(y_pred = preds2Test, y_true = testSet$realValue)
 
 # End

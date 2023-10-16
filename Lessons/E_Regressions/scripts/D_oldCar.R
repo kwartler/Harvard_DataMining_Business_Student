@@ -6,8 +6,7 @@
 # Libs
 library(vtreat)
 library(dplyr)
-library(ModelMetrics)
-library(readr)
+library(MLmetrics)
 
 # Options
 options(scipen=999)
@@ -91,12 +90,12 @@ head(trainingResults)
 # Be careful!  Different libraries have subtle differences, but shouldn't be an issue with RMSE but can cause issues with other KPI
 # library(ModelMetrics) has rmse(a, p)
 # library(MLmetrics) has RMSE(p, a)
-(trainRMSE <- MLmetrics::RMSE(trainingResults$predicted, 
-                              trainingResults$actuals))
+(trainRMSE <- MLmetrics::RMSE(y_pred = trainingResults$predicted, 
+                              y_true = trainingResults$actuals))
 
 # What is the MAPE?
-(trainMAPE <- MLmetrics::MAPE(trainingResults$predicted, 
-                              trainingResults$actuals))
+(trainMAPE <- MLmetrics::MAPE(y_pred = trainingResults$predicted, 
+                              y_true = trainingResults$actuals))
 
 # Since we haven't looked at the test set, we *could* go back and adjust the model.
 # Let's continue to the test set evaluation
@@ -113,12 +112,12 @@ testResults <- data.frame(actuals   = testSet$Price,
 head(testResults)
 
 # KPI
-(testRMSE <- MLmetrics::RMSE(testResults$predicted, 
-                             testResults$actuals))
+(testRMSE <- MLmetrics::RMSE(y_pred = testResults$predicted, 
+                             y_true = testResults$actuals))
 
 # What is the MAPE?
-(testMAPE <- MLmetrics::MAPE(testResults$predicted, 
-                             testResults$actuals))
+(testMAPE <- MLmetrics::MAPE(y_pred = testResults$predicted, 
+                             y_true = testResults$actuals))
 
 # Side by Side
 trainRMSE

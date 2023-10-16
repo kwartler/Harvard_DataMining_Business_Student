@@ -7,7 +7,6 @@ options(scipen=999)
 
 # Libs
 library(vtreat)
-library(readr)
 
 # SetWD
 setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")

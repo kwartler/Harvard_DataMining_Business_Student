@@ -11,7 +11,6 @@ library(ggthemes)
 library(vtreat)
 library(MLmetrics)
 library(ROSE)
-library(readr)
 
 # Data
 ccData <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/F_LogReg_Tree_RF/data/UCI_Credit_Card.csv')
@@ -47,11 +46,10 @@ plan <- designTreatmentsC(training,
 treatedTrain <- prepare(plan, training)
 treatedValidation <- prepare(plan, validation)
 
-#### Unbalanced Y, page 141 explains over sampling data to rebalance
+#### Unbalanced Y, the book explains over sampling data to rebalance
 # ROSE - Random Over Sample Examples
 #trainingRose <- ROSE(default.payment.next.month~., treatedTrain)
 #table(trainingRose$data$default.payment.next.month)
-# You could use trainingRose and treatedTrain to build two models then compare choosing the more accurate model (assumes balanced classification costs)
 
 # Model
 fit <- glm(default.payment.next.month ~., treatedTrain, family = 'binomial')

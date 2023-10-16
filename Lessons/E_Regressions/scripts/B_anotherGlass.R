@@ -4,14 +4,13 @@
 #' 
 
 # Libs
-library(readr)
 library(vtreat)
 
 # Setwd
 setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 
 # Data
-wine <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/E_Regressions/data/Wine.csv')
+wine <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/E_Regressions/data/Wine.csv')
 
 # Train 90%/Test 10% Partitioning
 splitPercent  <- round(nrow(wine) %*% .9)
