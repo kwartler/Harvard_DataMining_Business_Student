@@ -7,6 +7,7 @@ renderLogisticForm <- function(df, backgroundColor = 'black', fontColor = 'white
                        font = 'arial',
                        fileName = NULL) {
   
+  
   # Libs
   library(htmltools)
   library(stringr)
