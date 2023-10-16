@@ -78,7 +78,7 @@ renderRegressionForm <- function(df, fileName = NULL) {
   
   if(is.null(fileName)){
     warning('no fileName added, using default')
-    fileName <- paste0(Sys.Date(), '_protypeForm.html')
+    fileName <- paste0(Sys.Date(), '_protypeRegForm.html')
   }
   save_html(htmlBody, fileName)
 }
