@@ -1,7 +1,7 @@
 
 #' @param df dataframe with the following characteristics column one name is "x" consisting of string variable names. Column 2 name is "beta" with corresponding beta coefficient values.  Column 3 is called "type" denoting each variable type as "intercept", "Boolean", "numeric", "character", "dummy".  Finally the data.frame paramater "stringsAsFactors" must be set to FALSE.   See example for clarification.
 #' @param fileName character string ending in .html ie. "myForm.html"; NULL will create a default name.
-renderForm <- function(df, backgroundColor = 'black', fontColor = 'white', 
+renderLogisticForm <- function(df, backgroundColor = 'black', fontColor = 'white', 
                        submitButtonColor = 'blue', 
                        submitButtonFontColor = 'white', 
                        font = 'arial',
