@@ -13,7 +13,7 @@ library(MLmetrics)
 library(ROSE)
 
 # Data
-ccData <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/F_LogReg_Tree_RF/data/UCI_Credit_Card.csv')
+ccData <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/E_Regressions/data/UCI_Credit_Card.csv')
 
 idx <- sample(1:nrow(ccData), 30000*0.8)
 
