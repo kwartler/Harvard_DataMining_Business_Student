@@ -31,6 +31,7 @@ ggplot(training, aes(x=no_of_adults, color = type_of_meal_plan)) +
   facet_wrap(vars(type_of_meal_plan)) + 
   theme_gdocs()
 
+# Try to adjust this to other functions and formulas
 aggregate(avg_price_per_room ~booking_status,training, mean)
 
 # MODIFY - you could also see about engineering variables
