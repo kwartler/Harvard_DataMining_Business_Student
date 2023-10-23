@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Data: Mar 7, 2022
+#' Data: Oct 23, 2023
 #' Purpose: Load data build a decision tree
 #' https://archive.ics.uci.edu/ml/datasets/bank+marketing
 
@@ -78,7 +78,7 @@ sum(diag(confMat))/sum(confMat)
 rm(list=ls())
 
 ##########
-dat <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/F_Tree_RF/data/bank-full_v2.csv') # now a bit more data to approximate real scenario 
+dat <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/F_Tree_RF/data/bank-full_v2.csv') # now a bit more data to approximate real scenario 
 
 
 # To save time in class, we are only training on 50% of the data
@@ -121,9 +121,11 @@ fit <- train(as.factor(y) ~., #formula based
 fit
 
 # Plot the CP Accuracy Relationship to adust the tuneGrid inputs
+dev.off()
 plot(fit)
 
 # Plot a pruned tree
+dev.off()
 prp(fit$finalModel, extra = 1)
 
 # Make some predictions on the training set
