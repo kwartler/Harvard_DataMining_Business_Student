@@ -11,10 +11,9 @@ options(scipen=999)
 ## Load the libraries
 library(caret)
 library(rpart.plot) #visualizing
-library(readr)
 
 ## Bring in some data
-dat <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/F_LogReg_Tree_RF/data/bank2.csv') 
+dat <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/F_Tree_RF/data/bank2.csv') 
 
 # Partitioning
 splitPercent <- round(nrow(dat) %*% .9)
@@ -27,9 +26,11 @@ testDat  <- dat[-idx,]
 
 ## EDA
 summary(trainDat)
-head(testDat)
+head(trainDat)
+table(trainDat$y)
 
 # Force a full tree (override default parameters)
+# Don't do this one in your case!
 overFit <- rpart(as.factor(y) ~ ., 
                  data = trainDat, 
                  method = "class", 
@@ -77,7 +78,7 @@ sum(diag(confMat))/sum(confMat)
 rm(list=ls())
 
 ##########
-dat <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/F_LogReg_Tree_RF/data/bank-full_v2.csv') # now a bit more data to approximate real scenario 
+dat <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/F_Tree_RF/data/bank-full_v2.csv') # now a bit more data to approximate real scenario 
 
 
 # To save time in class, we are only training on 50% of the data

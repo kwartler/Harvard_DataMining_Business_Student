@@ -63,7 +63,7 @@ rm(list=ls())
 # Get the data
 wine <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/E_Regressions/data/Wine.csv')
 
-# Train 50%/Validation 40% /Varible Treatment 10%
+# Train 50%/Validation 40% /Variable Treatment 10%
 trainPercent      <- round(nrow(wine) %*% .5)
 validationPercent <- round(nrow(wine) %*% .4)
 

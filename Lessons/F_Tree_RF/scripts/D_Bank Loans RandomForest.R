@@ -16,10 +16,9 @@ library(caret)
 library(rpart.plot) 
 library(randomForest)
 library(vtreat)
-library(readr)
 
 ## Bring in some data
-dat <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/F_LogReg_Tree_RF/data/bank-downSampled.csv')
+dat <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/F_Tree_RF/data/bank-downSampled.csv')
 
 # EDA
 names(dat)
