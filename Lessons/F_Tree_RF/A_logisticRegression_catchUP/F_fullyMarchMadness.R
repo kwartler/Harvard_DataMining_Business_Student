@@ -71,6 +71,7 @@ confMat
 
 # What is the accuracy?
 sum(diag(confMat)) / sum(confMat)
+Accuracy(y_pred = results$ModelClassification, y_true = results$actual)
 
 # Let's bucket probabilities of winning teams to see the distribution
 winnningTeams <- subset(results, results$actual==1)
