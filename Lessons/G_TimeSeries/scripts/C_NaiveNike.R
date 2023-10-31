@@ -15,7 +15,7 @@ library(forecast)
 setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 
 # Data
-stockQtrRev <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/G_TimeSeries_Equities/data/nike_qtr_rev.csv')
+stockQtrRev <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/G_TimeSeries/data/nike_qtr_rev.csv')
 stockQtrRev$date <- gsub(' 1:00','',stockQtrRev$date)
 stockQtrRev$date <- mdy(stockQtrRev$date)
 

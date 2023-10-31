@@ -8,7 +8,7 @@
 library(lubridate)
 library(forecast)
 
-cvsDF <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/G_TimeSeries_Equities/challenge!/CVS_quarterlyRev.csv')
+cvsDF <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/G_TimeSeries/challenge!/CVS_quarterlyRev.csv')
 head(cvsDF)
 plot(cvsDF$Value, type = 'l')
 
@@ -81,7 +81,7 @@ tail(validationAndTwoYrForecasts, 8)
 #' 
 
 # Here is some code to get you started
-tsaDF <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/G_TimeSeries_Equities/challenge!/TSA_screened_passengers.csv')
+tsaDF <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/G_TimeSeries/challenge!/TSA_screened_passengers.csv')
 head(tsaDF)
 
 plot(tsaDF$TSAscreenings, type = 'l', main = 'Daily Number of TSA Passengers Screened')

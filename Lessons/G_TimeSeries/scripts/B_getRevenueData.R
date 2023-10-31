@@ -14,7 +14,7 @@ library(ggplot2)
 library(ggthemes)
 
 # read in Data
-qtrDF <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/G_TimeSeries_Equities/data/AMZN_Qtr_Rev.csv')
+qtrDF <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/G_TimeSeries/data/AMZN_Qtr_Rev.csv')
 qtrDF <- as.data.frame(qtrDF)
 tail(qtrDF)
 

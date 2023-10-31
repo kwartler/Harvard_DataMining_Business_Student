@@ -15,7 +15,7 @@ library(lubridate)
 library(ggseas) #seasonal adjustments with ggplot too!
 
 # Data
-amzn <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/G_TimeSeries_Equities/data/AMZN_Qtr_Rev.csv')
+amzn <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/G_TimeSeries/data/AMZN_Qtr_Rev.csv')
 head(amzn)
 
 # Time formatting
@@ -69,9 +69,13 @@ ggsdc(amznDF, aes(x = x, y = y), method = "decompose") + geom_line() + theme_bw(
 decompositionMulti <- ggsdc(amznDF, aes(x = x, y = y), method = "seas")
 
 # Extract individual components
-trendMult     <- decompositionMulti$data$trend
-seasonalMult  <- decompositionMulti$data$seasonal
-remainderMult <- decompositionMulti$data$remainder
+trendMult     <- subset(decompositionMulti$data,
+                        decompositionMulti$data$component=='trend')
+head(trendMult) #x = date, y=value, component is section of multiplicative component
+seasonalMult  <- subset(decompositionMulti$data,
+                        decompositionMulti$data$component=='seasonal')
+remainderMult <- subset(decompositionMulti$data,
+                        decompositionMulti$data$component=='irregular')
 
 # decompose(): additive method
 # ggseas::ggsdc(): multiplicative method using ARIMA (autoregressive (AR), differencing (I), and moving average (MA) for the components.  AR - past values, I - removes trend, MA - reduces noise
