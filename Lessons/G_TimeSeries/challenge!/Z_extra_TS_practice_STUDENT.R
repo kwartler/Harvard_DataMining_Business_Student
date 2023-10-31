@@ -1,0 +1,111 @@
+#' Author: Ted Kwartler
+#' Data: 10-29-2023
+#' Extra TS data practice
+#' Load and convert the CVS data to TS
+#' Using TSD understand the impact of Covid on retail sales at CVS. Compare the shape of this revenue to NIKE and reflect on the impact of covid for the two companies.
+
+# Library
+library(lubridate)
+library(forecast)
+
+cvsDF <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/G_TimeSeries_Equities/challenge!/CVS_quarterlyRev.csv')
+head(cvsDF)
+plot(cvsDF$_____, type = 'l')
+
+# Convert to a date with month day year  mdy() from lubridate
+cvsDF$Date <- ___(cvsDF$____)
+
+
+# Create a time series; add in the frequency from your review earlier
+stYr  <- year(cvsDF$____[_])
+stQtr <- quarter(_____$Date[_])
+st    <- c(____, ____)
+qtrTS <- ts(_____$_____, start = st, frequency = _)
+qtrTS
+
+# Apply Time Series Decomposition as part of exploratory work
+cvsDecompose <- _________(_____)
+
+# Plot it
+____(cvsDecompose)
+
+# Now use window() to partition the data and build a Holt Winters model, ending BEFORE 2020. 
+# Optionally/Additionally you could create a naive drift modelfor comparison.
+trainTS      <- ______(_____, end = c(2019,4))
+validationTS <- ______(_____, start = c(2020,1))
+
+# Make a HW model using the training periods
+qtrHW <- ___________(_______, seasonal = 'mult')
+
+# Plot the HW results and see how well it did
+____(_____)
+
+# Make predictions for each of the validation periods
+validForecasts <- _______(_____, length(validationTS))
+
+# Organize & Compare
+validationDF <- data.frame(idx      = seq_along(validForecasts),
+                           original = as.vector(validationTS),
+                           fit      = validForecasts)
+
+# Examine visual fit add a line with original and then fit using the validation DF
+ggplot(____________) +
+  geom_line(aes(x=idx, y=________), color = 'black', alpha = 0.5) +
+  geom_line(aes(x=idx, y=___), colour='red') + theme_bw()
+
+# Get RMSE
+RMSE(validationDF$original, validationDF$fit)
+MAPE(validationDF$original, validationDF$fit)
+
+# Why did the HW forecast over predict revenue consistently?
+
+
+# Now that accept the HW model (in reality you would try other methods and compare MAPE etc) since it was only 6% off, we should refit it on all the data and make a forecast
+fullHW <- ___________(qtrTS, seasonal = 'mult')
+
+# Make predictions for the next 2 yrs (8quarters)
+twoYrForecasts <- _______(fullHW, _)
+
+# Compare it to the original partitioned model that was unaware of the virus, predict the validation set and the 8 new quarters
+validationAndTwoYrForecasts <- predict(qtrHW, length(validationTS) + _)
+
+# When you compare the two sets of 8 quarter predictions you see the full HW has lower amounts because the change in trend from covid is included while the original model did not have that impact
+twoYrForecasts
+tail(validationAndTwoYrForecasts, 8)
+
+
+#' See if you can understand the impact of TSA screenings due to coronavirus using time series analysis/modeling
+#' Using HoltWinters make a prediction for the next days, evaluate the model using out of time sampling
+#' Once satisfied with HW (or another from the book) rerun with all the data making a prediction for the next month and compare to the data here:
+#' https://www.tsa.gov/coronavirus/passenger-throughput
+#' 
+
+# Here is some code to get you started
+tsaDF <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/G_TimeSeries_Equities/challenge!/TSA_screened_passengers.csv')
+head(tsaDF)
+
+plot(tsaDF$TSAscreenings, type = 'l', main = 'Daily Number of TSA Passengers Screened')
+
+# Convert to a TS for the TSA_screenings, then partition with window(), then model, evaluate, and predict!
+
+# End
+
+### For those that are curious about how the data was obtained:
+#library(rvest)
+#library(tidyverse)
+#pg <- read_html('https://www.tsa.gov/travel/passenger-volumes')
+#tsaPassengers  <- pg %>% 
+#  html_nodes("table") %>% 
+#  html_table(fill = TRUE)
+
+#tsaPassengers <- as.data.frame(tsaPassengers)
+#tsaPassengers <- tsaPassengers %>%
+#  pivot_longer(cols = -Date, names_to = "Year", values_to = "TSAscreenings") 
+
+#tsaPassengers$Date <- sub("/[0-9]{4}$", "", tsaPassengers$Date)
+#tsaPassengers$Date <- paste0(tsaPassengers$Date,'/',sub("^X", "", tsaPassengers$Year))
+#tsaPassengers$TSAscreenings <- as.numeric(gsub(",", "",tsaPassengers$TSAscreenings))
+#tsaPassengers$Date <- mdy(tsaPassengers$Date)
+#tsaPassengers <- tsaPassengers %>% arrange(Date)
+#tsaPassengers$Year <- NULL
+#write.csv(tsaPassengers, '~/Desktop/Harvard_DataMining_Business_Student/Lessons/G_TimeSeries_Equities/challenge!/TSA_screened_passengers.csv', row.names = F)

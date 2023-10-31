@@ -15,13 +15,13 @@ library(maps)
 library(ggthemes)
 library(ggplot2)
 library(leaflet)
+library(leaflet.extras)
 library(mapproj)
-library(readr)
 
 # Import
 #amzn <- read.csv('amznWarehouses.csv')
 gitFile <- url('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/A_IntroToR/data/amznWarehouses.csv')
-amzn <- read_csv(gitFile)
+amzn <- read.csv(gitFile)
 
 
 # This is messy webscraped data, check out the state.
@@ -111,11 +111,12 @@ ggMA +
 
 # Leaflet layers using %>% pipe
 mplot<- leaflet(data=onlyMA) %>%
-  addTiles() %>%
+  addTiles() %>% 
   addMarkers( popup = paste("Loc:", onlyMA$Location, "<br>",
                             "SqFt:", onlyMA$Sq..Feet,"<br>",
                             "Type:", onlyMA$Type),
-              clusterOptions = markerClusterOptions()) 
+              clusterOptions = markerClusterOptions()) %>%
+  addResetMapButton()
 mplot
 
 # End
