@@ -87,11 +87,11 @@ stockChk <- function(tickerSymbol='AAPL',
 }
 
 # Examples
-stockChk()
-stockChk('goog')
-stockChk('amzn', lookBack = 34) 
-stockChk('CMG', kpi = 'rsi', lookBack = 365)
-stockChk('CMG', kpi= 'sma', lookBack = 365)
-stockChk('CMG', kpi='macd', lookBack = 365, recommendation='buy')
+#stockChk()
+#stockChk('goog')
+#stockChk('amzn', lookBack = 34) 
+#stockChk('CMG', kpi = 'rsi', lookBack = 365)
+#stockChk('CMG', kpi= 'sma', lookBack = 365)
+#stockChk('CMG', kpi='macd', lookBack = 365, recommendation='buy')
 
 # End
