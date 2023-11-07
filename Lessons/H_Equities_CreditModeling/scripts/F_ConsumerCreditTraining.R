@@ -16,11 +16,9 @@ library(dplyr)
 library(caret)
 library(e1071)
 library(vtreat)
-library(readr)
 
 # I/O
-df <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/H_CreditModeling/data/20K_sampleLoans.csv') 
-df <- as.data.frame(df)
+df <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/H_Equities_CreditModeling/data/20K_sampleLoans.csv') 
 
 # Keep the pertinent information
 keeps <- c("loan_amnt", "term", "int_rate", "installment", "grade", "sub_grade", "emp_length" , "home_ownership", "annual_inc", "purpose", "title", "zip_code", "addr_state", "dti", "delinq_2yrs", "pub_rec_bankruptcies", "inq_last_6mths", "mths_since_last_delinq", "mths_since_last_record", "open_acc", "pub_rec", "revol_bal", "revol_util", "total_acc", "initial_list_status", "collections_12_mths_ex_med", "mths_since_last_major_derog","y")
@@ -102,7 +100,7 @@ summary(chk$probs.1)
 # Depending on the amount of your portfolio and what we learned you may want to increase the cutoff to optimize payoff not overall accuracy
 losingMoney$highCutoff <- ifelse(losingMoney$probs.1 > 0.98,1,0)
 highThreshold <- table(losingMoney$highCutoff, validation$y) #704 is now 55, much less chance of getting it wrong
-highThreshold
+highThreshold # more like 10 correctly identified and only 1 misidentified
 MLmetrics::Accuracy(losingMoney$highCutoff, validation$y)
 
 # End

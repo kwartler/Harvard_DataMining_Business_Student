@@ -14,7 +14,7 @@ library(dygraphs)
 library(htmltools)
 
 # Get a Stock
-stk <- getSymbols("AMZN", auto.assign = F) #"AMZN_1_TTR_E.rds"
+stk <- getSymbols("AMZN", auto.assign = F) 
 
 # Calc RSI
 STKrsi <- RSI(Cl(stk),

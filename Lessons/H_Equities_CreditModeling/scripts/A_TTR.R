@@ -72,7 +72,7 @@ head(OpCl(AAPL),5)
 dygraph(AAPL$AAPL.Close)  %>% dyRangeSelector()
 
 
-# Example Candlestick & MANY TTR!
+# Example Candlestick 
 # https://www.investing.com/equities/apple-computer-inc-candlestick
 candleAAPL <- AAPL[,1:4]
 dygraph(candleAAPL) %>%
