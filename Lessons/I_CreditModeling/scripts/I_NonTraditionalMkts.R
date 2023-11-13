@@ -13,17 +13,17 @@ setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 
 # "Open" a pack with the correct card rarities function
 #source("~/Desktop/Harvard_DataMining_Business_Student/Lessons/I_nonTraditionalMkt_LPsolve_RealEstate/scripts/Z_crackPack.R")
-crackPack <- "https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/H_Equities_CreditModeling/scripts/Z_crackPack.R"
+crackPack <- "https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/I_CreditModeling/scripts/Z_crackPack.R"
 source_url(crackPack)
 
 
 # Get card values accounting for distribution by rarity type
 #source("~/Desktop/Harvard_DataMining_Business_Student/Lessons/I_nonTraditionalMkt_LPsolve_RealEstate/scripts/Z_cardValues.R")
-cardValues <- "https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/H_Equities_CreditModeling/scripts/Z_cardValues.R"
+cardValues <- "https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/I_CreditModeling/scripts/Z_cardValues.R"
 source_url(cardValues)
 
 # Card list obtained online
-cards <- read.csv("https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/H_Equities_CreditModeling/data/Guilds_10_16_18.csv")
+cards <- read.csv("https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/I_CreditModeling/data/Guilds_10_16_18.csv")
 
 # Examine
 head(cards)
