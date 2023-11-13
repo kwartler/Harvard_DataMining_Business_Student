@@ -73,6 +73,7 @@ for(j in 1:100){
 
 # Look at one box
 boxes[[1]]
+boxes[[42]]
 
 # Change to a data frame
 boxes <- do.call(rbind, boxes)
