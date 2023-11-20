@@ -3,7 +3,7 @@
 #' Author: Ted Kwartler
 #' email: edwardkwartler@fas.harvard.edu
 #' License: GPL>=3
-#' Date: Nov 14, 2022
+#' Date: Nov 20, 2023
 #'
 
 # Set the working directory
@@ -14,9 +14,6 @@ library(tm)
 library(qdap)
 library(wordcloud)
 library(RColorBrewer)
-library(pbapply)
-library(readr)
-
 
 # Options & Functions
 options(stringsAsFactors = FALSE)
@@ -55,7 +52,7 @@ objNames <- c('chardonnay.csv','coffee.csv','beer.csv')
 
 
 for (i in 1:length(txtFiles)){
-  assign(objNames[i], read_csv(txtFiles[i], locale = locale(encoding = "Latin1")))
+  assign(objNames[i], read.csv(txtFiles[i], encoding = "Latin1"))
   cat(paste('read completed:',txtFiles[i],'\n'))
 } 
 

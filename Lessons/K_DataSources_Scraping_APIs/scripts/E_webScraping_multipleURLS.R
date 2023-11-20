@@ -3,7 +3,7 @@
 #' Author: Ted Kwartler
 #' email: edwardkwartler@fas.harvard.edu
 #' License: GPL>=3
-#' Date: Nov 27, 2022
+#' Date: Nov 19, 2023
 #' 
 
 # Library
@@ -34,6 +34,7 @@ instructorNames
 # Follow links to get more bio's
 allBios <- list()
 for (i in 1:length(instructorNames)){
+  cat(i)
   # Progress Msg
   cat(instructorNames[i])
   pg <- read_html(getLinks[i])
@@ -60,5 +61,8 @@ allBios     <- do.call(rbind, allBios)
 # Drop the line returns 
 allBios$bio <- gsub("[\r\n\t]", "", allBios$bio)
 allBios[15,]
+
+# Still some issues need to be cleaned up as is often the case with webscraping.  Lots of cleanup!
+allBios[26,]
 
 # End

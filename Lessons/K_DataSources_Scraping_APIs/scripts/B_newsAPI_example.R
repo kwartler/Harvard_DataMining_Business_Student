@@ -1,14 +1,14 @@
-#' Title: News API
+#' Title: https://newsapi.org
 #' Purpose: Get data from JSON
 #' Author: Ted Kwartler
 #' email: edwardkwartler@fas.harvard.edu
 #' License: GPL>=3
-#' Date: Nov 27, 2022
+#' Date: Nov 19, 2023
 #'
 
 # Libraries
 library(jsonlite)
-library(pbapply)
+library(stringi) # fixes some formatting issues
 
 # Options
 options(stringsAsFactors = F)
@@ -22,8 +22,8 @@ usURL
 
 # The documentation has other sources
 # Get last weeks information from Al Jazeera English
-to   <- Sys.Date()
-from <- to-7
+to   <- Sys.Date()-1
+from <- to-8 
 
 # Let's get Al Jazeera Top Headlines
 apiURL <- paste0('https://newsapi.org/v2/top-headlines?sources=',
@@ -31,7 +31,7 @@ apiURL <- paste0('https://newsapi.org/v2/top-headlines?sources=',
                 '&from=', from,
                 '&',
                 'to=', to,
-                '1&sortBy=popularity&apiKey=',
+                '&sortBy=popularity&apiKey=',
                 apiKey)
 apiURL
 
@@ -44,6 +44,7 @@ newsInfo$totalResults     <- NULL
 newsInfo$articles$source  <- NULL
 
 finalContent <- newsInfo[[1]]
+finalContent$content <- stri_unescape_unicode(finalContent$content)
 finalContent
 
 # End

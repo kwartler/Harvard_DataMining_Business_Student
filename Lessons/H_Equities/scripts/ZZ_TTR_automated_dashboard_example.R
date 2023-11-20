@@ -91,5 +91,6 @@ stockChk <- function(tickerSymbol='AAPL',
 #stockChk('CMG', kpi = 'rsi', lookBack = 365)
 #stockChk('CMG', kpi= 'sma', lookBack = 365)
 #stockChk('CMG', kpi='macd', lookBack = 365, recommendation='buy')
+stockChk('CRM', kpi = 'macd', lookBack = 365, recommendation='buy')
 
 # End

@@ -3,7 +3,7 @@
 #' Author: Ted Kwartler
 #' email: edwardkwartler@fas.harvard.edu
 #' License: GPL>=3
-#' Date: Apr 10, 2022
+#' Date: Nov 20, 2023
 #'
 
 # Set the working directory
@@ -18,8 +18,6 @@ library(tm)
 library(radarchart)
 library(textdata)
 library(ggplot2)
-library(readr)
-
 
 # Options & Functions
 options(stringsAsFactors = FALSE)
@@ -79,6 +77,7 @@ bingSent
 
 # Quick Analysis - count of words
 bingAgg <- aggregate(count~document+sentiment, bingSent, sum)
+bingAgg
 reshape2::dcast(bingAgg, document~sentiment)
 
 # Compare with qdap::Polarity
@@ -87,7 +86,7 @@ polarity(text[2])
 polarity(text[3])
 
 # Sometimes text and sentiment can be temporal
-coffee <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/coffee.csv', locale = locale(encoding = "Latin1"))
+coffee <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/coffee.csv', encoding = "Latin1")
 head(coffee$created) 
 tail(coffee$created)
 coffee <- coffee[order(coffee$created, decreasing = F),]
@@ -100,7 +99,7 @@ coffeeCorpus <- DocumentTermMatrix(coffeeCorpus)
 coffeeCorpus <- tidy(coffeeCorpus)
 
 # Get the AFINN lexicon
-afinn <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/AFINN/afinn.csv')
+afinn <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/AFINN/afinn.csv')
 head(afinn)
 
 # Join
@@ -114,9 +113,8 @@ plot(coffeeAfinnAgg$value, type = 'l')
 plot(TTR::SMA(coffeeAfinnAgg$value,10), type = 'l')
 
 
-# Get nrc lexicon, again causes probs on rstudio cloud
 #nrc <- textdata::lexicon_nrc() # should download it
-nrc <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/nrc.csv')
+nrc <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/nrc.csv')
 head(nrc)
 
 # Perform Inner Join

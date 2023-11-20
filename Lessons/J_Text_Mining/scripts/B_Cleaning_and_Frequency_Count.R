@@ -3,7 +3,7 @@
 #' Author: Ted Kwartler
 #' email: edwardkwartler@fas.harvard.edu
 #' License: GPL>=3
-#' Date: Nov 14, 2022
+#' Date: Nov 20, 2023
 #'
 
 # Set the working directory
@@ -11,7 +11,6 @@ setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 
 # Libs
 library(tm)
-library(readr)
 
 # Options & Functions
 Sys.setlocale('LC_ALL','C')
@@ -41,7 +40,7 @@ cleanCorpus<-function(corpus, customStopwords){
 customStopwords <- c(stopwords('english'), 'lol', 'smh', 'rofl')
 
 # Data
-text <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/coffee.csv', locale = locale(encoding = "Latin1")) # sometimes text encoding causes problems so declaring it as latin
+text <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/coffee.csv',encoding = "Latin1") # sometimes text encoding causes problems so declaring it as latin
 View(text)
 
 # As of tm version 0.7-3 tabular was deprecated
@@ -69,8 +68,10 @@ text$text[4]
 
 # Make a Document Term Matrix or Term Document Matrix depending on analysis
 txtDtm  <- DocumentTermMatrix(txtCorpus)
-txtTdm  <- TermDocumentMatrix(txtCorpus)
 txtDtmM <- as.matrix(txtDtm)
+
+# Here we make a TDM but when you do this on your own you only need one!  Its the same information just transposed.
+txtTdm  <- TermDocumentMatrix(txtCorpus)
 txtTdmM <- as.matrix(txtTdm)
 
 # Examine
