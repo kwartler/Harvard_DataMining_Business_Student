@@ -20,7 +20,7 @@ setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 
 # Youtube URL
 # https://www.youtube.com/watch?v=K5Rly83zfuI&ab_channel=TheDailyShowwithTrevorNoah
-youtubeCaption <- 'https://www.youtube.com/api/timedtext?v=K5Rly83zfuI&ei=rclaZZ60F_CI_9EPtpGY4AE&caps=asr&opi=112496729&xoaf=4&hl=en&ip=0.0.0.0&ipbits=0&expire=1700473885&sparams=ip%2Cipbits%2Cexpire%2Cv%2Cei%2Ccaps%2Copi%2Cxoaf&signature=0CAC75781745CA2A32AA5A2056B85AE074838E17.6C344D4CE558888818E0C202A95B7C016E7901A3&key=yt8&lang=en-US&fmt=json3&xorb=2&xobt=3&xovt=3&cbrand=apple&cbr=Chrome&cbrver=119.0.0.0&c=WEB&cver=2.20231117.01.04&cplayer=UNIPLAYER&cos=Macintosh&cosver=10_15_7&cplatform=DESKTOP'
+youtubeCaption <- 'https://www.youtube.com/api/timedtext?v=K5Rly83zfuI&ei=oRplZffbKPaO_9EP7uu0-AM&caps=asr&opi=112496729&xoaf=4&hl=en&ip=0.0.0.0&ipbits=0&expire=1701149969&sparams=ip%2Cipbits%2Cexpire%2Cv%2Cei%2Ccaps%2Copi%2Cxoaf&signature=6BDA74E8AFC34BB57F4CF68B2942E2406B8E39DB.671C2F6290AB89E8EC168F7F6628A25AFA91E4C8&key=yt8&lang=en-US&fmt=json3&xorb=2&xobt=3&xovt=3&cbrand=apple&cbr=Chrome&cbrver=119.0.0.0&c=WEB&cver=2.20231121.08.00&cplayer=UNIPLAYER&cos=Macintosh&cosver=10_15_7&cplatform=DESKTOP'
 
 # Go get the data
 dat <- fromJSON(youtubeCaption) # you can even pass in a URL to go to a webpage

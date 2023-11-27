@@ -33,7 +33,7 @@ releaseDates
 # Similarly now to get all the text for each section
 # //section is all sections
 # //p is all paragraphs
-# positions() > 1 means all paragaphs after the first because thats the release date
+# positions() > 1 means all paragraphs after the first because that's the release date
 movieInfo <- read_html(pg) %>% html_nodes(xpath = '//section//p[position() > 1]') %>% html_text(trim = TRUE)
 
 # Needs some cleanup
@@ -44,7 +44,9 @@ length(releaseDates)
 idx <- cumsum(grepl("Director:", movieInfo)) # Get a running total of the split word
 idx #these are now the section groups!
 movieInfo <- data.frame(id = idx, text  = movieInfo)
+movieInfo[1:2,]
 movieInfo <- aggregate(text ~id, movieInfo, paste, collapse = ' ')
+movieInfo[1,]
 
 # Final organization
 finalDF <- data.frame(name = movieNames, 
@@ -80,6 +82,6 @@ movieInfo2 <- read_html(pg) %>%
       paste(collapse = ' ')
   })
 movieInfo2 <- unlist(movieInfo2)
-
+movieInfo2
 
 # End

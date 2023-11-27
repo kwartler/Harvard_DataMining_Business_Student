@@ -2,8 +2,11 @@
 For students of Harvard CSCI E-96 Data Mining for Business
 
 ## Syllabus
-University [syllabus](https://harvard.simplesyllabus.com/doc/jff3zh7o0/Fall-Term-2023-Full-Term-CSCI-E-96-1-Data-Mining-for-Business?mode=view)
-or [here](https://harvard.simplesyllabus.com/api2/doc-pdf/jff3zh7o0/Fall-Term-2023-Full-Term-CSCI-E-96-1-Data-Mining-for-Business.pdf?locale=en-US)
+Fall 2023 University [syllabus](https://harvard.simplesyllabus.com/doc/jff3zh7o0/Fall-Term-2023-Full-Term-CSCI-E-96-1-Data-Mining-for-Business?mode=view)
+or [PDF here](https://harvard.simplesyllabus.com/api2/doc-pdf/jff3zh7o0/Fall-Term-2023-Full-Term-CSCI-E-96-1-Data-Mining-for-Business.pdf?locale=en-US)
+
+Spring 2024 University [syllabus](https://harvard.simplesyllabus.com/doc/lb0nf6j56/Spring-Term-2024-Full-Term-CSCI-E-96-1-Data-Mining-for-Business?mode=view) or 
+[PDF here](https://harvard.simplesyllabus.com/api2/doc-pdf/lb0nf6j56/Spring-Term-2024-Full-Term-CSCI-E-96-1-Data-Mining-for-Business.pdf?locale=en-US)
 
 ## Working with R
 If you are new to R, please take an online course to get familarity prior to the first session.  We will still cover R basics but students have been aided by spending a few hours taking a free online course at [DataQuest](https://www.dataquest.io/) or [DataCamp](https://www.datacamp.com).  The code below should be run in the console to install packages needed for the semester.
