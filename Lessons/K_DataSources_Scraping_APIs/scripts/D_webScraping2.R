@@ -6,6 +6,9 @@
 #' Date: Nov 19, 2023
 #'
 
+# libraries
+library(rvest)
+
 # webpage to webscrape
 pg <- 'https://rvest.tidyverse.org/articles/starwars.html'
 
