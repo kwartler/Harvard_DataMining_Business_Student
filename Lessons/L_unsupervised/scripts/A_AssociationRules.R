@@ -6,10 +6,10 @@
 library(arules)
 
 # WD
-setwd("~/Desktop/Harvard_DataMining_Business_Student/Lessons/M_RecoEngine_Ethics/data")
+setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 
 # Data
-faceDF <- read.csv("Faceplate.csv")
+faceDF <- read.csv("https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/L_unsupervised/data/Faceplate.csv")
 
 # Examine
 faceDF
@@ -28,9 +28,9 @@ inspect(faceTrans)
 
 # Apply aprior algo
 faceRules <- apriori(faceTrans, 
-                  parameter = list(supp = 0.2, 
-                                   conf = 0.5, 
-                                   target = "rules"))
+                     parameter = list(supp = 0.2, 
+                                      conf = 0.5, 
+                                      target = "rules"))
 
 # How many did we get?
 faceRules
@@ -39,15 +39,18 @@ faceRules
 inspect(head(sort(faceRules, by = "lift"), n = 6))
 
 # Extract the rules to a useable format and subset example
-#rulesDF <- inspect(faceRules) #author method
+#rulesDF <- inspect(faceRules) #book author method
 rulesDF  <- as(faceRules, 'data.frame') # correct method
-rulesDF[rulesDF$support >= 0.04 & rulesDF$confidence >= 0.7,]
 
-# Clear workspace
+# Examine
+rulesDF
+
+# Clear workspace for a more realistic version
 rm(list=ls())
 
 # Now work on a larger, more realistic dataset
-books <- read.csv('CharlesBookClub.csv')
+books <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/L_unsupervised/data/CharlesBookClub.csv')
+head(books)
 
 # Subset to Transaction level
 books <- books[,8:18]
@@ -55,7 +58,7 @@ books <- books[,8:18]
 # Examine
 head(books)
 
-# Discretize into binary outcome; discretize function is cumbersome & error prone
+# Discretize into binary outcome; discretize() function is cumbersome & error prone
 books <- ifelse(books > 0,1,0)
 
 # Incidence Matrix class obj
@@ -65,8 +68,7 @@ booksTrans <- as(books, 'transactions')
 itemFrequencyPlot(booksTrans)
 
 # Apriori control parameters
-ctrl <- list(supp= 200/4000, 
-             # how many times *minimum* should the rule appear 
+ctrl <- list(supp= 200/4000, #5%, how many times *minimum* should the rule appear 
              conf = 0.5, 
              # for a specific antecedent, at least 50% of the time the specific consequent must be found
              target = "rules") # return rules
@@ -89,13 +91,13 @@ head(booksApr, 10)
 # Consequent: then suggest a youth book.
 # support (% of time the transaction appeared): 253 / 4000 = .06325
 # confidence (when the transaction appeared how many times did the consequent appear): 57.7% of the time {ChildBks,CookBks,GeogBks} transactions also had a youth book
-# lift (confidence/(benchmark confidence): 2.424452
+# lift = (confidence/(benchmark confidence): 2.424452
 # 0.5776256 / x = 2.424452
 # 0.5776256  = 2.424452x
 # 0.5776256 / 2.424452 = x
-# 0.23825
+# 0.23825 = x; benchmark confidence
 # *benchmark confidence is the number of times youth books appeared as the consequent naturally) 2.42 better than random youth book purchases.
 
 # Checking math
-nrow(subset(books, books[,2]>0)) / 4000 # = .23825
+nrow(subset(books, books[,colnames(books) %in% 'YouthBks']>0)) / 4000 # = .23825
 # End

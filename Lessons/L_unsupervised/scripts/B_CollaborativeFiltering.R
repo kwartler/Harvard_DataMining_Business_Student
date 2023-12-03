@@ -13,21 +13,24 @@ library(recommenderlab)
 library(reshape2)
 
 # wd
-setwd("/Users/edwardkwartler/Desktop/Harvard_DataMining_Business_Student/Lessons/M_RecoEngine_Ethics/data")
+setwd("/Users/edwardkwartler/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 
 # Raw Data In & EDA
-songListens <- read_fst('10000Songs.fst')
+songListens <- read_fst('~/Desktop/Harvard_DataMining_Business_Student/Lessons/L_unsupervised/data/10000Songs.fst')
 songData    <- read_fst(unzip(file.choose())) #interactive file selection with an unzip!
 
 # Examine Song Information
 head(songData)
-#nlevels(as.factor(songData$song_id)) #999056; takes while to run
+
+# How many unique songs are there
+length(unique(songData$song_id))
 
 # Examine Listening Behavior
 head(songListens, 10)
-nlevels(songListens$userID)
-nlevels(songListens$song_id)
+nlevels(songListens$userID) #76klisteners
+nlevels(songListens$song_id) #10k unique songs (toy data reduction)
 summary(songListens$listens)
+plot(density(songListens$listens))
 
 # Oh my!
 subset(songListens, songListens$listens==2213)
@@ -35,7 +38,7 @@ subset(songData, songData$song_id=='SOFCGSE12AF72A674F')
 #https://www.youtube.com/watch?v=OgkoiFwI5eM 3:32
 #((212*2213)/60)/24 = 325 days?
 
-# Just get first 1000 unique users for example
+# Just get first 1000 unique users & their listens for example; otherwise will have to run for longer!
 sampUsers   <- unique(songListens$userID)[1:1000]
 songListens <- songListens[songListens$userID %in% sampUsers,]
 
@@ -45,18 +48,24 @@ affinityMatrix <- acast(songListens, userID ~ song_id)
 # Examine
 dim(affinityMatrix)
 affinityMatrix[50:53,108:110]
+
+# Let's look up the song in the song dictionary
 subset(songData, songData$song_id=='SOAJWRM12A8C13CF2B')
 
+# So user 0ec9cc33028dff6209aa49bf645ef64bdcbe00fc listend to song SOAJWRM12A8C13CF2B six times
+
 # Convert to reco lab class
+affinityMatrix[50:53,108:110]
 affinityMatrix <- as(affinityMatrix,"realRatingMatrix")
 
 # Construct a User-Based-Collaborative-Filter
 recModel <- Recommender(affinityMatrix, method = "UBCF")
 
-# Get #103 to 106 users
-user <- affinityMatrix[sampUsers[103:106],]
+# Get #103 to 106 users for example
+user <- affinityMatrix[sampUsers[90:100],] #103:106
+head(as(user, 'data.frame'))
 
-# recommended top 5 items for each user
+# recommended top 5 items for each user 
 recommendedItems <- predict(recModel, user, n=5)
 
 # Chg to List 
@@ -65,20 +74,20 @@ recoList <- as(recommendedItems, "list")
 # Examine
 recoList
 
-# Now what songs are those?
-userThreeRecos <- unlist(recoList[[3]])
-userThreeRecos
-songData[songData$song_id %in% userThreeRecos,]
+# Append the original user IDs
+as.character(sampUsers[90:100])
+names(recoList) <- sampUsers[90:100]
 
-# What did this listener originally listen too?  Does the reco make sense?
-userThreeID <- names(recoList)[3] #"8ee90038724c4957eb4df16f3e9c6ed2b570a3ec"
-userThreeID
+# Now let's compare the user listens to the recommendations
+userIdx <- 9 #1-11 since we subset to some users earlier
+oneUserRecos <- unlist(recoList[[userIdx]])
+oneUserListens <- subset(songListens, songListens$userID==names(recoList)[userIdx])
+oneUserRecos
+oneUserListens
 
- 
-# Subset to a single user then join the data
-singleListens <- subset(songListens, songListens$userID == userThreeID)
-singleListens
+# Now append song names to both
+left_join(oneUserListens, songData) # what did they listen too
+songData[songData$song_id %in% oneUserRecos,] # what was recommended
 
-left_join(singleListens, songData)
 
 # End
