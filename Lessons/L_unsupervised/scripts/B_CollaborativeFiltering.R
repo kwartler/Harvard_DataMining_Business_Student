@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Date: Dec 7-2020
+#' Date: Dec 3-2023
 #' Purpose: Collaborative Filtering Example
 
 ### RecoLab 0.2-6 has some unusual code, in the UBCF so instead install the older version
