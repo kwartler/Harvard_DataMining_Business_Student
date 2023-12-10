@@ -61,7 +61,7 @@ affinityMatrix <- as(affinityMatrix,"realRatingMatrix")
 # Construct a User-Based-Collaborative-Filter
 recModel <- Recommender(affinityMatrix, method = "UBCF")
 
-# Get #103 to 106 users for example
+# Get #90 to 100 users for example
 user <- affinityMatrix[sampUsers[90:100],] #103:106
 head(as(user, 'data.frame'))
 
