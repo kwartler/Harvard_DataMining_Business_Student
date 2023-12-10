@@ -110,6 +110,13 @@ someVoters <- randomForest(as.factor(Class) ~ .,
 trainClass <- predict(someVoters, treatedTrain)
 confusionMatrix(trainClass, as.factor(treatedTrain$Class))
 
+# This code helps to determine mtry with OOB errors;
+# one could go back and use this mtry but in this data set it's 
+# pretty high so still may not be optimal
+#optimalRF <- tuneRF(x = treatedTrain[,1:59], 
+#                    y = ifelse(treatedTrain[,60]=='yes',1,0), 
+#                    stepFactor=1.5)
+
 ### Now let's apply to the validation test set
 threeVotes        <- predict(downSampleFit, treatedTest)
 fiveHundredVoters <- predict(moreVoters,    treatedTest)
