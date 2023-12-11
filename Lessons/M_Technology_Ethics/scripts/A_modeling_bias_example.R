@@ -16,7 +16,6 @@ library(glmnet)
 library(MLmetrics)
 library(vtreat)
 library(fairness)
-library(readr)
 
 # Custom cleaning function
 resumeClean<-function(xVec, stops=stopwords("SMART")){
@@ -28,9 +27,9 @@ resumeClean<-function(xVec, stops=stopwords("SMART")){
 }
 
 # Data
-candidates <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/M_Technology_Ethics/data/HR%20Hiring%20(Bias%20%26%20Fairness).csv')
+candidates <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/M_Technology_Ethics/data/HR%20Hiring%20(Bias%20%26%20Fairness).csv')
 
-### SAMPLE : Patritioning
+### SAMPLE : Partitioning
 set.seed(1234)
 idx              <- createDataPartition(candidates$Hired,p=.7,list=F)
 trainCandidates <- candidates[idx,]
@@ -64,6 +63,10 @@ vectorizer <- vocab_vectorizer(prunedtextVocab)
 trainingDTM <- create_dtm(iterMaker, vectorizer)
 dim(trainingDTM)
 
+# Examine the DTM
+idx <- which(!trainingDTM == 0)
+trainingDTM[ head(idx),grep('human_resources', colnames(trainingDTM))]
+
 # Append DTM to original data
 allCandidateData <- cbind(trainCandidates, as.matrix(trainingDTM))
 names(allCandidateData)
@@ -71,6 +74,9 @@ names(allCandidateData)
 # Let's drop ApplicationID,AgeBracket, Gender and raw text Summary
 drops <- c('ApplicationID', 'AgeBracket', 'Gender', 'Summary')
 allCandidateData <- allCandidateData[, !(names(allCandidateData) %in% drops)]
+
+# Examine all the data used in the model
+allCandidateData[head(idx),c(1:ncol(trainCandidates),grep('human_resources', colnames(allCandidateData)))]
 
 # Now let's prepare for modeling by making dummy variables
 plan <- designTreatmentsC(allCandidateData, #data
@@ -190,7 +196,7 @@ genderFit <- cv.glmnet(as.matrix(allCandidateData),
 # Subset to impacting terms to identify issues for rebuilding the model
 bestTerms <- subset(as.matrix(coefficients(genderFit)), 
                     as.matrix(coefficients(genderFit)) !=0)
-bestTerms <- data.frame(term = rownames(bestTerms), value = bestTerms[,1])
+bestTerms <- data.frame(term = rownames(bestTerms), value = bestTerms[,1], row.names = NULL)
 bestTerms <- bestTerms[order(bestTerms$value, decreasing=T), ] #proxies
 
 # Indicative of "male"
@@ -208,7 +214,7 @@ ageFit <- cv.glmnet(as.matrix(allCandidateData),
 # Subset to impacting terms to identify issues for rebuilding the model
 bestTerms <- subset(as.matrix(coefficients(ageFit)), 
                     as.matrix(coefficients(ageFit)) !=0)
-bestTerms <- data.frame(term = rownames(bestTerms), value = bestTerms[,1])
+bestTerms <- data.frame(term = rownames(bestTerms), value = bestTerms[,1], row.names = NULL)
 bestTerms <- bestTerms[order(bestTerms$value, decreasing=T), ] #proxies
 # Indicative of "40 and Over"
 head(bestTerms, 15)
