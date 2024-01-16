@@ -3,7 +3,7 @@ For students of Harvard CSCI E-96 Data Mining for Business
 
 ## Syllabus
 Fall 2023 University [syllabus](https://harvard.simplesyllabus.com/doc/jff3zh7o0/Fall-Term-2023-Full-Term-CSCI-E-96-1-Data-Mining-for-Business?mode=view)
-or [PDF here](https://harvard.simplesyllabus.com/api2/doc-pdf/jff3zh7o0/Fall-Term-2023-Full-Term-CSCI-E-96-1-Data-Mining-for-Business.pdf?locale=en-US)
+or [PDF here](https://harvard.simplesyllabus.com/api2/doc-pdf/lb0nf6j56/Spring-Term-2024-Full-Term-CSCI-E-96-1-Data-Mining-for-Business.pdf?locale=en-US)
 
 Spring 2024 University [syllabus](https://harvard.simplesyllabus.com/doc/lb0nf6j56/Spring-Term-2024-Full-Term-CSCI-E-96-1-Data-Mining-for-Business?mode=view) or 
 [PDF here](https://harvard.simplesyllabus.com/api2/doc-pdf/lb0nf6j56/Spring-Term-2024-Full-Term-CSCI-E-96-1-Data-Mining-for-Business.pdf?locale=en-US)
@@ -35,3 +35,25 @@ pacman::p_load(ggplot2, ggthemes, ggdark, rbokeh, maps,
                devtools, flexdashboard, rmarkdown, httr)
 
 ```
+
+## Class Schedule 
+
+This is tentative and subject to change to maximize learning
+
+|Date     | Topic  |
+|---------|------------|
+| Jan 22  | Intro to R, R-studio & git  |
+| Jan 29  | Intro to Data Mining   |
+| Feb 5   | More R Practice & EDA  |
+| Feb 12  | Data mining workflows  |
+| Feb 19  | no class (university holiday)  |
+| Feb 26  | Regression & Log Regression  |
+| Mar 4   | Decision Tree & Random Forest  |
+| Mar 11  | Spring Break - no class  |
+| Mar 25  | Equities  |
+| Apr 1   | Predicting Risk & non-traditional investing  |
+| Apr 8   | Text analysis & NLP  |
+| Apr 15  | Text analysis & NLP, continued  |
+| Apr 22  | Data sources & APIs  |
+| Apr 29  | Responsible AI & tech ethics  |
+| May 6   | Class Lab  |
