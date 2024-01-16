@@ -50,6 +50,7 @@ This is tentative and subject to change to maximize learning
 | Feb 26  | Regression & Log Regression  |
 | Mar 4   | Decision Tree & Random Forest  |
 | Mar 11  | Spring Break - no class  |
+| Mar 18  | Time Series Data  |
 | Mar 25  | Equities  |
 | Apr 1   | Predicting Risk & non-traditional investing  |
 | Apr 8   | Text analysis & NLP  |
