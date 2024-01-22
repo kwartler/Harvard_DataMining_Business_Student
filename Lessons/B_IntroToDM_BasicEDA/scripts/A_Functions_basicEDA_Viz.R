@@ -8,7 +8,6 @@ setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 ## Load the libraries; 1st time use install.packages('ggplot2')
 library(ggplot2)
 library(ggthemes)
-library(rbokeh)
 
 ## Bring in some data
 screenTime <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/B_IntroToDM_BasicEDA/data/on_screen_time.csv')
@@ -100,12 +99,5 @@ ggplot(screenTime,
 ggsave("character_scenes.pdf")
 ggsave("character_scenes.png")
 ggsave("character_scenes.jpg")
-
-# HTMLwidgets:rbokeh; 
-# note the tidy style programming is recommended by the author but not necessary
-p <- figure(legend_location = NULL) %>%
-  ly_points(start, character, data = screenTime,
-            color = character, hover = list(character, start, end))
-p
 
 # End
