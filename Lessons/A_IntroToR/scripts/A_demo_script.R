@@ -10,12 +10,11 @@ setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 options(scipen = 999)
 library(ggplot2)
 library(ggthemes)
-library(readr)
 
 # Step 3 Bring in some data: Go get our banana!
 #scenesDF   <- read.csv('~/Desktop/Harvard_DataMining_Business_Student/Lessons/A_IntroToR/data/forceAwakens_definedScenes.csv')
 
-scenesDF <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/A_IntroToR/data/forceAwakens_definedScenes.csv')
+scenesDF <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/A_IntroToR/data/forceAwakens_definedScenes.csv')
 
 # Step 4 Apply functions: Perform the task we want on our data: Cut & Peel our banana!
 

@@ -23,7 +23,6 @@ library(mapproj)
 gitFile <- url('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/A_IntroToR/data/amznWarehouses.csv')
 amzn <- read.csv(gitFile)
 
-
 # This is messy webscraped data, check out the state.
 tail(amzn$STATE,25)
 
@@ -31,7 +30,6 @@ tail(amzn$STATE,25)
 amzn$STATE <- gsub('location_','',amzn$STATE)
 amzn$STATE <- trimws(amzn$STATE, which='both')
 tail(amzn$STATE,25)
-
 
 # Subset to New England
 NEwarehouses <- amzn[ amzn$STATE  %in% c("MA","ME", "VT", "NH"), ]
@@ -120,3 +118,4 @@ mplot<- leaflet(data=onlyMA) %>%
 mplot
 
 # End
+
