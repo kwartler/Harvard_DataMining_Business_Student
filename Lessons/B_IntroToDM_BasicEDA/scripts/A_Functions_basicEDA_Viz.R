@@ -16,6 +16,8 @@ characters <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataM
 
 ## Exploratory Data Analysis, and indexing
 head(screenTime)
+head(characters)
+head(scenes)
 
 # New Column
 screenTime$length <- screenTime$end - screenTime$start  # add new column by taking the difference between vectors
@@ -45,12 +47,12 @@ sampledData <- screenTime[idx,]
 scenes$length <- scenes$end - scenes$start # same as before but different data frame
 
 # More EDA
-summary(scenes$length) #base summary stats, quartile of a named vector
+summary(scenes) #base summary stats, quartile of a named vector
 
 # Sort to find longest scenes
 # Example in two lines
 reorderedIndex <- order(scenes$length, decreasing=T) # get the numeric re-order
-reorderedIndex # examine results
+reorderedIndex # these are the row numbers in decreasing order
 scenes <- scenes[reorderedIndex,] #remember "rows, then columns" so place as the row index left of the comma
 
 # Example in 1 line nesting functions

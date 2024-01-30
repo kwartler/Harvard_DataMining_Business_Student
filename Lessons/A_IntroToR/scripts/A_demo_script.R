@@ -50,7 +50,7 @@ scenesDF$length <- (scenesDF$length/1000) /60
 # We removed the bonus features and are only looking at the first 38 scenes
 ggplot(scenesDF[1:38,], aes(colour=name)) + 
   geom_segment(aes(x=start, xend=end,
-                   y=id, yend=id),size=3) +
+                   y=id, yend=id),linewidth=3) +
   geom_text(data=scenesDF[1:38,], aes(x=end, y=id,  label = name), 
             size = 2.25,color = 'black', alpha = 0.5, check_overlap = TRUE) + 
   theme_gdocs() + theme(legend.position="none")

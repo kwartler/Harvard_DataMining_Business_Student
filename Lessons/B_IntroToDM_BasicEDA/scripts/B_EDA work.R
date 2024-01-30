@@ -62,13 +62,12 @@ idx <- sample(1:nrow(_____   ),   )
 -------[------, ]
 
 # DataExplorer
-plot_str(cereal)
 plot_missing(cereal)
 plot_histogram(cereal$protein) 
 plot_density(cereal$calories) 
-plot_histogram(cereal)#time consuming 
-plot_density(cereal)#time consuming 
-plot_scatterplot(cereal, by='rating') #time consuming 
+plot_histogram(cereal)#time consuming for bigger data 
+plot_density(cereal)#time consuming for bigger data 
+plot_scatterplot(cereal, by='rating') #time consuming for bigger data 
 
 # radiant.data
 # example video: https://radiant-rstats.github.io/radiant.data/
