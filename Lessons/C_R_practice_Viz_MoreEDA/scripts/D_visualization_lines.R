@@ -67,6 +67,7 @@ totalWords <- rap %>% group_by(song) %>% summarise(maxWords = max(cumulativeWord
 totalTime <- rap %>% group_by(song) %>% summarise(endTime = max(endTime, na.rm=TRUE))
 rapStats <- left_join(totalWords, totalTime,  by = "song")
 rapStats$eminem <- grepl('Eminem', rapStats$song, ignore.case = T)
+head(rapStats)
 ggplot(rap,  aes(x = endTime/1000/60,
                 y  = cumulativeWords, 
                           group = song, 

@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Date: Sept 5 2022
+#' Date: Feb 5, 2024
 #' Purpose: R bar visual ggplot bars examples
 #' Good resource: https://r-graphics.org/
 
@@ -9,7 +9,6 @@ setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 library(ggplot2)
 library(ggthemes)
 library(lubridate)
-library(qcc)
 
 # Load
 possiblePurchase <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/C_R_practice_Viz_MoreEDA/data/MarthasVineyardCondo.csv')
@@ -58,7 +57,7 @@ ggplot(data = possiblePurchase, aes(x=NightOccupied)) +
 # histogram: buckets similar values to see the distribution from the same variable
 ggplot(data = possiblePurchase, aes(x=NightOccupied)) +
   geom_histogram(binwidth=2, color = 'red') +
-    stat_bin(binwidth=2, geom='text', color='white', aes(label=..count..),
+    stat_bin(binwidth=2, geom='text', color='white', aes(label=after_stat(count)),
              position=position_stack(vjust = 0.5)) + theme_few() 
 
 # barchart for comparing quantities.  I prefer geom_col so its not an automatic count of the observations
@@ -91,10 +90,16 @@ dataStack <- data.frame(month  = as.factor(df$month),
                         yr     = df$yr,
                         vacant = df$closingDate-df$NightOccupied,
                         occupied= df$NightOccupied)
-
+head(dataStack)
+tail(dataStack)
 ggplot(data = dataStack, aes(fill=yr, y=vacant, x=month)) + 
   geom_bar(position="stack", stat="identity") + 
   theme_few()
+
+# Example facet which is a way to make multiple charts by a factor level
+ggplot(data = dataStack, aes(fill=yr, y=occupied, x=month)) + 
+  geom_bar(position="stack", stat="identity") + 
+  theme_few() +facet_wrap(.~yr)
 
 # filled stacked:  used to compare proportion only within a category
 # Make a "goodMonth" indicator as an example
@@ -104,5 +109,7 @@ ggplot(possiblePurchase, aes(x = factor(month), fill = goodMonth)) +
   geom_bar(position = "fill") +
   scale_y_continuous(labels = scales::percent) +
   theme_few()
+
+
 
 # End

@@ -5,7 +5,7 @@
 #' 
 #' Possible questions to answer, but many more are possible!
 #' What was the best month for sales? How much was earned that month?  Can you make a line plot of this?
-#' What city sold the most product? Can you plot the top 6 cities as a bar chart?  You will need to stringplit the Purchase.Address by comma and extract the states and cities.  Maybe look up how to map it too!
+#' What city sold the most product? Can you plot the top 6 cities as a bar chart?  You will need to stringsplit the Purchase.Address by comma and extract the states and cities.  Maybe look up how to map it too!
 #' What time should we display advertisements to maximize the likelihood of customers buying products? Maybe check for the most useful hour of the day?
 #' What products are most often sold together? This one is HARD and you could use gpt or the library arules to help.
 #' What product sold the most and plot the top 6? table() could be helpful
