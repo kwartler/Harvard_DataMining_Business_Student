@@ -40,7 +40,7 @@ nonPrepData <- donors[-idx,]
 
 # Automated variable processing
 # for **categorical** outcomes 
-# i. e.will the prospective donor give Y/N
+# i.e. will the prospective donor give Y/N
 # inputs: DATA FRAME, NAMES OF INFORMATIVE VARS, RESPONSE VAR, SUCCESS CLASS
 plan <- designTreatmentsC(prepData, 
                           informativeFeatures,
@@ -50,34 +50,6 @@ plan <- designTreatmentsC(prepData,
 # Apply the plan
 # If you apply prepare to the donors dataframe you trigger a warning about over fitting.  Overall not a huge deal in class but something to avoid in real application
 # WARNING's dont really impact us in class but this is caused since we use the original designTreatment data and are now preparing it so the a priori rule is broken
-treatedData <- prepare(plan, nonPrepData)
-
-# Lots more appended vars; still need to drop redundant flags but much faster and robust!
-summary(treatedData)
-
-# Start over 
-rm(list=ls())
-
-# Data
-donors <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/D_DM_Workflow/data/fakeDonorBureau_v2.csv')
-plot(density(donors$Y2_DonatedAmt))
-
-# Select 10% for your preparation learning
-set.seed(2022)
-idx         <- sample(1:nrow(donors),.1*nrow(donors))
-prepData    <- donors[idx,]
-nonPrepData <- donors[-idx,]
-
-
-# for **numeric** outcomes 
-# how much will the prospective donor give?
-# DATA, NAMES OF INFORMATIVE VARS, RESPONSE VAR
-# For numeric Y we don't need to declare the "success class"
-plan <- designTreatmentsN(prepData, 
-                          names(donors)[3:19],
-                          'Y2_DonatedAmt')
-
-# Apply the plan
 treatedData <- prepare(plan, nonPrepData)
 
 # Lots more appended vars; still need to drop redundant flags but much faster and robust!

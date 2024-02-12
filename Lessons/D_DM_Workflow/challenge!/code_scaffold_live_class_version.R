@@ -13,9 +13,9 @@ library(ggplot2)
 library(ggthemes)
 
 # Data Munge: Joins!
-news  <- read.csv("advertising_Newspaper.csv")
-radio <- read.csv( "advertising_Radio.csv")
-tv    <- read.csv("advertising_TV_Y.csv")
+news  <- read.csv("https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/D_DM_Workflow/challenge!/advertising_Newspaper.csv")
+radio <- read.csv( "https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/D_DM_Workflow/challenge!/advertising_Radio.csv")
+tv    <- read.csv("https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/D_DM_Workflow/challenge!/advertising_TV_Y.csv")
 
 # First Join
 joinData <- left_join(news, radio, by = 'periodID')
@@ -39,7 +39,7 @@ trainingData <- prepare(plan, leftOverData)
 
 # Model!
 fit <- lm(Sales ~., trainingData)
-
+summary(fit)
 # Assess
 salesValues <- predict(fit, trainingData)
 
