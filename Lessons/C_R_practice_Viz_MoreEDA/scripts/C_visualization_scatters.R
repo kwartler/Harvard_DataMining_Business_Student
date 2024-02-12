@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Date: Sept 5 2022
+#' Date: Feb 5, 2024
 #' Purpose: R bar visual ggplot scatter & bubble examples
 #' Good resource: https://r-graphics.org/
 
@@ -72,13 +72,11 @@ ggplot(data = possiblePurchase, aes(x=NightOccupied, y=EffectiveGrossIncome, siz
 # a Cleveland Dot plot, xy both class levels, color and size can be other dimensions but this shows only 3
 df <- subset(possiblePurchase, possiblePurchase$yr !='2020')
 ggplot(data = df, aes(x=yr, y=factor(month), size = NetOperatingIncome, color = NetOperatingIncome)) + 
-  geom_point() +  scale_colour_viridis_c(option = "magma")  + 
-  ggdark::dark_theme_gray() + 
-  theme(legend.position = "none") +
+  geom_point() +  scale_colour_viridis_c(option = "magma")  +
+  theme(legend.position = "none") + theme_few() +
   labs(x="year", y = "month", title= "Operating Income MV Condo")
-#ggdark::invert_geom_defaults()
 
-# dumb bell plot to compare extremes by group, data wrangling you can use group_by but this is to be clear for new R programmers
+# bar bell plot to compare extremes by group, data wrangling you can use group_by but this is to be clear for new R programmers
 minIncomes <- aggregate(NetOperatingIncome~month, data = df, FUN= min)
 minIncomes
 maxIncomes <- aggregate(NetOperatingIncome~month, data = df, FUN= max)
@@ -89,7 +87,7 @@ incomes
 
 ggplot(incomes) + 
   geom_segment(aes(x=minIncome, xend=maxIncome,
-                   y=factor(month), yend=factor(month)),size=2,  color = "#aeb6bf", alpha = 0.5) +
+                   y=factor(month), yend=factor(month)),linewidth=2,  color = "#aeb6bf", alpha = 0.5) +
   geom_point(data = incomes, aes(x=minIncome, y=factor(month)), color = 'red', size = 2) + 
   geom_point(data = incomes, aes(x=maxIncome, y=factor(month)), color = 'blue', size = 2) +
   geom_vline(xintercept = 0, linetype = 'dotted', color = 'darkgrey', size = 0.5) +
@@ -119,7 +117,7 @@ basePlot + geom_point(alpha = 0.25) + theme_few()
 basePlot + geom_density_2d_filled(contour_var = 'ndensity') + theme(legend.position = "none") 
 
 # Or use a facet to subset the visual by a group
-head(player)
+head(as.data.frame(player))
 ggplot(data = player) + theme_hc() +
   geom_density_2d_filled( aes(x = plate_x, y = plate_z), 
                           contour_var = 'ndensity') + 
