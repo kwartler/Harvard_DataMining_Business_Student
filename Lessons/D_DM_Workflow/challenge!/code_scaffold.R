@@ -6,6 +6,9 @@
 # Set the working directory
 
 # Load libraries
+# joins
+# variable Treatment
+# plotting
 
 # Data Munge: Joins!
 

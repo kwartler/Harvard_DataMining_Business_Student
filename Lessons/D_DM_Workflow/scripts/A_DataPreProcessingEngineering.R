@@ -58,6 +58,24 @@ summary(treatedData)
 # Start over 
 rm(list=ls())
 
+# Now perform designTreatmentsN
+# Read in the data
+donors<- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/D_DM_Workflow/data/fakeDonorBureau_v2.csv')
+set.seed(2023)
+idx         <- sample(1:nrow(donors),.1*nrow(donors))
+prepData    <- donors[idx,]
+nonPrepData <- donors[-idx,]
+
+# Notice that no "success" input is needed for designTreatmentsN
+plan <- designTreatmentsN(prepData,
+                          names(prepData)[3:19],
+                          'Y2_DonatedAmt')
+treatednonPrepData <- prepare(plan, nonPrepData)
+head(treatednonPrepData)
+
+# Start over 
+rm(list=ls())
+
 # Data
 donors <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/D_DM_Workflow/data/fakeDonorBureau_v2.csv')
 
