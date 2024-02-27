@@ -62,6 +62,7 @@ idx <- sample(1:nrow(_____   ),   )
 -------[------, ]
 
 # DataExplorer
+plot_intro(cereal)
 plot_missing(cereal)
 plot_histogram(cereal$protein) 
 plot_density(cereal$calories) 
