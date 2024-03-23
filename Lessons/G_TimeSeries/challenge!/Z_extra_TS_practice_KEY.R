@@ -7,6 +7,8 @@
 # Library
 library(lubridate)
 library(forecast)
+library(ggplot2)
+library(MLmetrics)
 
 cvsDF <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/G_TimeSeries/challenge!/CVS_quarterlyRev.csv')
 head(cvsDF)
@@ -60,7 +62,7 @@ MAPE(validationDF$original, validationDF$fit)
 # Why did the HW forecast over predict revenue consistently?
 # The impact of the virus diminished revenue, though not as bad as other companies.  Since HW has a trend component, the impacted and diminished trend has a lasting effect on this forecast since the entire training does not have any virus impacted quarters.
 
-# Now that accept the HW model (in reality you would try other methods and compare MAPE etc) since it was only 6% off, we should refit it on all the data and make a forecast
+# Now to accept the HW model (in reality you would try other methods and compare MAPE etc) since it was only 6% off, we should refit it on all the data and make a forecast
 fullHW <- HoltWinters(qtrTS, seasonal = 'mult')
 
 # Make predictions for the next 2 yrs (8quarters)

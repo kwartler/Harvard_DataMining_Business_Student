@@ -12,7 +12,7 @@ library(dygraphs)
 library(lubridate)
 
 # Data
-df <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/G_TimeSeries_Equities/data/Amtrak.csv')
+df <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/G_TimeSeries/data/Amtrak.csv')
 
 # Examine
 head(df, 10)

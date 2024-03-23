@@ -7,7 +7,6 @@
 options(scipen=999)
 
 # library
-library(jsonlite)
 library(lubridate)
 library(xts)
 library(ggplot2)
