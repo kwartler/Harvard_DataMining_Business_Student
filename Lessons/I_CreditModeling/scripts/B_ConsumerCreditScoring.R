@@ -17,7 +17,8 @@ library(caret)
 library(e1071)
 library(vtreat)
 library(MLmetrics)
-library(rbokeh)
+library(ggplot2)
+library(ggthemes)
 
 # I/O
 df <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/I_CreditModeling/data/20K_sampleLoans.csv') 
@@ -132,27 +133,32 @@ head(scoredNotes, 10)
 bestNotes <- subset(scoredNotes, 
                     scoredNotes$LCgrade == "A" & scoredNotes$risk <= 0.1)
 
-# Make a mkt Plot
-mktPlot <- figure(legend_location = "bottom_right") %>% 
-  ly_points(risk, reward, 
-            data  = bestNotes,
-            color = LCgrade, glyph = LCgrade,
-            hover = list(id, risk, reward, LCgrade)) 
-mktPlot
+# Make a mkt ggplot2
+ggplot(data = bestNotes, aes(x= risk, y = reward)) + 
+  geom_point() + 
+  geom_text(aes(label = id, vjust = -0.5)) +
+  theme_gdocs() +
+  geom_hline(yintercept = 7, linetype = "dashed", color = "red")  +
+  annotate("text", x = .025, y = 7.1, label = "Historical S&P500 return", color = "red") +
+  geom_hline(yintercept = 5.86, linetype = "dashed", color = "red") +
+  annotate("text", x = .025, y = 5.96, label = "5yr T-Bill Historical Avg Return", color = "red")
 
-# Make a CAPM-style Risk/Reward Plot
-mktPlot2 <- mktPlot %>% 
-  ly_abline(a      = 7.0, 
-            b      = 0,
-            type   = 2, 
-            color  = 'red',
-            legend = "historical SP500 return") %>% 
-  ly_abline(a      = 5.86, 
-            b      = 0, 
-            type   = 2, 
-            color  = 'green', 
-            legend = "historical 5yr T-bill")
-mktPlot2
+# Make an interactive plot
+bestNotes |>
+  e_charts(risk) |>
+  e_scatter( reward, bind = id) |>
+  e_tooltip(
+    formatter = htmlwidgets::JS("
+      function(params){
+        return('<strong> noteID: ' + params.name + 
+                '</strong><br />risk: ' + params.value[0] + 
+                '<br />reward: ' + params.value[1]) 
+                }
+    ")) |>
+  e_toolbox_feature(feature = "dataZoom") |>
+  e_mark_line(data = list(yAxis = 7), title = "Historical SP500 Avg Return") |>
+  e_mark_line(data = list(yAxis = 5.86), title = "Historical 5yr T-Bill Return")
+
 
 
 # End
