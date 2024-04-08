@@ -1,26 +1,20 @@
 #' Title: Intro: TidyText Sentiment
 #' Purpose: Sentiment nonsense
 #' Author: Ted Kwartler
-#' email: edwardkwartler@fas.harvard.edu
-#' License: GPL>=3
-#' Date: Nov 20, 2023
+#' Date: Mar 12, 2023
 #'
 
 # Set the working directory
 setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 
-
 # Libs
 library(tidytext)
 library(dplyr)
-library(qdap)
 library(tm)
 library(radarchart)
 library(textdata)
 library(ggplot2)
-
-# Options & Functions
-options(stringsAsFactors = FALSE)
+library(tidyr)
 
 # Custom Functions
 tryTolower <- function(x){
@@ -31,7 +25,7 @@ tryTolower <- function(x){
   return(y)
 }
 
-cleanCorpus<-function(corpus,customStopwords){
+cleanCorpus<-function(corpus, customStopwords){
   corpus <- tm_map(corpus, removePunctuation)
   corpus <- tm_map(corpus, stripWhitespace)
   corpus <- tm_map(corpus, removeNumbers)
@@ -40,85 +34,82 @@ cleanCorpus<-function(corpus,customStopwords){
   return(corpus)
 }
 
-
-# Data
-text <- c(readLines('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/starboy.txt'), 
-          readLines('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/in_your_eyes.txt'),
-          readLines('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/pharrell_williams_happy.txt'))
-cat(text)
-
-docNames <- c("starboy", "eyes", "happy") 
-
 # Create custom stop words
 customStopwords <- c(stopwords('english'))
 
-# Clean Corpus
-txtCorpus <- VCorpus(VectorSource(text))
-txtCorpus <- cleanCorpus(txtCorpus, customStopwords)
+# Read in multiple files as individuals
+txtFiles<-c('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/starboy.txt',
+            'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/in_your_eyes.txt',
+            'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/pharrell_williams_happy.txt') 
+documentTopics <- c("starboy", "eyes", "happy") 
 
-# DTM
-txtDTM    <- DocumentTermMatrix(txtCorpus)
-txtDTM
-dim(txtDTM)
+# Read in as a list
+all <- lapply(txtFiles,readLines)
 
-# Tidy
-tidyCorp <- tidy(txtDTM)
-tidyCorp
-dim(tidyCorp)
+# This could be made more concise but we're going to do it within a loop
+cleanTibbles <- list()
+for(i in 1:length(all)){
+  x <- VCorpus(VectorSource(all[i])) #declare as a corpus
+  x <- cleanCorpus(x, customStopwords) #clean each corpus
+  x <- DocumentTermMatrix(x) #make a DTM
+  x <- tidy(x) #change orientation
+  x$document <- documentTopics[i]
+  cleanTibbles[[documentTopics[i]]] <- x #put it into the list
+}
+
+# Examine
+cleanTibbles$eyes
+dim(cleanTibbles$eyes)
+
+# Organize into a single tibble
+allText <- do.call(rbind, cleanTibbles)
 
 # Get bing lexicon
 # "afinn", "bing", "nrc", "loughran"
 bing <- get_sentiments(lexicon = c("bing"))
-head(bing)
+bing
 
 # Perform Inner Join
-bingSent <- inner_join(tidyCorp,bing, by=c('term'='word'))
+bingSent <- inner_join(allText,
+                       bing, 
+                       by=c('term'='word'))
 bingSent
 
 # Quick Analysis - count of words
-bingAgg <- aggregate(count~document+sentiment, bingSent, sum)
-bingAgg
-reshape2::dcast(bingAgg, document~sentiment)
+bingResults <- aggregate(count~document+sentiment, bingSent, sum)
+pivot_wider(bingResults, names_from = document, values_from = count)
 
-# Compare with qdap::Polarity
-polarity(text[1])
-polarity(text[2])
-polarity(text[3])
+# Get afinn lexicon
+afinn <- get_sentiments(lexicon = c("afinn")) 
+afinn
 
-# Sometimes text and sentiment can be temporal
-coffee <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/coffee.csv', encoding = "Latin1")
-head(coffee$created) 
-tail(coffee$created)
-coffee <- coffee[order(coffee$created, decreasing = F),]
-head(coffee$created)
+# Word Sequence
+allText$idx       <- as.numeric(ave(allText$document, 
+                                     allText$document, FUN=seq_along))
+# Perform Inner Join
+afinnSent <- inner_join(allText,
+                        afinn, 
+                        by=c('term'='word'))
+afinnSent
 
-# Corp and Join
-coffeeCorpus <- VCorpus(VectorSource(coffee$text))
-coffeeCorpus <- cleanCorpus(coffeeCorpus, customStopwords)
-coffeeCorpus <- DocumentTermMatrix(coffeeCorpus)
-coffeeCorpus <- tidy(coffeeCorpus)
+# Calc
+afinnSent$ValueCount <- afinnSent$value * afinnSent$count 
+afinnSent
 
-# Get the AFINN lexicon
-afinn <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/AFINN/afinn.csv')
-head(afinn)
+# If you did have a timestamp you can easily make a timeline of sentiment using this code
+# The idx here is not temporal but this is an example if you were tracking over time instead of alpha
+plotDF <- subset(afinnSent, afinnSent$document=='eyes')
+ggplot(plotDF, aes(x=idx, y=ValueCount, group=document, color=document)) +
+  geom_line()
 
-# Join
-coffeeAfinn <- inner_join(coffeeCorpus, afinn, by = c('term' = 'word'))
-coffeeAfinnAgg <- aggregate(value ~ document, coffeeAfinn, sum)
-
-# Quick timeline, but of course with timestamps you could make a real "time series" object
-coffeeAfinnAgg$document <- as.numeric(as.character(coffeeAfinnAgg$document))
-coffeeAfinnAgg <- coffeeAfinnAgg[order(coffeeAfinnAgg$document),]
-plot(coffeeAfinnAgg$value, type = 'l')
-plot(TTR::SMA(coffeeAfinnAgg$value,10), type = 'l')
-
-
-#nrc <- textdata::lexicon_nrc() # should download it
-nrc <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/nrc.csv')
-head(nrc)
+# Get nrc lexicon,notice that some words can have multiple sentiments
+nrc <- lexicon_nrc()
 
 # Perform Inner Join
-nrcSent <- inner_join(tidyCorp,nrc, by=c('term' = 'word'))
+nrcSent <- inner_join(allText,
+                      nrc, 
+                      by = c('term' = 'word'),
+                      multiple = "all")
 nrcSent
 
 # Drop pos/neg leaving only emotion
@@ -128,21 +119,22 @@ nrcSent <- nrcSent[-grep('positive|negative',nrcSent$sentiment),]
 table(nrcSent$sentiment,nrcSent$document)
 
 # Manipulate for radarchart
-nrcSentRadar <- as.data.frame.matrix(table(nrcSent$sentiment, nrcSent$document))
+nrcSentRadar <- as.matrix(table(nrcSent$sentiment, nrcSent$document))
 nrcSentRadar
-colnames(nrcSentRadar) <- docNames
 
-# Normalize for length; prop.table needs a "matrix" class...annoying!
-nrcSentRadar <- prop.table(as.matrix(nrcSentRadar),2)
+# Normalize for length; prop.table by column is "2"
+nrcSentRadar <- prop.table(nrcSentRadar,2)
 nrcSentRadar
-colSums(nrcSentRadar)
+colSums(nrcSentRadar) #quick check to see what prop table did
+
+pivot_longer(as.data.frame.matrix(nrcSentRadar), col = everything())
 
 # Organize
-nrcSentRadar <- data.frame(labels = rownames(nrcSentRadar),
-                           nrcSentRadar, 
+plotDF <- data.frame(labels = rownames(nrcSentRadar),
+                           as.data.frame.matrix(nrcSentRadar),
                            row.names = NULL)
-nrcSentRadar
+plotDF
 
 # Chart
-chartJSRadar(scores = nrcSentRadar, labelSize = 10, showLegend = T)
+chartJSRadar(scores = plotDF, labelSize = 10, showLegend = T)
 # End

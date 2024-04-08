@@ -1,9 +1,7 @@
 #' Title: Intro: Other Wordclouds
 #' Purpose: Make other types of word clouds
 #' Author: Ted Kwartler
-#' email: edwardkwartler@fas.harvard.edu
-#' License: GPL>=3
-#' Date: Nov 20, 2023
+#' Date: Mar 12, 2023
 #'
 
 # Set the working directory
@@ -11,25 +9,23 @@ setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 
 # Libs
 library(tm)
-library(qdap)
 library(wordcloud)
+library(qdapRegex)
 library(RColorBrewer)
 
 # Options & Functions
-options(stringsAsFactors = FALSE)
 Sys.setlocale('LC_ALL','C')
 
 tryTolower <- function(x){
   y = NA
   try_error = tryCatch(tolower(x), error = function(e) e)
   if (!inherits(try_error, 'error'))
-  y = tolower(x)
+    y = tolower(x)
   return(y)
 }
 
 cleanCorpus<-function(corpus, customStopwords){
   corpus <- tm_map(corpus, content_transformer(qdapRegex::rm_url))
-  corpus <- tm_map(corpus, content_transformer(replace_contraction))
   corpus <- tm_map(corpus, removePunctuation)
   corpus <- tm_map(corpus, stripWhitespace)
   corpus <- tm_map(corpus, removeNumbers)
@@ -40,77 +36,67 @@ cleanCorpus<-function(corpus, customStopwords){
 
 # Create custom stop words
 customStopwords <- c(stopwords('english'), 'lol', 'smh', 
-                     'amp','drink', 'chardonnay', 'beer','coffee')
+                     'amp','sivb', 'bank', 'sequoia')
 
 # Read in multiple files as individuals
-txtFiles<-c('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/chardonnay.csv',
-            'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/coffee.csv',
-            'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/beer.csv') #use list.files() for a lot
+txtFiles<-c('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/sivbVector.csv',
+            'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/Sequoia%20CapitalVector.csv',
+            'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/hashtagBankCrashVector.csv') 
+documentTopics <- c('siliconValley','Sequoia', 'bankCrash')
 
-# Object Names
-objNames <- c('chardonnay.csv','coffee.csv','beer.csv')
+# Read in as a list
+all <- lapply(txtFiles,read.csv)
 
+# This could be made more concise but we're going to do it within a loop
+cleanText <- list()
+for(i in 1:length(all)){
+  x <- VCorpus(VectorSource(all[i])) #declare as a corpus
+  x <- cleanCorpus(x, customStopwords) #clean each corpus
+  x <- unlist(sapply(x, `[`, "content")) #extract out each cleaned text using content()
+  x <- paste(x, collapse = ' ') #collapse all text from 1000 tweet documents to 1 blob of text by subject
+  cleanText[[documentTopics[i]]] <- x #put it into the list
+}
 
-for (i in 1:length(txtFiles)){
-  assign(objNames[i], read.csv(txtFiles[i], encoding = "Latin1"))
-  cat(paste('read completed:',txtFiles[i],'\n'))
-} 
+# To make it clear we now have a single document of all tweets for a subject
+length(all[[1]]$x)
+length(cleanText$siliconValley)
 
-# Vector Corpus
-beer       <- VCorpus(VectorSource(beer.csv$text))
-chardonnay <- VCorpus(VectorSource(chardonnay.csv$text))
-coffee     <- VCorpus(VectorSource(coffee.csv$text))
-
-# Cleaning
-beer       <- cleanCorpus(beer, customStopwords)
-chardonnay <- cleanCorpus(chardonnay, customStopwords)
-coffee     <- cleanCorpus(coffee, customStopwords)
-
-# Extract plain clean text out of each corpus same as calling content() on an individual tweet
-beer       <- sapply(beer, content)
-chardonnay <- sapply(chardonnay, content)
-coffee     <- sapply(coffee, content)
-
-# Combine all subject matter tweets (1000) into single document encompassing all tweets
-beer       <- paste(beer, collapse=" ")
-chardonnay <- paste(chardonnay, collapse=" ")
-coffee     <- paste(coffee, collapse=" ")
-
-# To make it clear we now have a single document of all drink tweets
-beer
-length(beer)
 
 # Make a combined corpus of 3 subject matters
-allDrinks   <- c(beer, chardonnay, coffee)
-drinkCorpus <- VCorpus(VectorSource(allDrinks))
-drinkCorpus
+allTopics <- unlist(cleanText)
+allTopics <- VCorpus(VectorSource(allTopics))
+allTopics
 
 # Make TDM
-drinkTDM  <- TermDocumentMatrix(drinkCorpus)
-drinkTDMm <- as.matrix(drinkTDM)
+topicDTM  <- DocumentTermMatrix(allTopics)
+topicDTMm <- as.matrix(topicDTM)
 
 # Label the new TDM, remember the order of subjects from lines 80,81, and 82!
-colnames(drinkTDMm) = c("Beer", "Chardonnay", "Coffee")
-drinkTDMm[50:55,1:3]
+rownames(topicDTMm) <- documentTopics
+topicDTMm[1:3,50:55]
 
 # Pallette
 pal <- brewer.pal(8, "Purples")
 pal <- pal[-(1:2)]
 
-# Make commonality cloud
-commonality.cloud(drinkTDMm, 
+# Make commonality cloud requires rows as terms and columns as documents.
+# Thus, it really needs a TermDocumentMatrix but for ease of learning we made DTM abov.
+# So, its a simple transposition here but really should be adjusted above in DocumentTermMatrix to TermDocumentMatrix & 
+# colnames() section too
+dev.off()
+commonality.cloud(t(topicDTMm), 
                   max.words=150, 
                   random.order=FALSE,
                   colors=pal,
                   scale=c(3.5,0.25))
-dev.off()
 
 # Make comparison cloud
-comparison.cloud(drinkTDMm, 
+dev.off()
+comparison.cloud(t(topicDTMm), 
                  max.words=75, 
                  random.order=FALSE,
-                 title.size=1.5,
-                 colors=brewer.pal(ncol(drinkTDMm),"Dark2"),
+                 title.size=0.5,
+                 colors=c('goldenrod', 'tomato', 'green'),
                  scale=c(3,0.1))
 
 # End
