@@ -75,6 +75,7 @@ display.brewer.all()
 pal <- brewer.pal(8, "Blues")
 pal <- pal[-(1:2)]
 
+
 # Make simple word cloud
 # Reminder to expand device pane
 wordcloud(wordFreqDF$word,

@@ -79,8 +79,8 @@ topicDTMm[1:3,50:55]
 pal <- brewer.pal(8, "Purples")
 pal <- pal[-(1:2)]
 
-# Make commonality cloud requires rows as terms and columns as documents.
-# Thus, it really needs a TermDocumentMatrix but for ease of learning we made DTM abov.
+# commonality.cloud requires rows as terms and columns as documents.
+# Thus, it really needs a TermDocumentMatrix but to demonstrate that its still the same data, we just transpose it.
 # So, its a simple transposition here but really should be adjusted above in DocumentTermMatrix to TermDocumentMatrix & 
 # colnames() section too
 dev.off()

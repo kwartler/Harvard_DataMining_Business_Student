@@ -36,7 +36,7 @@ cleanCorpus<-function(corpus, customStopwords){
 }
 
 # Create custom stop words
-customStopwords <- c(stopwords('english'), 'lol', 'smh')
+customStopwords <- c(stopwords('english'), 'lol', 'smh', 'harvard')
 
 # Data
 text <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/coffeeVector.csv')
