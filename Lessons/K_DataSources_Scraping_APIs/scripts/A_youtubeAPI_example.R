@@ -3,7 +3,7 @@
 #' Author: Ted Kwartler
 #' email: edwardkwartler@fas.harvard.edu
 #' License: GPL>=3
-#' Date: Nov 19, 2023
+#' Date: Apr 15, 2024
 #'
 
 # Libraries
@@ -20,7 +20,8 @@ setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 
 # Youtube URL
 # https://www.youtube.com/watch?v=K5Rly83zfuI&ab_channel=TheDailyShowwithTrevorNoah
-youtubeCaption <- 'https://www.youtube.com/api/timedtext?v=K5Rly83zfuI&ei=oRplZffbKPaO_9EP7uu0-AM&caps=asr&opi=112496729&xoaf=4&hl=en&ip=0.0.0.0&ipbits=0&expire=1701149969&sparams=ip%2Cipbits%2Cexpire%2Cv%2Cei%2Ccaps%2Copi%2Cxoaf&signature=6BDA74E8AFC34BB57F4CF68B2942E2406B8E39DB.671C2F6290AB89E8EC168F7F6628A25AFA91E4C8&key=yt8&lang=en-US&fmt=json3&xorb=2&xobt=3&xovt=3&cbrand=apple&cbr=Chrome&cbrver=119.0.0.0&c=WEB&cver=2.20231121.08.00&cplayer=UNIPLAYER&cos=Macintosh&cosver=10_15_7&cplatform=DESKTOP'
+# https://www.youtube.com/watch?v=sal78ACtGTc&ab_channel=SequoiaCapital
+youtubeCaption <- 'https://www.youtube.com/api/timedtext?v=sal78ACtGTc&ei=lq8dZuWBGf2elu8PiqSwsAc&caps=asr&opi=112496729&xoaf=5&hl=en&ip=0.0.0.0&ipbits=0&expire=1713246726&sparams=ip%2Cipbits%2Cexpire%2Cv%2Cei%2Ccaps%2Copi%2Cxoaf&signature=55E66BC809219CC2083BA0F982A701EEFCCBFEF1.593D4205317852ABA74C4BF3A18901C2CF6DE04D&key=yt8&kind=asr&lang=en&fmt=json3&xorb=2&xobt=3&xovt=3&cbrand=apple&cbr=Chrome&cbrver=123.0.0.0&c=WEB&cver=2.20240415.01.00&cplayer=UNIPLAYER&cos=Macintosh&cosver=10_15_7&cplatform=DESKTOP'
 
 # Go get the data
 dat <- fromJSON(youtubeCaption) # you can even pass in a URL to go to a webpage
@@ -50,9 +51,23 @@ rawTxt <- str_squish(rawTxt)
 oneChunk <- paste(rawTxt, collapse = ' ')
 
 # If you want to retain the meta data
+tmpText <- lapply(dat$events$segs, "[", 'utf8')
+tmpTextList <- list()
+for(i in 1:length(tmpText)){
+  if(is.null(tmpText[[i]])){
+    tmp <- 'NULL'
+  } else {
+    tmp <- apply( tmpText[[i]], 2, paste, collapse = ' ')
+    tmp <- trimws(tmp)
+  }
+  tmpTextList[[i]] <- tmp
+  
+}
+
+
 textDF <- data.frame(startTime = dat$events$tStartMs/1000,
                      duration  = dat$events$dDurationMs/1000,
-                     text = unlist(lapply(dat$events$segs, "[", 'utf8') ))
+                     text = unlist(tmpTextList))
 
 # Examine to make sure format is ok
 head(textDF, 10)

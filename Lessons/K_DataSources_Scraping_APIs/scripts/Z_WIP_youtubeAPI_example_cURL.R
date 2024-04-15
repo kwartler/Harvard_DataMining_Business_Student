@@ -103,3 +103,5 @@ apiResponse <- content(res)
 
 # Examine a structure; just need some list extraction and clean up
 str(apiResponse)
+apiResponse
+
