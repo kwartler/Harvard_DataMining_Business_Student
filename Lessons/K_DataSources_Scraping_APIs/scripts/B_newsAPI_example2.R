@@ -16,7 +16,8 @@ library(jsonlite)
 apiQuery <- URLencode('Harvard University')
 
 # One example API endpoint
-pg <- 'https://newsdata.io/api/1/news?apikey=pub_28206c846297a1def49b2298ab44279976513&q=Harvard%20University'
+pg <- paste0('https://newsapi.org/v2/everything?q=',apiQuery,'&sortBy=publishedAt&apiKey=',apiKey)
+pg 
 
 # Recent News Data 
 apiResponse <- fromJSON(pg)
@@ -28,10 +29,10 @@ apiResponse$status
 apiResponse$totalResults
 
 # Article responses returned in a data frame
-str(apiResponse$results)
+str(apiResponse)
 
 # One article
-apiResponse$results[1,]
+apiResponse$articles[1,]
 
 
 # End
