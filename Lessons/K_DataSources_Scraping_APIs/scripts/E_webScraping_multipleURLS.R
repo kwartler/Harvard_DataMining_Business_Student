@@ -63,6 +63,6 @@ allBios$bio <- gsub("[\r\n\t]", "", allBios$bio)
 allBios[15,]
 
 # Still some issues need to be cleaned up as is often the case with webscraping.  Lots of cleanup!
-allBios[26,]
+allBios[22,]
 
 # End
