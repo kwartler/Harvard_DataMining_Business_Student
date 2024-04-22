@@ -27,7 +27,7 @@ resumeClean<-function(xVec, stops=stopwords("SMART")){
 }
 
 # Data
-candidates <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/M_Technology_Ethics/data/HR%20Hiring%20(Bias%20%26%20Fairness).csv')
+candidates <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/L_Technology_Ethics/data/HR%20Hiring%20(Bias%20%26%20Fairness).csv')
 
 ### SAMPLE : Partitioning
 set.seed(1234)
@@ -64,7 +64,7 @@ trainingDTM <- create_dtm(iterMaker, vectorizer)
 dim(trainingDTM)
 
 # Examine the DTM
-idx <- which(!trainingDTM == 0)
+idx <- which(trainingDTM != 0)
 trainingDTM[ head(idx),grep('human_resources', colnames(trainingDTM))]
 
 # Append DTM to original data
