@@ -7,7 +7,7 @@ library(httr)
 library(jsonlite)
 
 # Inputs
-prompt   <- "What is the captial of Brazil?" 
+prompt   <- "What is the capital of Brazil?" 
 llmModel <- 'lmstudio-ai/gemma-2b-it-GGUF'
 
 # Organize Request

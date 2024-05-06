@@ -1,0 +1,16 @@
+# Example prompts
+1. What is the captial of Brazil?
+2. Tell me 5 comedy TV shows or movies I will like.
+3. I like Arrested Development and Parks and Rec.  I hate Saw and American Horror.  Please recommend 5 TV shows or movies.
+
+## Chain of Thought example and contrast
+4. Question: The cafeteria had 23 apples. If they used 20 to make lunch and bought 6 more, how many apples do they have?  Please explain your logic in steps.
+Contast
+4a. The cafeteria had 23 apples. If they used 20 to make lunch and bought 6 more, how many apples do they have? Dont give me any information except the answer.
+
+## Contrastive Chain of Thought example
+5. Question: James writes a 3-page letter to 2 different friends twice a week.  How many pages does he write in an year?
+Explanation: He write each friend 3*2=6 pages a week.  So he writes 6*2=12 pages every week.  That means he writes 12*52=624 pages a year.
+Wrong Explanation: He writes each friend 12*52=624 pages a week. So he writes 3*2=6 pages every week.  That means he writes 6*2=12 pages a year.
+Question: James has 30 teeth.  His dentist drills 4 of them and caps 7 more teeth than he drills.  What percentage of his teeth does the dentist fix?
+
