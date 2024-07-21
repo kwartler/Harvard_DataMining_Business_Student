@@ -2,14 +2,14 @@
 For students of Harvard CSCI E-96 Data Mining for Business
 
 ## Syllabus
-Fall 2023 University [syllabus](https://harvard.simplesyllabus.com/doc/jff3zh7o0/Fall-Term-2023-Full-Term-CSCI-E-96-1-Data-Mining-for-Business?mode=view)
-or [PDF here](https://harvard.simplesyllabus.com/api2/doc-pdf/lb0nf6j56/Spring-Term-2024-Full-Term-CSCI-E-96-1-Data-Mining-for-Business.pdf?locale=en-US)
+Fall 2024 University [syllabus](https://harvard.simplesyllabus.com/doc/k6cprbiwb/Fall-Term-2024-Full-Term-CSCI-E-96-1-Data-Mining-for-Business?mode=view)
+or [PDF here](https://harvard.simplesyllabus.com/api2/doc-pdf/k6cprbiwb/Fall-Term-2024-Full-Term-CSCI-E-96-1-Data-Mining-for-Business.pdf?locale=en-US)
 
 Spring 2024 University [syllabus](https://harvard.simplesyllabus.com/doc/lb0nf6j56/Spring-Term-2024-Full-Term-CSCI-E-96-1-Data-Mining-for-Business?mode=view) or 
 [PDF here](https://harvard.simplesyllabus.com/api2/doc-pdf/lb0nf6j56/Spring-Term-2024-Full-Term-CSCI-E-96-1-Data-Mining-for-Business.pdf?locale=en-US)
 
 ## Working with R
-If you are new to R, please take an online course to get familarity prior to the first session.  We will still cover R basics but students have been aided by spending a few hours taking a free online course at [DataQuest](https://www.dataquest.io/) or [DataCamp](https://www.datacamp.com).  The code below should be run in the console to install packages needed for the semester.
+If you are new to R, please take an online course to get familarity prior to the first session.  We will still cover R basics but students have been aided by spending a few hours taking a free online course at [Youtube](https://www.youtube.com/watch?v=eR-XRSKsuR4) or [DataCamp](https://www.datacamp.com).  The code below should be run in the console to install packages needed for the semester.
 
 ## Please install the following packages with this R code.
 If you encounter any errors don't worry we will find time to work through them.  The `qdap` library is usually the trickiest because it requires Java and `rJava` and does not work on Mac.  So if you get any errors, try removing that from the code below and rerunning.  This will take **a long time** if you don't already have the packages, so please run prior to class, and at a time you don't need your computer ie *at night*.
@@ -42,19 +42,18 @@ This is tentative and subject to change to maximize learning
 
 |Date     | Topic  |
 |---------|------------|
-| Jan 22  | Intro to R, R-studio & git  |
-| Jan 29  | Intro to Data Mining   |
-| Feb 5   | More R Practice & EDA  |
-| Feb 12  | Data mining workflows  |
-| Feb 19  | no class (university holiday)  |
-| Feb 26  | Regression & Log Regression  |
-| Mar 4   | Decision Tree & Random Forest  |
-| Mar 11  | Spring Break - no class  |
-| **Mar 18**  | **Time Series Data (TA led, instructor will be out)**  |
-| Mar 25  | Equities  |
-| Apr 1   | Predicting Risk & non-traditional investing  |
-| Apr 8   | Text analysis & NLP  |
-| Apr 15  | Text analysis & NLP, continued  |
-| Apr 22  | Data sources & APIs  |
-| Apr 29  | Responsible AI & tech ethics  |
-| May 6   | Class Lab  |
+| Sept 9  | Intro to R, R-studio & git  |
+| Sept 16  | Intro to Data Mining   |
+| Sept 23   | More R Practice & EDA  |
+| Sept 30  | Data mining workflows  |
+| Oct 7   | Regression & Log Regression  |
+| Oct 14  | no class (university holiday)  |
+| Oct 21   | Decision Tree & Random Forest  |
+| Oct 28  | Time Series Data  |
+| Nov 4  | Equities  |
+| Nov 11   | Predicting Risk & non-traditional investing  |
+| Nov 18   | Text analysis & NLP  |
+| Nov 25  | Text analysis & NLP, continued  |
+| Dec 2  | Chat GPT basics  |
+| Dec 9  | Responsible AI & tech ethics  |
+| Dec 16   | Optional Class Lab  |
