@@ -4,7 +4,7 @@
 #' Date: Jan 23, 2022
 
 # Step 1 Set the working directory: where's the fruit? Where should I save my outputs?
-setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
+#setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 
 # Step 2 Load some libraries: Make R a customized piece of software
 options(scipen = 999)

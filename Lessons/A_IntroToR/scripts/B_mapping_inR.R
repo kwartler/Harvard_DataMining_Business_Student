@@ -58,7 +58,7 @@ gg <- ggplot() +
   geom_map(data  =  us, 
            map = us,
            aes(x = long, y = lat, map_id = region, group = group), 
-           fill = 'white', color = 'black', size = 0.25) + 
+           fill = 'white', color = 'black', linewidth = 0.25) + 
   coord_map('albers', lat0 = 39, lat1 = 45) +
   theme_map()
 gg
@@ -72,7 +72,7 @@ ggNE <- ggplot() +
                y = lat, 
                map_id = region, 
                group = group), 
-           fill = 'white', color = 'black', size = 0.25) + 
+           fill = 'white', color = 'black', linewidth = 0.25) + 
   coord_map('albers', lat0 = 39, lat1 = 45) +
   theme_map()
 
@@ -95,7 +95,7 @@ ggMA <- ggplot() +
   geom_map(data  =  MAcounty, map = MAcounty,
            aes(x = long, y = lat, 
                map_id = region, group = group), 
-           fill = 'white', color = 'blue', size = 0.25) + 
+           fill = 'white', color = 'blue', linewidth = 0.25) + 
   coord_map('albers', lat0 = 39, lat1 = 45) +
   theme_map()
 
