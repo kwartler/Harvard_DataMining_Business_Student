@@ -7,8 +7,6 @@
 library(radiant.data)
 library(DataExplorer)
 
-# Set WD
-setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 
 # Data look up on github
 cereal <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/B_IntroToDM_BasicEDA/data/Cereals.csv')
