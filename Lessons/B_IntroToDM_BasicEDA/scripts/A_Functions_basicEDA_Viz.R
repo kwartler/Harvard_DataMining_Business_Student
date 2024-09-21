@@ -59,7 +59,7 @@ scenes <- scenes[order(scenes$length, decreasing=T),] #reorder the data frame by
 head(scenes,10) # object and number to return, default is 6 rows
 
 # Examine the 8 shortest scenes ONLY a vector
-tail(scenes$defined.scenes,8) 
+tail(scenes,8) 
 
 ## Visuals
 # Summarise character appearances
@@ -81,7 +81,7 @@ barplot(characterTally[1:5],
 plot(characterTally, main='Force Awakens: Character Scene Tally')
 
 # Save a basic plot to disk in the personal folder since it was set as the "working directory"
-png("characterTally_plot.png")
+png("~/Desktop/Harvard_DataMining_Business_Student/personalFiles/characterTally_plot.png")
 plot(characterTally, main='Force Awakens: Character Scene Tally')
 dev.off()
 
@@ -92,7 +92,7 @@ ggplot(screenTime,
   geom_segment(aes(x    = start, 
                    xend = end, 
                    y    = character, 
-                   yend = character), size=3) + #add layer of segments & declare x/y 
+                   yend = character), linewidth=3) + #add layer of segments & declare x/y 
   theme_gdocs() + #add a default "theme"
   theme(legend.position="none") # turn off the need for a legend
 ggsave("character_scenes.pdf")
