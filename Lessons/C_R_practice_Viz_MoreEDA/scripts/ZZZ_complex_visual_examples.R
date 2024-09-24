@@ -3,6 +3,7 @@
 #' Purpose: R popular visuals
 #' Good resource: https://r-graphics.org/
 
+library(ggplot2)
 
 # https://twitter.com/MaxCRoser/status/1566182467010273280
 # Our world in Data example
