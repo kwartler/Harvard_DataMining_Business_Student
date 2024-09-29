@@ -2,9 +2,6 @@
 #' Date: Sept 5 2022
 #' Purpose: Fundraising PreProcessing
 
-# Setwd
-setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
-
 # Libs
 library(vtreat)
 library(dplyr)
