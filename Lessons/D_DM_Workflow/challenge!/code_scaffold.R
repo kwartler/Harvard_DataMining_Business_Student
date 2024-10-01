@@ -1,7 +1,7 @@
 #' Ted Kwartler
 #' Code Along Scaffold
 #' Linear Regression: SEMMA & Vtreat 
-#' Marketing Attribtion: https://www.kaggle.com/datasets/ashydv/advertising-dataset
+#' Marketing Attribution: https://www.kaggle.com/datasets/ashydv/advertising-dataset
 
 # Set the working directory
 
