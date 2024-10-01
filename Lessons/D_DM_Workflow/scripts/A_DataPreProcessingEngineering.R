@@ -95,7 +95,7 @@ nonPrepData <- leftData[-idx,]
 
 ## A taste of whats to come...for those in the know, yes we are skipping a lot of steps.
 plan <- designTreatmentsC(prepData,
-                          names(leftData)[4:20],
+                          names(leftData)[c(3:19, 22,23)],
                           'Y1_Donation',
                           'Yes')
 treatedLeftData <- prepare(plan, nonPrepData)
