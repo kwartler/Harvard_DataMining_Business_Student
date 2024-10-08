@@ -93,4 +93,9 @@ RMSE(y_pred = manualPredsTest, y_true = testSet$realValue)
 RMSE(y_pred = preds1Test, y_true = testSet$realValue)
 RMSE(y_pred = preds2Test, y_true = testSet$realValue)
 
+# MAPE for each "model"
+MAPE(y_pred = manualPredsTest, y_true = testSet$realValue)
+MAPE(y_pred = preds1Test, y_true = testSet$realValue)
+MAPE(y_pred = preds2Test, y_true = testSet$realValue)
+
 # End
