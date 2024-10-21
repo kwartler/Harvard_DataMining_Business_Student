@@ -16,6 +16,7 @@ library(caret)
 library(rpart.plot) 
 library(randomForest)
 library(vtreat)
+library(ranger)
 
 ## Bring in some data
 dat <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/F_Tree_RF/data/bank-downSampled.csv')
@@ -126,5 +127,22 @@ oneHundredVoters  <- predict(someVoters,    treatedTest)
 Accuracy(treatedTest$Class, threeVotes)
 Accuracy(treatedTest$Class, fiveHundredVoters)
 Accuracy(treatedTest$Class, oneHundredVoters)
+
+# Just to show another implementation, Nnow we can use the ranger package which is a fast implmentation of RF
+
+# Show the default characteristics
+?ranger
+
+# Fit a ranger RF
+rangerRF <- ranger(as.factor(Class) ~ .,
+                   data = treatedTrain, 
+                   importance = 'impurity',
+                   num.trees	=500)
+
+# Get predictions
+rangerPreds <- predict(rangerRF, treatedTest)
+
+# KPI
+Accuracy(treatedTest$Class, rangerPreds$predictions)
 
 # End
