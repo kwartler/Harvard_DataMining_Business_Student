@@ -8,7 +8,6 @@ setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 
 # libs
 library(dygraphs)
-library(dygraphs)
 library(lubridate)
 
 # Data

@@ -48,11 +48,11 @@ length(coefficients(fit))
 length(coefficients(bestFit))
 
 # Get predictions
-teamPreds <- predict(bestFit, type='response')
+teamPreds <- predict(bestFit, treatedX, type='response')
 head(teamPreds)
 
 # Classify
-cutoff <- 0.5
+cutoff <- 0.50
 teamClasses <- ifelse(teamPreds >= cutoff, 1,0)
 
 # Organize w/Actual
@@ -75,11 +75,11 @@ Accuracy(y_pred = results$ModelClassification, y_true = results$actual)
 
 # Let's bucket probabilities of winning teams to see the distribution
 winnningTeams <- subset(results, results$actual==1)
-ggplot(winnningTeams, aes(x = winningProbability)) + geom_histogram()
+ggplot(winnningTeams, aes(x = winningProbability)) + geom_density()
 
 # Let's bucket probabilities of losing teams to see the distribution
 losingTeams <- subset(results, results$actual!=1)
-ggplot(losingTeams, aes(x = winningProbability)) + geom_histogram() 
+ggplot(losingTeams, aes(x = winningProbability)) + geom_density() 
 
 # It's best to compare side by side & easier to see as a density plot
 # Visually how well did we separate our classes?

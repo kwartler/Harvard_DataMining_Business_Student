@@ -15,7 +15,7 @@ library(lubridate)
 library(ggseas) #seasonal adjustments with ggplot too!
 
 # Data
-amzn <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/G_TimeSeries/data/AMZN_Qtr_Rev.csv')
+amzn <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/G_TimeSeries/data/AMZN_Qtr_Rev.csv')
 head(amzn)
 
 # Time formatting
