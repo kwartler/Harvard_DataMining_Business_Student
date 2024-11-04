@@ -44,6 +44,11 @@ stk   <- stk['2019-01-01/']
 ma50  <- SMA(Cl(stk), 50)
 ma200 <- SMA(Cl(stk), 200)
 
+# Make a quick plot
+plot(stk$NVDA.Close)
+lines(ma50, col='red')
+lines(ma200, col='blue')
+
 # Set up the indicator
 tradeSignal <- Lag(ifelse(ma50 > ma200  , 1, 0))
 table(tradeSignal)

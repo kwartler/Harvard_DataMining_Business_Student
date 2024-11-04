@@ -36,7 +36,7 @@ plot(qtrTS)
 # Apply HW
 # use hw() from forecast package to get prediction intervals, HoltWinters() is from stats package
 # Book Authors use ets from forecast with model='MAA'
-qtrHW <- HoltWinters(qtrTS, seasonal = "mult") #has a built in alpha optimizer
+qtrHW <- HoltWinters(qtrTS, seasonal = "multiplicative") #has a built in alpha optimizer
 
 # Example
 plot(qtrHW)
