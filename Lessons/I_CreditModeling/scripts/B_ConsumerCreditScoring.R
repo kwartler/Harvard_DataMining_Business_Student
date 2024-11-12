@@ -19,6 +19,7 @@ library(vtreat)
 library(MLmetrics)
 library(ggplot2)
 library(ggthemes)
+library(echarts4r)
 
 # I/O
 df <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/I_CreditModeling/data/20K_sampleLoans.csv') 
@@ -157,7 +158,7 @@ bestNotes |>
     ")) |>
   e_toolbox_feature(feature = "dataZoom") |>
   e_mark_line(data = list(yAxis = 7), title = "Historical SP500 Avg Return") |>
-  e_mark_line(data = list(yAxis = 5.86), title = "Historical 5yr T-Bill Return")
+  e_mark_line(data = list(yAxis = 5.86), title = "Historical 5yr T-Bill Return") |> e_tooltip()
 
 
 
