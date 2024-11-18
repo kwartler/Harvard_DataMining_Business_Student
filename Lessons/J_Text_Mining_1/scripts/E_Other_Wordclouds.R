@@ -39,9 +39,9 @@ customStopwords <- c(stopwords('english'), 'lol', 'smh',
                      'amp','sivb', 'bank', 'sequoia')
 
 # Read in multiple files as individuals
-txtFiles<-c('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/sivbVector.csv',
-            'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/Sequoia%20CapitalVector.csv',
-            'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/hashtagBankCrashVector.csv') 
+txtFiles<-c('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/J_Text_Mining_1/data/sivbVector.csv',
+            'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/J_Text_Mining_1/data/Sequoia%20CapitalVector.csv',
+            'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/J_Text_Mining_1/data/hashtagBankCrashVector.csv') 
 documentTopics <- c('siliconValley','Sequoia', 'bankCrash')
 
 # Read in as a list
