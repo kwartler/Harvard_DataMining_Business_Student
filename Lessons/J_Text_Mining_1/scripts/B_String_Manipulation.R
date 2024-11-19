@@ -9,7 +9,7 @@ library(stringi)
 library(stringr)
 
 # Get Data
-text <- read.csv('https://raw.githubusercontent.com/kwartler/GSERM_2024/main/lessons/Day1_intoR_NLP/data/allComplaints.csv')
+text <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/J_Text_Mining_1/data/allComplaints.csv')
 
 # Let's look at the colnames & a portion of the data
 names(text)
@@ -46,7 +46,7 @@ sum(checking) / nrow(text)
 sum(savings) / nrow(text)
 sum(checkingSavingAccounts) / nrow(text)
 
-# Count occurrences of words per tweet
+# Count occurrences of words per document
 frequencyCheck <- stri_count(text$Consumer.complaint.narrative, fixed="debt")
 head(frequencyCheck)
 sum(frequencyCheck) / nrow(text)
@@ -138,3 +138,4 @@ str_trim(allText, side = c("both", "left", "right")) #'left', 'right'
 # Middle of string spaces can be cleaned with regex and gsub
 gsub("\\s+", " ", '    Example      text to be cleaned    ')
 # End
+

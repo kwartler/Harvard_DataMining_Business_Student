@@ -35,7 +35,7 @@ stopwords('english')
 customStopwords <- c(stopwords('english'), 'bank', 'money', 'account')
 
 # Data
-text <- read.csv('https://raw.githubusercontent.com/kwartler/GSERM_2024/main/lessons/Day1_intoR_NLP/data/allComplaints.csv')
+text <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/J_Text_Mining_1/data/allComplaints.csv')
 text$Consumer.complaint.narrative[1]
 
 # Global substitutions with more complex regex; Redacted dates
@@ -100,5 +100,5 @@ str(txtDtm) #i=document, j=term index, v=frequency/count value
 txtDtmM <- as.matrix(txtDtm)
 
 # Let's examine a portion
-txtDtmM[1:3,grep('marcus',colnames(txtDtmM))]
+txtDtmM[5319:5322,grep('marcus',colnames(txtDtmM))]
 # End
