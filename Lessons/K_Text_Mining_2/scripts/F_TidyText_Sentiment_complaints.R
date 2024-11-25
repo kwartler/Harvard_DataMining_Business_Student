@@ -17,8 +17,8 @@ library(lubridate)
 library(syuzhet)
 
 # Data list.files()
-filePathA <- 'https://raw.githubusercontent.com/kwartler/GSERM_2024/main/lessons/Day3_sentiment/data/goldmanSachs_2023_3k.csv'
-filePathB <- 'https://raw.githubusercontent.com/kwartler/GSERM_2024/main/lessons/Day3_sentiment/data/BARCLAYS_BANK_DELAWARE_2023_3k.csv'
+filePathA <- 'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/K_Text_Mining_2/data/goldmanSachs_2023_3k.csv'
+filePathB <- 'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/K_Text_Mining_2/data/BARCLAYS_BANK_DELAWARE_2023_3k.csv'
 txtFiles  <- c(filePathA, filePathB)
 docNames <- c('GS','Barclays')
 
