@@ -37,9 +37,9 @@ cleanCorpus<-function(corpus, customStopwords){
 customStopwords <- c(stopwords('english'))
 
 # Read in multiple files as individuals
-txtFiles<-c( 'https://raw.githubusercontent.com/kwartler/GSERM_2024/main/lessons/Day3_sentiment/data/in_your_eyes.txt', 
-             'https://raw.githubusercontent.com/kwartler/GSERM_2024/main/lessons/Day3_sentiment/data/pharrell_williams_happy.txt',
-             'https://raw.githubusercontent.com/kwartler/GSERM_2024/main/lessons/Day3_sentiment/data/starboy.txt') 
+txtFiles<-c( 'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/K_Text_Mining_2/data/in_your_eyes.txt', 
+             'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/K_Text_Mining_2/data/pharrell_williams_happy.txt',
+             'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/K_Text_Mining_2/data/starboy.txt') 
 documentTopics <- c("in_your_eyes.txt", "pharrell_williams_happy.txt", "starboy.txt") 
 
 # Read in as a list
