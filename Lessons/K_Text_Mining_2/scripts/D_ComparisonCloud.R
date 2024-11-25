@@ -5,8 +5,8 @@
 #'
 
 # Data Input, locally you can use list.files()
-chardonnay <- 'https://raw.githubusercontent.com/kwartler/GSERM_2024/main/lessons/Day2_Visualizations/data/chardonnay.csv'
-coffee     <- 'https://raw.githubusercontent.com/kwartler/GSERM_2024/main/lessons/Day2_Visualizations/data/coffee.csv'
+chardonnay <- 'https://github.com/kwartler/Harvard_DataMining_Business_Student/raw/refs/heads/master/Lessons/K_Text_Mining_2/data/chardonnay.csv'
+coffee     <- 'https://github.com/kwartler/Harvard_DataMining_Business_Student/raw/refs/heads/master/Lessons/K_Text_Mining_2/data/coffee.csv'
 txtFiles <- c(chardonnay, coffee)
 
 # Topic names

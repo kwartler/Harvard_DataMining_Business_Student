@@ -8,7 +8,7 @@
 library(tm)
 
 # File path
-filePath <- 'https://raw.githubusercontent.com/kwartler/GSERM_2024/main/lessons/Day2_Visualizations/data/studentLoan_2024.csv'
+filePath <- 'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/K_Text_Mining_2/data/studentLoan_2024.csv'
 
 # Custom functions
 tryTolower <- function(x){
@@ -59,5 +59,5 @@ txtDtmM <- as.matrix(txtDtm)
 dim(txtDtmM)
 mostFreq <- colSums(txtDtmM)
 mostFreq[which.max(mostFreq)]
-txtDtmM[1:6,grep('payment', colnames(txtDtmM))]
+txtDtmM[35:40,grep('payment', colnames(txtDtmM))[10:13]]
 # End

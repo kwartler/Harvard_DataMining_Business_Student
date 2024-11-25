@@ -5,7 +5,7 @@
 #'
 
 # Declare the data path
-filePath  <- '~/Desktop/GSERM_2024/lessons/Day2_Visualizations/data/chardonnay.csv'
+filePath  <- 'https://github.com/kwartler/Harvard_DataMining_Business_Student/raw/refs/heads/master/Lessons/K_Text_Mining_2/data/chardonnay.csv'
 
 # Libs
 library(tm)
@@ -91,7 +91,7 @@ wordcloud(topWordsA$word,
           colors       = pal,
           scale        = c(2,1))
 
-pdf('~/Desktop/GSERM_2024/personalFiles/exampleWC.pdf')
+pdf('~/Desktop/Harvard_DataMining_Business_Student/personalFiles/exampleWC.pdf')
 wordcloud(topWordsA$word,
           topWordsA$freq,
           max.words    = 50,
