@@ -1,28 +1,24 @@
-#' Title: Comparison Cloud
 #' Purpose: Given two corpora find disjoint words and visualize
 #' Author: Ted Kwartler
 #' email: edwardkwartler@fas.harvard.edu
-#' License: GPL>=3
-#' Date: Nov 21, 2022
+#' Date: May 12, 2024
+#'
 
-# Set the working directory
-setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
+# Data Input, locally you can use list.files()
+chardonnay <- 'https://raw.githubusercontent.com/kwartler/GSERM_2024/main/lessons/Day2_Visualizations/data/chardonnay.csv'
+coffee     <- 'https://raw.githubusercontent.com/kwartler/GSERM_2024/main/lessons/Day2_Visualizations/data/coffee.csv'
+txtFiles <- c(chardonnay, coffee)
 
-# Options
-options(scipen = 999)
+# Topic names
+topicNames <- c('chardonnay','coffee')
 
 # Libs
 library(tm)
-library(qdap)
 library(wordcloud)
 library(RColorBrewer)
-library(pbapply)
-library(readr)
 
-# Options & Functions
-options(stringsAsFactors = FALSE)
-Sys.setlocale('LC_ALL','C')
-
+# Custom functions
+# Robust to lower
 tryTolower <- function(x){
   y = NA
   try_error = tryCatch(tolower(x), error = function(e) e)
@@ -31,68 +27,63 @@ tryTolower <- function(x){
   return(y)
 }
 
+# Cleaning
 cleanCorpus<-function(corpus, customStopwords){
-  corpus <- tm_map(corpus, content_transformer(qdapRegex::rm_url))
-  #corpus <- tm_map(corpus, content_transformer(replace_contraction)) 
-  corpus <- tm_map(corpus, removeNumbers)
-  corpus <- tm_map(corpus, removePunctuation)
-  corpus <- tm_map(corpus, stripWhitespace)
+  corpus <- tm_map(corpus, content_transformer(qdapRegex::rm_url)) 
   corpus <- tm_map(corpus, content_transformer(tryTolower))
   corpus <- tm_map(corpus, removeWords, customStopwords)
+  corpus <- tm_map(corpus, removePunctuation)
+  corpus <- tm_map(corpus, removeNumbers)
+  corpus <- tm_map(corpus, stripWhitespace)
   return(corpus)
 }
 
+
 # Create custom stop words
-stops <- c(stopwords('english'), 'lol', 'amp', 'chardonnay', 'beer', 'coffee')
+stops <- c(stopwords('english'), 'lol', 'amp', 'chardonnay', 'coffee')
 
-# Read in multiple files as a list
-txtFiles<-c('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/K_More_TM_DocClass/data/chardonnay.csv',
-                        'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/K_More_TM_DocClass/data/coffee.csv',
-                        'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/K_More_TM_DocClass/data/beer.csv')
-
-# Make a list of DFs
-txtLst <- lapply(txtFiles, read_csv,  locale = locale(encoding = "Latin1"))
-
-#  Apply steps to each list element
-for(i in 1:length(txtLst)){
-  print(paste('working on',i, 'of', length(txtLst)))
-  tmp <- paste(txtLst[[i]]$text, collapse = ' ')
-  tmp <- VCorpus(VectorSource(tmp))
-  tmp <- cleanCorpus(tmp, stops)
-  tmp <- sapply(tmp, content)
-  txtLst[[i]] <- tmp
+# Read in the files
+for (i in 1:length(txtFiles)){
+  assign(topicNames[i], read.csv(txtFiles[i]))
+  cat(paste('read completed:',txtFiles[i],'\n'))
 }
 
-# Name list elements programmatically
-txtFiles
-txtNames      <- sapply(strsplit(txtFiles, '/'), tail, 1)
-names(txtLst) <- txtNames
+# Vector Corpus; omit the meta data
+coffee     <- VCorpus(VectorSource(coffee$text))
+chardonnay <- VCorpus(VectorSource(chardonnay$text))
 
-# Combine the subject documents into a corpus of *3* documents
-allDrinks <- unlist(txtLst)
+# Clean up the data
+coffee     <- cleanCorpus(coffee, stops)
+chardonnay <- cleanCorpus(chardonnay, stops)
+
+# Another way to extract the cleaned text
+coffee     <- sapply(coffee, NLP::content)
+chardonnay <- sapply(chardonnay, NLP::content)
+
+# Instead of 1000 individual documents, collapse each into a single "subject" ie a single document
+coffee     <- paste(coffee, collapse = ' ')
+chardonnay <- paste(chardonnay, collapse = ' ')
+
+# Combine the subject documents into a corpus of *2* documents
+allDrinks <- c(chardonnay, coffee)
 allDrinks <- VCorpus((VectorSource(allDrinks)))
 
 # Make TDM with a different control parameter
 # Tokenization `control=list(tokenize=bigramTokens)`
 # You can have more than 1 ie `control=list(tokenize=bigramTokens, weighting = weightTfIdf)`
 ctrl      <- list(weighting = weightTfIdf)
-drinkTDM  <- TermDocumentMatrix(allDrinks, control = ctrl)
-drinkTDMm <- as.matrix(drinkTDM)
+drinkDTM  <- DocumentTermMatrix(allDrinks, control = ctrl)
+drinkDTMm <- as.matrix(drinkDTM)
 
-# Make sure order is the same as the c(objA, objB) on line ~80
-colnames(drinkTDMm) <- txtNames
+# Make sure order is the same as the c(objA, objB) 
+rownames(drinkDTMm) <- c('chardonnay', 'coffee')
 
-# Examine
-head(drinkTDMm)
-
-# Make comparison cloud
-dev.off()
-comparison.cloud(drinkTDMm, 
-                 max.words=75, 
+# Make comparison cloud; requires TDM!
+comparison.cloud(t(drinkDTMm),
+                 max.words=75,
                  random.order=FALSE,
                  title.size=0.5,
-                 colors=brewer.pal(ncol(drinkTDMm),"Dark2"),
+                 colors=c('tomato','goldenrod'),
                  scale=c(3,0.1))
 
 # End
-

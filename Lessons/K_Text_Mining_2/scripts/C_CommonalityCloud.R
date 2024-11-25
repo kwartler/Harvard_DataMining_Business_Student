@@ -3,95 +3,96 @@
 #' Author: Ted Kwartler
 #' email: edwardkwartler@fas.harvard.edu
 #' License: GPL>=3
-#' Date: Nov 21, 2022
+#' Date: May 12, 2024
 #'
 
-# Set the working directory
-setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
+# Data Input, locally you can use list.files()
+chardonnay <- 'https://raw.githubusercontent.com/kwartler/GSERM_2024/main/lessons/Day2_Visualizations/data/chardonnay.csv'
+coffee     <- 'https://raw.githubusercontent.com/kwartler/GSERM_2024/main/lessons/Day2_Visualizations/data/coffee.csv'
+txtFiles <- c(chardonnay, coffee)
+
+# Topic names
+topicNames <- c('chardonnay','coffee')
 
 # Libs
 library(tm)
-library(qdap)
 library(wordcloud)
 library(RColorBrewer)
-library(readr)
 
-# Options & Functions
-options(stringsAsFactors = FALSE)
-Sys.setlocale('LC_ALL','C')
-
+# Custom functions
+# Robust to lower
 tryTolower <- function(x){
-  y <- NA
-  tryError <- tryCatch(tolower(x), error = function(e) e)
-  if (!inherits(tryError, 'error'))
-    y <- tolower(x)
+  y = NA
+  try_error = tryCatch(tolower(x), error = function(e) e)
+  if (!inherits(try_error, 'error'))
+    y = tolower(x)
   return(y)
 }
 
+# Cleaning
 cleanCorpus<-function(corpus, customStopwords){
-  corpus <- tm_map(corpus, content_transformer(qdapRegex::rm_url))
-  corpus <- tm_map(corpus, content_transformer(replace_contraction)) 
-  corpus <- tm_map(corpus, removeNumbers)
-  corpus <- tm_map(corpus, removePunctuation)
-  corpus <- tm_map(corpus, stripWhitespace)
+  corpus <- tm_map(corpus, content_transformer(qdapRegex::rm_url)) 
   corpus <- tm_map(corpus, content_transformer(tryTolower))
   corpus <- tm_map(corpus, removeWords, customStopwords)
+  corpus <- tm_map(corpus, removePunctuation)
+  corpus <- tm_map(corpus, removeNumbers)
+  corpus <- tm_map(corpus, stripWhitespace)
   return(corpus)
 }
+
+
 
 # Create custom stop words
 stops <- c(stopwords('english'), 'lol', 'amp', 'chardonnay', 'coffee')
 
-# Read in multiple files as a list if local files
-#txtFiles <- list.files(path = '~/Desktop/Harvard_DataMining_Business_Student/Lessons/K_More_TM_DocClass/data',
-#                       pattern = 'chardonnay|coffee', full.names = T) 
-# Read in multiple files as a list if on github
-txtFiles<-c('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/K_More_TM_DocClass/data/chardonnay.csv',
-            'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/K_More_TM_DocClass/data/coffee.csv',
-            'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/K_More_TM_DocClass/data/beer.csv')
-
-# Make a list of DFs
-txtLst <- lapply(txtFiles, read_csv,  locale = locale(encoding = "Latin1"))
-sapply(txtLst, nrow)
-
-#  Apply steps to each list element
-for(i in 1:length(txtLst)){
-  print(paste('working on',i, 'of', length(txtLst)))
-  tmp <- paste(txtLst[[i]]$text, collapse = ' ')
-  tmp <- VCorpus(VectorSource(tmp))
-  tmp <- cleanCorpus(tmp, stops)
-  tmp <- sapply(tmp, content)
-  txtLst[[i]] <- tmp
+# Read in the files
+for (i in 1:length(txtFiles)){
+  assign(topicNames[i], read.csv(txtFiles[i]))
+  cat(paste('read completed:',txtFiles[i],'\n'))
 }
 
-# FYI
-sapply(txtLst, length)
+# Vector Corpus; omit the meta data
+chardonnay <- VCorpus(VectorSource(chardonnay$text))
+coffee     <- VCorpus(VectorSource(coffee$text))
 
-# Name list elements programmatically
-txtFiles
-txtNames      <- sapply(strsplit(txtFiles, '/'), tail, 1)
-names(txtLst) <- txtNames
+# Clean up the data
+chardonnay <- cleanCorpus(chardonnay, stops)
+coffee     <- cleanCorpus(coffee, stops)
+
+# Extract the cleaned text
+chardonnay <- sapply(chardonnay, NLP::content)
+coffee     <- sapply(coffee, NLP::content)
+
+# FYI
+length(chardonnay)
+
+# Instead of 1000 individual documents, collapse each into a single "subject" ie a single document
+chardonnay <- paste(chardonnay, collapse = ' ')
+coffee     <- paste(coffee, collapse = ' ')
+
+# FYI pt2
+length(chardonnay)
 
 # Combine the subject documents into a corpus of *2* documents
-allDrinks <- unlist(txtLst)
+allDrinks <- c(chardonnay, coffee)
 allDrinks <- VCorpus((VectorSource(allDrinks)))
 
 # How many docs now?
 allDrinks
 
 # Make TDM
-drinkTDM  <- TermDocumentMatrix(allDrinks)
-drinkTDMm <- as.matrix(drinkTDM)
+drinkDTM  <- DocumentTermMatrix(allDrinks)
+drinkDTMm <- as.matrix(drinkDTM)
 
 # Make sure order is correct!
-colnames(drinkTDMm) <- txtNames
+rownames(drinkDTMm) <- topicNames
 
 # Examine
-head(drinkTDMm)
+drinkDTMm[,1:10]
 
-
-commonality.cloud(drinkTDMm, 
-                  max.words=150, 
+# Plot the frequent & in common terms; must be a TDM!
+commonality.cloud(t(drinkDTMm),
+                  max.words=150,
                   random.order=FALSE,
                   colors='blue',
                   scale=c(3.5,0.25))

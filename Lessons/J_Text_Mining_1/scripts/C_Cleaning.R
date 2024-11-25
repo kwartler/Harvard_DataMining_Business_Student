@@ -32,7 +32,7 @@ cleanCorpus<-function(corpus, customStopwords){
 
 # Create custom stop words
 stopwords('english')
-customStopwords <- c(stopwords('english'), 'bank', 'money', 'account')
+customStopwords <- c(stopwords('english'), 'bank', 'money', 'account', 'lol')
 
 # Data
 text <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/J_Text_Mining_1/data/allComplaints.csv')

@@ -1,11 +1,9 @@
 #' Title: Intro: TidyText Sentiment
 #' Purpose: Sentiment nonsense
 #' Author: Ted Kwartler
-#' Date: Mar 12, 2023
+#' Date: May 12, 2024
 #'
 
-# Set the working directory
-setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 
 # Libs
 library(tidytext)
@@ -26,11 +24,12 @@ tryTolower <- function(x){
 }
 
 cleanCorpus<-function(corpus, customStopwords){
-  corpus <- tm_map(corpus, removePunctuation)
-  corpus <- tm_map(corpus, stripWhitespace)
-  corpus <- tm_map(corpus, removeNumbers)
+  corpus <- tm_map(corpus, content_transformer(qdapRegex::rm_url)) 
   corpus <- tm_map(corpus, content_transformer(tryTolower))
   corpus <- tm_map(corpus, removeWords, customStopwords)
+  corpus <- tm_map(corpus, removePunctuation)
+  corpus <- tm_map(corpus, removeNumbers)
+  corpus <- tm_map(corpus, stripWhitespace)
   return(corpus)
 }
 
@@ -38,10 +37,10 @@ cleanCorpus<-function(corpus, customStopwords){
 customStopwords <- c(stopwords('english'))
 
 # Read in multiple files as individuals
-txtFiles<-c('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/starboy.txt',
-            'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/in_your_eyes.txt',
-            'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/J_Text_Mining/data/pharrell_williams_happy.txt') 
-documentTopics <- c("starboy", "eyes", "happy") 
+txtFiles<-c( 'https://raw.githubusercontent.com/kwartler/GSERM_2024/main/lessons/Day3_sentiment/data/in_your_eyes.txt', 
+             'https://raw.githubusercontent.com/kwartler/GSERM_2024/main/lessons/Day3_sentiment/data/pharrell_williams_happy.txt',
+             'https://raw.githubusercontent.com/kwartler/GSERM_2024/main/lessons/Day3_sentiment/data/starboy.txt') 
+documentTopics <- c("in_your_eyes.txt", "pharrell_williams_happy.txt", "starboy.txt") 
 
 # Read in as a list
 all <- lapply(txtFiles,readLines)
@@ -58,8 +57,8 @@ for(i in 1:length(all)){
 }
 
 # Examine
-cleanTibbles$eyes
-dim(cleanTibbles$eyes)
+cleanTibbles$in_your_eyes.txt
+dim(cleanTibbles$in_your_eyes.txt)
 
 # Organize into a single tibble
 allText <- do.call(rbind, cleanTibbles)
@@ -85,7 +84,7 @@ afinn
 
 # Word Sequence
 allText$idx       <- as.numeric(ave(allText$document, 
-                                     allText$document, FUN=seq_along))
+                                    allText$document, FUN=seq_along))
 # Perform Inner Join
 afinnSent <- inner_join(allText,
                         afinn, 
@@ -98,7 +97,7 @@ afinnSent
 
 # If you did have a timestamp you can easily make a timeline of sentiment using this code
 # The idx here is not temporal but this is an example if you were tracking over time instead of alpha
-plotDF <- subset(afinnSent, afinnSent$document=='eyes')
+plotDF <- subset(afinnSent, afinnSent$document=='in_your_eyes.txt')
 ggplot(plotDF, aes(x=idx, y=ValueCount, group=document, color=document)) +
   geom_line()
 
@@ -109,30 +108,34 @@ nrc <- lexicon_nrc()
 nrcSent <- inner_join(allText,
                       nrc, 
                       by = c('term' = 'word'),
-                      multiple = "all")
+                      relationship = "many-to-many")
 nrcSent
 
 # Drop pos/neg leaving only emotion
 nrcSent <- nrcSent[-grep('positive|negative',nrcSent$sentiment),]
 
-# Quick chk
-table(nrcSent$sentiment,nrcSent$document)
+# Unique polarized term tally
+table(nrcSent$sentiment,nrcSent$document) #unique polarized words 
 
-# Manipulate for radarchart
-nrcSentRadar <- as.matrix(table(nrcSent$sentiment, nrcSent$document))
+# Sum of the polarized words
+aggregate(count~document + sentiment, nrcSent, sum) %>%
+  pivot_wider(names_from = document, values_from = count)
+
+# Now lets use this for a radar chart
+nrcSentRadar <- aggregate(count~document + sentiment, nrcSent, sum) %>%
+  pivot_wider(names_from = document, values_from = count) %>% as.data.frame()
 nrcSentRadar
 
 # Normalize for length; prop.table by column is "2"
-nrcSentRadar <- prop.table(nrcSentRadar,2)
-nrcSentRadar
-colSums(nrcSentRadar) #quick check to see what prop table did
-
-pivot_longer(as.data.frame.matrix(nrcSentRadar), col = everything())
+tmp <- as.matrix(nrcSentRadar[,2:ncol(nrcSentRadar)])
+tmp <- prop.table(tmp,2)
+tmp
+colSums(tmp) #quick check to see what prop table did
 
 # Organize
-plotDF <- data.frame(labels = rownames(nrcSentRadar),
-                           as.data.frame.matrix(nrcSentRadar),
-                           row.names = NULL)
+plotDF <- data.frame(labels = nrcSentRadar[,1],
+                     tmp,
+                     row.names = NULL)
 plotDF
 
 # Chart
