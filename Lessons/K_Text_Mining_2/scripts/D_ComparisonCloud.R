@@ -49,6 +49,8 @@ for (i in 1:length(txtFiles)){
 }
 
 # Vector Corpus; omit the meta data
+coffee$text <- stringi::stri_encode(coffee$text, "", "UTF-8")
+chardonnay$text <- stringi::stri_encode(chardonnay$text, "", "UTF-8")
 coffee     <- VCorpus(VectorSource(coffee$text))
 chardonnay <- VCorpus(VectorSource(chardonnay$text))
 
