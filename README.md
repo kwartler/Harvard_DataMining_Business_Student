@@ -5,8 +5,8 @@ For students of Harvard CSCI E-96 Data Mining for Business
 Fall 2024 University [syllabus](https://harvard.simplesyllabus.com/doc/k6cprbiwb/Fall-Term-2024-Full-Term-CSCI-E-96-1-Data-Mining-for-Business?mode=view)
 or [PDF here](https://harvard.simplesyllabus.com/api2/doc-pdf/k6cprbiwb/Fall-Term-2024-Full-Term-CSCI-E-96-1-Data-Mining-for-Business.pdf?locale=en-US)
 
-Spring 2024 University [syllabus](https://harvard.simplesyllabus.com/doc/lb0nf6j56/Spring-Term-2024-Full-Term-CSCI-E-96-1-Data-Mining-for-Business?mode=view) or 
-[PDF here](https://harvard.simplesyllabus.com/api2/doc-pdf/lb0nf6j56/Spring-Term-2024-Full-Term-CSCI-E-96-1-Data-Mining-for-Business.pdf?locale=en-US)
+Spring 2024 University [syllabus](https://harvard.simplesyllabus.com/doc/cs6yu9p2b/Spring-Term-2025-Full-Term-CSCI-E-96-1-Data-Mining-for-Business?mode=view) or 
+[PDF here](https://harvard.simplesyllabus.com/api2/doc-pdf/cs6yu9p2b/Spring-Term-2025-Full-Term-CSCI-E-96-1-Data-Mining-for-Business.pdf?locale=en-US)
 
 ## Working with R
 If you are new to R, please take an online course to get familarity prior to the first session.  We will still cover R basics but students have been aided by spending a few hours taking a free online course at [Youtube](https://www.youtube.com/watch?v=eR-XRSKsuR4) or [DataCamp](https://www.datacamp.com).  The code below should be run in the console to install packages needed for the semester.
@@ -40,6 +40,8 @@ pacman::p_load(ggplot2, ggthemes, ggdark, rbokeh, maps,
 
 This is tentative and subject to change to maximize learning
 
+### Fall Semester
+
 |Date     | Topic  |
 |---------|------------|
 | Sept 9  | Intro to R, R-studio & git  |
@@ -57,3 +59,24 @@ This is tentative and subject to change to maximize learning
 | Dec 2  | Chat GPT basics  |
 | Dec 9  | Responsible AI & tech ethics  |
 | Dec 16   | Optional Class Lab  |
+
+### Spring Semester
+
+|Date     | Topic  |
+|---------|------------|
+| Jan 27  | Intro to R, R-studio & git  |
+| Feb 3   | Intro to Data Mining   |
+| Feb 10  | Chat GPT basics  |
+| Feb 17  | No class - President's Day  |
+| Feb 24  | More R Practice & EDA |
+| Mar 3   | Data mining workflows   |
+| Mar 10  | Regression & Log Regression   |
+| Mar 17  | No class - Spring Break   |
+| Mar 24  | Decision Tree & Random Forest  |
+| Mar 31  | Time Series Data  |
+| Apr 7   | Equities  |
+| Apr 14  | Predicting Risk & non-traditional investing |
+| Apr 21  | Text analysis & NLP   |
+| Apr 28  | Text analysis & NLP, continued  |
+| May 5   | APIs, Novel & Advanced LLM workflows  |
+| May 12  | Responsible AI & tech ethics  |
