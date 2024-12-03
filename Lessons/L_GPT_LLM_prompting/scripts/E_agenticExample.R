@@ -8,7 +8,7 @@ library(httr)
 library(jsonlite)
 
 # Input
-llmModel <- 'lmstudio-ai/gemma-2b-it-GGUF'
+llmModel <- 'meta-llama-3.1-8b-instruct'
 headers <- c(`Content-Type` = "application/json")
 
 # Agents

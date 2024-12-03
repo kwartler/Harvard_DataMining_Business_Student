@@ -21,7 +21,7 @@ headers <- c(
 
 # Define model
 openAImodel <- "gpt-4o"
-userPrompt <- 'create an image of a sunset, photorealistic, high definition'
+userPrompt <- 'Using the R language create a simple guess the number game.'
 
 # Define messages
 messages <- list(
@@ -43,4 +43,8 @@ res <- httr::POST(url = "https://api.openai.com/v1/chat/completions",
                   httr::add_headers(.headers=headers), 
                   body = jsonData)
 # Print the response
-print(content(res))
+print(httr::content(res))
+
+# Show response in console
+cat(httr::content(res)$choices[[1]]$message$content)
+
