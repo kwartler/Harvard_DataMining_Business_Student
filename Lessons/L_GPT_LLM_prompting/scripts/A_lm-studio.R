@@ -8,7 +8,7 @@ library(jsonlite)
 
 # Inputs
 prompt   <- "What is the captial of Brazil?" 
-llmModel <- 'lmstudio-ai/gemma-2b-it-GGUF'
+llmModel <- 'meta-llama-3.1-8b-instruct'
 
 # Organize Request
 dataLLM <- list(model = llmModel,

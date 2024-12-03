@@ -68,7 +68,7 @@ mgsub::mgsub(unicorns$text[c(720, 804)], emojis$emoji, emojis$name)
 
 # Since emojis are often without spaces:
 st <- Sys.time()
-subTxt <- mgsub::mgsub(unicorns$text[1:1000],
+subTxt <- mgsub::mgsub(unicorns$text[1:100],
                        emojis$emoji,
                        paste0(' ', emojis$name,' '))
 Sys.time() - st #10x longer for 1000 tweets, imagine more! ~2.5min
