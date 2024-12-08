@@ -28,7 +28,7 @@ prodOwner <- list(model = llmModel,
                   list(role = "system", content = productOwnerSystem),
                   list(role = "user", content = productOwnerTask)),
                 temperature = 0.7,
-                max_tokens = 512,
+                max_tokens = -1,
                 stream = FALSE)
 
 # PO Functional Spec Creation
@@ -44,7 +44,7 @@ programmeR <- LLMdata <- list(
     list(role = "user", content = functionalSpec)
   ),
   temperature = 0.7,
-  max_tokens = 512,
+  max_tokens = -1,
   stream = FALSE
 )
 
@@ -62,7 +62,7 @@ LLMqc <- list(
     list(role = "user", content = Rcode)
   ),
   temperature = 0.7,
-  max_tokens = 512,
+  max_tokens = -1,
   stream = FALSE
 )
 
@@ -84,7 +84,7 @@ LLMdocs <- list(
     list(role = "user", content = teamEffort)
   ),
   temperature = 0.7,
-  max_tokens = 512,
+  max_tokens = -1,
   stream = FALSE
 )
 
@@ -95,6 +95,6 @@ techDoc<- httr::POST(url = "http://localhost:1234/v1/chat/completions",
 techDoc <- httr::content(techDoc)$choices[[1]]$message$content
 
 # Final output of all agents
-sapply(c(functionalSpec, Rcode, qcCode, techDoc), cat)
-
+grpEffort <- paste(functionalSpec, Rcode, qcCode, techDoc, sep = '###')
+cat(grpEffort)
 # End
