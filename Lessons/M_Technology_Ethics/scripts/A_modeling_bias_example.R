@@ -27,7 +27,7 @@ resumeClean<-function(xVec, stops=stopwords("SMART")){
 }
 
 # Data
-candidates <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/L_Technology_Ethics/data/HR%20Hiring%20(Bias%20%26%20Fairness).csv')
+candidates <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/M_Technology_Ethics/data/HR%20Hiring%20(Bias%20%26%20Fairness).csv')
 
 ### SAMPLE : Partitioning
 set.seed(1234)
