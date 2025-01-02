@@ -80,3 +80,9 @@ This is tentative and subject to change to maximize learning
 | Apr 28  | Text analysis & NLP, continued  |
 | May 5   | APIs, Novel & Advanced LLM workflows  |
 | May 12  | Responsible AI & tech ethics  |
+
+
+
+# Libraries to adjust too
+
+`library(textstem)`
