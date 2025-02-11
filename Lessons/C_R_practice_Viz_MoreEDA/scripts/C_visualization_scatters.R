@@ -3,9 +3,6 @@
 #' Purpose: R bar visual ggplot scatter & bubble examples
 #' Good resource: https://r-graphics.org/
 
-# wd
-setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
-
 # libs
 library(ggplot2)
 library(ggthemes)
