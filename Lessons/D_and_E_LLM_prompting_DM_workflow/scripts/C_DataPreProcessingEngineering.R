@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Date: Sept 5 2022
+#' Date: Feb 24, 2025
 #' Purpose: Fundraising PreProcessing
 
 # Libs
@@ -52,12 +52,17 @@ treatedData <- prepare(plan, nonPrepData)
 # Lots more appended vars; still need to drop redundant flags but much faster and robust!
 summary(treatedData)
 
+# Now we will want to select the remaining data for next week's modeling
+idx <- sample(1:nrow(treatedData), nrow(treatedData)*.8)
+modelTrainingData   <- treatedData[idx,]
+modelValidationData <- treatedData[-idx,]
+
 # Start over 
 rm(list=ls())
 
 # Now perform designTreatmentsN
 # Read in the data
-donors<- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/D_DM_Workflow/data/fakeDonorBureau_v2.csv')
+donors<- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/D_and_E_LLM_prompting_DM_workflow/data/fakeDonorBureau_v2.csv')
 set.seed(2023)
 idx         <- sample(1:nrow(donors),.1*nrow(donors))
 prepData    <- donors[idx,]
@@ -70,14 +75,19 @@ plan <- designTreatmentsN(prepData,
 treatednonPrepData <- prepare(plan, nonPrepData)
 head(treatednonPrepData)
 
+# Now we will want to select the remaining data for next week's modeling
+idx <- sample(1:nrow(treatednonPrepData), nrow(treatednonPrepData)*.8)
+modelTrainingData   <- treatednonPrepData[idx,]
+modelValidationData <- treatednonPrepData[-idx,]
+
 # Start over 
 rm(list=ls())
 
 # Data
-donors <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/D_DM_Workflow/data/fakeDonorBureau_v2.csv')
+donors <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/D_and_E_LLM_prompting_DM_workflow/data/fakeDonorBureau_v2.csv')
 
 # Fictitious Data Enrichment
-thirdPartyData <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/D_DM_Workflow/data/fakeDataEnrichment.csv')
+thirdPartyData <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/D_and_E_LLM_prompting_DM_workflow/data/fakeDataEnrichment.csv')
 
 # Examine
 head(thirdPartyData)
@@ -99,17 +109,26 @@ plan <- designTreatmentsC(prepData,
                           'Y1_Donation',
                           'Yes')
 treatedLeftData <- prepare(plan, nonPrepData)
-fit             <- glm(as.factor(Y1_Donation) ~ ., treatedLeftData, family='binomial')
+
+# Partition the remaining data to avoid overfitting (more to come on this)
+idx <- sample(1:nrow(treatedLeftData), nrow(treatedLeftData)*.8)
+modelTrainingData   <- treatedLeftData[idx,]
+modelValidationData <- treatedLeftData[-idx,]
+
+# Model!
+fit             <- glm(as.factor(Y1_Donation) ~ ., modelTrainingData, family='binomial')
 
 # Our first model!
 summary(fit)
 
 # Make some real predictions
-donationProbability <- predict(fit, treatedLeftData, type='response')
+donationProbability <- predict(fit, 
+                               modelValidationData, 
+                               type='response')
 head(donationProbability)
 
 # let's examine some records
-resultsDF <- data.frame(actualOutcome  = treatedLeftData$Y1_Donation,
+resultsDF <- data.frame(actualOutcome  = modelValidationData$Y1_Donation,
                         modelProbabilities = donationProbability)
 head(resultsDF, 10)
 
