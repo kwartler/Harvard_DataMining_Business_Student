@@ -11,9 +11,9 @@
 # plotting
 
 # Data Munge: Joins!
-news  <- read.csv("https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/D_DM_Workflow/challenge!/advertising_Newspaper.csv")
-radio <- read.csv( "https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/D_DM_Workflow/challenge!/advertising_Radio.csv")
-tv    <- read.csv("https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/D_DM_Workflow/challenge!/advertising_TV_Y.csv")
+news  <- read.csv("https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/D_and_E_LLM_prompting_DM_workflow/challenge!/advertising_Newspaper.csv")
+radio <- read.csv( "https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/D_and_E_LLM_prompting_DM_workflow/challenge!/advertising_Radio.csv")
+tv    <- read.csv("https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/D_and_E_LLM_prompting_DM_workflow/challenge!/advertising_TV_Y.csv")
 
 # Sample
 
