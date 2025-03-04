@@ -128,8 +128,13 @@ donationProbability <- predict(fit,
 head(donationProbability)
 
 # let's examine some records
-resultsDF <- data.frame(actualOutcome  = modelValidationData$Y1_Donation,
+resultsDF <- data.frame(nonPrepData$uniqueID[-idx],
+  actualOutcome  = modelValidationData$Y1_Donation,
                         modelProbabilities = donationProbability)
+head(resultsDF, 10)
+
+# Now let's adjust to the top most likely respondants
+resultsDF <- resultsDF[order(resultsDF$modelProbabilities, decreasing = T),]
 head(resultsDF, 10)
 
 # visualize the separation ie the distribution of probabilities for YES and NO groups.  This shows _small_ lift bc the "YES" is to the right of the "NO" distribution
