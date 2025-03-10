@@ -11,11 +11,8 @@ library(MLmetrics)
 # Options
 options(scipen=999)
 
-# SetWD
-setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
-
 # Dat
-cars <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/E_Regressions/data/oldCar.csv')
+cars <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/F_Regressions/data/oldCar.csv')
 
 # Partitioning 20% test set
 splitPercent <- round(nrow(cars) %*% .8)

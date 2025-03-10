@@ -12,7 +12,7 @@ library(MLmetrics)
 options(scipen=999)
 
 # Data
-cars <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/E_Regressions/data/newCars.csv')
+cars <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/F_Regressions/data/newCars.csv')
 
 # drop geo and text for this example
 cars$state       <- NULL

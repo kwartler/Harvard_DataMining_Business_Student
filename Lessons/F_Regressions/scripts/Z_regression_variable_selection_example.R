@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Date: 7-5-2018
+#' Date: Mar 10 2025
 #' Purpose: oldCar Toyota Corolla Backward step Variable Regression
 #'
 # Options
@@ -8,11 +8,8 @@ options(scipen=999)
 # Libs
 library(vtreat)
 
-# SetWD
-setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
-
 # Data
-cars <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/E_Regressions/data/oldCar.csv')
+cars <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/F_Regressions/data/oldCar.csv')
 
 # Partitioning 20% test set
 splitPercent <- round(nrow(cars) %*% .8)

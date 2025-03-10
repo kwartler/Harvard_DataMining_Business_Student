@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Date: 10-10-2023
+#' Date: Mar 10 2025
 #' Purpose: Regressions
 #' 
 
@@ -7,11 +7,9 @@
 library(MLmetrics)
 options(scipen = 999)
 
-# Setwd
-setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 
 # Data
-houses <-read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/E_Regressions/data/BostonHousing.csv')
+houses <-read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/F_Regressions/data/BostonHousing.csv')
 houses <- houses[order(houses$MEDV), ]
 houses$realValue <- houses$MEDV*10000
 houses$MEDV <- NULL #original variable

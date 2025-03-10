@@ -1,16 +1,13 @@
 #' Author: Ted Kwartler
-#' Date: 7-5-2018
+#' Date: Mar 10 2025
 #' Purpose: Partitioning Schema
 #' 
 
 # Libs
 library(vtreat)
 
-# Setwd
-setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
-
 # Data
-wine <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/E_Regressions/data/Wine.csv')
+wine <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/F_Regressions/data/Wine.csv')
 
 # Train 90%/Test 10% Partitioning
 splitPercent  <- round(nrow(wine) %*% .9)
@@ -31,7 +28,7 @@ dim(testSet)
 rm(list=ls())
 
 # Data
-wine <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/E_Regressions/data/Wine.csv')
+wine <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/F_Regressions/data/Wine.csv')
 
 # Train 50%/Validation 40% /Testing 10%
 trainPercent      <- round(nrow(wine) %*% .5)
@@ -61,7 +58,7 @@ nrow(wine)
 rm(list=ls())
 
 # Get the data
-wine <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/E_Regressions/data/Wine.csv')
+wine <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/F_Regressions/data/Wine.csv')
 
 # Train 50%/Validation 40% /Variable Treatment 10%
 trainPercent      <- round(nrow(wine) %*% .5)
