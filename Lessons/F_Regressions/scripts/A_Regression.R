@@ -21,7 +21,7 @@ sampDiamonds <- sample_n(diamonds, 10000)
 summary(sampDiamonds)
 
 # Remember this?
-p <- ggplot(sampDiamonds, aes(carat, price)) + geom_point(alpha=0.02)
+p <- ggplot(sampDiamonds, aes(x= carat, y= price)) + geom_point(alpha=0.02)
 p
 
 # Since we see a relationship let's make a linear model to predict prices
