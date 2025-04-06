@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Date: 03-01-2020
+#' Date: 03-31-2025
 #' Purpose: What happens when regression is applied to a binary outcome?
 #' 
 
@@ -8,15 +8,11 @@ library(ggplot2)
 library(dplyr)
 library(tidyverse)
 
-# wd
-setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
-
 # Data
 data('diamonds')
 
 # Convert to binary
 diamonds$icedOut <- ifelse(diamonds$price >= 11000,1, 0)
-diamonds$price   <- NULL
 
 set.seed(1234)
 sampDiamonds <- sample_n(diamonds, 10000)

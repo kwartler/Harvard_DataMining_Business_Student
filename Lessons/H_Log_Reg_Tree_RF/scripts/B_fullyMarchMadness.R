@@ -1,7 +1,7 @@
 #' Purpose: apply a logistic regression to basketball data
 #' Author: Ted Kwartler
 #' email: edwardkwartler@fas.harvard.edu
-#' Date: Oct 10, 2023
+#' Date: March 31, 2025
 #'
 
 # Libs
@@ -11,7 +11,7 @@ library(pROC)
 library(ggplot2)
 
 # Data location
-filePath <- 'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/E_Regressions/data/ncaa.csv'
+filePath <- 'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/H_Log_Reg_Tree_RF/data/ncaa.csv'
 
 # Data
 bball <- read.csv(filePath)

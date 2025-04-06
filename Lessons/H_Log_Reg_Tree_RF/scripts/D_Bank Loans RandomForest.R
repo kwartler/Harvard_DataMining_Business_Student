@@ -1,11 +1,7 @@
 #' Author: Ted Kwartler
-#' Data: Mar 21, 2022
+#' Data: Mar 25, 2025
 #' Purpose: Load data build a random forest tree; this version uses more equally balanced target classes
 #' https://archive.ics.uci.edu/ml/datasets/bank+marketing
-
-
-## Set the working directory
-setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 
 # Options
 options(scipen=999)
@@ -19,7 +15,7 @@ library(vtreat)
 library(ranger)
 
 ## Bring in some data
-dat <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/F_Tree_RF/data/bank-downSampled.csv')
+dat <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/H_Log_Reg_Tree_RF/data/bank-downSampled.csv')
 
 # EDA
 names(dat)
@@ -128,7 +124,7 @@ Accuracy(treatedTest$Class, threeVotes)
 Accuracy(treatedTest$Class, fiveHundredVoters)
 Accuracy(treatedTest$Class, oneHundredVoters)
 
-# Just to show another implementation, Nnow we can use the ranger package which is a fast implmentation of RF
+# Just to show another implementation, Now we can use the ranger package which is a fast implmentation of RF
 
 # Show the default characteristics
 ?ranger
@@ -144,5 +140,10 @@ rangerPreds <- predict(rangerRF, treatedTest)
 
 # KPI
 Accuracy(treatedTest$Class, rangerPreds$predictions)
+
+# Notes on why ranger is better (under the hood, it has additional optimization)
+# written in C++ for parallel processing
+# has a more complex splitting rule called logarithmic scoring "measure of the difference between the predicted probabilities and the actual outcome" From MetaAI: In the context of the ranger() package, logarithmic scoring is used as a splitting criterion to evaluate the quality of a split. The split with the lowest logarithmic score is chosen as the best split. This helps to improve the accuracy of the random forest model.
+# has penalties "regularization" to prevent over fitting and could cause early stopping
 
 # End
