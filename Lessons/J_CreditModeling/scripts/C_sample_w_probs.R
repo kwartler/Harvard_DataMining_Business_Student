@@ -27,3 +27,4 @@ set.seed(1234)
 sample(idx, 3, replace = T, prob = c(.33,.33,0,0,0,0,.33,0,0,0))
 
 # End
+
