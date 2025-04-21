@@ -1,7 +1,7 @@
 #' Title: Intro: Keyword Scanning
 #' Purpose: Learn some basic string manipulation
 #' Author: Ted Kwartler
-#' Date: Apr 28, 2024
+#' Date: Apr 21, 2025
 #'
 
 # Libraries
@@ -9,7 +9,7 @@ library(stringi)
 library(stringr)
 
 # Get Data
-text <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/J_Text_Mining_1/data/allComplaints.csv')
+text <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/K_Text_Mining_1/data/allComplaints.csv')
 
 # Let's look at the colnames & a portion of the data
 names(text)
@@ -35,13 +35,13 @@ keywords    <-"checking|checking acount|saving|savings|savings account"
 checkingSavingAccounts <-grepl(keywords, text$Consumer.complaint.narrative,ignore.case=TRUE)
 
 # Logical T/F for one word AND another
-matches <- grep("(?=.*told)(?=.*called)(?=.*back)", 
+matches <- grep("(?=.*apple)(?=.*card)(?=.*collect)", 
                 text$Consumer.complaint.narrative, 
                 perl = TRUE, 
                 ignore.case = TRUE)
-text$Consumer.complaint.narrative[matches[1]]
+text$Consumer.complaint.narrative[matches[2]]
 
-# Calculate the % of times among all tweets
+# Calculate the % of times among all text records
 sum(checking) / nrow(text)
 sum(savings) / nrow(text)
 sum(checkingSavingAccounts) / nrow(text)

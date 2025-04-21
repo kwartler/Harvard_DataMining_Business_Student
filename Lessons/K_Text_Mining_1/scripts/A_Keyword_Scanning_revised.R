@@ -1,11 +1,8 @@
 #' Title: Intro: Keyword Scanning
 #' Purpose: Learn some basic string manipulation
 #' Author: Ted Kwartler
-#' Date: Mar 12, 2023
+#' Date: Apr 21, 2025
 #'
-
-# Set the working directory
-setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
 
 # Libs
 library(stringi)
@@ -14,7 +11,7 @@ library(stringi)
 Sys.setlocale('LC_ALL','C') #some tweets are in different languages so you may get an error
 
 # Get Data
-text <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/J_Text_Mining_1/data/coffeeVector.csv')
+text <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/K_Text_Mining_1/data/coffeeVector.csv')
 head(text$x)
 
 

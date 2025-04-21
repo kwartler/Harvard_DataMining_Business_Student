@@ -35,7 +35,7 @@ stopwords('english')
 customStopwords <- c(stopwords('english'), 'bank', 'money', 'account', 'lol')
 
 # Data
-text <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/J_Text_Mining_1/data/allComplaints.csv')
+text <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/K_Text_Mining_1/data/allComplaints.csv')
 text$Consumer.complaint.narrative[1]
 
 # Global substitutions with more complex regex; Redacted dates
