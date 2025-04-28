@@ -5,7 +5,7 @@
 #'
 
 # Declare the data path
-filePath  <- 'https://github.com/kwartler/Harvard_DataMining_Business_Student/raw/refs/heads/master/Lessons/K_Text_Mining_2/data/chardonnay.csv'
+filePath  <- 'https://github.com/kwartler/Harvard_DataMining_Business_Student/raw/refs/heads/master/Lessons/L_Text_Mining_2/data/chardonnay.csv'
 
 # Libs
 library(tm)

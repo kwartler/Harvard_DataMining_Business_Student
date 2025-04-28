@@ -5,8 +5,8 @@
 #'
 
 # Data Input, locally you can use list.files()
-chardonnay <- 'https://github.com/kwartler/Harvard_DataMining_Business_Student/raw/refs/heads/master/Lessons/K_Text_Mining_2/data/chardonnay.csv'
-coffee     <- 'https://github.com/kwartler/Harvard_DataMining_Business_Student/raw/refs/heads/master/Lessons/K_Text_Mining_2/data/coffee.csv'
+chardonnay <- 'https://github.com/kwartler/Harvard_DataMining_Business_Student/raw/refs/heads/master/Lessons/L_Text_Mining_2/data/chardonnay.csv'
+coffee     <- 'https://github.com/kwartler/Harvard_DataMining_Business_Student/raw/refs/heads/master/Lessons/L_Text_Mining_2/data/coffee.csv'
 txtFiles <- c(chardonnay, coffee)
 
 # Topic names
@@ -84,7 +84,7 @@ rownames(drinkDTMm) <- c('chardonnay', 'coffee')
 comparison.cloud(t(drinkDTMm),
                  max.words=75,
                  random.order=FALSE,
-                 title.size=0.5,
+                 title.size=1,
                  colors=c('tomato','goldenrod'),
                  scale=c(3,0.1))
 

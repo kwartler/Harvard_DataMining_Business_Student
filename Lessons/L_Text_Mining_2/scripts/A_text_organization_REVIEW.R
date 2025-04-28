@@ -8,7 +8,7 @@
 library(tm)
 
 # File path
-filePath <- 'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/K_Text_Mining_2/data/studentLoan_2024.csv'
+filePath <- 'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/L_Text_Mining_2/data/studentLoan_2024.csv'
 
 # Custom functions
 tryTolower <- function(x){

@@ -4,7 +4,6 @@
 #' Date: May 12, 2024
 #'
 
-
 # Libs
 library(tidytext)
 library(dplyr)
@@ -37,9 +36,9 @@ cleanCorpus<-function(corpus, customStopwords){
 customStopwords <- c(stopwords('english'))
 
 # Read in multiple files as individuals
-txtFiles<-c( 'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/K_Text_Mining_2/data/in_your_eyes.txt', 
-             'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/K_Text_Mining_2/data/pharrell_williams_happy.txt',
-             'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/K_Text_Mining_2/data/starboy.txt') 
+txtFiles<-c( 'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/L_Text_Mining_2/data/in_your_eyes.txt', 
+             'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/L_Text_Mining_2/data/pharrell_williams_happy.txt',
+             'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/L_Text_Mining_2/data/starboy.txt') 
 documentTopics <- c("in_your_eyes.txt", "pharrell_williams_happy.txt", "starboy.txt") 
 
 # Read in as a list
@@ -76,7 +75,8 @@ bingSent
 
 # Quick Analysis - count of words
 bingResults <- aggregate(count~document+sentiment, bingSent, sum)
-pivot_wider(bingResults, names_from = document, values_from = count)
+bingResults <- pivot_wider(bingResults, names_from = document, values_from = count)
+as.data.frame(bingResults)
 
 # Get afinn lexicon
 afinn <- get_sentiments(lexicon = c("afinn")) 
@@ -95,12 +95,6 @@ afinnSent
 afinnSent$ValueCount <- afinnSent$value * afinnSent$count 
 afinnSent
 
-# If you did have a timestamp you can easily make a timeline of sentiment using this code
-# The idx here is not temporal but this is an example if you were tracking over time instead of alpha
-plotDF <- subset(afinnSent, afinnSent$document=='in_your_eyes.txt')
-ggplot(plotDF, aes(x=idx, y=ValueCount, group=document, color=document)) +
-  geom_line()
-
 # Get nrc lexicon,notice that some words can have multiple sentiments
 nrc <- lexicon_nrc()
 
@@ -118,9 +112,6 @@ nrcSent <- nrcSent[-grep('positive|negative',nrcSent$sentiment),]
 table(nrcSent$sentiment,nrcSent$document) #unique polarized words 
 
 # Sum of the polarized words
-aggregate(count~document + sentiment, nrcSent, sum) %>%
-  pivot_wider(names_from = document, values_from = count)
-
 # Now lets use this for a radar chart
 nrcSentRadar <- aggregate(count~document + sentiment, nrcSent, sum) %>%
   pivot_wider(names_from = document, values_from = count) %>% as.data.frame()
