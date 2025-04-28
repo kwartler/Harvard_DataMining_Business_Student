@@ -85,7 +85,7 @@ associations
 
 # Organize the word associations
 assocDF <- data.frame(terms     = names(associations[[1]]),
-                      value     = unlist(associations),
+                      value     = unlist(associations[[1]]),
                       row.names = NULL)
 
 # Chg to factor so bars are ordered by value not alphabetical
