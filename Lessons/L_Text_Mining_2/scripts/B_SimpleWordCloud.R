@@ -1,7 +1,7 @@
 #' Purpose: Build a simple word cloud with bi-grams
 #' Author: Ted Kwartler
 #' email: edwardkwartler@fas.harvard.edu
-#' Date: May 12, 2024
+#' Date: Apr 28, 2025
 #'
 
 # Declare the data path

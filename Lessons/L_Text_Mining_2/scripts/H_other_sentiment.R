@@ -1,7 +1,7 @@
 #' Purpose: Other sentiment libraries
 #' Author: Ted Kwartler
 #' email: edwardkwartler@fas.harvard.edu
-#' Date: June 5, 2023
+#' Date: Apr 28, 2025
 #'
 
 # Libs

@@ -1,7 +1,7 @@
 #' Title: Intro: TidyText Sentiment
 #' Purpose: Sentiment nonsense
 #' Author: Ted Kwartler
-#' Date: May 12, 2024
+#' Date: Apr 28, 2025
 #'
 
 # Libs
