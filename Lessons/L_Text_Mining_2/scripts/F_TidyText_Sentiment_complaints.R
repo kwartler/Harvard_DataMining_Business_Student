@@ -155,10 +155,10 @@ posNegMonth
 month.abb
 posNegMonth$month <- factor(posNegMonth$month, levels = month.abb)
 
-ggplot(posNegMonth, aes(x = month, y = count, fill = topic)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  labs(title = "Count by Month", x = "Month", y = "Count") +
-  facet_wrap(.~sentiment) 
+ggplot(posNegMonth, aes(x = month, y = proportion, color = topic, group = interaction(topic, sentiment))) +
+  geom_line() +  
+  geom_point() + 
+  theme_minimal()
 
 # Finally let's explore as a radar chart using NRC
 nrc <- lexicon_nrc()
