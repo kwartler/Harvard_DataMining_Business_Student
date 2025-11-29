@@ -42,7 +42,7 @@ pacman::p_load(ggplot2, ggthemes, ggdark, rbokeh, maps,
 
 ## Class Schedule 
 
-This is tentative and subject to change to maximize learning.
+This is tentative and subject to change to maximize learning.  The course syllabus will have the most up to date topics.
 
 ### Spring Semester
 
