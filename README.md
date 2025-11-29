@@ -2,6 +2,10 @@
 For students of Harvard CSCI E-96 Data Mining for Business
 
 ## Syllabus
+
+Spring 2025 University [syllabus](https://harvard.simplesyllabus.com/doc/67luwcix3/Spring-Term-2026-Full-Term-CSCI-E-96-1-Data-Mining-for-Business?mode=view) or [PDF here](https://harvard.simplesyllabus.com/api2/doc-pdf/67luwcix3/Spring-Term-2026-Full-Term-CSCI-E-96-1-Data-Mining-for-Business.pdf?locale=en-US
+)
+
 Fall 2024 University [syllabus](https://harvard.simplesyllabus.com/doc/k6cprbiwb/Fall-Term-2024-Full-Term-CSCI-E-96-1-Data-Mining-for-Business?mode=view)
 or [PDF here](https://harvard.simplesyllabus.com/api2/doc-pdf/k6cprbiwb/Fall-Term-2024-Full-Term-CSCI-E-96-1-Data-Mining-for-Business.pdf?locale=en-US)
 
@@ -39,26 +43,6 @@ pacman::p_load(ggplot2, ggthemes, ggdark, rbokeh, maps,
 ## Class Schedule 
 
 This is tentative and subject to change to maximize learning
-
-### Fall Semester
-
-|Date     | Topic  |
-|---------|------------|
-| Sept 9  | Intro to R, R-studio & git  |
-| Sept 16  | Intro to Data Mining   |
-| Sept 23   | More R Practice & EDA  |
-| Sept 30  | Data mining workflows  |
-| Oct 7   | Regression & Log Regression  |
-| Oct 14  | no class (university holiday)  |
-| Oct 21   | Decision Tree & Random Forest  |
-| Oct 28  | Time Series Data  |
-| Nov 4  | Equities  |
-| Nov 11   | Predicting Risk & non-traditional investing  |
-| Nov 18   | Text analysis & NLP  |
-| Nov 25  | Text analysis & NLP, continued  |
-| Dec 2  | Chat GPT basics  |
-| Dec 9  | Responsible AI & tech ethics  |
-| Dec 16   | Optional Class Lab  |
 
 ### Spring Semester
 
