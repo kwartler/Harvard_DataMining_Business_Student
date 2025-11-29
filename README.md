@@ -42,31 +42,29 @@ pacman::p_load(ggplot2, ggthemes, ggdark, rbokeh, maps,
 
 ## Class Schedule 
 
-This is tentative and subject to change to maximize learning
+This is tentative and subject to change to maximize learning.
 
 ### Spring Semester
 
 |Date     | Topic  |
 |---------|------------|
-| Jan 27  | Intro to R, R-studio & git  |
-| Feb 3   | Intro to Data Mining   |
-| Feb 10  | Chat GPT basics  |
-| Feb 17  | No class - President's Day  |
-| Feb 24  | More R Practice & EDA |
-| Mar 3   | Data mining workflows   |
-| Mar 10  | Regression & Log Regression   |
-| Mar 17  | No class - Spring Break   |
-| Mar 24  | Decision Tree & Random Forest  |
-| Mar 31  | Time Series Data  |
-| Apr 7   | Equities  |
-| Apr 14  | Predicting Risk & non-traditional investing |
-| Apr 21  | Text analysis & NLP   |
-| Apr 28  | Text analysis & NLP, continued  |
-| May 5   | APIs, Novel & Advanced LLM workflows  |
-| May 12  | Responsible AI & tech ethics  |
+| Jan 26  | Intro to R, R-studio & git  |
+| Feb 2   | Intro to Data Mining   |
+| Feb 9   | Chat GPT basics  |
+| Feb 16  | No class - President's Day  |
+| Feb 23  | More R Practice & EDA |
+| Mar 2   | Data mining workflows   |
+| Mar 9   | Regression & Log Regression   |
+| Mar 16  | No class - Spring Break   |
+| Mar 23  | Decision Tree & Random Forest  |
+| Mar 30  | Time Series Data  |
+| Apr 6   | Equities  |
+| Apr 13  | Predicting Risk & non-traditional investing |
+| Apr 20  | Text analysis & NLP   |
+| Apr 27  | Text analysis & NLP, continued  |
+| May 4   | APIs, Novel & Advanced LLM workflows  |
+| May 11  | Responsible AI & tech ethics  |
 
-
-
-# Libraries to adjust too
+# Libraries to possibly add
 
 `library(textstem)`
