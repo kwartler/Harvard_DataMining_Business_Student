@@ -3,3 +3,14 @@ Prof To Do next semester
 2. Add section on html webform regression files.
 3. Add psel to the non-traditional 
 4. Review GSERM API and chatGPT lessons for possible inclusion
+
+good API example
+# Query Open-Meteo API for historical daily temperature
+url <- paste0("https://archive-api.open-meteo.com/v1/archive?",
+              "latitude=", latitude,
+              "&longitude=", longitude,
+              "&start_date=", start_date,
+              "&end_date=", end_date,
+              "&daily=temperature_2m_max,temperature_2m_min,precipitation_sum",
+              "&timezone=Europe%2FBerlin")
+response <- GET(url)
