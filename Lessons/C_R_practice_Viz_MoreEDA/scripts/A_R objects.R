@@ -68,7 +68,7 @@ listA$singleDF$vec1
 listA$singleVal
 
 
-#### JOINS FOR THE UPCOMING CASE REFERENCE ####
+#### JOINS FOR REFERENCE ####
 # There are times you have data sets with information that need to be combined
 # For example, a table of customers and a table of their purchases
 # SQL and R have "table joins" which aid this merger
