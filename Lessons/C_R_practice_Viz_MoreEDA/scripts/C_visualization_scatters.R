@@ -8,7 +8,8 @@ library(ggplot2)
 library(ggthemes)
 library(lubridate)
 #library(ggdark) # ok ok, I forgot this one ;)
-#library(CalledStrike)  # ok ok,my bad!
+remotes::install_github("bayesball/CalledStrike")
+#library(CalledStrike)  # just used in 1 line
 library(dplyr)
 
 # Load
@@ -87,7 +88,7 @@ ggplot(incomes) +
                    y=factor(month), yend=factor(month)),linewidth=2,  color = "#aeb6bf", alpha = 0.5) +
   geom_point(data = incomes, aes(x=minIncome, y=factor(month)), color = 'red', size = 2) + 
   geom_point(data = incomes, aes(x=maxIncome, y=factor(month)), color = 'blue', size = 2) +
-  geom_vline(xintercept = 0, linetype = 'dotted', color = 'darkgrey', size = 0.5) +
+  geom_vline(xintercept = 0, linetype = 'dotted', color = 'darkgrey', linewidth = 0.5) +
   theme_few() + theme(legend.position="none") +
   labs(x="Income", y = "Month", title= "Min/Max Income by Month")
 
