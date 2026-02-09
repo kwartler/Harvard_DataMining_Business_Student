@@ -81,7 +81,7 @@ barplot(characterTally[1:5],
 plot(characterTally, main='Force Awakens: Character Scene Tally')
 
 # Save a basic plot to disk in the personal folder since it was set as the "working directory"
-png("~/Desktop/Harvard_DataMining_Business_Student/personalFiles/characterTally_plot.png")
+png("~/Desktop/Harvard_DataMining_Business_Student/personalFiles/characterTally_plot2.png")
 plot(characterTally, main='Force Awakens: Character Scene Tally')
 dev.off()
 
@@ -95,8 +95,8 @@ ggplot(screenTime,
                    yend = character), linewidth=3) + #add layer of segments & declare x/y 
   theme_gdocs() + #add a default "theme"
   theme(legend.position="none") # turn off the need for a legend
-ggsave("character_scenes.pdf")
-ggsave("character_scenes.png")
-ggsave("character_scenes.jpg")
+ggsave("~/Desktop/Harvard_DataMining_Business_Student/personalFiles/character_scenes.pdf")
+ggsave("~/Desktop/Harvard_DataMining_Business_Student/personalFiles/character_scenes.png")
+ggsave("~/Desktop/Harvard_DataMining_Business_Student/personalFiles/character_scenes.jpg")
 
 # End
