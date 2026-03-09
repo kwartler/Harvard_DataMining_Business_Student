@@ -143,7 +143,7 @@ Accuracy(treatedTest$Class, rangerPreds$predictions)
 
 # Notes on why ranger is better (under the hood, it has additional optimization)
 # written in C++ for parallel processing
-# has a more complex splitting rule called logarithmic scoring "measure of the difference between the predicted probabilities and the actual outcome" From MetaAI: In the context of the ranger() package, logarithmic scoring is used as a splitting criterion to evaluate the quality of a split. The split with the lowest logarithmic score is chosen as the best split. This helps to improve the accuracy of the random forest model.
+# has a more complex splitting rule called logarithmic scoring "measure of the difference between the predicted probabilities and the actual outcome" From Meta.AI: In the context of the ranger() package, logarithmic scoring is used as a splitting criterion to evaluate the quality of a split. The split with the lowest logarithmic score is chosen as the best split. This helps to improve the accuracy of the random forest model.
 # has penalties "regularization" to prevent over fitting and could cause early stopping
 
 # End

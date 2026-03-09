@@ -7,7 +7,6 @@
 # Libs
 library(vtreat)
 library(MLmetrics)
-#library(pROC) deprecated
 library(ggplot2)
 
 # Data location

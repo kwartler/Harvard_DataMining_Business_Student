@@ -118,8 +118,7 @@ fit <- train(as.factor(y) ~., #formula based
 # Examine
 fit
 
-# Plot the CP Accuracy Relationship to adust the tuneGrid inputs
-dev.off()
+# Plot the CP Accuracy Relationship to adjust the tuneGrid inputs
 plot(fit)
 
 # Plot a pruned tree
