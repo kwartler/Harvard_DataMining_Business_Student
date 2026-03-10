@@ -11,7 +11,7 @@ library(caret)
 library(rpart.plot) #visualizing
 
 # Bring in some data
-dat <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/H_Log_Reg_Tree_RF/data/bank2.csv') 
+dat <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/G_Log_Reg_Tree_RF/data/bank2.csv') 
 
 # Partitioning
 splitPercent <- round(nrow(dat) %*% .9)
@@ -76,7 +76,7 @@ sum(diag(confMat))/sum(confMat)
 rm(list=ls())
 
 ##########
-dat <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/H_Log_Reg_Tree_RF/data/bank-full_v2.csv') # now a bit more data to approximate real scenario 
+dat <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/G_Log_Reg_Tree_RF/data/bank-full_v2.csv') # now a bit more data to approximate real scenario 
 
 
 # To save time in class, we are only training on 50% of the data

@@ -15,7 +15,7 @@ library(vtreat)
 library(ranger)
 
 ## Bring in some data
-dat <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/H_Log_Reg_Tree_RF/data/bank-downSampled.csv')
+dat <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/G_Log_Reg_Tree_RF/data/bank-downSampled.csv')
 
 # EDA
 names(dat)
