@@ -10,7 +10,7 @@ library(MLmetrics)
 library(ggplot2)
 
 # Data location
-filePath <- 'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/H_Log_Reg_Tree_RF/data/ncaa.csv'
+filePath <- 'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/G_Log_Reg_Tree_RF/data/ncaa.csv'
 
 # Data
 bball <- read.csv(filePath)
