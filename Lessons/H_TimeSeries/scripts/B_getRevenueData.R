@@ -1,7 +1,8 @@
 #' Author: Ted Kwartler
-#' Data: 10-28-2023
+#' Data: Mar 23 2026
 #' Purpose: Grab some time series revenue data and visualize it
 #' https://ycharts.com/companies/AMZN/revenues
+#' https://www.macrotrends.net/stocks/charts/AMZN/amazon/revenue#google_vignette
 
 # Options
 options(scipen=999)
@@ -13,7 +14,7 @@ library(ggplot2)
 library(ggthemes)
 
 # read in Data
-qtrDF <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/G_TimeSeries/data/AMZN_Qtr_Rev.csv')
+qtrDF <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/H_TimeSeries/data/AMZN_Qtr_Rev.csv')
 tail(qtrDF)
 
 # Change to date

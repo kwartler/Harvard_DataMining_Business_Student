@@ -3,15 +3,12 @@
 #' Purpose: Forecasting Basics
 #'
 
-# WD
-setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
-
 # libs
 library(dygraphs)
 library(lubridate)
 
 # Data
-df <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/G_TimeSeries/data/Amtrak.csv')
+df <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/H_TimeSeries/data/Amtrak.csv')
 
 # Examine
 head(df, 10)

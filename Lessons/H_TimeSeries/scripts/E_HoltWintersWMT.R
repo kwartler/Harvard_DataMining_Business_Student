@@ -5,9 +5,6 @@
 # Options
 options(scipen=999)
 
-# Wd
-setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
-
 # library
 library(forecast)
 library(lubridate)
@@ -15,7 +12,7 @@ library(ggplot2)
 library(MLmetrics)
 
 # Data
-wmt <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/G_TimeSeries/data/WMT_Qtr_Rev.csv')
+wmt <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/H_TimeSeries/data/WMT_Qtr_Rev.csv')
 
 # Time formatting
 wmt$date <- as.POSIXct(wmt$unixTime, origin = '1970-1-1')

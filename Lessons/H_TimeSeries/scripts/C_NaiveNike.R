@@ -11,13 +11,9 @@ library(lubridate)
 library(dygraphs)
 library(forecast)
 
-# WD
-setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
-
 # Data
-stockQtrRev <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/G_TimeSeries/data/nike_qtr_rev.csv')
-stockQtrRev$date <- gsub(' 1:00','',stockQtrRev$date)
-stockQtrRev$date <- mdy(stockQtrRev$date)
+stockQtrRev <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/H_TimeSeries/data/nike_qtr_rev.csv')
+stockQtrRev$date <- mdy_hm(stockQtrRev$date)
 
 head(stockQtrRev)
 tail(stockQtrRev)
