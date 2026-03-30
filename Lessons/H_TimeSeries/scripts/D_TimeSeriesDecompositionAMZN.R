@@ -9,11 +9,10 @@ options(scipen=999)
 # library
 library(forecast)
 library(lubridate)
-library(ggseas) #seasonal adjustments with ggplot too!
 library(timetk)
 library(dplyr)
 library(feasts)
-library(tstibble)
+#library(tstibble)
 
 # Data
 amzn <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/H_TimeSeries/data/AMZN_Qtr_Rev.csv')
