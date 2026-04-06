@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Date: Nov 6, 2023
+#' Date: Apr 6 2026
 #' Purpose: Non-traditional market investing
 #'
 
@@ -20,7 +20,7 @@ cardValues <- "https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Bus
 source_url(cardValues)
 
 # Card list obtained online
-cards <- read.csv("https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/J_CreditModeling/data/Guilds_10_16_18.csv")
+cards <- read.csv("https://github.com/kwartler/teaching-datasets/raw/refs/heads/main/Guilds_10_16_18.csv")
 
 # Examine
 head(cards)
@@ -95,3 +95,4 @@ pnorm(q    = (boxPrice + shippingHandling),
       mean = mean(totalRevenue$packVal),
       sd   = sd(totalRevenue$packVal))
 # End
+
