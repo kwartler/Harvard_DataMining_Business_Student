@@ -1,7 +1,7 @@
 #' Title: Intro: Cleaning and Frequency Count
 #' Purpose: Learn some basic cleaning functions & term frequency
 #' Author: Ted Kwartler
-#' Date: Apr 28, 2024
+#' Date: Apr 13, 2026
 #'
 
 # Libraries
@@ -35,7 +35,7 @@ stopwords('english')
 customStopwords <- c(stopwords('english'), 'bank', 'money', 'account', 'lol')
 
 # Data
-text <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/K_Text_Mining_1/data/allComplaints.csv')
+text <- read.csv('https://raw.githubusercontent.com/kwartler/teaching-datasets/refs/heads/main/allComplaints.csv')
 text$Consumer.complaint.narrative[1]
 
 # Global substitutions with more complex regex; Redacted dates

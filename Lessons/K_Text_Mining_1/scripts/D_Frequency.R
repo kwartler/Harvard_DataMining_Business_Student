@@ -36,7 +36,7 @@ cleanCorpus<-function(corpus, customStopwords){
 customStopwords <- c(stopwords('english'), 'bank', 'money', 'account')
 
 # Data
-text <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/K_Text_Mining_1/data/allComplaints.csv')
+text <- read.csv('https://raw.githubusercontent.com/kwartler/teaching-datasets/refs/heads/main/allComplaints.csv')
 
 # Substitutions
 text$Consumer.complaint.narrative <- gsub('(X{2}\\/X{2}\\/X{4})|(X{2}\\/X{2}\\/[0-9]{2,4})|([0-9]{2}\\/[0-9]{2}\\/[0-9]{2,4})', '', text$Consumer.complaint.narrative, perl = T)
@@ -79,7 +79,7 @@ ggplot(topWords, aes(x=frequency, y=reorder(word, frequency))) +
 
 ############ Back to PPT
 
-# Inspect word associations; takes about 45 seconds
+# Inspect word associations; takes a while for big corpora
 associations <- findAssocs(txtDtm, c('called'), 0.3)
 associations
 

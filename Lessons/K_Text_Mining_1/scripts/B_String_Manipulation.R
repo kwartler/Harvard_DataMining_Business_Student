@@ -1,7 +1,7 @@
 #' Title: Intro: Keyword Scanning
 #' Purpose: Learn some basic string manipulation
 #' Author: Ted Kwartler
-#' Date: Apr 21, 2025
+#' Date: Apr 13, 2026
 #'
 
 # Libraries
@@ -9,7 +9,7 @@ library(stringi)
 library(stringr)
 
 # Get Data
-text <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/K_Text_Mining_1/data/allComplaints.csv')
+text <- read.csv('https://raw.githubusercontent.com/kwartler/teaching-datasets/refs/heads/main/allComplaints.csv')
 
 # Let's look at the colnames & a portion of the data
 names(text)

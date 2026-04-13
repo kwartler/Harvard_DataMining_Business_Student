@@ -1,7 +1,7 @@
 #' Title: Intro: Keyword Scanning
 #' Purpose: Learn some basic string manipulation
 #' Author: Ted Kwartler
-#' Date: Apr 21, 2025
+#' Date: Apr 13, 2026
 #'
 
 # Libs
@@ -11,7 +11,7 @@ library(stringi)
 Sys.setlocale('LC_ALL','C') #some tweets are in different languages so you may get an error
 
 # Get Data
-text <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/K_Text_Mining_1/data/coffeeVector.csv')
+text <- read.csv('https://raw.githubusercontent.com/kwartler/teaching-datasets/refs/heads/main/coffeeVector.csv')
 head(text$x)
 
 
