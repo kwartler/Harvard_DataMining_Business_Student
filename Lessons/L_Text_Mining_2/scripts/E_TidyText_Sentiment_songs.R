@@ -36,9 +36,9 @@ cleanCorpus<-function(corpus, customStopwords){
 customStopwords <- c(stopwords('english'))
 
 # Read in multiple files as individuals
-txtFiles<-c( 'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/L_Text_Mining_2/data/in_your_eyes.txt', 
-             'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/L_Text_Mining_2/data/pharrell_williams_happy.txt',
-             'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/L_Text_Mining_2/data/starboy.txt') 
+txtFiles<-c( 'https://github.com/kwartler/teaching-datasets/raw/refs/heads/main/in_your_eyes.txt', 
+             'https://github.com/kwartler/teaching-datasets/raw/refs/heads/main/pharrell_williams_happy.txt',
+             'https://github.com/kwartler/teaching-datasets/raw/refs/heads/main/starboy.txt') 
 documentTopics <- c("in_your_eyes.txt", "pharrell_williams_happy.txt", "starboy.txt") 
 
 # Read in as a list
@@ -75,16 +75,19 @@ bingSent
 
 # Quick Analysis - count of words
 bingResults <- aggregate(count~document+sentiment, bingSent, sum)
-bingResults <- pivot_wider(bingResults, names_from = document, values_from = count)
-as.data.frame(bingResults)
+#bingResults <- pivot_wider(bingResults, names_from = document, values_from = count)
+#as.data.frame(bingResults)
+
+# If I want I can adjust to understand the density of these words among each document
+totalWords <- aggregate(count~document, allText, sum)
+totalWords
+bingResults %>% left_join(totalWords, by = "document") %>%
+  mutate(proportion = count.x / count.y) 
 
 # Get afinn lexicon
 afinn <- get_sentiments(lexicon = c("afinn")) 
 afinn
 
-# Word Sequence
-allText$idx       <- as.numeric(ave(allText$document, 
-                                    allText$document, FUN=seq_along))
 # Perform Inner Join
 afinnSent <- inner_join(allText,
                         afinn, 
@@ -97,6 +100,18 @@ afinnSent
 
 # Get nrc lexicon,notice that some words can have multiple sentiments
 nrc <- lexicon_nrc()
+
+# Alternatively you can download it here
+nrc <- read.csv('https://raw.githubusercontent.com/kwartler/teaching-datasets/refs/heads/main/nrc.csv')
+
+# Add some terms if needed
+tmp <- data.frame(word = c('lol', 'lol'),
+                  sentiment = c('joy','trust'))
+nrc <- rbind(nrc, tmp)
+
+# Drop some terms if needed
+drops <- grep('abacus|\\babandon\\b', nrc$word)
+nrc <- nrc[-drops,]
 
 # Perform Inner Join
 nrcSent <- inner_join(allText,

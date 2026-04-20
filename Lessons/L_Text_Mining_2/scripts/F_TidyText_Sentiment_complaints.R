@@ -1,7 +1,7 @@
 #' Title: Intro: TidyText Sentiment
 #' Purpose: Sentiment nonsense
 #' Author: Ted Kwartler
-#' Date: Apr 28, 2025
+#' Date: June 14, 2025
 #'
 
 # Libs
@@ -16,8 +16,8 @@ library(lubridate)
 library(syuzhet)
 
 # Data list.files()
-filePathA <- 'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/L_Text_Mining_2/data/goldmanSachs_2023_3k.csv'
-filePathB <- 'https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/L_Text_Mining_2/data/BARCLAYS_BANK_DELAWARE_2023_3k.csv'
+filePathA <- 'https://raw.githubusercontent.com/kwartler/teaching-datasets/refs/heads/main/goldmanSachs_2023_3k.csv'
+filePathB <- 'https://raw.githubusercontent.com/kwartler/teaching-datasets/refs/heads/main/BARCLAYS_BANK_DELAWARE_2023_3k.csv'
 txtFiles  <- c(filePathA, filePathB)
 docNames <- c('GS','Barclays')
 
@@ -158,11 +158,13 @@ posNegMonth$month <- factor(posNegMonth$month, levels = month.abb)
 ggplot(posNegMonth, aes(x = month, y = proportion, color = topic, group = interaction(topic, sentiment))) +
   geom_line() +  
   geom_point() + 
-  theme_minimal()
+  theme_minimal() + facet_wrap(~sentiment+topic, scales = 'free_y')
 
 # Finally let's explore as a radar chart using NRC
 nrc <- lexicon_nrc()
-# not the tidy workflow; get_nrc_sentiment()
+# not the tidy workflow; syuzhet::get_nrc_sentiment()
+# Alternatively you can download it here
+nrc <- read.csv('https://raw.githubusercontent.com/kwartler/teaching-datasets/refs/heads/main/nrc.csv')
 
 # Inner join on the list
 x <- lapply(cleanMonthlyTibbles, inner_join, nrc, by = c('term' = 'word'))

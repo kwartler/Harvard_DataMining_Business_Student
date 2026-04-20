@@ -3,12 +3,12 @@
 #' Author: Ted Kwartler
 #' email: edwardkwartler@fas.harvard.edu
 #' License: GPL>=3
-#' Date: Apr 28, 2025
+#' Date: Apr 20, 2026
 #'
 
 # Data Input, locally you can use list.files()
-chardonnay <- 'https://github.com/kwartler/Harvard_DataMining_Business_Student/raw/refs/heads/master/Lessons/L_Text_Mining_2/data/chardonnay.csv'
-coffee     <- 'https://github.com/kwartler/Harvard_DataMining_Business_Student/raw/refs/heads/master/Lessons/L_Text_Mining_2/data/coffee.csv'
+chardonnay <- 'https://github.com/kwartler/teaching-datasets/raw/refs/heads/main/chardonnay.csv'
+coffee     <- 'https://github.com/kwartler/teaching-datasets/raw/refs/heads/main/coffee.csv'
 txtFiles <- c(chardonnay, coffee)
 
 # Topic names
@@ -43,7 +43,7 @@ cleanCorpus<-function(corpus, customStopwords){
 
 
 # Create custom stop words
-stops <- c(stopwords('english'), 'lol', 'amp', 'chardonnay', 'coffee')
+stops <- c(stopwords('SMART'), 'lol', 'amp', 'chardonnay', 'coffee')
 
 # Read in the files
 for (i in 1:length(txtFiles)){

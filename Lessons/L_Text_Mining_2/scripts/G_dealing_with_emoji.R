@@ -31,7 +31,7 @@ intToBits(charToRaw(emojis$emoji[2]))
 rawToChar(charToRaw(emojis$emoji[2]))
 
 # Read in some data
-unicorns <- read.csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/refs/heads/master/Lessons/L_Text_Mining_2/data/unicorns.csv')
+unicorns <- read.csv('https://github.com/kwartler/teaching-datasets/raw/refs/heads/main/unicorns.csv')
 
 # Small sample
 unicorns$text[c(720, 804)]
