@@ -6,8 +6,8 @@ Fetches the "tokens processed in the last 7 days" value for every model
 listed on https://openrouter.ai/models and appends a row per model to
 tokenomics_data/model_tokens.csv.
 
-Stop collection early: commit a file named STOP inside tokenomics_data/.
-Auto-stops after MAX_DAYS unique collection dates.
+Runs indefinitely. To stop: disable the GitHub Actions workflow in the
+Actions tab, or commit a file named STOP inside tokenomics_data/.
 """
 
 import csv
@@ -19,7 +19,6 @@ from pathlib import Path
 DATA_DIR = Path(__file__).parent
 CSV_FILE = DATA_DIR / "model_tokens.csv"
 STOP_FILE = DATA_DIR / "STOP"
-MAX_DAYS = 30
 URL = "https://openrouter.ai/models?input_modalities=text"
 
 FIELDNAMES = ["date", "model_id", "model_name", "tokens_7d_raw", "tokens_7d"]
@@ -45,12 +44,8 @@ def should_stop(today: str) -> bool:
     if STOP_FILE.exists():
         print("STOP file found — collection halted.")
         return True
-    days = existing_dates()
-    if today in days:
+    if today in existing_dates():
         print(f"Data for {today} already collected — skipping.")
-        return True
-    if len(days) >= MAX_DAYS:
-        print(f"Reached {MAX_DAYS}-day limit — collection complete.")
         return True
     return False
 
@@ -162,9 +157,7 @@ def try_playwright():
                 break
             prev_height = height
 
-        # If we captured structured model data from intercepted calls, done.
         if intercepted:
-            # Deduplicate by model id (the same endpoint may fire multiple times)
             seen, unique = set(), []
             for m in intercepted:
                 if m.get("id") not in seen:
@@ -173,7 +166,6 @@ def try_playwright():
             browser.close()
             return unique, "api_intercept"
 
-        # Fall back: DOM extraction
         print("  no API intercepted — falling back to DOM parsing")
         dom_models = extract_from_dom(page)
         browser.close()
@@ -182,7 +174,6 @@ def try_playwright():
 
 def extract_from_dom(page):
     """Pull model ids, names, and token counts from the rendered page."""
-    # 1. Try Next.js __NEXT_DATA__ server-side data first
     page_data = page.evaluate("""() => {
         try { return window.__NEXT_DATA__; } catch { return null; }
     }""")
@@ -190,14 +181,11 @@ def extract_from_dom(page):
         print("  found __NEXT_DATA__")
         return {"__next_data__": page_data}
 
-    # 2. Walk the DOM looking for rows that contain both a model link and a
-    #    token-count string like "212B" or "1.5T tokens".
     results = page.evaluate(r"""() => {
         const TOKEN_RE = /([\d,.]+)\s*([KMBT])\s*tokens?/i;
         const rows = [];
         const seen = new Set();
 
-        // Gather candidate containers
         const candidates = [
             ...document.querySelectorAll('a[href*="/models/"]'),
         ];
@@ -207,7 +195,6 @@ def extract_from_dom(page):
             const modelId = href.replace(/^.*\/models\//, '').split('?')[0];
             if (!modelId || seen.has(modelId)) continue;
 
-            // Walk up to find a container that includes a token count
             let container = anchor;
             for (let i = 0; i < 8; i++) {
                 const t = container.innerText || '';
@@ -220,7 +207,6 @@ def extract_from_dom(page):
             const tokenMatch = text.match(TOKEN_RE);
             if (!tokenMatch) continue;
 
-            // Model name: look for heading-like elements first
             const nameEl = container.querySelector('h1,h2,h3,h4,[class*="name"],[class*="title"]');
             const name = (nameEl ? nameEl.innerText : anchor.innerText || modelId)
                 .trim().replace(/\s+/g, ' ').slice(0, 120);
@@ -244,26 +230,7 @@ def extract_from_dom(page):
 def build_records(raw, source: str, today: str):
     records = []
 
-    if source == "requests_api":
-        for m in raw:
-            mid = m.get("id", "")
-            name = m.get("name", mid)
-            # The public /api/v1/models endpoint may or may not include usage stats.
-            # Probe every field for something that looks like a token count.
-            tok_raw = ""
-            for k, v in m.items():
-                if any(kw in k.lower() for kw in ("token", "usage", "weekly", "processed")):
-                    tok_raw = str(v)
-                    break
-            records.append({
-                "date": today,
-                "model_id": mid,
-                "model_name": name,
-                "tokens_7d_raw": tok_raw,
-                "tokens_7d": parse_tokens(tok_raw) or "",
-            })
-
-    elif source == "api_intercept":
+    if source in ("requests_api", "api_intercept"):
         for m in raw:
             mid = m.get("id", "")
             name = m.get("name", mid)
@@ -282,7 +249,6 @@ def build_records(raw, source: str, today: str):
 
     elif source == "dom":
         if isinstance(raw, dict):
-            # Raw __NEXT_DATA__ or other structured fallback — store as single debug row
             import json
             records.append({
                 "date": today,
@@ -329,14 +295,12 @@ def main():
         sys.exit(0)
 
     days_so_far = len(existing_dates())
-    print(f"Collection day {days_so_far + 1}/{MAX_DAYS} — {today}")
+    print(f"Collection day {days_so_far + 1} — {today}")
 
-    # Strategy 1: plain requests (fast, no browser overhead)
     raw = try_requests_api()
     if raw:
         source = "requests_api"
     else:
-        # Strategy 2: Playwright (real browser, network intercept + DOM fallback)
         raw, source = try_playwright()
 
     if not raw:
@@ -349,8 +313,7 @@ def main():
         sys.exit(1)
 
     append_csv(records)
-    remaining = MAX_DAYS - days_so_far - 1
-    print(f"Done ({source}). {remaining} collection day(s) remaining.")
+    print(f"Done ({source}). Total days collected: {days_so_far + 1}.")
 
 
 if __name__ == "__main__":
