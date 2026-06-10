@@ -11,6 +11,7 @@ Actions tab, or commit a file named STOP inside tokenomics_data/.
 """
 
 import csv
+import json
 import re
 import sys
 from datetime import date
@@ -21,7 +22,7 @@ CSV_FILE = DATA_DIR / "model_tokens.csv"
 STOP_FILE = DATA_DIR / "STOP"
 URL = "https://openrouter.ai/models?input_modalities=text"
 
-FIELDNAMES = ["date", "model_id", "model_name", "tokens_7d_raw", "tokens_7d"]
+FIELDNAMES = ["date", "model_id", "model_name", "tokens_7d_raw", "tokens_7d", "source"]
 
 BROWSER_UA = (
     "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
@@ -58,9 +59,14 @@ def parse_tokens(text: str):
     """Convert '212B', '1.5T', '500M', '300K' to an integer, else None."""
     if not text:
         return None
-    m = re.search(r"([\d,.]+)\s*([KMBT])", text.upper())
+    m = re.search(r"([\d,.]+)\s*([KMBT])", str(text).upper())
     if not m:
-        return None
+        # Try plain integer
+        try:
+            v = int(str(text).replace(",", "").strip())
+            return v if v > 1_000_000 else None
+        except ValueError:
+            return None
     try:
         val = float(m.group(1).replace(",", ""))
     except ValueError:
@@ -70,64 +76,74 @@ def parse_tokens(text: str):
 
 
 # ---------------------------------------------------------------------------
-# Strategy 1: plain HTTP (works if OpenRouter doesn't block server-side UA)
+# Recursive search through nested dicts/lists for model arrays
 # ---------------------------------------------------------------------------
 
-def try_requests_api():
-    try:
-        import requests
-    except ImportError:
-        return None
+def find_model_lists(obj, depth=0):
+    """Recursively find lists that look like OpenRouter model arrays."""
+    if depth > 8:
+        return []
+    found = []
+    if isinstance(obj, list) and len(obj) > 5:
+        if obj and isinstance(obj[0], dict) and "id" in obj[0]:
+            if "/" in str(obj[0].get("id", "")):  # e.g. "openai/gpt-4"
+                found.append(obj)
+    if isinstance(obj, dict):
+        for v in obj.values():
+            found.extend(find_model_lists(v, depth + 1))
+    elif isinstance(obj, list):
+        for item in obj[:3]:  # only first few items to avoid explosion
+            found.extend(find_model_lists(item, depth + 1))
+    return found
 
-    headers = {
-        "User-Agent": BROWSER_UA,
-        "Accept": "application/json",
-    }
-    try:
-        resp = requests.get(
-            "https://openrouter.ai/api/v1/models",
-            headers=headers,
-            timeout=30,
-        )
-        if resp.status_code == 200:
-            body = resp.json()
-            items = body.get("data", [])
-            if items and isinstance(items[0], dict) and "id" in items[0]:
-                print(f"requests API: got {len(items)} models")
-                return items
-    except Exception as e:
-        print(f"requests API failed: {e}")
-    return None
+
+def token_fields_from_model(m: dict):
+    """Try every field to find one that looks like a 7-day token count."""
+    # Direct token-related keys (various naming conventions seen in APIs)
+    priority_keys = [
+        "tokens_7d", "tokens_7_days", "weekly_tokens", "tokens_processed",
+        "tokens_processed_7d", "usage_7d", "7d_tokens", "volume",
+        "token_volume", "popularity", "traffic",
+    ]
+    for k in priority_keys:
+        if k in m and m[k]:
+            return str(m[k])
+
+    # Any key that contains these substrings (but not "context" which is window size)
+    for k, v in m.items():
+        kl = k.lower()
+        if "context" in kl or "max" in kl or "limit" in kl:
+            continue
+        if any(w in kl for w in ("token", "usage", "weekly", "processed", "volume", "traffic")):
+            return str(v)
+
+    # Large integer that could be a token count (>= 1 million)
+    for k, v in m.items():
+        if isinstance(v, (int, float)) and v >= 1_000_000:
+            return str(int(v))
+
+    return ""
 
 
 # ---------------------------------------------------------------------------
-# Strategy 2: Playwright — intercept the internal API call the page makes
+# Playwright-based collection
 # ---------------------------------------------------------------------------
 
-def try_playwright():
-    try:
-        from playwright.sync_api import sync_playwright
-    except ImportError:
-        print("playwright not installed")
-        return None, None
+def collect_via_playwright():
+    from playwright.sync_api import sync_playwright
 
-    intercepted: list = []
+    all_json = {}  # url -> body
 
     def on_response(response):
         try:
-            url = response.url
-            if "openrouter.ai" not in url or response.status != 200:
+            if "openrouter.ai" not in response.url:
+                return
+            if response.status != 200:
                 return
             ct = response.headers.get("content-type", "")
             if "json" not in ct:
                 return
-            body = response.json()
-            if not isinstance(body, dict):
-                return
-            items = body.get("data", [])
-            if isinstance(items, list) and items and isinstance(items[0], dict) and "id" in items[0]:
-                print(f"  intercepted: {url}  ({len(items)} items)")
-                intercepted.extend(items)
+            all_json[response.url] = response.json()
         except Exception:
             pass
 
@@ -140,132 +156,168 @@ def try_playwright():
         page = ctx.new_page()
         page.on("response", on_response)
 
-        print(f"Playwright: navigating to {URL}")
+        print(f"Loading {URL} ...")
         try:
             page.goto(URL, wait_until="networkidle", timeout=90_000)
         except Exception as e:
             print(f"  navigation warning: {e}")
-        page.wait_for_timeout(5_000)
+        page.wait_for_timeout(6_000)
 
-        # Scroll to trigger lazy-loaded model rows
-        prev_height = 0
-        for _ in range(20):
+        # Scroll to load all models (infinite scroll)
+        prev_h = 0
+        for _ in range(25):
             page.keyboard.press("End")
-            page.wait_for_timeout(1_500)
-            height = page.evaluate("document.body.scrollHeight")
-            if height == prev_height:
+            page.wait_for_timeout(1_200)
+            h = page.evaluate("document.body.scrollHeight")
+            if h == prev_h:
                 break
-            prev_height = height
+            prev_h = h
 
-        if intercepted:
-            seen, unique = set(), []
-            for m in intercepted:
-                if m.get("id") not in seen:
-                    seen.add(m["id"])
-                    unique.append(m)
+        # ----------------------------------------------------------------
+        # Strategy A: find an intercepted response that has token data
+        # ----------------------------------------------------------------
+        best_with_tokens = None
+        best_without_tokens = None
+
+        for url, body in all_json.items():
+            # Unwrap {"data": [...]} envelope
+            items = body.get("data", body) if isinstance(body, dict) else body
+            if not isinstance(items, list) or not items:
+                continue
+            if not isinstance(items[0], dict) or "id" not in items[0]:
+                continue
+            # Must look like OpenRouter model IDs (provider/model)
+            if "/" not in str(items[0].get("id", "")):
+                continue
+
+            has_tok = any(token_fields_from_model(m) for m in items[:5])
+            print(f"  intercepted {url}: {len(items)} models, token_data={has_tok}")
+
+            if has_tok and best_with_tokens is None:
+                best_with_tokens = (items, url)
+            elif not has_tok and best_without_tokens is None:
+                best_without_tokens = (items, url)
+
+        if best_with_tokens:
+            items, url = best_with_tokens
+            print(f"Using token-rich API response ({len(items)} models) from {url}")
             browser.close()
-            return unique, "api_intercept"
+            return items, "api_intercept"
 
-        print("  no API intercepted — falling back to DOM parsing")
-        dom_models = extract_from_dom(page)
-        browser.close()
-        return dom_models, "dom"
+        # ----------------------------------------------------------------
+        # Strategy B: __NEXT_DATA__ (server-side rendered props)
+        # ----------------------------------------------------------------
+        next_data = page.evaluate("() => { try { return window.__NEXT_DATA__; } catch { return null; } }")
+        if next_data:
+            lists = find_model_lists(next_data)
+            if lists:
+                best = max(lists, key=len)
+                print(f"Found {len(best)} models in __NEXT_DATA__")
+                has_tok = any(token_fields_from_model(m) for m in best[:5])
+                if has_tok:
+                    browser.close()
+                    return best, "next_data"
 
+        # ----------------------------------------------------------------
+        # Strategy C: DOM scraping — extract visible token count text
+        # ----------------------------------------------------------------
+        print("Falling back to DOM scraping for token counts...")
 
-def extract_from_dom(page):
-    """Pull model ids, names, and token counts from the rendered page."""
-    page_data = page.evaluate("""() => {
-        try { return window.__NEXT_DATA__; } catch { return null; }
-    }""")
-    if page_data:
-        print("  found __NEXT_DATA__")
-        return {"__next_data__": page_data}
+        # First get model names from best intercepted response
+        model_names = {}
+        if best_without_tokens:
+            for m in best_without_tokens[0]:
+                model_names[m.get("id", "")] = m.get("name", m.get("id", ""))
 
-    results = page.evaluate(r"""() => {
-        const TOKEN_RE = /([\d,.]+)\s*([KMBT])\s*tokens?/i;
-        const rows = [];
-        const seen = new Set();
+        dom_tokens = page.evaluate(r"""() => {
+            const results = [];
+            const seen = new Set();
 
-        const candidates = [
-            ...document.querySelectorAll('a[href*="/models/"]'),
-        ];
+            // Match numbers like 212B, 1.5T, 500M, 300K (with or without "tokens")
+            const TOK_RE = /([\d,.]+)\s*([KMBT])\b/i;
 
-        for (const anchor of candidates) {
-            const href = anchor.getAttribute('href') || '';
-            const modelId = href.replace(/^.*\/models\//, '').split('?')[0];
-            if (!modelId || seen.has(modelId)) continue;
+            const allLinks = document.querySelectorAll('a[href*="/models/"]');
+            for (const a of allLinks) {
+                const href = a.getAttribute('href') || '';
+                // OpenRouter model IDs: provider/model-name
+                const afterModels = href.split('/models/')[1];
+                if (!afterModels) continue;
+                const modelId = afterModels.split('?')[0];
+                if (!modelId || !modelId.includes('/') || seen.has(modelId)) continue;
 
-            let container = anchor;
-            for (let i = 0; i < 8; i++) {
-                const t = container.innerText || '';
-                if (TOKEN_RE.test(t)) break;
-                if (!container.parentElement) break;
-                container = container.parentElement;
+                const nameEl = a.querySelector('h1,h2,h3,h4,span,p') || a;
+                const name = nameEl.innerText.trim().replace(/\s+/g, ' ').slice(0, 120) || modelId;
+
+                // Walk up the DOM to find a sibling/ancestor with a token count
+                let tokenText = '';
+                let el = a;
+                for (let i = 0; i < 12 && !tokenText; i++) {
+                    const text = (el.innerText || '').replace(/\n/g, ' ');
+                    const m = text.match(TOK_RE);
+                    if (m) {
+                        // Make sure the number is large enough to be a token count
+                        // (skip things like "8B params" that are in the model name)
+                        // Look for the token count specifically near "tok" or at end of line
+                        const tokMatch = text.match(/([\d,.]+)\s*([KMBT])\s*(tok|token)/i);
+                        if (tokMatch) {
+                            tokenText = tokMatch[0];
+                        } else if (m) {
+                            tokenText = m[0];
+                        }
+                    }
+                    if (!el.parentElement) break;
+                    el = el.parentElement;
+                }
+
+                seen.add(modelId);
+                results.push({ id: modelId, name: name, token_text: tokenText });
             }
+            return results;
+        }""")
 
-            const text = container.innerText || '';
-            const tokenMatch = text.match(TOKEN_RE);
-            if (!tokenMatch) continue;
+        browser.close()
 
-            const nameEl = container.querySelector('h1,h2,h3,h4,[class*="name"],[class*="title"]');
-            const name = (nameEl ? nameEl.innerText : anchor.innerText || modelId)
-                .trim().replace(/\s+/g, ' ').slice(0, 120);
+        # Merge DOM token counts with API model names where possible
+        if dom_tokens and model_names:
+            for item in dom_tokens:
+                if not item.get("name") and item["id"] in model_names:
+                    item["name"] = model_names[item["id"]]
 
-            seen.add(modelId);
-            rows.push({
-                id: modelId,
-                name: name,
-                token_text: tokenMatch[0].trim(),
-            });
-        }
-        return rows;
-    }""")
-    return results
+        return dom_tokens or [], "dom"
 
 
 # ---------------------------------------------------------------------------
 # Record builder
 # ---------------------------------------------------------------------------
 
-def build_records(raw, source: str, today: str):
+def build_records(raw, src: str, today: str):
     records = []
 
-    if source in ("requests_api", "api_intercept"):
+    if src in ("api_intercept", "next_data", "requests_api"):
         for m in raw:
             mid = m.get("id", "")
             name = m.get("name", mid)
-            tok_raw = ""
-            for k, v in m.items():
-                if any(kw in k.lower() for kw in ("token", "usage", "weekly", "processed")):
-                    tok_raw = str(v)
-                    break
+            tok_raw = token_fields_from_model(m)
             records.append({
                 "date": today,
                 "model_id": mid,
                 "model_name": name,
                 "tokens_7d_raw": tok_raw,
                 "tokens_7d": parse_tokens(tok_raw) or "",
+                "source": src,
             })
 
-    elif source == "dom":
-        if isinstance(raw, dict):
-            import json
+    elif src == "dom":
+        for m in raw:
+            tok_raw = m.get("token_text", "")
             records.append({
                 "date": today,
-                "model_id": "__debug__",
-                "model_name": "raw_page_data",
-                "tokens_7d_raw": json.dumps(raw)[:500],
-                "tokens_7d": "",
+                "model_id": m.get("id", ""),
+                "model_name": m.get("name", ""),
+                "tokens_7d_raw": tok_raw,
+                "tokens_7d": parse_tokens(tok_raw) or "",
+                "source": src,
             })
-        else:
-            for m in raw:
-                records.append({
-                    "date": today,
-                    "model_id": m.get("id", ""),
-                    "model_name": m.get("name", ""),
-                    "tokens_7d_raw": m.get("token_text", ""),
-                    "tokens_7d": parse_tokens(m.get("token_text", "")) or "",
-                })
 
     return records
 
@@ -297,11 +349,7 @@ def main():
     days_so_far = len(existing_dates())
     print(f"Collection day {days_so_far + 1} — {today}")
 
-    raw = try_requests_api()
-    if raw:
-        source = "requests_api"
-    else:
-        raw, source = try_playwright()
+    raw, source = collect_via_playwright()
 
     if not raw:
         print("ERROR: No model data retrieved.", file=sys.stderr)
@@ -312,8 +360,12 @@ def main():
         print("ERROR: Zero records parsed.", file=sys.stderr)
         sys.exit(1)
 
+    # Report token coverage
+    with_tokens = sum(1 for r in records if r["tokens_7d"] != "")
+    print(f"Models: {len(records)}, with token data: {with_tokens} ({source})")
+
     append_csv(records)
-    print(f"Done ({source}). Total days collected: {days_so_far + 1}.")
+    print(f"Done. Total days collected: {days_so_far + 1}.")
 
 
 if __name__ == "__main__":
