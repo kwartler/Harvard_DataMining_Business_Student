@@ -1,0 +1,46 @@
+name: Tokenomics Daily Collection
+
+on:
+  schedule:
+    - cron: '0 8 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Python dependencies
+        run: pip install requests playwright
+
+      - name: Install Playwright + Chromium system deps
+        run: python -m playwright install chromium --with-deps
+
+      - name: Run token collection
+        run: python tokenomics_data/fetch_tokens.py
+
+      - name: Commit and push updated CSV
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add tokenomics_data/model_tokens.csv
+          if git diff --staged --quiet; then
+            echo "No new data — nothing to commit."
+          else
+            git commit -m "data: tokenomics update $(date -u +%Y-%m-%d)"
+            git push origin HEAD
+          fi
