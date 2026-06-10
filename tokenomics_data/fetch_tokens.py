@@ -16,7 +16,7 @@ import sys
 from datetime import date
 from pathlib import Path
 
-DATA_DIR = Path(__file__).parent
+DATA_DIR    = Path(__file__).parent
 TOKENS_CSV  = DATA_DIR / "model_tokens.csv"
 REGISTRY_CSV = DATA_DIR / "model_registry.csv"
 STOP_FILE   = DATA_DIR / "STOP"
@@ -80,7 +80,6 @@ def parse_tokens(text: str):
 
 
 def format_context(n: int) -> str:
-    """200000 → '200K', 1000000 → '1M'."""
     if not n:
         return ""
     if n >= 1_000_000:
@@ -93,17 +92,13 @@ def format_context(n: int) -> str:
 
 
 def provider_from_model(model_id: str, model_name: str) -> str:
-    """Extract provider label, e.g. 'anthropic/claude-3' → 'Anthropic'."""
-    # Prefer the part before ':' in the display name ("Anthropic: Claude 3 Haiku")
     if ":" in model_name:
         return model_name.split(":")[0].strip()
-    # Fall back to the id prefix ("anthropic/...")
     prefix = model_id.split("/")[0]
     return prefix.replace("-", " ").title()
 
 
 def pricing_from_model(m: dict):
-    """Return (input_per_1m, output_per_1m) as floats, both in USD."""
     pricing = m.get("pricing", {}) or {}
     try:
         inp = round(float(pricing.get("prompt", 0) or 0) * 1_000_000, 6)
@@ -117,16 +112,14 @@ def pricing_from_model(m: dict):
 
 
 # ---------------------------------------------------------------------------
-# Strategy 1 — requests API (metadata + pricing; fast and reliable)
+# Strategy 1 — requests API (metadata + pricing)
 # ---------------------------------------------------------------------------
 
 def fetch_api_models():
-    """Returns list of raw model dicts from /api/v1/models, or None."""
     try:
         import requests
     except ImportError:
         return None
-
     try:
         resp = requests.get(
             "https://openrouter.ai/api/v1/models",
@@ -136,22 +129,20 @@ def fetch_api_models():
         if resp.status_code == 200:
             items = resp.json().get("data", [])
             if items and "id" in items[0]:
-                print(f"API: {len(items)} models")
+                print(f"API: {len(items)} models fetched")
                 return items
+        print(f"API: HTTP {resp.status_code}")
     except Exception as e:
         print(f"API fetch failed: {e}")
     return None
 
 
 # ---------------------------------------------------------------------------
-# Strategy 2 — Playwright (token usage counts from page)
+# Strategy 2 — Playwright (token usage counts)
 # ---------------------------------------------------------------------------
 
 def fetch_playwright_tokens():
-    """
-    Returns dict {model_id: token_text} scraped from the rendered page.
-    Uses network interception first, DOM scraping as fallback.
-    """
+    """Returns dict {model_id: token_text_raw}."""
     try:
         from playwright.sync_api import sync_playwright
     except ImportError:
@@ -173,7 +164,8 @@ def fetch_playwright_tokens():
     with sync_playwright() as pw:
         browser = pw.chromium.launch(headless=True)
         page = browser.new_context(
-            user_agent=BROWSER_UA, viewport={"width": 1920, "height": 1080}
+            user_agent=BROWSER_UA,
+            viewport={"width": 1920, "height": 1080},
         ).new_page()
         page.on("response", on_response)
 
@@ -194,54 +186,134 @@ def fetch_playwright_tokens():
                 break
             prev_h = h
 
-        # A — intercepted API response that already has token data
+        # --- A: inspect all intercepted JSON for token usage fields ---
+        print(f"  intercepted {len(all_json)} JSON responses")
+        TOKEN_CANDIDATE_KEYS = [
+            "tokens_7d", "weekly_tokens", "tokens_processed", "tokens_processed_7d",
+            "usage_7d", "7d_tokens", "token_count", "volume", "traffic", "popularity",
+            "token_volume", "weekly_volume", "tokens",
+        ]
         for url, body in all_json.items():
             items = body.get("data", body) if isinstance(body, dict) else body
             if not isinstance(items, list) or not items:
                 continue
             if not isinstance(items[0], dict) or "id" not in items[0]:
                 continue
-            # Look for a numeric token field
-            sample = items[:5]
-            for candidate_key in ["tokens_7d", "weekly_tokens", "tokens_processed",
-                                   "usage_7d", "volume", "traffic", "popularity"]:
-                if any(candidate_key in m for m in sample):
+            fields = list(items[0].keys())
+            print(f"    {url}: {len(items)} items, fields={fields[:12]}")
+            for key in TOKEN_CANDIDATE_KEYS:
+                if any(key in m for m in items[:5]):
                     result = {
-                        m["id"]: str(m.get(candidate_key, ""))
+                        m["id"]: str(m.get(key, ""))
                         for m in items if m.get("id")
                     }
-                    print(f"  token field '{candidate_key}' found in {url}")
+                    found = sum(1 for v in result.values() if v and v != "0")
+                    print(f"  SUCCESS: key='{key}', {found} non-zero values")
                     browser.close()
                     return result
 
-        # B — DOM scrape for visible "212B tokens" text
-        print("  scraping token counts from DOM...")
-        dom = page.evaluate(r"""() => {
+        # --- B: text-node DOM walk looking for "XB tokens" pattern ---
+        print("  no token field found in API — trying DOM text-node walk...")
+        dom_result = page.evaluate(r"""() => {
             const out = {};
-            const TOK = /([\d,.]+)\s*([KMBT])\s*(tok|token)/i;
-            const BARE = /([\d,.]+)\s*([KMBT])\b/i;
-            for (const a of document.querySelectorAll('a[href*="/models/"]')) {
-                const after = (a.getAttribute('href') || '').split('/models/')[1];
-                if (!after) continue;
-                const mid = after.split('?')[0];
-                if (!mid || !mid.includes('/') || out[mid]) continue;
-                let el = a, text = '';
-                for (let i = 0; i < 12; i++) {
-                    text = (el.innerText || '').replace(/\n/g, ' ');
-                    if (TOK.test(text)) { out[mid] = text.match(TOK)[0]; break; }
-                    if (!el.parentElement) break;
+            // Match "212B tokens", "1.5T tokens", "500M tok", etc.
+            const TOK_RE = /([\d,.]+)\s*([KMBT])\s*(tok|token)/i;
+
+            const walker = document.createTreeWalker(
+                document.body,
+                NodeFilter.SHOW_TEXT,
+                null, false
+            );
+            while (walker.nextNode()) {
+                const raw = (walker.currentNode.textContent || '').trim();
+                if (!raw) continue;
+                const m = raw.match(TOK_RE);
+                if (!m) continue;
+
+                // Walk up to find the nearest ancestor that contains a model link
+                let el = walker.currentNode.parentElement;
+                for (let depth = 0; depth < 15 && el; depth++) {
+                    const link = el.querySelector('a[href*="/models/"]');
+                    if (link) {
+                        const href = link.getAttribute('href') || '';
+                        const mid = (href.split('/models/')[1] || '').split('?')[0];
+                        if (mid && mid.includes('/') && !out[mid]) {
+                            out[mid] = m[0].trim();
+                        }
+                        break;
+                    }
                     el = el.parentElement;
-                }
-                // fallback: any large "XB" figure near the link
-                if (!out[mid]) {
-                    const m = text.match(BARE);
-                    if (m) out[mid] = m[0];
                 }
             }
             return out;
         }""")
+
+        dom_count = sum(1 for v in dom_result.values() if v)
+        print(f"  DOM text-node walk: {dom_count} models with token counts")
+        if dom_count > 0:
+            sample = dict(list(dom_result.items())[:3])
+            print(f"  sample: {sample}")
+            browser.close()
+            return dom_result
+
+        # --- C: attribute search (title / aria-label containing "token") ---
+        print("  trying attribute search (title/aria-label)...")
+        attr_result = page.evaluate(r"""() => {
+            const out = {};
+            const NUM_RE = /([\d,.]+)\s*([KMBT])/i;
+            // Find elements whose title or aria-label mentions "token"
+            const els = document.querySelectorAll('[title*="token"],[title*="Token"],[aria-label*="token"],[aria-label*="Token"]');
+            for (const el of els) {
+                const attrVal = el.getAttribute('title') || el.getAttribute('aria-label') || '';
+                const numMatch = attrVal.match(NUM_RE) || (el.innerText || '').match(NUM_RE);
+                if (!numMatch) continue;
+                // Find nearest model link
+                const link = el.closest('a[href*="/models/"]') ||
+                             el.querySelector('a[href*="/models/"]');
+                let ancestor = el;
+                let modelLink = null;
+                for (let i = 0; i < 10 && ancestor; i++) {
+                    const l = ancestor.querySelector('a[href*="/models/"]');
+                    if (l) { modelLink = l; break; }
+                    ancestor = ancestor.parentElement;
+                }
+                if (!modelLink) continue;
+                const href = modelLink.getAttribute('href') || '';
+                const mid = (href.split('/models/')[1] || '').split('?')[0];
+                if (mid && mid.includes('/') && !out[mid]) {
+                    out[mid] = numMatch[0].trim();
+                }
+            }
+            return out;
+        }""")
+
+        attr_count = sum(1 for v in attr_result.values() if v)
+        print(f"  attribute search: {attr_count} models with token counts")
+
+        # --- D: diagnostic — sample page text to see what's actually there ---
+        print("  === PAGE DIAGNOSTIC (first 20 lines containing numbers) ===")
+        sample_lines = page.evaluate(r"""() => {
+            const lines = (document.body.innerText || '').split('\n');
+            return lines
+                .map(l => l.trim())
+                .filter(l => l.length > 3 && /\d/.test(l))
+                .slice(0, 20);
+        }""")
+        for line in sample_lines:
+            print(f"    {line}")
+
+        # Also check if the token text format uses different words
+        tok_lines = page.evaluate(r"""() => {
+            const lines = (document.body.innerText || '').split('\n');
+            return lines
+                .map(l => l.trim())
+                .filter(l => /\d.*[KMBT].*tok/i.test(l) || /tok.*\d.*[KMBT]/i.test(l))
+                .slice(0, 10);
+        }""")
+        print(f"  lines matching 'NUMBERx tok*': {tok_lines}")
+
         browser.close()
-        return dom or {}
+        return attr_result or {}
 
 
 # ---------------------------------------------------------------------------
@@ -249,8 +321,6 @@ def fetch_playwright_tokens():
 # ---------------------------------------------------------------------------
 
 def update_registry(api_models: list, today: str):
-    """Upsert model_registry.csv — add new models, update last_seen."""
-    # Load existing
     existing = {}
     if REGISTRY_CSV.exists():
         with open(REGISTRY_CSV, newline="") as f:
@@ -264,30 +334,21 @@ def update_registry(api_models: list, today: str):
             continue
         name = m.get("name", mid)
         provider = provider_from_model(mid, name)
-        ctx = m.get("context_length", 0) or 0
-        ctx_display = format_context(int(ctx))
+        ctx = int(m.get("context_length", 0) or 0)
+        ctx_display = format_context(ctx)
 
         if mid not in existing:
             existing[mid] = {
-                "model_id": mid,
-                "model_name": name,
-                "provider": provider,
-                "context_length": ctx,
-                "context_display": ctx_display,
-                "first_seen": today,
-                "last_seen": today,
+                "model_id": mid, "model_name": name, "provider": provider,
+                "context_length": ctx, "context_display": ctx_display,
+                "first_seen": today, "last_seen": today,
             }
             changed = True
         else:
             row = existing[mid]
-            # Update mutable fields
-            updates = {
-                "model_name": name,
-                "provider": provider,
-                "context_length": ctx,
-                "context_display": ctx_display,
-                "last_seen": today,
-            }
+            updates = {"model_name": name, "provider": provider,
+                       "context_length": ctx, "context_display": ctx_display,
+                       "last_seen": today}
             for k, v in updates.items():
                 if str(row.get(k, "")) != str(v):
                     row[k] = v
@@ -299,17 +360,20 @@ def update_registry(api_models: list, today: str):
             writer = csv.DictWriter(f, fieldnames=REGISTRY_FIELDS)
             writer.writeheader()
             writer.writerows(rows)
-        new_count = sum(1 for r in rows if r["first_seen"] == today)
-        print(f"Registry: {len(rows)} models total, {new_count} new today")
+        new_today = sum(1 for r in rows if r["first_seen"] == today)
+        print(f"Registry: {len(rows)} models, {new_today} new today")
     else:
         print(f"Registry: no changes ({len(existing)} models)")
 
 
 # ---------------------------------------------------------------------------
-# Build daily token records
+# Build + append daily token records
 # ---------------------------------------------------------------------------
 
-def build_token_records(api_models: list, token_lookup: dict, today: str, source: str):
+def build_and_append(api_models: list, token_lookup: dict, today: str):
+    tok_coverage = sum(1 for v in token_lookup.values() if v)
+    source = "api+playwright" if tok_coverage > 0 else "api_only"
+
     records = []
     for m in api_models:
         mid = m.get("id", "")
@@ -326,20 +390,17 @@ def build_token_records(api_models: list, token_lookup: dict, today: str, source
             "output_price_per_1m": out,
             "source": source,
         })
-    return records
 
-
-def append_tokens_csv(records: list):
     needs_header = not TOKENS_CSV.exists() or TOKENS_CSV.stat().st_size == 0
     with open(TOKENS_CSV, "a", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=TOKENS_FIELDS)
         if needs_header:
             writer.writeheader()
         writer.writerows(records)
-    with_tok = sum(1 for r in records if r["tokens_7d"] != "")
+
     with_price = sum(1 for r in records if r["input_price_per_1m"])
-    print(f"Tokens CSV: {len(records)} rows, {with_tok} with token counts, "
-          f"{with_price} with pricing")
+    print(f"Tokens CSV: {len(records)} rows, {tok_coverage} with token counts, "
+          f"{with_price} with pricing ({source})")
 
 
 # ---------------------------------------------------------------------------
@@ -355,30 +416,16 @@ def main():
     days_so_far = len(existing_dates())
     print(f"Collection day {days_so_far + 1} — {today}")
 
-    # Step 1: get model metadata + pricing from API
     api_models = fetch_api_models()
     if not api_models:
-        print("ERROR: Could not fetch model list from API", file=sys.stderr)
+        print("ERROR: Could not fetch model list", file=sys.stderr)
         sys.exit(1)
 
-    # Step 2: get token usage counts from page (Playwright)
     token_lookup = fetch_playwright_tokens()
-    tok_coverage = sum(1 for v in token_lookup.values() if v)
-    print(f"Token lookup: {tok_coverage}/{len(token_lookup)} models have counts")
 
-    # Step 3: determine source label
-    source = "api+playwright_tokens" if tok_coverage > 0 else "api_only"
-
-    # Step 4: upsert registry
     update_registry(api_models, today)
+    build_and_append(api_models, token_lookup, today)
 
-    # Step 5: build and append daily records
-    records = build_token_records(api_models, token_lookup, today, source)
-    if not records:
-        print("ERROR: Zero records built", file=sys.stderr)
-        sys.exit(1)
-
-    append_tokens_csv(records)
     print(f"Done. Total days collected: {days_so_far + 1}.")
 
 
