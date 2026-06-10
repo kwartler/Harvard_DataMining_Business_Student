@@ -23,20 +23,20 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install Python dependencies
+      - name: Install dependencies
         run: pip install requests playwright
 
-      - name: Install Playwright + Chromium system deps
+      - name: Install Playwright + Chromium
         run: python -m playwright install chromium --with-deps
 
       - name: Run token collection
         run: python tokenomics_data/fetch_tokens.py
 
-      - name: Commit and push updated CSV
+      - name: Commit and push updated data
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add tokenomics_data/model_tokens.csv
+          git add tokenomics_data/model_tokens.csv tokenomics_data/model_registry.csv
           if git diff --staged --quiet; then
             echo "No new data — nothing to commit."
           else
