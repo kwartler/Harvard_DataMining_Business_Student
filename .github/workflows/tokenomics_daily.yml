@@ -36,7 +36,7 @@ jobs:
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add tokenomics_data/model_tokens.csv tokenomics_data/model_registry.csv
+          git add tokenomics_data/
           if git diff --staged --quiet; then
             echo "No new data — nothing to commit."
           else
