@@ -6,38 +6,43 @@ Two output files:
   model_registry.csv  — one row per model (upserted): provider, context, first/last seen
   model_tokens.csv    — daily append: token usage + input/output prices
 
-Runs indefinitely. To stop: disable the GitHub Actions workflow, or commit
-a file named STOP inside tokenomics_data/.
+Token counts are fetched via the internal /api/frontend/v1/stats/router-activity endpoint
+using same-origin Playwright fetches (required — plain HTTP returns 404).
+
+Runs indefinitely. Stop by disabling the workflow or committing tokenomics_data/STOP.
 """
 
 import csv
 import re
 import sys
-from datetime import date
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
-DATA_DIR    = Path(__file__).parent
-TOKENS_CSV  = DATA_DIR / "model_tokens.csv"
+DATA_DIR     = Path(__file__).parent
+TOKENS_CSV   = DATA_DIR / "model_tokens.csv"
 REGISTRY_CSV = DATA_DIR / "model_registry.csv"
-STOP_FILE   = DATA_DIR / "STOP"
-URL = "https://openrouter.ai/models?input_modalities=text"
+STOP_FILE    = DATA_DIR / "STOP"
+MODELS_URL   = "https://openrouter.ai/models?input_modalities=text"
 
 TOKENS_FIELDS = [
     "date", "model_id", "model_name",
-    "tokens_7d_raw", "tokens_7d",
+    "tokens_7d_raw", "tokens_7d", "tokens_1d",
     "input_price_per_1m", "output_price_per_1m",
     "source",
 ]
 REGISTRY_FIELDS = [
     "model_id", "model_name", "provider",
     "context_length", "context_display",
-    "first_seen", "last_seen",
+    "permaslug", "first_seen", "last_seen",
 ]
 
 BROWSER_UA = (
     "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
     "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
 )
+ROUTER_ACTIVITY_PATH = "/api/frontend/v1/stats/router-activity"
+CHUNK_SIZE = 40       # models per batch-fetch chunk
+FETCH_DELAY_MS = 150  # ms between calls inside JS
 
 
 # ---------------------------------------------------------------------------
@@ -53,7 +58,7 @@ def existing_dates():
 
 def should_stop(today: str) -> bool:
     if STOP_FILE.exists():
-        print("STOP file found — collection halted.")
+        print("STOP file found — halted.")
         return True
     if today in existing_dates():
         print(f"Data for {today} already collected — skipping.")
@@ -61,22 +66,24 @@ def should_stop(today: str) -> bool:
     return False
 
 
-def parse_tokens(text: str):
-    """'212B' / '1.5T' / '500M' / '300K' → integer, else None."""
-    if not text:
+def parse_tokens(text) -> int | None:
+    if text is None:
         return None
-    m = re.search(r"([\d,.]+)\s*([KMBT])", str(text).upper())
-    if not m:
+    if isinstance(text, (int, float)) and text > 0:
+        return int(text)
+    s = str(text).strip()
+    m = re.search(r"([\d,.]+)\s*([KMBT])", s.upper())
+    if m:
         try:
-            v = int(str(text).replace(",", "").strip())
-            return v if v > 1_000_000 else None
-        except ValueError:
-            return None
+            val = float(m.group(1).replace(",", ""))
+            return int(val * {"K": 1e3, "M": 1e6, "B": 1e9, "T": 1e12}[m.group(2)])
+        except (ValueError, KeyError):
+            pass
     try:
-        val = float(m.group(1).replace(",", ""))
+        v = int(s.replace(",", ""))
+        return v if v > 1_000_000 else None
     except ValueError:
         return None
-    return int(val * {"K": 1e3, "M": 1e6, "B": 1e9, "T": 1e12}[m.group(2)])
 
 
 def format_context(n: int) -> str:
@@ -94,25 +101,24 @@ def format_context(n: int) -> str:
 def provider_from_model(model_id: str, model_name: str) -> str:
     if ":" in model_name:
         return model_name.split(":")[0].strip()
-    prefix = model_id.split("/")[0]
-    return prefix.replace("-", " ").title()
+    return model_id.split("/")[0].replace("-", " ").title()
 
 
 def pricing_from_model(m: dict):
-    pricing = m.get("pricing", {}) or {}
+    p = m.get("pricing", {}) or {}
     try:
-        inp = round(float(pricing.get("prompt", 0) or 0) * 1_000_000, 6)
+        inp = round(float(p.get("prompt", 0) or 0) * 1_000_000, 6)
     except (ValueError, TypeError):
         inp = 0.0
     try:
-        out = round(float(pricing.get("completion", 0) or 0) * 1_000_000, 6)
+        out = round(float(p.get("completion", 0) or 0) * 1_000_000, 6)
     except (ValueError, TypeError):
         out = 0.0
     return inp, out
 
 
 # ---------------------------------------------------------------------------
-# Strategy 1 — requests API (metadata + pricing)
+# Public API — model list + pricing (no token stats here)
 # ---------------------------------------------------------------------------
 
 def fetch_api_models():
@@ -121,35 +127,287 @@ def fetch_api_models():
     except ImportError:
         return None
     try:
-        resp = requests.get(
+        r = requests.get(
             "https://openrouter.ai/api/v1/models",
             headers={"User-Agent": BROWSER_UA, "Accept": "application/json"},
             timeout=30,
         )
-        if resp.status_code == 200:
-            items = resp.json().get("data", [])
+        if r.status_code == 200:
+            items = r.json().get("data", [])
             if items and "id" in items[0]:
-                print(f"API: {len(items)} models fetched")
+                print(f"API: {len(items)} models")
                 return items
-        print(f"API: HTTP {resp.status_code}")
+        print(f"API HTTP {r.status_code}")
     except Exception as e:
-        print(f"API fetch failed: {e}")
+        print(f"API error: {e}")
     return None
 
 
 # ---------------------------------------------------------------------------
-# Strategy 2 — Playwright (token usage counts)
+# Permaslug extraction helpers
 # ---------------------------------------------------------------------------
 
-def fetch_playwright_tokens():
-    """Returns dict {model_id: token_text_raw}."""
+def extract_permaslugs_from_json(all_json: dict) -> dict:
+    """Scan intercepted JSON responses for permaslug fields."""
+    slugs = {}  # model_id -> permaslug
+    for url, body in all_json.items():
+        items = body.get("data", body) if isinstance(body, dict) else body
+        if not isinstance(items, list) or not items:
+            continue
+        if not isinstance(items[0], dict):
+            continue
+        if "permaslug" not in items[0]:
+            continue
+        for m in items:
+            mid = m.get("id", "")
+            ps = m.get("permaslug", "")
+            if mid and ps:
+                slugs[mid] = ps
+        if slugs:
+            print(f"  permaslugs from {url}: {len(slugs)} found")
+            return slugs
+    return {}
+
+
+def extract_permaslugs_from_page_html(page) -> dict:
+    """Extract permaslug values embedded in the page HTML/JS bundles."""
+    # The page HTML contains JSON with "permaslug":"provider/model-YYYYMMDD"
+    matches = page.evaluate(r"""() => {
+        const html = document.documentElement.innerHTML;
+        const re = /"id"\s*:\s*"([^"]+)"[^}]{0,200}"permaslug"\s*:\s*"([^"]+)"/g;
+        const out = {};
+        let m;
+        while ((m = re.exec(html)) !== null) {
+            out[m[1]] = m[2];
+        }
+        // Also try reversed field order
+        const re2 = /"permaslug"\s*:\s*"([^"]+)"[^}]{0,200}"id"\s*:\s*"([^"]+)"/g;
+        while ((m = re2.exec(html)) !== null) {
+            out[m[2]] = m[1];
+        }
+        return out;
+    }""")
+    if matches:
+        print(f"  permaslugs from page HTML: {len(matches)} found")
+    return matches or {}
+
+
+# ---------------------------------------------------------------------------
+# Batch same-origin router-activity fetch (runs inside the loaded page)
+# ---------------------------------------------------------------------------
+
+def batch_fetch_router_activity(page, permaslugs: list[str]) -> dict:
+    """
+    permaslugs: list of permaslug strings
+    Returns: {permaslug: response_body_dict}
+    Runs fetch() inside the loaded openrouter.ai page context so cookies/
+    CSRF headers are automatically attached.
+    """
+    results = {}
+    for i in range(0, len(permaslugs), CHUNK_SIZE):
+        chunk = permaslugs[i:i + CHUNK_SIZE]
+        print(f"  router-activity batch {i // CHUNK_SIZE + 1}/"
+              f"{(len(permaslugs) + CHUNK_SIZE - 1) // CHUNK_SIZE} "
+              f"({len(chunk)} models)...")
+        try:
+            chunk_results = page.evaluate(
+                """async ([slugs, path, delayMs]) => {
+                    const out = {};
+                    const sleep = ms => new Promise(r => setTimeout(r, ms));
+                    for (const slug of slugs) {
+                        try {
+                            const url = path + '?permaslug=' + encodeURIComponent(slug);
+                            const res = await fetch(url, {
+                                credentials: 'include',
+                                headers: { 'Accept': 'application/json' }
+                            });
+                            out[slug] = res.ok
+                                ? await res.json()
+                                : { _http_error: res.status };
+                        } catch(e) {
+                            out[slug] = { _js_error: String(e) };
+                        }
+                        await sleep(delayMs);
+                    }
+                    return out;
+                }""",
+                [chunk, ROUTER_ACTIVITY_PATH, FETCH_DELAY_MS],
+            )
+            results.update(chunk_results or {})
+        except Exception as e:
+            print(f"  chunk error: {e}")
+    return results
+
+
+# ---------------------------------------------------------------------------
+# Parse router-activity analytics → 7-day token total
+# ---------------------------------------------------------------------------
+
+_debug_logged = False
+
+def analytics_to_tokens(activity: dict, today_str: str) -> tuple[int | None, int | None]:
+    """
+    Parse router-activity analytics into two figures:
+      tokens_7d  — sum of token counts across the last 7 days (rolling total)
+      tokens_1d  — the most recent single day's token count (non-cumulative)
+
+    The analytics array is a per-period, per-series time series. We sum across
+    all series within each date, then derive the 7-day rolling total and the
+    latest single-day total. Returns (tokens_7d, tokens_1d).
+    """
+    global _debug_logged
+
+    if not activity or not isinstance(activity, dict):
+        return None, None
+    if "_http_error" in activity or "_js_error" in activity:
+        return None, None
+
+    analytics = activity.get("analytics", [])
+    if not isinstance(analytics, list) or not analytics:
+        return None, None
+
+    # Log structure of first item once per run to aid debugging
+    if not _debug_logged:
+        sample = analytics[0] if analytics else {}
+        print(f"  analytics[0] sample: {dict(list(sample.items())[:6])}")
+        _debug_logged = True
+
+    # Identify the token-count field: the numeric field with the largest sum
+    field_totals: dict[str, float] = {}
+    for item in analytics:
+        if not isinstance(item, dict):
+            continue
+        for k, v in item.items():
+            if isinstance(v, (int, float)) and v > 0:
+                field_totals[k] = field_totals.get(k, 0) + v
+
+    if not field_totals:
+        return None, None
+
+    token_field = max(field_totals, key=lambda k: field_totals[k])
+
+    # Identify the date/period field
+    date_field = None
+    for item in analytics[:5]:
+        for k, v in item.items():
+            if isinstance(v, str) and re.match(r"\d{4}-\d{2}-\d{2}", v):
+                date_field = k
+                break
+        if date_field:
+            break
+
+    # Aggregate token counts by date (summing across all series per day)
+    by_date: dict[str, float] = {}
+    undated_total = 0.0
+    for item in analytics:
+        if not isinstance(item, dict):
+            continue
+        tok = item.get(token_field, 0) or 0
+        d = None
+        if date_field:
+            dv = item.get(date_field)
+            if isinstance(dv, str):
+                d = dv[:10]
+        if d:
+            by_date[d] = by_date.get(d, 0) + tok
+        else:
+            undated_total += tok
+
+    # 7-day rolling total
+    cutoff = (datetime.fromisoformat(today_str) - timedelta(days=7)).date()
+    total_7d = undated_total
+    for d, v in by_date.items():
+        try:
+            if datetime.fromisoformat(d).date() < cutoff:
+                continue
+        except ValueError:
+            pass
+        total_7d += v
+
+    # Most recent single day (non-cumulative)
+    tokens_1d = None
+    dated = sorted((d, v) for d, v in by_date.items() if d)
+    if dated:
+        tokens_1d = dated[-1][1]
+
+    return (
+        int(total_7d) if total_7d > 0 else None,
+        int(tokens_1d) if tokens_1d else None,
+    )
+
+
+# ---------------------------------------------------------------------------
+# Text-proximity fallback (used if router-activity yields nothing)
+# ---------------------------------------------------------------------------
+
+def text_proximity_tokens(page, api_models: list) -> dict:
+    """Extract token counts from visible page text as a last resort."""
+    name_lookup: dict[str, str] = {}
+    for m in api_models:
+        mid = m.get("id", "")
+        name = m.get("name", "")
+        name_lookup[name.lower()] = mid
+        if ":" in name:
+            name_lookup[name.split(":", 1)[1].strip().lower()] = mid
+
+    pairs = page.evaluate(r"""() => {
+        const lines = (document.body.innerText || '')
+            .split('\n').map(l => l.trim()).filter(l => l);
+        const TOK = /^([\d,.]+)\s*([KMBT])\s*tokens?$/i;
+        const SKIP = /^\$|^https?:|^\d+\s*ms$|^\d+\s*[Kk]\/s$|^Context|^Input|^Output/i;
+        const DATE_HDR = /^[A-Z][a-z]+ \d{4}$/;
+        const results = [];
+        for (let i = 0; i < lines.length; i++) {
+            if (!TOK.test(lines[i])) continue;
+            for (let j = 1; j <= 10; j++) {
+                if (i - j < 0) break;
+                const prev = lines[i - j];
+                if (!prev || SKIP.test(prev) || DATE_HDR.test(prev)) continue;
+                if (TOK.test(prev)) break;
+                results.push({ name: prev, token_text: lines[i] });
+                break;
+            }
+        }
+        return results;
+    }""")
+
+    result: dict[str, str] = {}
+    for pair in pairs:
+        mid = name_lookup.get(pair["name"].lower())
+        if not mid:
+            # partial match
+            pl = pair["name"].lower()
+            for m in api_models:
+                n = m.get("name", "").lower()
+                short = n.split(":", 1)[1].strip() if ":" in n else n
+                if short == pl or n == pl:
+                    mid = m.get("id")
+                    break
+        if mid:
+            result[mid] = pair["token_text"]
+
+    print(f"  text-proximity fallback: {len(result)} matched")
+    return result
+
+
+# ---------------------------------------------------------------------------
+# Main Playwright orchestration
+# ---------------------------------------------------------------------------
+
+def fetch_token_counts(api_models: list) -> tuple[dict, dict, str]:
+    """
+    Returns (token_lookup, daily_lookup, source_label).
+      token_lookup — {model_id: 7-day value (int, or raw str from fallback)}
+      daily_lookup — {model_id: most-recent single-day token int}
+    Tries router-activity first, falls back to text-proximity (7d only).
+    """
     try:
         from playwright.sync_api import sync_playwright
     except ImportError:
         print("playwright not installed")
-        return {}
+        return {}, {}, "none"
 
-    all_json = {}
+    all_json: dict = {}
 
     def on_response(response):
         try:
@@ -168,152 +426,72 @@ def fetch_playwright_tokens():
             viewport={"width": 1920, "height": 1080},
         ).new_page()
         page.on("response", on_response)
+        page.set_default_timeout(120_000)
 
-        print(f"Playwright: loading {URL}")
+        print(f"Playwright: loading {MODELS_URL}")
         try:
-            page.goto(URL, wait_until="networkidle", timeout=90_000)
+            page.goto(MODELS_URL, wait_until="networkidle", timeout=90_000)
         except Exception as e:
             print(f"  nav warning: {e}")
         page.wait_for_timeout(6_000)
 
-        # Scroll to trigger lazy-loaded rows
+        # Scroll to trigger full model list
         prev_h = 0
         for _ in range(25):
             page.keyboard.press("End")
-            page.wait_for_timeout(1_200)
+            page.wait_for_timeout(1_000)
             h = page.evaluate("document.body.scrollHeight")
             if h == prev_h:
                 break
             prev_h = h
 
-        # --- A: inspect all intercepted JSON for token usage fields ---
-        print(f"  intercepted {len(all_json)} JSON responses")
-        TOKEN_CANDIDATE_KEYS = [
-            "tokens_7d", "weekly_tokens", "tokens_processed", "tokens_processed_7d",
-            "usage_7d", "7d_tokens", "token_count", "volume", "traffic", "popularity",
-            "token_volume", "weekly_volume", "tokens",
-        ]
-        for url, body in all_json.items():
-            items = body.get("data", body) if isinstance(body, dict) else body
-            if not isinstance(items, list) or not items:
-                continue
-            if not isinstance(items[0], dict) or "id" not in items[0]:
-                continue
-            fields = list(items[0].keys())
-            print(f"    {url}: {len(items)} items, fields={fields[:12]}")
-            for key in TOKEN_CANDIDATE_KEYS:
-                if any(key in m for m in items[:5]):
-                    result = {
-                        m["id"]: str(m.get(key, ""))
-                        for m in items if m.get("id")
-                    }
-                    found = sum(1 for v in result.values() if v and v != "0")
-                    print(f"  SUCCESS: key='{key}', {found} non-zero values")
-                    browser.close()
-                    return result
+        # ---- Step 1: find permaslugs ----
+        permaslugs = extract_permaslugs_from_json(all_json)
+        if not permaslugs:
+            permaslugs = extract_permaslugs_from_page_html(page)
 
-        # --- B: text-node DOM walk looking for "XB tokens" pattern ---
-        print("  no token field found in API — trying DOM text-node walk...")
-        dom_result = page.evaluate(r"""() => {
-            const out = {};
-            // Match "212B tokens", "1.5T tokens", "500M tok", etc.
-            const TOK_RE = /([\d,.]+)\s*([KMBT])\s*(tok|token)/i;
+        if permaslugs:
+            print(f"  {len(permaslugs)} permaslugs available, "
+                  f"fetching router-activity...")
+            slug_list = list(permaslugs.values())
+            raw_activity = batch_fetch_router_activity(page, slug_list)
 
-            const walker = document.createTreeWalker(
-                document.body,
-                NodeFilter.SHOW_TEXT,
-                null, false
-            );
-            while (walker.nextNode()) {
-                const raw = (walker.currentNode.textContent || '').trim();
-                if (!raw) continue;
-                const m = raw.match(TOK_RE);
-                if (!m) continue;
+            today_str = date.today().isoformat()
+            token_counts: dict[str, int] = {}
+            daily_counts: dict[str, int] = {}
+            errors = 0
+            for mid, ps in permaslugs.items():
+                activity = raw_activity.get(ps, {})
+                t7, t1 = analytics_to_tokens(activity, today_str)
+                if t7 is not None:
+                    token_counts[mid] = t7
+                if t1 is not None:
+                    daily_counts[mid] = t1
+                if t7 is None and (
+                    "_http_error" in activity or "_js_error" in activity
+                ):
+                    errors += 1
 
-                // Walk up to find the nearest ancestor that contains a model link
-                let el = walker.currentNode.parentElement;
-                for (let depth = 0; depth < 15 && el; depth++) {
-                    const link = el.querySelector('a[href*="/models/"]');
-                    if (link) {
-                        const href = link.getAttribute('href') || '';
-                        const mid = (href.split('/models/')[1] || '').split('?')[0];
-                        if (mid && mid.includes('/') && !out[mid]) {
-                            out[mid] = m[0].trim();
-                        }
-                        break;
-                    }
-                    el = el.parentElement;
-                }
-            }
-            return out;
-        }""")
+            coverage = len(token_counts)
+            print(f"  router-activity: {coverage}/{len(permaslugs)} models "
+                  f"returned data, {errors} errors")
 
-        dom_count = sum(1 for v in dom_result.values() if v)
-        print(f"  DOM text-node walk: {dom_count} models with token counts")
-        if dom_count > 0:
-            sample = dict(list(dom_result.items())[:3])
-            print(f"  sample: {sample}")
-            browser.close()
-            return dom_result
+            if coverage > 0:
+                # Update registry with permaslugs
+                _permaslug_cache.update(permaslugs)
+                browser.close()
+                return token_counts, daily_counts, "router_activity"
+            else:
+                print("  router-activity returned 0 counts — trying fallback")
 
-        # --- C: attribute search (title / aria-label containing "token") ---
-        print("  trying attribute search (title/aria-label)...")
-        attr_result = page.evaluate(r"""() => {
-            const out = {};
-            const NUM_RE = /([\d,.]+)\s*([KMBT])/i;
-            // Find elements whose title or aria-label mentions "token"
-            const els = document.querySelectorAll('[title*="token"],[title*="Token"],[aria-label*="token"],[aria-label*="Token"]');
-            for (const el of els) {
-                const attrVal = el.getAttribute('title') || el.getAttribute('aria-label') || '';
-                const numMatch = attrVal.match(NUM_RE) || (el.innerText || '').match(NUM_RE);
-                if (!numMatch) continue;
-                // Find nearest model link
-                const link = el.closest('a[href*="/models/"]') ||
-                             el.querySelector('a[href*="/models/"]');
-                let ancestor = el;
-                let modelLink = null;
-                for (let i = 0; i < 10 && ancestor; i++) {
-                    const l = ancestor.querySelector('a[href*="/models/"]');
-                    if (l) { modelLink = l; break; }
-                    ancestor = ancestor.parentElement;
-                }
-                if (!modelLink) continue;
-                const href = modelLink.getAttribute('href') || '';
-                const mid = (href.split('/models/')[1] || '').split('?')[0];
-                if (mid && mid.includes('/') && !out[mid]) {
-                    out[mid] = numMatch[0].trim();
-                }
-            }
-            return out;
-        }""")
-
-        attr_count = sum(1 for v in attr_result.values() if v)
-        print(f"  attribute search: {attr_count} models with token counts")
-
-        # --- D: diagnostic — sample page text to see what's actually there ---
-        print("  === PAGE DIAGNOSTIC (first 20 lines containing numbers) ===")
-        sample_lines = page.evaluate(r"""() => {
-            const lines = (document.body.innerText || '').split('\n');
-            return lines
-                .map(l => l.trim())
-                .filter(l => l.length > 3 && /\d/.test(l))
-                .slice(0, 20);
-        }""")
-        for line in sample_lines:
-            print(f"    {line}")
-
-        # Also check if the token text format uses different words
-        tok_lines = page.evaluate(r"""() => {
-            const lines = (document.body.innerText || '').split('\n');
-            return lines
-                .map(l => l.trim())
-                .filter(l => /\d.*[KMBT].*tok/i.test(l) || /tok.*\d.*[KMBT]/i.test(l))
-                .slice(0, 10);
-        }""")
-        print(f"  lines matching 'NUMBERx tok*': {tok_lines}")
-
+        # ---- Step 2: text-proximity fallback (7-day only) ----
+        tok = text_proximity_tokens(page, api_models)
         browser.close()
-        return attr_result or {}
+        return tok, {}, "text_proximity"
+
+
+# Shared permaslug cache so update_registry can use it
+_permaslug_cache: dict[str, str] = {}
 
 
 # ---------------------------------------------------------------------------
@@ -321,7 +499,7 @@ def fetch_playwright_tokens():
 # ---------------------------------------------------------------------------
 
 def update_registry(api_models: list, today: str):
-    existing = {}
+    existing: dict = {}
     if REGISTRY_CSV.exists():
         with open(REGISTRY_CSV, newline="") as f:
             for row in csv.DictReader(f):
@@ -335,21 +513,23 @@ def update_registry(api_models: list, today: str):
         name = m.get("name", mid)
         provider = provider_from_model(mid, name)
         ctx = int(m.get("context_length", 0) or 0)
-        ctx_display = format_context(ctx)
+        ps = _permaslug_cache.get(mid, existing.get(mid, {}).get("permaslug", ""))
 
         if mid not in existing:
             existing[mid] = {
                 "model_id": mid, "model_name": name, "provider": provider,
-                "context_length": ctx, "context_display": ctx_display,
+                "context_length": ctx, "context_display": format_context(ctx),
+                "permaslug": ps,
                 "first_seen": today, "last_seen": today,
             }
             changed = True
         else:
             row = existing[mid]
-            updates = {"model_name": name, "provider": provider,
-                       "context_length": ctx, "context_display": ctx_display,
-                       "last_seen": today}
-            for k, v in updates.items():
+            for k, v in [("model_name", name), ("provider", provider),
+                         ("context_length", ctx),
+                         ("context_display", format_context(ctx)),
+                         ("permaslug", ps),
+                         ("last_seen", today)]:
                 if str(row.get(k, "")) != str(v):
                     row[k] = v
                     changed = True
@@ -357,9 +537,9 @@ def update_registry(api_models: list, today: str):
     if changed:
         rows = sorted(existing.values(), key=lambda r: r["model_id"])
         with open(REGISTRY_CSV, "w", newline="") as f:
-            writer = csv.DictWriter(f, fieldnames=REGISTRY_FIELDS)
-            writer.writeheader()
-            writer.writerows(rows)
+            w = csv.DictWriter(f, fieldnames=REGISTRY_FIELDS)
+            w.writeheader()
+            w.writerows(rows)
         new_today = sum(1 for r in rows if r["first_seen"] == today)
         print(f"Registry: {len(rows)} models, {new_today} new today")
     else:
@@ -370,22 +550,23 @@ def update_registry(api_models: list, today: str):
 # Build + append daily token records
 # ---------------------------------------------------------------------------
 
-def build_and_append(api_models: list, token_lookup: dict, today: str):
-    tok_coverage = sum(1 for v in token_lookup.values() if v)
-    source = "api+playwright" if tok_coverage > 0 else "api_only"
-
+def build_and_append(api_models: list, token_lookup: dict, daily_lookup: dict,
+                     today: str, source: str):
     records = []
     for m in api_models:
         mid = m.get("id", "")
-        name = m.get("name", mid)
-        tok_raw = token_lookup.get(mid, "")
+        raw = token_lookup.get(mid)
+        tok_int = raw if isinstance(raw, int) else parse_tokens(raw)
+        tok_raw = str(raw) if raw is not None else ""
+        day_int = daily_lookup.get(mid)
         inp, out = pricing_from_model(m)
         records.append({
             "date": today,
             "model_id": mid,
-            "model_name": name,
+            "model_name": m.get("name", mid),
             "tokens_7d_raw": tok_raw,
-            "tokens_7d": parse_tokens(tok_raw) or "",
+            "tokens_7d": tok_int if tok_int is not None else "",
+            "tokens_1d": day_int if day_int is not None else "",
             "input_price_per_1m": inp,
             "output_price_per_1m": out,
             "source": source,
@@ -393,14 +574,16 @@ def build_and_append(api_models: list, token_lookup: dict, today: str):
 
     needs_header = not TOKENS_CSV.exists() or TOKENS_CSV.stat().st_size == 0
     with open(TOKENS_CSV, "a", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=TOKENS_FIELDS)
+        w = csv.DictWriter(f, fieldnames=TOKENS_FIELDS)
         if needs_header:
-            writer.writeheader()
-        writer.writerows(records)
+            w.writeheader()
+        w.writerows(records)
 
+    with_tok = sum(1 for r in records if r["tokens_7d"] != "")
+    with_day = sum(1 for r in records if r["tokens_1d"] != "")
     with_price = sum(1 for r in records if r["input_price_per_1m"])
-    print(f"Tokens CSV: {len(records)} rows, {tok_coverage} with token counts, "
-          f"{with_price} with pricing ({source})")
+    print(f"Tokens CSV: {len(records)} rows | {with_tok} with 7d | "
+          f"{with_day} with 1d | {with_price} with pricing | source={source}")
 
 
 # ---------------------------------------------------------------------------
@@ -421,10 +604,10 @@ def main():
         print("ERROR: Could not fetch model list", file=sys.stderr)
         sys.exit(1)
 
-    token_lookup = fetch_playwright_tokens()
+    token_lookup, daily_lookup, source = fetch_token_counts(api_models)
 
     update_registry(api_models, today)
-    build_and_append(api_models, token_lookup, today)
+    build_and_append(api_models, token_lookup, daily_lookup, today, source)
 
     print(f"Done. Total days collected: {days_so_far + 1}.")
 
