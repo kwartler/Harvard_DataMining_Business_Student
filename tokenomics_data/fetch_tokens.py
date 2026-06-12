@@ -49,6 +49,39 @@ FETCH_DELAY_MS = 150  # ms between calls inside JS
 # Helpers
 # ---------------------------------------------------------------------------
 
+def migrate_tokens_csv():
+    """
+    Self-heal model_tokens.csv if its header predates a schema change.
+    Older runs wrote an 8-column header (no tokens_1d); appending 9-column
+    rows under it makes the last field overflow when parsed. Rewrite the
+    file with the current header, inserting an empty tokens_1d for old rows.
+    """
+    if not TOKENS_CSV.exists() or TOKENS_CSV.stat().st_size == 0:
+        return
+    with open(TOKENS_CSV, newline="") as f:
+        rows = list(csv.reader(f))
+    if not rows or rows[0] == TOKENS_FIELDS:
+        return
+
+    print(f"Migrating model_tokens.csv: header {len(rows[0])} -> "
+          f"{len(TOKENS_FIELDS)} columns")
+    out_rows = []
+    for r in rows[1:]:
+        if len(r) == 9:                       # already new schema
+            rec = r
+        elif len(r) == 8:                     # old: insert empty tokens_1d
+            rec = r[:5] + [""] + r[5:]        # after tokens_7d (index 5)
+        else:                                 # defensive pad/truncate
+            rec = (r + [""] * 9)[:9]
+        out_rows.append(rec)
+
+    with open(TOKENS_CSV, "w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(TOKENS_FIELDS)
+        w.writerows(out_rows)
+    print(f"  migrated {len(out_rows)} rows to current schema")
+
+
 def existing_dates():
     if not TOKENS_CSV.exists():
         return set()
@@ -660,6 +693,8 @@ def build_and_append(api_models: list, token_lookup: dict, daily_lookup: dict,
 
 def main():
     today = date.today().isoformat()
+
+    migrate_tokens_csv()  # self-heal stale header before anything reads the CSV
 
     if should_stop(today):
         sys.exit(0)
