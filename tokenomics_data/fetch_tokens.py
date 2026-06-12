@@ -169,27 +169,87 @@ def extract_permaslugs_from_json(all_json: dict) -> dict:
     return {}
 
 
+def fetch_permaslugs_via_frontend(page) -> dict:
+    """
+    Ask OpenRouter's own frontend model-list endpoint(s) for permaslugs,
+    same-origin from the loaded page. This is the most reliable source — the
+    response is structured JSON with both slug and permaslug per model.
+    """
+    candidates = [
+        "/api/frontend/models",
+        "/api/frontend/v1/models",
+        "/api/frontend/models/find",
+    ]
+    result = page.evaluate(
+        """async (paths) => {
+            const log = [];
+            for (const p of paths) {
+                try {
+                    const res = await fetch(p, {
+                        credentials: 'include',
+                        headers: { 'Accept': 'application/json' }
+                    });
+                    log.push(p + ' -> ' + res.status);
+                    if (!res.ok) continue;
+                    const body = await res.json();
+                    let items = Array.isArray(body) ? body
+                              : (body.data || body.models || null);
+                    if (!Array.isArray(items)) {
+                        for (const k of Object.keys(body || {})) {
+                            if (Array.isArray(body[k])) { items = body[k]; break; }
+                        }
+                    }
+                    if (!Array.isArray(items)) continue;
+                    const out = {};
+                    for (const it of items) {
+                        if (!it || typeof it !== 'object') continue;
+                        const key = it.slug || it.id;
+                        if (key && it.permaslug) out[key] = it.permaslug;
+                    }
+                    if (Object.keys(out).length) return { path: p, slugs: out, log };
+                } catch (e) {
+                    log.push(p + ' -> ERR ' + e);
+                }
+            }
+            return { path: null, slugs: {}, log };
+        }""",
+        candidates,
+    )
+    print(f"  frontend model-list probe: {result.get('log')}")
+    slugs = result.get("slugs", {}) or {}
+    if slugs:
+        print(f"  permaslugs from {result.get('path')}: {len(slugs)} found")
+    return slugs
+
+
 def extract_permaslugs_from_page_html(page) -> dict:
-    """Extract permaslug values embedded in the page HTML/JS bundles."""
-    # The page HTML contains JSON with "permaslug":"provider/model-YYYYMMDD"
+    """
+    Extract slug->permaslug pairs from the page HTML, tolerating escaped
+    quotes. OpenRouter embeds model data as JSON-inside-JSON (RSC streaming),
+    so quotes appear as \\" — the old unescaped-only regex matched nothing.
+    """
     matches = page.evaluate(r"""() => {
-        const html = document.documentElement.innerHTML;
-        const re = /"id"\s*:\s*"([^"]+)"[^}]{0,200}"permaslug"\s*:\s*"([^"]+)"/g;
+        // Normalize any run of backslashes before a quote down to a bare quote.
+        let html = document.documentElement.innerHTML.replace(/\\+"/g, '"');
         const out = {};
         let m;
-        while ((m = re.exec(html)) !== null) {
-            out[m[1]] = m[2];
-        }
-        // Also try reversed field order
-        const re2 = /"permaslug"\s*:\s*"([^"]+)"[^}]{0,200}"id"\s*:\s*"([^"]+)"/g;
-        while ((m = re2.exec(html)) !== null) {
-            out[m[2]] = m[1];
-        }
-        return out;
+        // slug -> permaslug (slug precedes permaslug in a model object)
+        const re1 = /"slug":"([^"]+)"[^{}]{0,600}?"permaslug":"([^"]+)"/g;
+        while ((m = re1.exec(html)) !== null) out[m[1]] = m[2];
+        // permaslug -> slug (reversed field order)
+        const re2 = /"permaslug":"([^"]+)"[^{}]{0,600}?"slug":"([^"]+)"/g;
+        while ((m = re2.exec(html)) !== null) { if (!out[m[2]]) out[m[2]] = m[1]; }
+        // id -> permaslug as a final pairing attempt
+        const re3 = /"id":"([^"]+)"[^{}]{0,600}?"permaslug":"([^"]+)"/g;
+        while ((m = re3.exec(html)) !== null) { if (!out[m[1]]) out[m[1]] = m[2]; }
+        const raw = (html.match(/"permaslug":"/g) || []).length;
+        return { pairs: out, raw_count: raw };
     }""")
-    if matches:
-        print(f"  permaslugs from page HTML: {len(matches)} found")
-    return matches or {}
+    out = matches.get("pairs", {}) if isinstance(matches, dict) else {}
+    raw = matches.get("raw_count", 0) if isinstance(matches, dict) else 0
+    print(f"  page HTML: {raw} raw permaslug occurrences, "
+          f"{len(out)} paired to slugs")
+    return out or {}
 
 
 # ---------------------------------------------------------------------------
@@ -445,8 +505,16 @@ def fetch_token_counts(api_models: list) -> tuple[dict, dict, str]:
                 break
             prev_h = h
 
-        # ---- Step 1: find permaslugs ----
-        permaslugs = extract_permaslugs_from_json(all_json)
+        # Diagnostic: what JSON did the page fetch on its own?
+        print(f"  intercepted {len(all_json)} JSON responses")
+        for u in list(all_json)[:25]:
+            has_ps = "permaslug" in str(all_json[u])[:8000]
+            print(f"    {u[:95]}  permaslug={has_ps}")
+
+        # ---- Step 1: find permaslugs (try the cleanest source first) ----
+        permaslugs = fetch_permaslugs_via_frontend(page)
+        if not permaslugs:
+            permaslugs = extract_permaslugs_from_json(all_json)
         if not permaslugs:
             permaslugs = extract_permaslugs_from_page_html(page)
 
