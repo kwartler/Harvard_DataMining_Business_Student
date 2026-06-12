@@ -180,42 +180,64 @@ def fetch_api_models():
 # Permaslug extraction helpers
 # ---------------------------------------------------------------------------
 
+def _collect_slug_permaslug(obj, out: dict):
+    """
+    Recursively walk a JSON structure, recording slug/id -> permaslug for any
+    object that carries a permaslug alongside a slug or id. The catalog/models
+    and models/find?fmt=cards responses nest model objects, so a flat
+    data[0].permaslug assumption misses them — this walks the whole tree.
+    """
+    if isinstance(obj, dict):
+        ps = obj.get("permaslug")
+        if isinstance(ps, str) and ps:
+            key = obj.get("slug") or obj.get("id")
+            if isinstance(key, str) and key:
+                out.setdefault(key, ps)
+        for v in obj.values():
+            _collect_slug_permaslug(v, out)
+    elif isinstance(obj, list):
+        for v in obj:
+            _collect_slug_permaslug(v, out)
+
+
 def extract_permaslugs_from_json(all_json: dict) -> dict:
-    """Scan intercepted JSON responses for permaslug fields."""
-    slugs = {}  # model_id -> permaslug
-    for url, body in all_json.items():
-        items = body.get("data", body) if isinstance(body, dict) else body
-        if not isinstance(items, list) or not items:
-            continue
-        if not isinstance(items[0], dict):
-            continue
-        if "permaslug" not in items[0]:
-            continue
-        for m in items:
-            mid = m.get("id", "")
-            ps = m.get("permaslug", "")
-            if mid and ps:
-                slugs[mid] = ps
-        if slugs:
-            print(f"  permaslugs from {url}: {len(slugs)} found")
-            return slugs
-    return {}
+    """Recursively scan all intercepted JSON responses for slug->permaslug."""
+    slugs: dict = {}
+    for body in all_json.values():
+        _collect_slug_permaslug(body, slugs)
+    if slugs:
+        print(f"  permaslugs from intercepted JSON: {len(slugs)} found")
+    return slugs
 
 
 def fetch_permaslugs_via_frontend(page) -> dict:
     """
-    Ask OpenRouter's own frontend model-list endpoint(s) for permaslugs,
-    same-origin from the loaded page. This is the most reliable source — the
-    response is structured JSON with both slug and permaslug per model.
+    Fetch OpenRouter's own frontend model-list endpoints same-origin and walk
+    the response for slug->permaslug pairs. These are the real endpoints the
+    page uses (discovered via response interception). Recurses the JSON so it
+    works regardless of how the model objects are nested.
     """
     candidates = [
-        "/api/frontend/models",
-        "/api/frontend/v1/models",
-        "/api/frontend/models/find",
+        "/api/frontend/v1/models/find?active=true&fmt=cards&input_modalities=text",
+        "/api/frontend/v1/catalog/models",
+        "/api/frontend/v1/models/find?active=true&fmt=cards",
     ]
     result = page.evaluate(
         """async (paths) => {
             const log = [];
+            const out = {};
+            const walk = (o) => {
+                if (!o || typeof o !== 'object') return;
+                if (Array.isArray(o)) { for (const v of o) walk(v); return; }
+                const ps = o.permaslug;
+                if (typeof ps === 'string' && ps) {
+                    const key = o.slug || o.id;
+                    if (typeof key === 'string' && key && !(key in out)) {
+                        out[key] = ps;
+                    }
+                }
+                for (const k in o) walk(o[k]);
+            };
             for (const p of paths) {
                 try {
                     const res = await fetch(p, {
@@ -224,27 +246,13 @@ def fetch_permaslugs_via_frontend(page) -> dict:
                     });
                     log.push(p + ' -> ' + res.status);
                     if (!res.ok) continue;
-                    const body = await res.json();
-                    let items = Array.isArray(body) ? body
-                              : (body.data || body.models || null);
-                    if (!Array.isArray(items)) {
-                        for (const k of Object.keys(body || {})) {
-                            if (Array.isArray(body[k])) { items = body[k]; break; }
-                        }
-                    }
-                    if (!Array.isArray(items)) continue;
-                    const out = {};
-                    for (const it of items) {
-                        if (!it || typeof it !== 'object') continue;
-                        const key = it.slug || it.id;
-                        if (key && it.permaslug) out[key] = it.permaslug;
-                    }
+                    walk(await res.json());
                     if (Object.keys(out).length) return { path: p, slugs: out, log };
                 } catch (e) {
                     log.push(p + ' -> ERR ' + e);
                 }
             }
-            return { path: null, slugs: {}, log };
+            return { path: null, slugs: out, log };
         }""",
         candidates,
     )
@@ -544,10 +552,12 @@ def fetch_token_counts(api_models: list) -> tuple[dict, dict, str]:
             has_ps = "permaslug" in str(all_json[u])[:8000]
             print(f"    {u[:95]}  permaslug={has_ps}")
 
-        # ---- Step 1: find permaslugs (try the cleanest source first) ----
-        permaslugs = fetch_permaslugs_via_frontend(page)
+        # ---- Step 1: find permaslugs ----
+        # The page already fetches catalog/models + models/find (both carry
+        # permaslugs), so parse the intercepted JSON first — no extra network.
+        permaslugs = extract_permaslugs_from_json(all_json)
         if not permaslugs:
-            permaslugs = extract_permaslugs_from_json(all_json)
+            permaslugs = fetch_permaslugs_via_frontend(page)
         if not permaslugs:
             permaslugs = extract_permaslugs_from_page_html(page)
 
