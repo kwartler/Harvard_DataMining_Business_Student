@@ -8,6 +8,10 @@ on:
 permissions:
   contents: write
 
+env:
+  # Opt into Node 24 early so the deprecation of Node 20 actions is a no-op.
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   collect:
     runs-on: ubuntu-latest
@@ -24,10 +28,7 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install requests playwright
-
-      - name: Install Playwright + Chromium
-        run: python -m playwright install chromium --with-deps
+        run: pip install requests
 
       - name: Run token collection
         run: python tokenomics_data/fetch_tokens.py
