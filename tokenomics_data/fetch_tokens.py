@@ -293,6 +293,105 @@ def extract_permaslugs_from_page_html(page) -> dict:
     return out or {}
 
 
+# Keys whose large numeric values are NOT token counts.
+_NON_TOKEN_KEYS = (
+    "context", "price", "cost", "created", "updated", "timestamp", "length",
+    "limit", "max", "min", "rank", "order", "index", "latency", "ms", "id",
+    "date", "version", "size", "height", "width", "year",
+)
+
+
+def _largest_token_like(model: dict):
+    """Heuristic: the biggest numeric value in a model object (excluding
+    context/price/etc.) is almost certainly its token volume — counts run to
+    millions/billions while context windows top out ~2M."""
+    best = 0
+
+    def rec(x):
+        nonlocal best
+        if isinstance(x, dict):
+            for k, v in x.items():
+                kl = str(k).lower()
+                if isinstance(v, (int, float)):
+                    if v > best and v > 1_000_000 and not any(
+                        s in kl for s in _NON_TOKEN_KEYS
+                    ):
+                        best = v
+                else:
+                    rec(v)
+        elif isinstance(x, list):
+            for v in x:
+                rec(v)
+
+    rec(model)
+    return int(best) if best > 1_000_000 else None
+
+
+def extract_token_stats_from_json(all_json: dict) -> dict:
+    """
+    The /models page renders each model's '<N> tokens (7d)' from data it has
+    already fetched (catalog/models, models/find?fmt=cards). Locate the model
+    objects, dump one object's shape once for debugging, and best-effort
+    extract a 7-day token count keyed by slug. Returns {slug: token_int}.
+    """
+    models: list[dict] = []
+
+    def walk(o):
+        if isinstance(o, dict):
+            if (o.get("slug") or o.get("id")) and o.get("permaslug"):
+                models.append(o)
+            for v in o.values():
+                walk(v)
+        elif isinstance(o, list):
+            for v in o:
+                walk(v)
+
+    for body in all_json.values():
+        walk(body)
+
+    if not models:
+        print("  cards JSON: no model objects found")
+        return {}
+
+    # One-time shape dump so we can pin the exact token field next iteration.
+    sample = models[0]
+    print(f"  cards JSON: {len(models)} model objects; "
+          f"sample slug={sample.get('slug') or sample.get('id')}")
+    print(f"  sample top-level keys: {sorted(sample.keys())}")
+
+    def surface(o, prefix=""):
+        lines = []
+        if isinstance(o, dict):
+            for k, v in o.items():
+                kl = str(k).lower()
+                if isinstance(v, (int, float)) and (
+                    v > 100_000 or any(w in kl for w in (
+                        "token", "stat", "usage", "count", "week", "volume",
+                        "traffic", "request",
+                    ))
+                ):
+                    lines.append(f"{prefix}{k}={v}")
+                elif isinstance(v, dict) and any(w in kl for w in (
+                    "stat", "usage", "token", "metric", "activity", "data",
+                )):
+                    lines.append(f"{prefix}{k}={{...}}")
+                    lines += surface(v, prefix + str(k) + ".")
+        return lines
+
+    print(f"  sample token-ish fields: {surface(sample)[:30]}")
+
+    # Best-effort extraction via the largest-number heuristic.
+    stats: dict = {}
+    for m in models:
+        key = m.get("slug") or m.get("id")
+        t = _largest_token_like(m)
+        if key and t is not None:
+            stats.setdefault(key, t)
+    print(f"  cards JSON: extracted token counts for {len(stats)} models "
+          f"(heuristic)")
+    return stats
+
+
 # ---------------------------------------------------------------------------
 # Batch same-origin router-activity fetch (runs inside the loaded page)
 # ---------------------------------------------------------------------------
@@ -324,7 +423,8 @@ def batch_fetch_router_activity(page, permaslugs: list[str]) -> dict:
                             });
                             out[slug] = res.ok
                                 ? await res.json()
-                                : { _http_error: res.status };
+                                : { _http_error: res.status,
+                                    _body: (await res.text()).slice(0, 160) };
                         } catch(e) {
                             out[slug] = { _js_error: String(e) };
                         }
@@ -560,7 +660,17 @@ def fetch_token_counts(api_models: list) -> tuple[dict, dict, str]:
             permaslugs = fetch_permaslugs_via_frontend(page)
         if not permaslugs:
             permaslugs = extract_permaslugs_from_page_html(page)
+        if permaslugs:
+            _permaslug_cache.update(permaslugs)
 
+        # ---- Step 2: 7-day totals straight from the cards JSON the page
+        #              already rendered (no extra network, no auth issues). ----
+        cards_tokens = extract_token_stats_from_json(all_json)
+
+        # ---- Step 3: router-activity for the daily breakdown (tokens_1d).
+        #              Diagnose error codes since prior runs returned all errors.
+        daily_counts: dict[str, int] = {}
+        ra_tokens: dict[str, int] = {}
         if permaslugs:
             print(f"  {len(permaslugs)} permaslugs available, "
                   f"fetching router-activity...")
@@ -568,37 +678,43 @@ def fetch_token_counts(api_models: list) -> tuple[dict, dict, str]:
             raw_activity = batch_fetch_router_activity(page, slug_list)
 
             today_str = date.today().isoformat()
-            token_counts: dict[str, int] = {}
-            daily_counts: dict[str, int] = {}
-            errors = 0
+            err_codes: dict = {}
+            err_sample = None
             for mid, ps in permaslugs.items():
                 activity = raw_activity.get(ps, {})
+                if isinstance(activity, dict) and "_http_error" in activity:
+                    c = activity["_http_error"]
+                    err_codes[c] = err_codes.get(c, 0) + 1
+                    if err_sample is None:
+                        err_sample = activity.get("_body")
+                    continue
                 t7, t1 = analytics_to_tokens(activity, today_str)
                 if t7 is not None:
-                    token_counts[mid] = t7
+                    ra_tokens[mid] = t7
                 if t1 is not None:
                     daily_counts[mid] = t1
-                if t7 is None and (
-                    "_http_error" in activity or "_js_error" in activity
-                ):
-                    errors += 1
 
-            coverage = len(token_counts)
-            print(f"  router-activity: {coverage}/{len(permaslugs)} models "
-                  f"returned data, {errors} errors")
+            print(f"  router-activity: {len(ra_tokens)} with 7d, "
+                  f"{len(daily_counts)} with 1d; error codes={err_codes}")
+            if err_sample:
+                print(f"  router-activity sample error body: {err_sample!r}")
 
-            if coverage > 0:
-                # Update registry with permaslugs
-                _permaslug_cache.update(permaslugs)
-                browser.close()
-                return token_counts, daily_counts, "router_activity"
-            else:
-                print("  router-activity returned 0 counts — trying fallback")
+        # ---- Choose the best 7-day source ----
+        seven_day = dict(cards_tokens)
+        for mid, t in ra_tokens.items():
+            seven_day.setdefault(mid, t)
 
-        # ---- Step 2: text-proximity fallback (7-day only) ----
+        if seven_day:
+            source = "cards_json" if cards_tokens else "router_activity"
+            print(f"  7-day source: {source} ({len(seven_day)} models)")
+            browser.close()
+            return seven_day, daily_counts, source
+
+        # ---- Step 4: text-proximity fallback (7-day only) ----
+        print("  no token stats from JSON — trying text-proximity")
         tok = text_proximity_tokens(page, api_models)
         browser.close()
-        return tok, {}, "text_proximity"
+        return tok, daily_counts, "text_proximity"
 
 
 # Shared permaslug cache so update_registry can use it
