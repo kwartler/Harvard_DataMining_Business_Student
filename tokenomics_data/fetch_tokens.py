@@ -39,7 +39,7 @@ BROWSER_UA = (
 
 API_MODELS_URL     = "https://openrouter.ai/api/v1/models"
 CATALOG_URL        = "https://openrouter.ai/api/frontend/v1/catalog/models"
-RANKINGS_DAY_URL   = "https://openrouter.ai/api/frontend/rankings/models?view=day"
+RANKINGS_DAY_URL   = "https://openrouter.ai/api/frontend/v1/rankings/models"
 
 TOKENS_FIELDS = [
     "date", "model_permaslug", "model_id", "model_name", "provider",
