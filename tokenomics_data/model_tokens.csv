@@ -8525,3 +8525,478 @@ date,model_permaslug,model_id,model_name,provider,requests,input_tokens,output_t
 2026-09-03,canopylabs/orpheus-3b-0.1-ft,canopylabs/orpheus-3b-0.1-ft,Canopy Labs: Orpheus 3B,canopylabs,4427,59304,0,59304,,,,,,rankings_day
 2026-09-03,fish-audio/s2.1-pro-free-20260729,fish-audio/s2.1-pro-free,Fish Audio: S2.1 Pro Free (free),fish-audio,95803,15726840,0,15726840,,,,,,rankings_day
 2026-09-03,openai/gpt-audio-mini,openai/gpt-audio-mini,OpenAI: GPT Audio Mini,openai,330493,228481484,87552915,316034399,0.6,2.4,137.09,210.13,347.22,rankings_day
+2026-09-04,google/gemini-3.8-flash-20260902,google/gemini-3.8-flash,Google: Gemini 3.8 Flash,google,13413486,635312880543,11601726788,646914607331,0.75,3.75,476484.66,43506.48,519991.14,rankings_day
+2026-09-04,meta/muse-spark-1.3-contributor-20260902,meta/muse-spark-1.3-contributor,Meta: Muse Spark 1.3 Contributor,meta,4185017,326817007539,4739087928,331556095467,0.1,0.2,32681.7,947.82,33629.52,rankings_day
+2026-09-04,anthropic/claude-fable-5.1-20260831,anthropic/claude-fable-5.1,Anthropic: Claude Fable 5.1,anthropic,1773936,217761200201,2313837626,220075037827,10.0,50.0,2177612.0,115691.88,2293303.88,rankings_day
+2026-09-04,meta/muse-spark-1.3-20260902,meta/muse-spark-1.3,Meta: Muse Spark 1.3,meta,1330059,85451757552,1965281135,87417038687,1.25,4.25,106814.7,8352.44,115167.14,rankings_day
+2026-09-04,inception/mercury-2.5-preview-20260831,inception/mercury-2.5-preview,Inception: Mercury 2.5 Preview,inception,1313580,32044872791,1246791174,33291663965,0.04,0.15,1281.79,187.02,1468.81,rankings_day
+2026-09-04,openai/gpt-6-astra-20260903,openai/gpt-6-astra,OpenAI: GPT-6 Astra,openai,88097,3817166593,63315884,3880482477,10.0,50.0,38171.67,3165.79,41337.46,rankings_day
+2026-09-04,inclusionai/ling-3.0-flash-sante-20260904,inclusionai/ling-3.0-flash-sante,inclusionAI: Ling 3.0 Flash Sante (free),inclusionai,58169,2514271698,68907035,2583178733,,,,,,rankings_day
+2026-09-04,ibm-granite/granite-4.2-8b-20260831,ibm-granite/granite-4.2-8b,IBM: Granite 4.2 8B,ibm-granite,170633,1744332551,159095865,1903428416,0.1,0.15,174.43,23.86,198.29,rankings_day
+2026-09-04,openai/gpt-6-astra-pro-20260903,openai/gpt-6-astra-pro,OpenAI: GPT-6 Astra Pro,openai,19662,1310249970,43102059,1353352029,10.0,50.0,13102.5,2155.1,15257.6,rankings_day
+2026-09-04,deepseek/deepseek-v4-pro-20260813,deepseek/deepseek-v4-pro-0813,DeepSeek: DeepSeek V4 Pro 0813,deepseek,28609668,1036401989146,32122524285,1068524513431,1.12068,3.36204,1161474.98,107997.21,1269472.19,rankings_day
+2026-09-04,microsoft/mai-image-2.6-20260904,microsoft/mai-image-2.6,Microsoft: MAI-Image-2.6,microsoft,621,936531,645822,1582353,,,,,,rankings_day
+2026-09-04,microsoft/mai-image-2.6-flash-20260904,microsoft/mai-image-2.6-flash,Microsoft: MAI-Image-2.6 Flash,microsoft,411,745273,435186,1180459,,,,,,rankings_day
+2026-09-04,x-ai/grok-4.3-20260430,x-ai/grok-4.3,SpaceXAI: Grok 4.3,x-ai,13559864,65312577348,7490162145,72802739493,1.25,2.5,81640.72,18725.41,100366.13,rankings_day
+2026-09-04,mistralai/mistral-medium-3.5-20260430,mistralai/mistral-medium-3-5,Mistral: Mistral Medium 3.5,mistralai,1088545,6727486385,775515655,7503002040,1.5,7.5,10091.23,5816.37,15907.6,rankings_day
+2026-09-04,google/veo-3.1-fast-20260320,google/veo-3.1-fast,Google: Veo 3.1 Fast,google,8872,0,0,0,,,,,,rankings_day
+2026-09-04,minimax/hailuo-03-20260730,minimax/hailuo-3,MiniMax: H3,minimax,8241,0,0,0,,,,,,rankings_day
+2026-09-04,alibaba/wan-3.0-prime-20260827,alibaba/wan-3.0-prime,Alibaba: Wan 3.0 Prime,alibaba,1565,0,0,0,,,,,,rankings_day
+2026-09-04,deepgram/nova-3-20260714,deepgram/nova-3,Deepgram: Nova-3,deepgram,58147,0,0,0,,,,,,rankings_day
+2026-09-04,runway/aleph-2-20260729,runway/aleph-2,Runway: Aleph 2.0,runway,168,0,0,0,,,,,,rankings_day
+2026-09-04,fish-audio/transcribe-1-20260729,fish-audio/transcribe-1,Fish Audio: Transcribe 1,fish-audio,26931,0,0,0,,,,,,rankings_day
+2026-09-04,black-forest-labs/flux-3-video-20260804,black-forest-labs/flux-3-video,Black Forest Labs: FLUX.3 Video,black-forest-labs,2540,0,0,0,,,,,,rankings_day
+2026-09-04,bytedance/seedance-2.0-20260414,bytedance/seedance-2.0,ByteDance: Seedance 2.0,bytedance,11007,0,0,0,,,,,,rankings_day
+2026-09-04,openai/whisper-large-v3,openai/whisper-large-v3,OpenAI: Whisper Large V3,openai,8417637,0,0,0,,,,,,rankings_day
+2026-09-04,microsoft/mai-transcribe-1.5,microsoft/mai-transcribe-1.5,Microsoft: MAI-Transcribe 1.5,microsoft,63938,0,0,0,,,,,,rankings_day
+2026-09-04,bytedance/seedance-2.0-mini-20260811,bytedance/seedance-2.0-mini,ByteDance: Seedance 2.0 Mini,bytedance,29153,0,0,0,,,,,,rankings_day
+2026-09-04,google/veo-3.1-20260320,google/veo-3.1,Google: Veo 3.1,google,3552,0,0,0,,,,,,rankings_day
+2026-09-04,google/veo-3.1-lite-20260331,google/veo-3.1-lite,Google: Veo 3.1 Lite,google,30131,0,0,0,,,,,,rankings_day
+2026-09-04,bytedance/seedance-2.0-fast-20260414,bytedance/seedance-2.0-fast,ByteDance: Seedance 2.0 Fast,bytedance,16448,0,0,0,,,,,,rankings_day
+2026-09-04,x-ai/grok-imagine-video-20260512,x-ai/grok-imagine-video,SpaceXAI: Grok Imagine Video,x-ai,10524,0,0,0,,,,,,rankings_day
+2026-09-04,mistralai/voxtral-small-24b-2507-stt-20260813,mistralai/voxtral-small-24b-2507-stt,Mistral: Voxtral Small 24B 2507 STT,mistralai,6130,0,0,0,,,,,,rankings_day
+2026-09-04,kwaivgi/kling-v3.0-pro-20260429,kwaivgi/kling-v3.0-pro,Kling: Video v3.0 Pro,kwaivgi,5005,0,0,0,,,,,,rankings_day
+2026-09-04,minimax/hailuo-2.3-20260420,minimax/hailuo-2.3,MiniMax: Hailuo 2.3,minimax,590,0,0,0,,,,,,rankings_day
+2026-09-04,heygen/avatar-iv-20260625,heygen/avatar-iv,HeyGen: Avatar IV,heygen,1231,0,0,0,,,,,,rankings_day
+2026-09-04,alibaba/happyhorse-1.0-20260624,alibaba/happyhorse-1.0,Alibaba: HappyHorse 1.0,alibaba,569,0,0,0,,,,,,rankings_day
+2026-09-04,alibaba/wan-3.0-20260824,alibaba/wan-3.0,Alibaba: Wan 3.0,alibaba,6437,0,0,0,,,,,,rankings_day
+2026-09-04,qwen/qwen3-asr-0.6b-20260813,qwen/qwen3-asr-0.6b,Qwen: Qwen3 ASR 0.6B,qwen,236068,0,0,0,,,,,,rankings_day
+2026-09-04,microsoft/mai-transcribe-2-20260903,microsoft/mai-transcribe-2,Microsoft: MAI-Transcribe 2,microsoft,490259,0,0,0,,,,,,rankings_day
+2026-09-04,kwaivgi/kling-video-o1-20260420,kwaivgi/kling-video-o1,Kling: Video O1,kwaivgi,874,0,0,0,,,,,,rankings_day
+2026-09-04,x-ai/grok-stt-20260723,x-ai/grok-stt-1.0,SpaceXAI: Grok STT 1.0,x-ai,154109,0,0,0,,,,,,rankings_day
+2026-09-04,black-forest-labs/flux-video-upscale-20260819,black-forest-labs/flux-video-upscale,Black Forest Labs: FLUX Video Upscale,black-forest-labs,70,0,0,0,,,,,,rankings_day
+2026-09-04,nvidia/nemotron-3.5-asr-streaming-multilingual-0.6b-20260813,nvidia/nemotron-3.5-asr-streaming-multilingual-0.6b,NVIDIA: Nemotron 3.5 ASR Streaming Multilingual 0.6B,nvidia,57698,0,0,0,,,,,,rankings_day
+2026-09-04,qwen/qwen3-asr-flash-2026-02-10,qwen/qwen3-asr-flash-2026-02-10,Qwen: Qwen3 ASR Flash,qwen,348991,0,0,0,,,,,,rankings_day
+2026-09-04,google/chirp-3,google/chirp-3,Google: Chirp 3,google,56655,0,0,0,,,,,,rankings_day
+2026-09-04,alibaba/wan-2.7-20260414,alibaba/wan-2.7,Alibaba: Wan 2.7,alibaba,2395,0,0,0,,,,,,rankings_day
+2026-09-04,qwen/qwen3-asr-1.7b-20260813,qwen/qwen3-asr-1.7b,Qwen: Qwen3 ASR 1.7B,qwen,263609,0,0,0,,,,,,rankings_day
+2026-09-04,mistralai/voxtral-mini-3b-2507-20260813,mistralai/voxtral-mini-3b-2507,Mistral: Voxtral Mini 3B 2507,mistralai,27475,0,0,0,,,,,,rankings_day
+2026-09-04,minimax/hailuo-3-max-20260901,minimax/hailuo-3-max,MiniMax: H3 Max,minimax,4059,0,0,0,,,,,,rankings_day
+2026-09-04,x-ai/grok-imagine-video-1.5-20260719,x-ai/grok-imagine-video-1.5,SpaceXAI: Grok Imagine Video 1.5,x-ai,5714,0,0,0,,,,,,rankings_day
+2026-09-04,bytedance/seedance-2.5-20260807,bytedance/seedance-2.5,ByteDance: Seedance 2.5,bytedance,16932,0,0,0,,,,,,rankings_day
+2026-09-04,alibaba/happyhorse-1.1-20260624,alibaba/happyhorse-1.1,Alibaba: HappyHorse 1.1,alibaba,3006,0,0,0,,,,,,rankings_day
+2026-09-04,kwaivgi/kling-v3.0-std-20260429,kwaivgi/kling-v3.0-std,Kling: Video v3.0 Standard,kwaivgi,4340,0,0,0,,,,,,rankings_day
+2026-09-04,nvidia/parakeet-tdt-0.6b-v3,nvidia/parakeet-tdt-0.6b-v3,NVIDIA: Parakeet TDT 0.6B v3,nvidia,586940,0,0,0,,,,,,rankings_day
+2026-09-04,openai/gpt-transcribe-20260805,openai/gpt-transcribe,OpenAI: GPT Transcribe,openai,189655,0,0,0,,,,,,rankings_day
+2026-09-04,bytedance/seedance-1-5-pro-20260320,bytedance/seedance-1-5-pro,ByteDance: Seedance 1.5 Pro,bytedance,7461,0,0,0,,,,,,rankings_day
+2026-09-04,alibaba/wan-2.6-20260327,alibaba/wan-2.6,Alibaba: Wan 2.6,alibaba,775,0,0,0,,,,,,rankings_day
+2026-09-04,cohere/rerank-4-fast,cohere/rerank-4-fast,Cohere: Rerank 4 Fast,cohere,1549469,0,0,0,,,,,,rankings_day
+2026-09-04,openai/whisper-large-v3-turbo,openai/whisper-large-v3-turbo,OpenAI: Whisper Large V3 Turbo,openai,3717487,0,0,0,,,,,,rankings_day
+2026-09-04,runway/gen-4.5-20260729,runway/gen-4.5,Runway: Gen-4.5,runway,705,0,0,0,,,,,,rankings_day
+2026-09-04,openai/whisper-1,openai/whisper-1,OpenAI: Whisper 1,openai,352386,0,0,0,,,,,,rankings_day
+2026-09-04,openai/sora-2-pro-20260320,openai/sora-2-pro,OpenAI: Sora 2 Pro,openai,343,0,0,0,,,,,,rankings_day
+2026-09-04,cohere/rerank-4-pro,cohere/rerank-4-pro,Cohere: Rerank 4 Pro,cohere,366724,0,0,0,,,,,,rankings_day
+2026-09-04,cohere/rerank-v3.5,cohere/rerank-v3.5,Cohere: Rerank v3.5,cohere,900652,0,0,0,,,,,,rankings_day
+2026-09-04,deepseek/deepseek-v4-flash-20260731,deepseek/deepseek-v4-flash-0731,DeepSeek: DeepSeek V4 Flash 0731,deepseek,445458316,11546329536370,372667838641,11918997375011,0.065,0.18,750511.42,67080.21,817591.63,rankings_day
+2026-09-04,qwen/qwen3.5-9b-20260310,qwen/qwen3.5-9b,Qwen: Qwen3.5-9B,qwen,7599649,27753186336,5507750357,33260936693,0.1,0.15,2775.32,826.16,3601.48,rankings_day
+2026-09-04,google/gemma-4-31b-it-20260402,google/gemma-4-31b-it,Google: Gemma 4 31B,google,78119375,316154220153,26939052686,343093272839,0.09,0.34,28453.88,9159.28,37613.16,rankings_day
+2026-09-04,moonshotai/kimi-k3-20260715,moonshotai/kimi-k3,MoonshotAI: Kimi K3,moonshotai,29011255,1875024468250,29621521927,1904645990177,3.0,15.0,5625073.4,444322.83,6069396.23,rankings_day
+2026-09-04,openai/gpt-oss-120b,openai/gpt-oss-120b,OpenAI: gpt-oss-120b,openai,100497292,380799877935,56348653004,437148530939,0.037,0.17,14089.6,9579.27,23668.87,rankings_day
+2026-09-04,openai/gpt-oss-20b,openai/gpt-oss-20b,OpenAI: gpt-oss-20b,openai,126420024,402166829096,65503621320,467670450416,0.03,0.13,12065.0,8515.47,20580.47,rankings_day
+2026-09-04,qwen/qwen3.8-2.4t-a95b-20260812,qwen/qwen3.8-2.4t-a95b,Qwen: Qwen3.8 2.4T A95B,qwen,1041147,36937093198,3109641753,40046734951,2.0,6.0,73874.19,18657.85,92532.04,rankings_day
+2026-09-04,google/gemini-embedding-2,google/gemini-embedding-2,Google: Gemini Embedding 2 (batch),google,30476185,30277224430,0,30277224430,,,,,,rankings_day
+2026-09-04,z-ai/glm-5.3-flash-20260826,z-ai/glm-5.3-flash,Z.ai: GLM 5.3 Flash,z-ai,358558828,11862567007545,452136838469,12314703846014,0.075,0.25,889692.53,113034.21,1002726.74,rankings_day
+2026-09-04,meta/muse-glimmer-30b-20260810,meta/muse-glimmer-30b,Meta: Muse Glimmer 30B,meta,1857037,12584046147,1450011213,14034057360,0.3,1.1,3775.21,1595.01,5370.22,rankings_day
+2026-09-04,nvidia/nemotron-3.5-content-safety-20260604,nvidia/nemotron-3.5-content-safety,NVIDIA: Nemotron 3.5 Content Safety,nvidia,621948,1502329385,93999311,1596328696,0.2,0.2,300.47,18.8,319.27,rankings_day
+2026-09-04,thinkingmachines/inkling-small-20260730,thinkingmachines/inkling-small,Thinking Machines: Inkling Small,thinkingmachines,2005855,103481477169,983119087,104464596256,0.45,1.2,46566.66,1179.74,47746.4,rankings_day
+2026-09-04,tencent/hy4-preview-20260827,tencent/hy4-preview,Tencent: Hy4 preview,tencent,115694731,13442435456552,122883144541,13565318601093,0.834,2.501,11210991.17,307330.74,11518321.91,rankings_day
+2026-09-04,thenlper/gte-large-20251117,thenlper/gte-large,Thenlper: GTE-Large,thenlper,10424,7773876,0,7773876,,,,,,rankings_day
+2026-09-04,inclusionai/ling-3.0-flash-fin-20260827,inclusionai/ling-3.0-flash-fin,inclusionAI: Ling 3.0 Flash Fin,inclusionai,10626099,753797498869,10236597387,764034096256,0.06,0.18,45227.85,1842.59,47070.44,rankings_day
+2026-09-04,thinkingmachines/inkling-20260715,thinkingmachines/inkling,Thinking Machines: Inkling,thinkingmachines,4149031,263619680118,3238140735,266857820853,1.0,4.05,263619.68,13114.47,276734.15,rankings_day
+2026-09-04,tencent/hy-mt2-7b-20260521,tencent/hy-mt2-7b,Tencent: Hy-MT2-7B,tencent,440799,99131410,43825080,142956490,0.074,0.295,7.34,12.93,20.27,rankings_day
+2026-09-04,perplexity/pplx-embed-v1-0.6b,,perplexity/pplx-embed-v1-0.6b,Perplexity,5399,658019,0,658019,,,,,,rankings_day
+2026-09-04,qwen/qwen3.8-flash-20260826,qwen/qwen3.8-flash,Qwen: Qwen3.8 Flash,qwen,4611072,157787981056,5472476630,163260457686,0.15,0.47,23668.2,2572.06,26240.26,rankings_day
+2026-09-04,minimax/minimax-m2.7-20260318,minimax/minimax-m2.7,MiniMax: MiniMax M2.7,minimax,18618057,587973930339,19194651875,607168582214,0.3,1.2,176392.18,23033.58,199425.76,rankings_day
+2026-09-04,mistralai/devstral-2512,mistralai/devstral-2512,Mistral: Devstral 2 2512,mistralai,85329,2055568400,19380270,2074948670,0.4,2.0,822.23,38.76,860.99,rankings_day
+2026-09-04,relace/relace-search-20251208,relace/relace-search,Relace: Relace Search,relace,9994,13826966,984620,14811586,1.0,3.0,13.83,2.95,16.78,rankings_day
+2026-09-04,openai/text-embedding-3-large,openai/text-embedding-3-large,OpenAI: Text Embedding 3 Large (batch),openai,23079815,105484044904,0,105484044904,,,,,,rankings_day
+2026-09-04,tencent/hunyuan-a13b-instruct,tencent/hunyuan-a13b-instruct,Tencent: Hunyuan A13B Instruct,tencent,46690,63271732,43607159,106878891,0.14,0.57,8.86,24.86,33.72,rankings_day
+2026-09-04,minimax/minimax-m3-20260531,minimax/minimax-m3,MiniMax: MiniMax M3,minimax,99167207,6864720161169,70404464989,6935124626158,0.3,1.2,2059416.05,84485.36,2143901.41,rankings_day
+2026-09-04,meta/muse-image-1.0-eval-20260824,meta/muse-image,Meta: Muse Image,meta,143250,50257249,265917322,316174571,,,,,,rankings_day
+2026-09-04,google/lyria-3-pro-preview-20260330,google/lyria-3-pro-preview,Google: Lyria 3 Pro Preview,google,22625,46910150,3957834,50867984,0.0,0.0,0.0,0.0,0.0,rankings_day
+2026-09-04,amazon/nova-2-lite-v1,amazon/nova-2-lite-v1,Amazon: Nova 2 Lite,amazon,795276,1736697715,122810999,1859508714,0.3,2.5,521.01,307.03,828.04,rankings_day
+2026-09-04,sentence-transformers/paraphrase-minilm-l6-v2-20251117,sentence-transformers/paraphrase-minilm-l6-v2,Sentence Transformers: paraphrase-MiniLM-L6-v2,sentence-transformers,8662,18324122,0,18324122,,,,,,rankings_day
+2026-09-04,mistralai/mistral-saba-2502,mistralai/mistral-saba,Mistral: Saba,mistralai,45418,102036013,13809454,115845467,0.2,0.6,20.41,8.29,28.7,rankings_day
+2026-09-04,bytedance-seed/seed-1.6-20250625,bytedance-seed/seed-1.6,ByteDance Seed: Seed 1.6,bytedance-seed,83858,305522809,71400617,376923426,0.25,2.0,76.38,142.8,219.18,rankings_day
+2026-09-04,google/gemini-3.5-flash-lite-20260721,google/gemini-3.5-flash-lite,Google: Gemini 3.5 Flash Lite,google,44890225,152916294245,7176823271,160093117516,0.3,2.5,45874.89,17942.06,63816.95,rankings_day
+2026-09-04,tencent/hy-mt2-30b-a3b-20260521,tencent/hy-mt2-30b-a3b,Tencent: Hy-MT2-30B-A3B,tencent,417336,308007473,88401899,396409372,0.074,0.295,22.79,26.08,48.87,rankings_day
+2026-09-04,sourceful/riverflow-v2-pro-20260130,sourceful/riverflow-v2-pro,Sourceful: Riverflow V2 Pro,sourceful,1049,2978598,4379575,7358173,,,,,,rankings_day
+2026-09-04,mancer/weaver,mancer/weaver,Mancer: Weaver (alpha),mancer,7660,6342856,1919384,8262240,0.4,0.75,2.54,1.44,3.98,rankings_day
+2026-09-04,openai/gpt-5-pro-2025-10-06,openai/gpt-5-pro,OpenAI: GPT-5 Pro,openai,3233,13909891,4355051,18264942,15.0,120.0,208.65,522.61,731.26,rankings_day
+2026-09-04,black-forest-labs/flux.2-max,black-forest-labs/flux.2-max,Black Forest Labs: FLUX.2 Max,black-forest-labs,23823,47461645,290141861,337603506,,,,,,rankings_day
+2026-09-04,openai/gpt-5-nano-2025-08-07,openai/gpt-5-nano,OpenAI: GPT-5 Nano,openai,18772484,97040793220,17530730497,114571523717,0.05,0.4,4852.04,7012.29,11864.33,rankings_day
+2026-09-04,ibm-granite/granite-4.1-8b-20260429,ibm-granite/granite-4.1-8b,IBM: Granite 4.1 8B,ibm-granite,3779942,4685058209,610894679,5295952888,,,,,,rankings_day
+2026-09-04,qwen/qwen3-8b-04-28,qwen/qwen3-8b,Qwen: Qwen3 8B,qwen,2097395,9073365750,1873995246,10947360996,0.117,0.455,1061.58,852.67,1914.25,rankings_day
+2026-09-04,voyageai/rerank-2.5-lite-20260727,voyageai/rerank-2.5-lite,VoyageAI by MongoDB: rerank-2.5-lite,voyageai,537315,7403208765,0,7403208765,,,,,,rankings_day
+2026-09-04,z-ai/glm-4.5v,z-ai/glm-4.5v,Z.ai: GLM 4.5V,z-ai,124280,371643744,55424447,427068191,0.6,1.8,222.99,99.76,322.75,rankings_day
+2026-09-04,openai/o1-2024-12-17,openai/o1,OpenAI: o1,openai,20002,22699906,23852371,46552277,15.0,60.0,340.5,1431.14,1771.64,rankings_day
+2026-09-04,recraft/recraft-v4-vector-20260514,recraft/recraft-v4-vector,Recraft: Recraft V4 Vector,recraft,631,709373,2642775,3352148,,,,,,rankings_day
+2026-09-04,qwen/qwen-audio-3.0-tts-flash-20260723,qwen/qwen-audio-3.0-tts-flash,Qwen: Qwen-Audio-3.0-TTS Flash,qwen,17072,1290184,0,1290184,,,,,,rankings_day
+2026-09-04,z-ai/glm-5.3-20260816,z-ai/glm-5.3,Z.ai: GLM 5.3,z-ai,65205987,2581878578195,38810211109,2620688789304,1.4,4.4,3614630.01,170764.93,3785394.94,rankings_day
+2026-09-04,qwen/qwen3-embedding-4b,qwen/qwen3-embedding-4b,Qwen: Qwen3 Embedding 4B,qwen,5219792,17227006455,0,17227006455,,,,,,rankings_day
+2026-09-04,recraft/recraft-v4-styles-vector-20260826,recraft/recraft-v4-styles-vector,Recraft: Recraft V4 Styles Vector,recraft,476,105801,2434025,2539826,,,,,,rankings_day
+2026-09-04,openai/o3-pro-2025-06-10,openai/o3-pro,OpenAI: o3 Pro,openai,3688,11177656,1138353,12316009,20.0,80.0,223.55,91.07,314.62,rankings_day
+2026-09-04,qwen/qwen-plus-2025-07-28,qwen/qwen-plus-2025-07-28,Qwen: Qwen Plus 0728,qwen,538566,860605590,93211602,953817192,0.26,0.78,223.76,72.71,296.47,rankings_day
+2026-09-04,openai/gpt-4.1-nano-2025-04-14,openai/gpt-4.1-nano,OpenAI: GPT-4.1 Nano,openai,37156584,65627258868,4123543499,69750802367,0.1,0.4,6562.73,1649.42,8212.15,rankings_day
+2026-09-04,qwen/qwen3.5-27b-20260224,qwen/qwen3.5-27b,Qwen: Qwen3.5-27B,qwen,2799180,10558403758,673092085,11231495843,0.195,1.56,2058.89,1050.02,3108.91,rankings_day
+2026-09-04,recraft/recraft-v4-styles-20260826,recraft/recraft-v4-styles,Recraft: Recraft V4 Styles,recraft,620,104759,2663650,2768409,,,,,,rankings_day
+2026-09-04,mistralai/mistral-medium-3,mistralai/mistral-medium-3,Mistral: Mistral Medium 3,mistralai,91734,416624693,17439787,434064480,0.4,2.0,166.65,34.88,201.53,rankings_day
+2026-09-04,x-ai/grok-4.20-multi-agent-20260309,x-ai/grok-4.20-multi-agent,SpaceXAI: Grok 4.20 Multi-Agent,x-ai,30589,3386203827,510591911,3896795738,1.25,2.5,4232.75,1276.48,5509.23,rankings_day
+2026-09-04,voyageai/rerank-2.5-20260727,voyageai/rerank-2.5,VoyageAI by MongoDB: rerank-2.5,voyageai,3301338,9097036501,0,9097036501,,,,,,rankings_day
+2026-09-04,openai/gpt-5.6-luna-20260709,openai/gpt-5.6-luna,OpenAI: GPT-5.6 Luna,openai,368714756,11135284036732,159127743094,11294411779826,0.2,1.2,2227056.81,190953.29,2418010.1,rankings_day
+2026-09-04,perceptron/perceptron-mk1-20260512,perceptron/perceptron-mk1,Perceptron: Perceptron Mk1,perceptron,116617,220179029,11839607,232018636,0.15,1.5,33.03,17.76,50.79,rankings_day
+2026-09-04,bytedance-seed/seed-2.0-lite-20260309,bytedance-seed/seed-2.0-lite,ByteDance Seed: Seed-2.0-Lite,bytedance-seed,574750,1978156437,163185767,2141342204,0.25,2.0,494.54,326.37,820.91,rankings_day
+2026-09-04,deepseek/deepseek-v4-flash-vision-exp-20260821,deepseek/deepseek-v4-flash-vision-exp,DeepSeek: DeepSeek V4 Flash Vision Exp,deepseek,5087990,350333354348,4747468055,355080822403,0.22,0.66,77073.34,3133.33,80206.67,rankings_day
+2026-09-04,fish-audio/s2-pro-20260729,fish-audio/s2-pro,Fish Audio: S2 Pro,fish-audio,2497,102068,0,102068,,,,,,rankings_day
+2026-09-04,tencent/hy-mt2-1.8b-20260521,tencent/hy-mt2-1.8b,Tencent: Hy-MT2-1.8B,tencent,1705203,54492613,12098778,66591391,0.044,0.177,2.4,2.14,4.54,rankings_day
+2026-09-04,recraft/recraft-v4.1-pro-vector-20260514,recraft/recraft-v4.1-pro-vector,Recraft: Recraft V4.1 Pro Vector,recraft,871,256558,3853525,4110083,,,,,,rankings_day
+2026-09-04,qwen/qwen-plus-2025-01-25,qwen/qwen-plus,Qwen: Qwen-Plus,qwen,259159,1799733467,73103254,1872836721,0.26,0.78,467.93,57.02,524.95,rankings_day
+2026-09-04,mistralai/mistral-large-2407,mistralai/mistral-large-2407,Mistral Large 2407,mistralai,31630,87490035,16298751,103788786,2.0,6.0,174.98,97.79,272.77,rankings_day
+2026-09-04,cohere/command-r7b-12-2024,cohere/command-r7b-12-2024,Cohere: Command R7B (12-2024),cohere,127697,201267582,14007459,215275041,0.0375,0.15,7.55,2.1,9.65,rankings_day
+2026-09-04,upstage/solar-pro4-20260810,upstage/solar-pro4,Upstage: Solar Pro 4,upstage,83031675,975202560045,13899569691,989102129736,0.03,0.12,29256.08,1667.95,30924.03,rankings_day
+2026-09-04,microsoft/phi-4,microsoft/phi-4,Microsoft: Phi 4,microsoft,845821,659858111,102174773,762032884,0.07,0.14,46.19,14.3,60.49,rankings_day
+2026-09-04,perplexity/sonar-pro-search,perplexity/sonar-pro-search,Perplexity: Sonar Pro Search,perplexity,132995,322251527,144672811,466924338,3.0,15.0,966.75,2170.09,3136.84,rankings_day
+2026-09-04,arcee-ai/trinity-large-thinking,arcee-ai/trinity-large-thinking,Arcee AI: Trinity Large Thinking,arcee-ai,206147,763756909,43692133,807449042,0.25,0.8,190.94,34.95,225.89,rankings_day
+2026-09-04,qwen/qwen3.5-35b-a3b-20260224,qwen/qwen3.5-35b-a3b,Qwen: Qwen3.5-35B-A3B,qwen,2852860,14182137153,8697465156,22879602309,0.08,0.75,1134.57,6523.1,7657.67,rankings_day
+2026-09-04,sentence-transformers/multi-qa-mpnet-base-dot-v1-20251117,sentence-transformers/multi-qa-mpnet-base-dot-v1,Sentence Transformers: multi-qa-mpnet-base-dot-v1,sentence-transformers,387,711392,0,711392,,,,,,rankings_day
+2026-09-04,recraft/recraft-v4-pro-vector-20260514,recraft/recraft-v4-pro-vector,Recraft: Recraft V4 Pro Vector,recraft,378,179708,1590675,1770383,,,,,,rankings_day
+2026-09-04,cohere/command-a-03-2025,cohere/command-a,Cohere: Command A,cohere,133663,106731688,24359179,131090867,2.5,10.0,266.83,243.59,510.42,rankings_day
+2026-09-04,qwen/qwen3-next-80b-a3b-thinking-2509,qwen/qwen3-next-80b-a3b-thinking,Qwen: Qwen3 Next 80B A3B Thinking,qwen,43625,86316114,181988173,268304287,0.15,1.2,12.95,218.39,231.34,rankings_day
+2026-09-04,minimax/speech-2.8-turbo-20260716,minimax/speech-2.8-turbo,MiniMax: Speech 2.8 Turbo,minimax,14675,360407,0,360407,,,,,,rankings_day
+2026-09-04,voyageai/voyage-code-4-20260812,voyageai/voyage-code-4,VoyageAI by MongoDB: voyage-code-4,voyageai,56320,426058762,0,426058762,,,,,,rankings_day
+2026-09-04,openai/o3-mini-2025-01-31,openai/o3-mini,OpenAI: o3 Mini,openai,69849,255507454,53679226,309186680,1.1,4.4,281.06,236.19,517.25,rankings_day
+2026-09-04,voyageai/voyage-4-lite-20260727,voyageai/voyage-4-lite,VoyageAI by MongoDB: voyage-4-lite,voyageai,557210,961724459,0,961724459,,,,,,rankings_day
+2026-09-04,qwen/qwen3-vl-8b-thinking,qwen/qwen3-vl-8b-thinking,Qwen: Qwen3 VL 8B Thinking,qwen,15428,23190260,45194429,68384689,0.18,2.1,4.17,94.91,99.08,rankings_day
+2026-09-04,openai/gpt-3.5-turbo,openai/gpt-3.5-turbo,OpenAI: GPT-3.5 Turbo,openai,880518,561333140,70486276,631819416,0.5,1.5,280.67,105.73,386.4,rankings_day
+2026-09-04,google/gemini-3.6-flash-20260721,google/gemini-3.6-flash,Google: Gemini 3.6 Flash,google,12696644,166688556449,12581816289,179270372738,0.75,3.75,125016.42,47181.81,172198.23,rankings_day
+2026-09-04,google/gemini-3.1-pro-preview-20260219,google/gemini-3.1-pro-preview,Google: Gemini 3.1 Pro Preview,google,15142220,199060079916,24231918599,223291998515,2.0,12.0,398120.16,290783.02,688903.18,rankings_day
+2026-09-04,anthropic/claude-3-haiku,anthropic/claude-3-haiku,Anthropic: Claude 3 Haiku,anthropic,1123583,3163254704,194227258,3357481962,0.25,1.25,790.81,242.78,1033.59,rankings_day
+2026-09-04,sakana/fugu-ultra-20260615,sakana/fugu-ultra,Sakana: Fugu Ultra,sakana,9935,1088806410,18461384,1107267794,5.0,30.0,5444.03,553.84,5997.87,rankings_day
+2026-09-04,openai/gpt-audio,openai/gpt-audio,OpenAI: GPT Audio,openai,58357,26379875,15517601,41897476,2.5,10.0,65.95,155.18,221.13,rankings_day
+2026-09-04,z-ai/glm-4.5,z-ai/glm-4.5,Z.ai: GLM 4.5,z-ai,99453,916487134,263854619,1180341753,0.6,2.2,549.89,580.48,1130.37,rankings_day
+2026-09-04,qwen/qwen3-30b-a3b-04-28,qwen/qwen3-30b-a3b,Qwen: Qwen3 30B A3B,qwen,980400,2181836069,547867268,2729703337,0.12,0.5,261.82,273.93,535.75,rankings_day
+2026-09-04,deepgram/aura-2-20260716,deepgram/aura-2,Deepgram: Aura-2,deepgram,42284,905651,0,905651,,,,,,rankings_day
+2026-09-04,google/gemma-3-27b-it,google/gemma-3-27b-it,Google: Gemma 3 27B,google,29473410,43027907385,14903701655,57931609040,0.08,0.45,3442.23,6706.67,10148.9,rankings_day
+2026-09-04,ibm-granite/granite-4.0-h-micro,ibm-granite/granite-4.0-h-micro,IBM: Granite 4.0 Micro,ibm-granite,928880,1933975494,404404433,2338379927,0.017,0.112,32.88,45.29,78.17,rankings_day
+2026-09-04,qwen/qwen-audio-3.0-tts-plus-20260723,qwen/qwen-audio-3.0-tts-plus,Qwen: Qwen-Audio-3.0-TTS Plus,qwen,27626,623284,0,623284,,,,,,rankings_day
+2026-09-04,qwen/qwen3.5-plus-20260216,qwen/qwen3.5-plus-02-15,Qwen: Qwen3.5 Plus 2026-02-15,qwen,195483,2395744613,427668085,2823412698,0.26,1.56,622.89,667.16,1290.05,rankings_day
+2026-09-04,google/gemini-3.1-flash-lite-20260507,google/gemini-3.1-flash-lite,Google: Gemini 3.1 Flash Lite,google,94185461,420682446826,22383921098,443066367924,0.25,1.5,105170.61,33575.88,138746.49,rankings_day
+2026-09-04,minimax/minimax-m1,minimax/minimax-m1,MiniMax: MiniMax M1,minimax,22466,73046247,12745056,85791303,0.55,2.2,40.18,28.04,68.22,rankings_day
+2026-09-04,openai/gpt-5-image-mini,openai/gpt-5-image-mini,OpenAI: GPT-5 Image Mini,openai,39911,96826886,145443536,242270422,2.5,2.0,242.07,290.89,532.96,rankings_day
+2026-09-04,dots-studio/dots-3-note-preview-20260813,dots-studio/dots-3-note-preview,Dots Studio: Dots3-Note Preview (free),dots-studio,4374478,179273915076,6087230722,185361145798,,,,,,rankings_day
+2026-09-04,recraft/recraft-v4-styles-pro-20260826,recraft/recraft-v4-styles-pro,Recraft: Recraft V4 Styles Pro,recraft,1668,223183,7026525,7249708,,,,,,rankings_day
+2026-09-04,qwen/qwen3-max-thinking-20260123,qwen/qwen3-max-thinking,Qwen: Qwen3 Max Thinking,qwen,52474,537889269,11231486,549120755,0.78,3.9,419.55,43.8,463.35,rankings_day
+2026-09-04,qwen/qwen3.6-flash,qwen/qwen3.6-flash,Qwen: Qwen3.6 Flash,qwen,2124448,18228014751,1184443947,19412458698,0.1875,1.125,3417.75,1332.5,4750.25,rankings_day
+2026-09-04,x-ai/grok-imagine-image-2.0-20260811,x-ai/grok-imagine-image-2.0,xAI: Grok Imagine Image 2.0,x-ai,92655,87137597,275099100,362236697,,,,,,rankings_day
+2026-09-04,openai/text-embedding-ada-002,openai/text-embedding-ada-002,OpenAI: Text Embedding Ada 002 (batch),openai,3910761,1195995601,0,1195995601,,,,,,rankings_day
+2026-09-04,sentence-transformers/all-mpnet-base-v2-20251117,sentence-transformers/all-mpnet-base-v2,Sentence Transformers: all-mpnet-base-v2,sentence-transformers,64139,513774810,0,513774810,,,,,,rankings_day
+2026-09-04,qwen/qwen3-vl-32b-instruct,qwen/qwen3-vl-32b-instruct,Qwen: Qwen3 VL 32B Instruct,qwen,6948140,16236685227,1488937762,17725622989,0.104,0.416,1688.62,619.4,2308.02,rankings_day
+2026-09-04,openai/gpt-5.2-pro-20251211,openai/gpt-5.2-pro,OpenAI: GPT-5.2 Pro,openai,11502,28835383,4526758,33362141,21.0,168.0,605.54,760.5,1366.04,rankings_day
+2026-09-04,minimax/speech-2.8-hd-20260716,minimax/speech-2.8-hd,MiniMax: Speech 2.8 HD,minimax,10162,256312,0,256312,,,,,,rankings_day
+2026-09-04,microsoft/mai-voice-2-flash-20260723,microsoft/mai-voice-2-flash,Microsoft: MAI-Voice-2-Flash,microsoft,22440,892761,0,892761,,,,,,rankings_day
+2026-09-04,baai/bge-m3-20251117,baai/bge-m3,BAAI: bge-m3,baai,19447886,29549205351,0,29549205351,,,,,,rankings_day
+2026-09-04,nvidia/nemotron-3.5-lightning-20260807,nvidia/nemotron-3.5-lightning,NVIDIA: Nemotron 3.5 Lightning,nvidia,18343810,1128053246584,14904474539,1142957721123,0.08,0.2,90244.26,2980.89,93225.15,rankings_day
+2026-09-04,intfloat/e5-base-v2-20251117,intfloat/e5-base-v2,Intfloat: E5-Base-v2,intfloat,9951,4819654,0,4819654,,,,,,rankings_day
+2026-09-04,openai/gpt-4o-mini-transcribe,openai/gpt-4o-mini-transcribe,OpenAI: GPT-4o Mini Transcribe,openai,669273,215464916,60351414,275816330,,,,,,rankings_day
+2026-09-04,qwen/qwen3.6-27b-20260422,qwen/qwen3.6-27b,Qwen: Qwen3.6 27B,qwen,3937453,32554279562,3125593706,35679873268,0.3,2.0,9766.28,6251.19,16017.47,rankings_day
+2026-09-04,openai/gpt-5.2-chat-20251211,openai/gpt-5.2-chat,OpenAI: GPT-5.2 Chat,openai,84,638876,89614,728490,1.75,14.0,1.12,1.25,2.37,rankings_day
+2026-09-04,nousresearch/hermes-3-llama-3.1-405b,nousresearch/hermes-3-llama-3.1-405b,Nous: Hermes 3 405B Instruct,nousresearch,305571,612188182,33784366,645972548,1.0,1.0,612.19,33.78,645.97,rankings_day
+2026-09-04,anthropic/claude-4.6-sonnet-20260217,anthropic/claude-sonnet-4.6,Anthropic: Claude Sonnet 4.6,anthropic,29552122,941220922258,14446713380,955667635638,3.0,15.0,2823662.77,216700.7,3040363.47,rankings_day
+2026-09-04,meta/muse-spark-1.1-20260709,meta/muse-spark-1.1,Meta: Muse Spark 1.1,meta,832736,22845592759,643642984,23489235743,1.25,4.25,28556.99,2735.48,31292.47,rankings_day
+2026-09-04,perplexity/pplx-embed-v1-4B,perplexity/pplx-embed-v1-4b,Perplexity: Embed V1 4B,perplexity,1905542,1230780884,0,1230780884,,,,,,rankings_day
+2026-09-04,google/gemini-3.1-flash-tts-preview,google/gemini-3.1-flash-tts-preview,Google: Gemini 3.1 Flash TTS Preview,google,1367932,82413731,229112980,311526711,,,,,,rankings_day
+2026-09-04,deepseek/deepseek-chat-v3-0324,deepseek/deepseek-chat-v3-0324,DeepSeek: DeepSeek V3 0324,deepseek,7473602,28841649578,1419738595,30261388173,0.25,1.0,7210.41,1419.74,8630.15,rankings_day
+2026-09-04,openai/gpt-5-image,openai/gpt-5-image,OpenAI: GPT-5 Image,openai,19515,24253645,73687312,97940957,10.0,10.0,242.54,736.87,979.41,rankings_day
+2026-09-04,openai/gpt-5.4-pro-20260305,openai/gpt-5.4-pro,OpenAI: GPT-5.4 Pro,openai,16085,37893585,5906609,43800194,30.0,180.0,1136.81,1063.19,2200.0,rankings_day
+2026-09-04,z-ai/glm-4.5-air,z-ai/glm-4.5-air,Z.ai: GLM 4.5 Air,z-ai,633983,4014172713,236251206,4250423919,0.13,0.85,521.84,200.81,722.65,rankings_day
+2026-09-04,qwen/qwen3-32b-04-28,qwen/qwen3-32b,Qwen: Qwen3 32B,qwen,14113188,31493562744,4456162960,35949725704,0.08,0.28,2519.49,1247.73,3767.22,rankings_day
+2026-09-04,openai/gpt-4.1-2025-04-14,openai/gpt-4.1,OpenAI: GPT-4.1,openai,10930303,62624241378,2192142618,64816383996,2.0,8.0,125248.48,17537.14,142785.62,rankings_day
+2026-09-04,openai/gpt-5.4-mini-20260317,openai/gpt-5.4-mini,OpenAI: GPT-5.4 Mini,openai,20665579,106211239470,5064532512,111275771982,0.75,4.5,79658.43,22790.4,102448.83,rankings_day
+2026-09-04,google/gemini-3.1-flash-lite-preview-20260303,google/gemini-3.1-flash-lite-preview,Google: Gemini 3.1 Flash Lite Preview,google,38934152,101537060514,5265491091,106802551605,0.25,1.5,25384.27,7898.24,33282.51,rankings_day
+2026-09-04,google/gemini-3-flash-preview-20251217,google/gemini-3-flash-preview,Google: Gemini 3 Flash Preview,google,98734198,797132187037,33000292779,830132479816,0.5,3.0,398566.09,99000.88,497566.97,rankings_day
+2026-09-04,mistralai/mistral-large,mistralai/mistral-large,Mistral Large,mistralai,99501,306907404,38327806,345235210,2.0,6.0,613.81,229.97,843.78,rankings_day
+2026-09-04,recraft/recraft-v4-styles-pro-vector-20260826,recraft/recraft-v4-styles-pro-vector,Recraft: Recraft V4 Styles Pro Vector,recraft,197,41204,868400,909604,,,,,,rankings_day
+2026-09-04,openai/gpt-4-turbo,openai/gpt-4-turbo,OpenAI: GPT-4 Turbo,openai,55819,40958397,4272789,45231186,10.0,30.0,409.58,128.18,537.76,rankings_day
+2026-09-04,thedrummer/cydonia-24b-v4.1,thedrummer/cydonia-24b-v4.1,TheDrummer: Cydonia 24B V4.1,thedrummer,412688,1338559464,75339724,1413899188,0.3,0.5,401.57,37.67,439.24,rankings_day
+2026-09-04,minimax/minimax-m2-her-20260123,minimax/minimax-m2-her,MiniMax: MiniMax M2-her,minimax,157398,868576610,9935572,878512182,0.3,1.2,260.57,11.92,272.49,rankings_day
+2026-09-04,nvidia/nemotron-3-nano-30b-a3b,nvidia/nemotron-3-nano-30b-a3b,NVIDIA: Nemotron 3 Nano 30B A3B,nvidia,770682,2910489791,859753131,3770242922,0.05,0.2,145.52,171.95,317.47,rankings_day
+2026-09-04,sourceful/riverflow-v2.5-pro-20260605,sourceful/riverflow-v2.5-pro,Sourceful: Riverflow V2.5 Pro,sourceful,3433,3925730,14332775,18258505,,,,,,rankings_day
+2026-09-04,sao10k/l3.1-euryale-70b,sao10k/l3.1-euryale-70b,Sao10K: Llama 3.1 Euryale 70B v2.2,sao10k,73466,260354994,12150733,272505727,0.85,0.85,221.3,10.33,231.63,rankings_day
+2026-09-04,qwen/qwen3-vl-30b-a3b-instruct,qwen/qwen3-vl-30b-a3b-instruct,Qwen: Qwen3 VL 30B A3B Instruct,qwen,7397393,8177700887,759081971,8936782858,0.15,0.6,1226.66,455.45,1682.11,rankings_day
+2026-09-04,microsoft/mai-image-2.5-pro-20260723,microsoft/mai-image-2.5-pro,Microsoft: MAI-Image-2.5 Pro,microsoft,8458,9770521,8463695,18234216,,,,,,rankings_day
+2026-09-04,openai/gpt-5.2-20251211,openai/gpt-5.2,OpenAI: GPT-5.2,openai,4240038,26553909482,1597542785,28151452267,1.75,14.0,46469.34,22365.6,68834.94,rankings_day
+2026-09-04,openai/o3-mini-high-2025-01-31,openai/o3-mini-high,OpenAI: o3 Mini High,openai,3062,5759640,1423650,7183290,1.1,4.4,6.34,6.26,12.6,rankings_day
+2026-09-04,moonshotai/kimi-k2-thinking-20251106,moonshotai/kimi-k2-thinking,MoonshotAI: Kimi K2 Thinking,moonshotai,265466,2068346342,586293764,2654640106,0.6,2.5,1241.01,1465.73,2706.74,rankings_day
+2026-09-04,cohere/north-mini-code-20260617,cohere/north-mini-code,Cohere: North Mini Code (free),cohere,3962902,95428921072,4626017684,100054938756,,,,,,rankings_day
+2026-09-04,hexgrad/kokoro-82m,hexgrad/kokoro-82m,hexgrad: Kokoro 82M,hexgrad,545176,83219271,0,83219271,,,,,,rankings_day
+2026-09-04,aion-labs/aion-3.0-mini-20260707,aion-labs/aion-3.0-mini,AionLabs: Aion-3.0-Mini,aion-labs,184530,1940024490,174515645,2114540135,0.7,1.4,1358.02,244.32,1602.34,rankings_day
+2026-09-04,sao10k/l3-lunaris-8b,sao10k/l3-lunaris-8b,Sao10K: Llama 3 8B Lunaris,sao10k,2694904,6358383131,456054031,6814437162,0.04,0.05,254.34,22.8,277.14,rankings_day
+2026-09-04,fish-audio/s2.1-pro-20260729,fish-audio/s2.1-pro,Fish Audio: S2.1 Pro,fish-audio,77414,3103165,0,3103165,,,,,,rankings_day
+2026-09-04,moonshotai/kimi-k2.6-20260420,moonshotai/kimi-k2.6,MoonshotAI: Kimi K2.6,moonshotai,9181888,174536569942,11685652783,186222222725,0.95,4.0,165809.74,46742.61,212552.35,rankings_day
+2026-09-04,baai/bge-large-en-v1.5-20251117,baai/bge-large-en-v1.5,BAAI: bge-large-en-v1.5,baai,88717,59390722,0,59390722,,,,,,rankings_day
+2026-09-04,voyageai/voyage-4-large-20260727,voyageai/voyage-4-large,VoyageAI by MongoDB: voyage-4-large,voyageai,1222755,4789319764,0,4789319764,,,,,,rankings_day
+2026-09-04,sourceful/riverflow-v2.5-fast-20260605,sourceful/riverflow-v2.5-fast,Sourceful: Riverflow V2.5 Fast,sourceful,6720,1851700,28056000,29907700,,,,,,rankings_day
+2026-09-04,qwen/qwen3-vl-235b-a22b-instruct,qwen/qwen3-vl-235b-a22b-instruct,Qwen: Qwen3 VL 235B A22B Instruct,qwen,4748875,18093775621,1052868816,19146644437,0.21,1.9,3799.69,2000.45,5800.14,rankings_day
+2026-09-04,google/gemini-2.5-flash,google/gemini-2.5-flash,Google: Gemini 2.5 Flash,google,130280270,457356144135,32421807792,489777951927,0.3,2.5,137206.84,81054.52,218261.36,rankings_day
+2026-09-04,voyageai/voyage-multimodal-3.5-20260727,voyageai/voyage-multimodal-3.5,VoyageAI by MongoDB: voyage-multimodal-3.5,voyageai,257413,137843547,0,137843547,,,,,,rankings_day
+2026-09-04,writer/palmyra-x5-20250428,writer/palmyra-x5,Writer: Palmyra X5,writer,10730,28983009,3037563,32020572,0.6,6.0,17.39,18.23,35.62,rankings_day
+2026-09-04,openai/gpt-4o-2024-11-20,openai/gpt-4o-2024-11-20,OpenAI: GPT-4o (2024-11-20),openai,495037,2916711626,59703135,2976414761,2.5,10.0,7291.78,597.03,7888.81,rankings_day
+2026-09-04,mistralai/voxtral-mini-transcribe-2602,mistralai/voxtral-mini-transcribe,Mistral: Voxtral Mini Transcribe,mistralai,331761,1596375,14184814,15781189,,,,,,rankings_day
+2026-09-04,intfloat/e5-large-v2-20251117,intfloat/e5-large-v2,Intfloat: E5-Large-v2,intfloat,267011,102257630,0,102257630,,,,,,rankings_day
+2026-09-04,openai/gpt-4o-2024-08-06,openai/gpt-4o-2024-08-06,OpenAI: GPT-4o (2024-08-06),openai,1408643,1832019653,83109501,1915129154,2.5,10.0,4580.05,831.1,5411.15,rankings_day
+2026-09-04,openai/gpt-5.1-codex-mini-20251113,openai/gpt-5.1-codex-mini,OpenAI: GPT-5.1-Codex-Mini,openai,76865,2129797134,143279112,2273076246,0.25,2.0,532.45,286.56,819.01,rankings_day
+2026-09-04,openai/o4-mini-2025-04-16,openai/o4-mini,OpenAI: o4 Mini,openai,405779,2326957395,334999332,2661956727,1.1,4.4,2559.65,1474.0,4033.65,rankings_day
+2026-09-04,openai/gpt-5.4-nano-20260317,openai/gpt-5.4-nano,OpenAI: GPT-5.4 Nano,openai,28240503,130212388894,6025261452,136237650346,0.2,1.25,26042.48,7531.58,33574.06,rankings_day
+2026-09-04,black-forest-labs/flux.2-pro,black-forest-labs/flux.2-pro,Black Forest Labs: FLUX.2 Pro,black-forest-labs,150577,419930565,625392342,1045322907,,,,,,rankings_day
+2026-09-04,bytedance-seed/seedream-5-0-pro-20260812,bytedance-seed/seedream-5-0-pro,ByteDance Seed: Seedream 5.0 Pro,bytedance-seed,46138,20328243,482369322,502697565,,,,,,rankings_day
+2026-09-04,qwen/qwen3-coder-480b-a35b-07-25,qwen/qwen3-coder,Qwen: Qwen3 Coder 480B A35B,qwen,755541,15118559771,146961106,15265520877,0.3,1.0,4535.57,146.96,4682.53,rankings_day
+2026-09-04,stepfun/step-3.7-flash-20260528,stepfun/step-3.7-flash,StepFun: Step 3.7 Flash,stepfun,8432443,467079613350,9052946504,476132559854,0.2,1.15,93415.92,10410.89,103826.81,rankings_day
+2026-09-04,openai/gpt-4.1-mini-2025-04-14,openai/gpt-4.1-mini,OpenAI: GPT-4.1 Mini,openai,40744004,76148923665,5337648422,81486572087,0.4,1.6,30459.57,8540.24,38999.81,rankings_day
+2026-09-04,bytedance-seed/seed-2-1-turbo-20260810,bytedance-seed/seed-2-1-turbo,ByteDance Seed: Seed 2.1 Turbo,bytedance-seed,95989,1087974408,216518754,1304493162,0.5,2.5,543.99,541.3,1085.29,rankings_day
+2026-09-04,minimax/minimax-m2.1,minimax/minimax-m2.1,MiniMax: MiniMax M2.1,minimax,60939,527156936,87251843,614408779,0.3,1.2,158.15,104.7,262.85,rankings_day
+2026-09-04,microsoft/wizardlm-2-8x22b,microsoft/wizardlm-2-8x22b,WizardLM-2 8x22B,microsoft,151670,996523230,25033133,1021556363,0.62,0.62,617.84,15.52,633.36,rankings_day
+2026-09-04,inclusionai/ling-3.0-flash-20260723,inclusionai/ling-3.0-flash,inclusionAI: Ling 3.0 Flash,inclusionai,16003369,71726575743,10099022472,81825598215,0.021,0.063,1506.26,636.24,2142.5,rankings_day
+2026-09-04,perplexity/sonar,perplexity/sonar,Perplexity: Sonar,perplexity,2474246,1639609688,721942040,2361551728,1.0,1.0,1639.61,721.94,2361.55,rankings_day
+2026-09-04,qwen/qwen-2.5-7b-instruct,qwen/qwen-2.5-7b-instruct,Qwen: Qwen2.5 7B Instruct,qwen,5571587,5086958562,507508785,5594467347,0.1,0.2,508.7,101.5,610.2,rankings_day
+2026-09-04,recraft/recraft-v4.1-20260514,recraft/recraft-v4.1,Recraft: Recraft V4.1,recraft,6735,2274743,28248050,30522793,,,,,,rankings_day
+2026-09-04,undi95/remm-slerp-l2-13b,undi95/remm-slerp-l2-13b,ReMM SLERP 13B,undi95,55892,99613267,6625357,106238624,0.35,0.65,34.86,4.31,39.17,rankings_day
+2026-09-04,z-ai/glm-4.7-20251222,z-ai/glm-4.7,Z.ai: GLM 4.7,z-ai,3555951,43742162490,2405891097,46148053587,0.4,1.75,17496.86,4210.31,21707.17,rankings_day
+2026-09-04,meta/muse-spark-1.2-contributor-20260805,meta/muse-spark-1.2-contributor,Meta: Muse Spark 1.2 Contributor,meta,5469761,249341536212,8138936764,257480472976,0.1,0.2,24934.15,1627.79,26561.94,rankings_day
+2026-09-04,anthropic/claude-4-opus-20250522,anthropic/claude-opus-4,Anthropic: Claude Opus 4,anthropic,44026,559470780,14761518,574232298,15.0,75.0,8392.06,1107.11,9499.17,rankings_day
+2026-09-04,qwen/qwen3-14b-04-28,qwen/qwen3-14b,Qwen: Qwen3 14B,qwen,2473154,4315252109,1476408891,5791661000,0.12,0.24,517.83,354.34,872.17,rankings_day
+2026-09-04,anthropic/claude-sonnet-5-20260630,anthropic/claude-sonnet-5,Anthropic: Claude Sonnet 5,anthropic,25187777,1274214827822,22766816070,1296981643892,2.0,10.0,2548429.66,227668.16,2776097.82,rankings_day
+2026-09-04,qwen/qwen3.5-flash-20260224,qwen/qwen3.5-flash-02-23,Qwen: Qwen3.5-Flash,qwen,32187508,63665769190,5019452299,68685221489,0.065,0.26,4138.27,1305.06,5443.33,rankings_day
+2026-09-04,openai/gpt-4o,openai/gpt-4o,OpenAI: GPT-4o,openai,5516712,13639930670,789062241,14428992911,2.5,10.0,34099.83,7890.62,41990.45,rankings_day
+2026-09-04,google/gemini-3.1-flash-image-20260528,google/gemini-3.1-flash-image,Google: Nano Banana 2 (Gemini 3.1 Flash Image),google,1509548,2322315005,1680345367,4002660372,0.5,3.0,1161.16,5041.04,6202.2,rankings_day
+2026-09-04,google/gemini-3-pro-image-20260528,google/gemini-3-pro-image,Google: Nano Banana Pro (Gemini 3 Pro Image),google,294985,480790191,351582775,832372966,2.0,12.0,961.58,4218.99,5180.57,rankings_day
+2026-09-04,qwen/qwen3-coder-30b-a3b-instruct,qwen/qwen3-coder-30b-a3b-instruct,Qwen: Qwen3 Coder 30B A3B Instruct,qwen,836020,5445558262,218392907,5663951169,0.07,0.28,381.19,61.15,442.34,rankings_day
+2026-09-04,mistralai/mistral-embed-2312,mistralai/mistral-embed-2312,Mistral: Mistral Embed 2312,mistralai,1530499,6992186357,0,6992186357,,,,,,rankings_day
+2026-09-04,qwen/qwen3-embedding-8b,qwen/qwen3-embedding-8b,Qwen: Qwen3 Embedding 8B,qwen,48025110,112081621147,0,112081621147,,,,,,rankings_day
+2026-09-04,x-ai/grok-voice-tts-1.0,x-ai/grok-voice-tts-1.0,SpaceXAI: Grok Voice TTS 1.0,x-ai,172429,9356086,0,9356086,,,,,,rankings_day
+2026-09-04,meta-llama/llama-4-maverick-17b-128e-instruct,meta-llama/llama-4-maverick,Meta: Llama 4 Maverick,meta-llama,10095732,18735469433,1124132037,19859601470,0.2,0.696,3747.09,782.4,4529.49,rankings_day
+2026-09-04,thedrummer/unslopnemo-12b,thedrummer/unslopnemo-12b,TheDrummer: UnslopNemo 12B,thedrummer,126635,543456946,27723837,571180783,0.4,0.4,217.38,11.09,228.47,rankings_day
+2026-09-04,openai/gpt-5.4-image-2-20260421,openai/gpt-5.4-image-2,OpenAI: GPT-5.4 Image 2,openai,257939,868758316,822644435,1691402751,8.0,15.0,6950.07,12339.67,19289.74,rankings_day
+2026-09-04,qwen/qwen3.5-plus-20260420,qwen/qwen3.5-plus-20260420,Qwen: Qwen3.5 Plus 2026-04-20,qwen,76869,1363221383,98119149,1461340532,0.3,1.8,408.97,176.61,585.58,rankings_day
+2026-09-04,deepseek/deepseek-r1-0528,deepseek/deepseek-r1-0528,DeepSeek: R1 0528,deepseek,1091595,9657070638,1439781589,11096852227,0.5,2.15,4828.54,3095.53,7924.07,rankings_day
+2026-09-04,openai/gpt-5.6-sol-pro-20260709,openai/gpt-5.6-sol-pro,OpenAI: GPT-5.6 Sol Pro,openai,724007,135309524898,2039575785,137349100683,2.0,10.0,270619.05,20395.76,291014.81,rankings_day
+2026-09-04,qwen/qwen3.7-flash-20260727,qwen/qwen3.7-flash,Qwen: Qwen3.7 Flash,qwen,38810008,150469924308,35630323894,186100248202,0.03,0.13,4514.1,4631.94,9146.04,rankings_day
+2026-09-04,qwen/qwen-image-3-pro-20260805,qwen/qwen-image-3-pro,Qwen: Qwen Image 3 Pro,qwen,12922,5501380,54241600,59742980,,,,,,rankings_day
+2026-09-04,qwen/qwen3-30b-a3b-thinking-2507,qwen/qwen3-30b-a3b-thinking-2507,Qwen: Qwen3 30B A3B Thinking 2507,qwen,56872,433371231,95224051,528595282,0.2,2.4,86.67,228.54,315.21,rankings_day
+2026-09-04,nousresearch/hermes-4-405b,nousresearch/hermes-4-405b,Nous: Hermes 4 405B,nousresearch,159485,589139304,41278336,630417640,1.0,3.0,589.14,123.84,712.98,rankings_day
+2026-09-04,openai/gpt-4o-mini-2024-07-18,openai/gpt-4o-mini-2024-07-18,OpenAI: GPT-4o-mini (2024-07-18),openai,4921280,6268287123,416965901,6685253024,0.15,0.6,940.24,250.18,1190.42,rankings_day
+2026-09-04,openai/o4-mini-high-2025-04-16,openai/o4-mini-high,OpenAI: o4 Mini High,openai,15427,101090887,17572515,118663402,1.1,4.4,111.2,77.32,188.52,rankings_day
+2026-09-04,nvidia/nemotron-3-nano-omni-30b-a3b-reasoning-20260428,nvidia/nemotron-3-nano-omni-30b-a3b-reasoning,NVIDIA: Nemotron 3 Nano Omni (free),nvidia,1813112,33562757947,4043721924,37606479871,,,,,,rankings_day
+2026-09-04,gryphe/mythomax-l2-13b,gryphe/mythomax-l2-13b,MythoMax 13B,gryphe,530306,595098418,82117206,677215624,0.06,0.06,35.71,4.93,40.64,rankings_day
+2026-09-04,qwen/qwen3-reranker-8b,qwen/qwen3-reranker-8b,Qwen3 Reranker 8B,qwen,309077,4106591180,0,4106591180,,,,,,rankings_day
+2026-09-04,z-ai/glm-4.6,z-ai/glm-4.6,Z.ai: GLM 4.6,z-ai,1098206,12946690896,717762750,13664453646,0.55,2.2,7120.68,1579.08,8699.76,rankings_day
+2026-09-04,openai/text-embedding-3-small,openai/text-embedding-3-small,OpenAI: Text Embedding 3 Small (batch),openai,130439509,157155085906,0,157155085906,,,,,,rankings_day
+2026-09-04,recraft/recraft-v4.1-vector-20260514,recraft/recraft-v4.1-vector,Recraft: Recraft V4.1 Vector,recraft,2154,424555,9289375,9713930,,,,,,rankings_day
+2026-09-04,recraft/recraft-v4-pro-20260413,recraft/recraft-v4-pro,Recraft: Recraft V4 Pro,recraft,946,547906,3949550,4497456,,,,,,rankings_day
+2026-09-04,krea/krea-2-medium-turbo-20260720,krea/krea-2-medium-turbo,Krea: Krea 2 Medium Turbo,krea,25032,4696201,104508600,109204801,,,,,,rankings_day
+2026-09-04,morph/morph-v3-fast,morph/morph-v3-fast,Morph: Morph V3 Fast,morph,12217,63707510,60815873,124523383,0.8,1.2,50.97,72.98,123.95,rankings_day
+2026-09-04,qwen/qwen3-vl-8b-instruct,qwen/qwen3-vl-8b-instruct,Qwen: Qwen3 VL 8B Instruct,qwen,11613869,13397812354,736386286,14134198640,0.117,0.455,1567.54,335.06,1902.6,rankings_day
+2026-09-04,cohere/command-r-08-2024,cohere/command-r-08-2024,Cohere: Command R (08-2024),cohere,105599,136555704,16689943,153245647,0.15,0.6,20.48,10.01,30.49,rankings_day
+2026-09-04,openai/gpt-5.1-20251113,openai/gpt-5.1,OpenAI: GPT-5.1,openai,2927394,20822915594,847962118,21670877712,1.25,10.0,26028.64,8479.62,34508.26,rankings_day
+2026-09-04,openai/gpt-chat-latest-20260505,openai/gpt-chat-latest,OpenAI: GPT Chat Latest,openai,137359,1419570555,30804687,1450375242,5.0,30.0,7097.85,924.14,8021.99,rankings_day
+2026-09-04,google/gemini-3.1-flash-lite-image-20260630,google/gemini-3.1-flash-lite-image,Google: Nano Banana 2 Lite (Gemini 3.1 Flash Lite Image),google,1256012,1625092625,1471338926,3096431551,0.25,1.5,406.27,2207.01,2613.28,rankings_day
+2026-09-04,moonshotai/kimi-k2,moonshotai/kimi-k2,MoonshotAI: Kimi K2 0711,moonshotai,731398,2961593582,235748763,3197342345,0.57,2.3,1688.11,542.22,2230.33,rankings_day
+2026-09-04,openai/gpt-5.6-sol-20260709,openai/gpt-5.6-sol,OpenAI: GPT-5.6 Sol,openai,30035637,1802160771183,21424506735,1823585277918,2.0,10.0,3604321.54,214245.07,3818566.61,rankings_day
+2026-09-04,google/gemini-2.5-pro,google/gemini-2.5-pro,Google: Gemini 2.5 Pro,google,5564457,47117756195,6765976786,53883732981,1.25,10.0,58897.2,67659.77,126556.97,rankings_day
+2026-09-04,mistralai/ministral-8b-2512,mistralai/ministral-8b-2512,Mistral: Ministral 3 8B 2512,mistralai,3563751,4835082911,591881601,5426964512,0.15,0.15,725.26,88.78,814.04,rankings_day
+2026-09-04,openai/gpt-image-2,openai/gpt-image-2,OpenAI: GPT Image 2,openai,481961,904450120,703563142,1608013262,,,,,,rankings_day
+2026-09-04,qwen/qwen-2.5-coder-32b-instruct,qwen/qwen-2.5-coder-32b-instruct,Qwen2.5 Coder 32B Instruct,qwen,46164,39452713,2178379,41631092,0.66,1.0,26.04,2.18,28.22,rankings_day
+2026-09-04,aion-labs/aion-3.0-20260707,aion-labs/aion-3.0,AionLabs: Aion-3.0,aion-labs,475586,8766098371,859815168,9625913539,3.0,6.0,26298.3,5158.89,31457.19,rankings_day
+2026-09-04,black-forest-labs/flux.2-klein-4b,black-forest-labs/flux.2-klein-4b,Black Forest Labs: FLUX.2 Klein 4B,black-forest-labs,61588,120733231,376957781,497691012,,,,,,rankings_day
+2026-09-04,openai/gpt-image-1,openai/gpt-image-1,OpenAI: GPT Image 1,openai,8980,4487297,30398064,34885361,,,,,,rankings_day
+2026-09-04,openai/gpt-5-2025-08-07,openai/gpt-5,OpenAI: GPT-5,openai,1933984,10316324134,1604131486,11920455620,1.25,10.0,12895.41,16041.31,28936.72,rankings_day
+2026-09-04,qwen/qwen3.8-27b-20260814,qwen/qwen3.8-27b,Qwen: Qwen3.8 27B,qwen,10475106,193847246585,9715121718,203562368303,0.42,3.0,81415.84,29145.37,110561.21,rankings_day
+2026-09-04,z-ai/glm-5.2-20260616,z-ai/glm-5.2,Z.ai: GLM 5.2,z-ai,65122937,2218238506593,61573034098,2279811540691,0.966,3.036,2142818.4,186935.73,2329754.13,rankings_day
+2026-09-04,anthropic/claude-opus-5-20260723,anthropic/claude-opus-5,Claude Opus 5,anthropic,20630689,1527880276124,26278415555,1554158691679,5.0,25.0,7639401.38,656960.39,8296361.77,rankings_day
+2026-09-04,x-ai/grok-imagine-image-quality-20260512,x-ai/grok-imagine-image-quality,SpaceXAI: Grok Imagine Image Quality,x-ai,135962,132410266,567641350,700051616,,,,,,rankings_day
+2026-09-04,anthracite-org/magnum-v4-72b,anthracite-org/magnum-v4-72b,Magnum v4 72B,anthracite-org,39091,109064582,8098630,117163212,2.5,5.0,272.66,40.49,313.15,rankings_day
+2026-09-04,anthropic/claude-4.5-haiku-20251001,anthropic/claude-haiku-4.5,Anthropic: Claude Haiku 4.5,anthropic,32751007,234871058295,9221570500,244092628795,1.0,5.0,234871.06,46107.85,280978.91,rankings_day
+2026-09-04,deepseek/deepseek-chat-v3.1,deepseek/deepseek-chat-v3.1,DeepSeek: DeepSeek V3.1,deepseek,10378999,40835109853,1809933447,42645043300,0.55,1.65,22459.31,2986.39,25445.7,rankings_day
+2026-09-04,qwen/qwen3-next-80b-a3b-instruct-2509,qwen/qwen3-next-80b-a3b-instruct,Qwen: Qwen3 Next 80B A3B Instruct,qwen,2238821,13258996468,836166216,14095162684,0.1,1.1,1325.9,919.78,2245.68,rankings_day
+2026-09-04,fish-audio/s1-20260729,fish-audio/s1,Fish Audio: S1,fish-audio,866,65394,0,65394,,,,,,rankings_day
+2026-09-04,openai/gpt-oss-safeguard-20b,openai/gpt-oss-safeguard-20b,OpenAI: gpt-oss-safeguard-20b,openai,3288185,6701720125,639585700,7341305825,0.075,0.3,502.63,191.88,694.51,rankings_day
+2026-09-04,liquid/lfm-2.5-2.6b-20260811,liquid/lfm-2.5-2.6b,LiquidAI: LFM2.5-2.6B (free),liquid,1030230,10068542216,1196839398,11265381614,,,,,,rankings_day
+2026-09-04,bytedance-seed/seed-1.6-flash-20250625,bytedance-seed/seed-1.6-flash,ByteDance Seed: Seed 1.6 Flash,bytedance-seed,1724501,2040797155,200975549,2241772704,0.075,0.3,153.06,60.29,213.35,rankings_day
+2026-09-04,black-forest-labs/flux.2-flex,black-forest-labs/flux.2-flex,Black Forest Labs: FLUX.2 Flex,black-forest-labs,3425,10844255,18039377,28883632,,,,,,rankings_day
+2026-09-04,google/gemini-3-pro-image-preview-20251120,google/gemini-3-pro-image-preview,Google: Nano Banana Pro (Gemini 3 Pro Image Preview),google,390825,356746205,600079672,956825877,2.0,12.0,713.49,7200.96,7914.45,rankings_day
+2026-09-04,openai/gpt-5.2-codex-20260114,openai/gpt-5.2-codex,OpenAI: GPT-5.2-Codex,openai,56412,1620400190,31423345,1651823535,1.75,14.0,2835.7,439.93,3275.63,rankings_day
+2026-09-04,sao10k/l3.3-euryale-70b-v2.3,sao10k/l3.3-euryale-70b,Sao10K: Llama 3.3 Euryale 70B,sao10k,140498,309695535,17277276,326972811,0.65,0.75,201.3,12.96,214.26,rankings_day
+2026-09-04,anthropic/claude-4-sonnet-20250522,anthropic/claude-sonnet-4,Anthropic: Claude Sonnet 4,anthropic,2105938,18018391429,738737679,18757129108,3.0,15.0,54055.17,11081.07,65136.24,rankings_day
+2026-09-04,google/gemma-3-12b-it,google/gemma-3-12b-it,Google: Gemma 3 12B,google,8654105,13052008727,703787079,13755795806,0.05,0.15,652.6,105.57,758.17,rankings_day
+2026-09-04,deepseek/deepseek-v3.2-20251201,deepseek/deepseek-v3.2,DeepSeek: DeepSeek V3.2,deepseek,68483001,423029300145,21321666006,444350966151,0.269,0.4,113794.88,8528.67,122323.55,rankings_day
+2026-09-04,amazon/nova-lite-v1,amazon/nova-lite-v1,Amazon: Nova Lite 1.0,amazon,1114351,2521881334,156767974,2678649308,0.06,0.24,151.31,37.62,188.93,rankings_day
+2026-09-04,inception/mercury-2-20260304,inception/mercury-2,Inception: Mercury 2,inception,964164,2474621584,518150037,2992771621,0.25,0.75,618.66,388.61,1007.27,rankings_day
+2026-09-04,qwen/qwen3-30b-a3b-instruct-2507,qwen/qwen3-30b-a3b-instruct-2507,Qwen: Qwen3 30B A3B Instruct 2507,qwen,19532974,38789263896,3049911421,41839175317,0.04815,0.19305,1867.7,588.79,2456.49,rankings_day
+2026-09-04,google/gemini-embedding-2-preview,google/gemini-embedding-2-preview,Google: Gemini Embedding 2 Preview,google,3337097,3388571808,0,3388571808,,,,,,rankings_day
+2026-09-04,poolside/laguna-s-2.1-20260720,poolside/laguna-s-2.1,Poolside: Laguna S 2.1,poolside,18001830,1402449221178,11930134561,1414379355739,0.09,0.18,126220.43,2147.42,128367.85,rankings_day
+2026-09-04,google/gemma-4-26b-a4b-it-20260403,google/gemma-4-26b-a4b-it,Google: Gemma 4 26B A4B ,google,88880727,305968775728,19946891306,325915667034,0.07,0.34,21417.81,6781.94,28199.75,rankings_day
+2026-09-04,openai/o1-pro,openai/o1-pro,OpenAI: o1-pro,openai,1473,289191,202211,491402,150.0,600.0,43.38,121.33,164.71,rankings_day
+2026-09-04,anthropic/claude-4.5-sonnet-20250929,anthropic/claude-sonnet-4.5,Anthropic: Claude Sonnet 4.5,anthropic,7615392,73973399835,3079814497,77053214332,3.0,15.0,221920.2,46197.22,268117.42,rankings_day
+2026-09-04,deepseek/deepseek-chat-v3,deepseek/deepseek-chat,DeepSeek: DeepSeek V3,deepseek-ai,9104469,20084356073,1810166003,21894522076,0.32,0.89,6426.99,1611.05,8038.04,rankings_day
+2026-09-04,z-ai/glm-4.7-flash-20260119,z-ai/glm-4.7-flash,Z.ai: GLM 4.7 Flash,z-ai,5995579,17648231544,1333658480,18981890024,0.06,0.4,1058.89,533.46,1592.35,rankings_day
+2026-09-04,recraft/recraft-v4.1-utility-20260514,recraft/recraft-v4.1-utility,Recraft: Recraft V4.1 Utility,recraft,1247,602477,5206225,5808702,,,,,,rankings_day
+2026-09-04,perplexity/sonar-deep-research,perplexity/sonar-deep-research,Perplexity: Sonar Deep Research,perplexity,7209,30815684,85853929,116669613,2.0,8.0,61.63,686.83,748.46,rankings_day
+2026-09-04,deepseek/deepseek-r1,deepseek/deepseek-r1,DeepSeek: R1,deepseek,427006,2063777649,500014906,2563792555,0.7,2.5,1444.64,1250.04,2694.68,rankings_day
+2026-09-04,z-ai/glm-4.6-20251208,z-ai/glm-4.6v,Z.ai: GLM 4.6V,z-ai,464851,1236319697,284238954,1520558651,0.3,0.9,370.9,255.82,626.72,rankings_day
+2026-09-04,qwen/qwen3-235b-a22b-07-25,qwen/qwen3-235b-a22b-2507,Qwen: Qwen3 235B A22B Instruct 2507,qwen,16967585,61548524435,3488339459,65036863894,0.09,0.55,5539.37,1918.59,7457.96,rankings_day
+2026-09-04,google/gemma-2-27b-it,google/gemma-2-27b-it,Google: Gemma 2 27B,google,61105,48949396,8745111,57694507,0.65,0.65,31.82,5.68,37.5,rankings_day
+2026-09-04,krea/krea-2-medium-20260720,krea/krea-2-medium,Krea: Krea 2 Medium,krea,28957,4736433,120895475,125631908,,,,,,rankings_day
+2026-09-04,z-ai/glm-5-20260211,z-ai/glm-5,Z.ai: GLM 5,z-ai,2026393,33371964581,2137253795,35509218376,0.6,1.92,20023.18,4103.53,24126.71,rankings_day
+2026-09-04,deepseek/deepseek-v3.1-terminus,deepseek/deepseek-v3.1-terminus,DeepSeek: DeepSeek V3.1 Terminus,deepseek,803941,7099935120,245978272,7345913392,0.27,1.0,1916.98,245.98,2162.96,rankings_day
+2026-09-04,x-ai/grok-4.20-20260309,x-ai/grok-4.20,SpaceXAI: Grok 4.20,x-ai,3774433,27926970213,1920742915,29847713128,1.25,2.5,34908.71,4801.86,39710.57,rankings_day
+2026-09-04,deepseek/deepseek-v4-flash-20260423,deepseek/deepseek-v4-flash,DeepSeek: DeepSeek V4 Flash 0423,deepseek,518003171,4967036758829,262910341789,5229947100618,0.08526,0.17052,423489.55,44831.47,468321.02,rankings_day
+2026-09-04,anthropic/claude-4.8-opus-20260528,anthropic/claude-opus-4.8,Anthropic: Claude Opus 4.8,anthropic,7904789,410885535000,7890107440,418775642440,5.0,25.0,2054427.68,197252.69,2251680.37,rankings_day
+2026-09-04,mistralai/mistral-small-3.1-24b-instruct-2503,mistralai/mistral-small-3.1-24b-instruct,Mistral: Mistral Small 3.1 24B,mistralai,450148,430587167,28407370,458994537,0.351,0.555,151.14,15.77,166.91,rankings_day
+2026-09-04,openai/gpt-5.6-terra-20260709,openai/gpt-5.6-terra,OpenAI: GPT-5.6 Terra,openai,20941415,571596232260,8442982188,580039214448,2.0,12.0,1143192.46,101315.79,1244508.25,rankings_day
+2026-09-04,google/gemini-2.5-flash-lite,google/gemini-2.5-flash-lite,Google: Gemini 2.5 Flash Lite,google,271273872,733647736458,68604956292,802252692750,0.1,0.4,73364.77,27441.98,100806.75,rankings_day
+2026-09-04,microsoft/mai-voice-2,microsoft/mai-voice-2,Microsoft: MAI-Voice-2,microsoft,47269,2416646,0,2416646,,,,,,rankings_day
+2026-09-04,anthropic/claude-4.1-opus-20250805,anthropic/claude-opus-4.1,Anthropic: Claude Opus 4.1,anthropic,129441,563530443,21041411,584571854,15.0,75.0,8452.96,1578.11,10031.07,rankings_day
+2026-09-04,qwen/qwen2.5-vl-72b-instruct,qwen/qwen2.5-vl-72b-instruct,Qwen: Qwen2.5 VL 72B Instruct,qwen,1397963,2620096209,157326703,2777422912,0.8,1.0,2096.08,157.33,2253.41,rankings_day
+2026-09-04,stepfun/step-3.5-flash,stepfun/step-3.5-flash,StepFun: Step 3.5 Flash,stepfun,119913,1693148856,240685902,1933834758,0.1,0.3,169.31,72.21,241.52,rankings_day
+2026-09-04,thenlper/gte-base-20251117,thenlper/gte-base,Thenlper: GTE-Base,thenlper,77346,323323450,0,323323450,,,,,,rankings_day
+2026-09-04,intfloat/multilingual-e5-large-20251117,intfloat/multilingual-e5-large,Intfloat: Multilingual-E5-Large,intfloat,995225,926754473,0,926754473,,,,,,rankings_day
+2026-09-04,qwen/qwen3.7-plus-20260602,qwen/qwen3.7-plus,Qwen: Qwen3.7 Plus,qwen,15419366,75624270388,3815651413,79439921801,0.32,1.28,24199.77,4884.03,29083.8,rankings_day
+2026-09-04,qwen/qwen3-vl-235b-a22b-thinking,qwen/qwen3-vl-235b-a22b-thinking,Qwen: Qwen3 VL 235B A22B Thinking,qwen,62683,172115126,117986739,290101865,0.4,4.0,68.85,471.95,540.8,rankings_day
+2026-09-04,google/gemini-3.1-flash-image-preview-20260226,google/gemini-3.1-flash-image-preview,Google: Nano Banana 2 (Gemini 3.1 Flash Image Preview),google,523420,555458213,782067506,1337525719,0.5,3.0,277.73,2346.2,2623.93,rankings_day
+2026-09-04,openai/gpt-4o-mini,openai/gpt-4o-mini,OpenAI: GPT-4o-mini,openai,100318940,204446496271,11412716549,215859212820,0.15,0.6,30666.97,6847.63,37514.6,rankings_day
+2026-09-04,nousresearch/hermes-3-llama-3.1-70b,nousresearch/hermes-3-llama-3.1-70b,Nous: Hermes 3 70B Instruct,nousresearch,164533,352903460,32595342,385498802,0.7,0.7,247.03,22.82,269.85,rankings_day
+2026-09-04,bytedance-seed/seedream-4.5-20251203,bytedance-seed/seedream-4.5,ByteDance Seed: Seedream 4.5,bytedance-seed,105013,84365485,2101429771,2185795256,,,,,,rankings_day
+2026-09-04,meta-llama/llama-3.1-70b-instruct,meta-llama/llama-3.1-70b-instruct,Meta: Llama 3.1 70B Instruct,meta-llama,4623486,3536863222,310964392,3847827614,0.4,0.4,1414.75,124.39,1539.14,rankings_day
+2026-09-04,meta-llama/llama-guard-4-12b,meta-llama/llama-guard-4-12b,Meta: Llama Guard 4 12B,meta-llama,2299359,1996541749,7912928,2004454677,0.18,0.18,359.38,1.42,360.8,rankings_day
+2026-09-04,nex-agi/nex-n2-mini,nex-agi/nex-n2-mini,Nex AGI: Nex-N2-Mini,nex-agi,1479448,7535536355,1362481854,8898018209,0.025,0.1,188.39,136.25,324.64,rankings_day
+2026-09-04,x-ai/grok-build-0.1-20260520,x-ai/grok-build-0.1,SpaceXAI: Grok Build 0.1,x-ai,85018,4103164992,96188963,4199353955,1.0,2.0,4103.16,192.38,4295.54,rankings_day
+2026-09-04,aion-labs/aion-2.0-20260223,aion-labs/aion-2.0,AionLabs: Aion-2.0,aion-labs,158520,1101817645,160549738,1262367383,0.8,1.6,881.45,256.88,1138.33,rankings_day
+2026-09-04,poolside/laguna-xs-2.1-20260625,poolside/laguna-xs-2.1,Poolside: Laguna XS 2.1,poolside,2153364,102809253069,1039300983,103848554052,0.06,0.12,6168.56,124.72,6293.28,rankings_day
+2026-09-04,google/lyria-3-clip-preview-20260330,google/lyria-3-clip-preview,Google: Lyria 3 Clip Preview,google,10573,7314393,551815,7866208,0.0,0.0,0.0,0.0,0.0,rankings_day
+2026-09-04,z-ai/glm-5.1-20260406,z-ai/glm-5.1,Z.ai: GLM 5.1,z-ai,4187373,57471453117,4336442131,61807895248,0.966,3.036,55517.42,13165.44,68682.86,rankings_day
+2026-09-04,qwen/qwen3-coder-plus,qwen/qwen3-coder-plus,Qwen: Qwen3 Coder Plus,qwen,153988,1832237360,44766631,1877003991,0.65,3.25,1190.95,145.49,1336.44,rankings_day
+2026-09-04,google/gemini-3.5-flash-20260519,google/gemini-3.5-flash,Google: Gemini 3.5 Flash,google,11926243,93691930804,12468160740,106160091544,1.5,9.0,140537.9,112213.45,252751.35,rankings_day
+2026-09-04,z-ai/glm-5-turbo-20260315,z-ai/glm-5-turbo,Z.ai: GLM 5 Turbo,z-ai,174655,4232686324,51917268,4284603592,1.2,4.0,5079.22,207.67,5286.89,rankings_day
+2026-09-04,anthropic/claude-4.6-opus-20260205,anthropic/claude-opus-4.6,Anthropic: Claude Opus 4.6,anthropic,3479214,131300530124,2989609686,134290139810,5.0,25.0,656502.65,74740.24,731242.89,rankings_day
+2026-09-04,morph/morph-v3-large,morph/morph-v3-large,Morph: Morph V3 Large,morph,11083,38859141,36192260,75051401,0.9,1.9,34.97,68.77,103.74,rankings_day
+2026-09-04,nvidia/nemotron-3-ultra-550b-a55b-20260604,nvidia/nemotron-3-ultra-550b-a55b,NVIDIA: Nemotron 3 Ultra,nvidia,33949441,3885846607637,24537527926,3910384135563,0.625,3.125,2428654.13,76679.77,2505333.9,rankings_day
+2026-09-04,google/gemini-2.5-flash-image,google/gemini-2.5-flash-image,Google: Nano Banana (Gemini 2.5 Flash Image),google,1050051,1049173419,771078123,1820251542,0.3,2.5,314.75,1927.7,2242.45,rankings_day
+2026-09-04,mistralai/mistral-medium-3.1,mistralai/mistral-medium-3.1,Mistral: Mistral Medium 3.1,mistralai,577930,2254544853,123032542,2377577395,0.4,2.0,901.82,246.07,1147.89,rankings_day
+2026-09-04,x-ai/grok-4.5-20260708,x-ai/grok-4.5,SpaceXAI: Grok 4.5,x-ai,4793783,114800263870,3925453640,118725717510,2.0,6.0,229600.53,23552.72,253153.25,rankings_day
+2026-09-04,moonshotai/kimi-k2.5-0127,moonshotai/kimi-k2.5,MoonshotAI: Kimi K2.5,moonshotai,6020620,63505337554,5290592957,68795930511,0.45,2.25,28577.4,11903.83,40481.23,rankings_day
+2026-09-04,openai/gpt-image-1-mini,openai/gpt-image-1-mini,OpenAI: GPT Image 1 Mini,openai,10523,4957276,24403644,29360920,,,,,,rankings_day
+2026-09-04,amazon/nova-pro-v1,amazon/nova-pro-v1,Amazon: Nova Pro 1.0,amazon,51298,85412854,11564530,96977384,0.8,3.2,68.33,37.01,105.34,rankings_day
+2026-09-04,mistralai/mistral-small-24b-instruct-2501,mistralai/mistral-small-24b-instruct-2501,Mistral: Mistral Small 3,mistralai,3444836,11048507186,1579179877,12627687063,0.05,0.08,552.43,126.33,678.76,rankings_day
+2026-09-04,rekaai/reka-edge-2603,rekaai/reka-edge,Reka Edge,rekaai,23835,10480169,2447274,12927443,0.1,0.1,1.05,0.24,1.29,rankings_day
+2026-09-04,openai/gpt-5.6-terra-pro-20260709,openai/gpt-5.6-terra-pro,OpenAI: GPT-5.6 Terra Pro,openai,179355,20263030104,406053206,20669083310,2.0,12.0,40526.06,4872.64,45398.7,rankings_day
+2026-09-04,mistralai/codestral-embed-2505,mistralai/codestral-embed-2505,Mistral: Codestral Embed 2505,mistralai,161143,581588703,0,581588703,,,,,,rankings_day
+2026-09-04,qwen/qwen-image-3-20260805,qwen/qwen-image-3,Qwen: Qwen Image 3,qwen,25515,4263402,107205650,111469052,,,,,,rankings_day
+2026-09-04,nex-agi/nex-n2-pro,nex-agi/nex-n2-pro,Nex AGI: Nex-N2-Pro,nex-agi,64833,1137589045,109348892,1246937937,0.25,1.0,284.4,109.35,393.75,rankings_day
+2026-09-04,meta-llama/llama-3.1-8b-instruct,meta-llama/llama-3.1-8b-instruct,Meta: Llama 3.1 8B Instruct,meta-llama,70802033,67794538915,5842383398,73636922313,0.05,0.08,3389.73,467.39,3857.12,rankings_day
+2026-09-04,openai/gpt-5.6-luna-pro-20260709,openai/gpt-5.6-luna-pro,OpenAI: GPT-5.6 Luna Pro,openai,3973115,342303060922,10254507388,352557568310,0.2,1.2,68460.61,12305.41,80766.02,rankings_day
+2026-09-04,openai/gpt-5.5-pro-20260423,openai/gpt-5.5-pro,OpenAI: GPT-5.5 Pro,openai,146833,304312688,32564411,336877099,30.0,180.0,9129.38,5861.59,14990.97,rankings_day
+2026-09-04,openai/gpt-5-mini-2025-08-07,openai/gpt-5-mini,OpenAI: GPT-5 Mini,openai,22251077,120424381989,17133554618,137557936607,0.25,2.0,30106.1,34267.11,64373.21,rankings_day
+2026-09-04,openai/gpt-5.3-codex-20260224,openai/gpt-5.3-codex,OpenAI: GPT-5.3-Codex,openai,562226,26626169604,346934727,26973104331,1.75,14.0,46595.8,4857.09,51452.89,rankings_day
+2026-09-04,google/gemini-embedding-001,google/gemini-embedding-001,Google: Gemini Embedding 001,google,10900830,7121113728,0,7121113728,,,,,,rankings_day
+2026-09-04,mistralai/mistral-small-3.2-24b-instruct-2506,mistralai/mistral-small-3.2-24b-instruct,Mistral: Mistral Small 3.2 24B,mistralai,6530855,14384985573,1090560350,15475545923,0.075,0.2,1078.87,218.11,1296.98,rankings_day
+2026-09-04,mistralai/mistral-small-2603,mistralai/mistral-small-2603,Mistral: Mistral Small 4,mistralai,5279361,16920601733,1540193088,18460794821,0.15,0.6,2538.09,924.12,3462.21,rankings_day
+2026-09-04,nvidia/nemotron-3-super-120b-a12b-20230311,nvidia/nemotron-3-super-120b-a12b,NVIDIA: Nemotron 3 Super,nvidia,10197971,330213294631,11462551346,341675845977,0.085,0.4,28068.13,4585.02,32653.15,rankings_day
+2026-09-04,qwen/qwen3-235b-a22b-thinking-2507,qwen/qwen3-235b-a22b-thinking-2507,Qwen: Qwen3 235B A22B Thinking 2507,qwen,146220,1700956744,437871151,2138827895,0.23,2.3,391.22,1007.1,1398.32,rankings_day
+2026-09-04,deepseek/deepseek-v3.2-exp,deepseek/deepseek-v3.2-exp,DeepSeek: DeepSeek V3.2 Exp,deepseek,2698654,17486699580,1395885692,18882585272,0.27,0.41,4721.41,572.31,5293.72,rankings_day
+2026-09-04,meta-llama/llama-3.2-1b-instruct,meta-llama/llama-3.2-1b-instruct,Meta: Llama 3.2 1B Instruct,meta-llama,450233,125124992,433811692,558936684,0.027,0.201,3.38,87.2,90.58,rankings_day
+2026-09-04,anthropic/claude-5-fable-20260609,anthropic/claude-fable-5,Anthropic: Claude Fable 5,anthropic,2511697,184797362156,2954177269,187751539425,10.0,50.0,1847973.62,147708.86,1995682.48,rankings_day
+2026-09-04,qwen/qwen3-vl-30b-a3b-thinking,qwen/qwen3-vl-30b-a3b-thinking,Qwen: Qwen3 VL 30B A3B Thinking,qwen,62011,115770451,76238914,192009365,0.2,2.4,23.15,182.97,206.12,rankings_day
+2026-09-04,qwen/qwen3.6-plus-04-02,qwen/qwen3.6-plus,Qwen: Qwen3.6 Plus,qwen,3821238,17574767389,1342096577,18916863966,0.325,1.95,5711.8,2617.09,8328.89,rankings_day
+2026-09-04,openai/gpt-5.1-codex-20251113,openai/gpt-5.1-codex,OpenAI: GPT-5.1-Codex,openai,26329,835774652,22905399,858680051,1.25,10.0,1044.72,229.05,1273.77,rankings_day
+2026-09-04,qwen/qwen3-max,qwen/qwen3-max,Qwen: Qwen3 Max,qwen,452159,2350314003,106781063,2457095066,0.78,3.9,1833.24,416.45,2249.69,rankings_day
+2026-09-04,liquid/lfm-2.5-embedding-350m-20260818,liquid/lfm-2.5-embedding-350m,LiquidAI: LFM2.5-Embedding-350M (free),liquid,93559,251725741,0,251725741,,,,,,rankings_day
+2026-09-04,qwen/qwen3-coder-next-2025-02-03,qwen/qwen3-coder-next,Qwen: Qwen3 Coder Next,qwen,729019,21372710310,327160308,21699870618,0.12,0.8,2564.73,261.73,2826.46,rankings_day
+2026-09-04,meta/muse-spark-1.2-20260805,meta/muse-spark-1.2,Meta: Muse Spark 1.2,meta,1313243,69852077395,3540444070,73392521465,1.25,4.25,87315.1,15046.89,102361.99,rankings_day
+2026-09-04,qwen/qwen3.8-max-20260803,qwen/qwen3.8-max,Qwen: Qwen3.8 Max (0803),qwen,5651542,240226457310,19891768419,260118225729,,,,,,rankings_day
+2026-09-04,sourceful/riverflow-v2-fast-20260130,sourceful/riverflow-v2-fast,Sourceful: Riverflow V2 Fast,sourceful,3122,1034505,13034350,14068855,,,,,,rankings_day
+2026-09-04,qwen/qwen3.5-397b-a17b-20260216,qwen/qwen3.5-397b-a17b,Qwen: Qwen3.5 397B A17B,qwen,3653078,24419342958,5259651699,29678994657,0.55,3.5,13430.64,18408.78,31839.42,rankings_day
+2026-09-04,qwen/qwen-2.5-72b-instruct,qwen/qwen-2.5-72b-instruct,Qwen2.5 72B Instruct,qwen,1879433,2802396847,187090039,2989486886,0.36,0.4,1008.86,74.84,1083.7,rankings_day
+2026-09-04,deepgram/flux-tts-20260812,deepgram/flux-tts,Deepgram: Flux TTS (free),deepgram,61060,3746530,0,3746530,,,,,,rankings_day
+2026-09-04,recraft/recraft-v4.1-pro-20260514,recraft/recraft-v4.1-pro,Recraft: Recraft V4.1 Pro,recraft,669,155800,2834825,2990625,,,,,,rankings_day
+2026-09-04,minimax/minimax-01,minimax/minimax-01,MiniMax: MiniMax-01,minimax,77006,184036206,15591711,199627917,0.2,1.1,36.81,17.15,53.96,rankings_day
+2026-09-04,openai/gpt-5.1-codex-max-20251204,openai/gpt-5.1-codex-max,OpenAI: GPT-5.1-Codex-Max,openai,15488,266659416,9947055,276606471,1.25,10.0,333.32,99.47,432.79,rankings_day
+2026-09-04,openai/o3-2025-04-16,openai/o3,OpenAI: o3,openai,129887,499462118,129315167,628777285,2.0,8.0,998.92,1034.52,2033.44,rankings_day
+2026-09-04,google/gemini-3.7-flash-20260813,google/gemini-3.7-flash,Google: Gemini 3.7 Flash,google,78299787,2439481625463,64243972202,2503725597665,0.75,3.75,1829611.22,240914.9,2070526.12,rankings_day
+2026-09-04,openai/gpt-4o-2024-05-13,openai/gpt-4o-2024-05-13,OpenAI: GPT-4o (2024-05-13),openai,324825,228272918,6799730,235072648,5.0,15.0,1141.36,102.0,1243.36,rankings_day
+2026-09-04,relace/relace-apply-3,relace/relace-apply-3,Relace: Relace Apply 3,relace,43410,159517833,137460647,296978480,0.85,1.25,135.59,171.83,307.42,rankings_day
+2026-09-04,meta-llama/llama-4-scout-17b-16e-instruct,meta-llama/llama-4-scout,Meta: Llama 4 Scout,meta-llama,6757120,11514577808,827269038,12341846846,0.1,0.3,1151.46,248.18,1399.64,rankings_day
+2026-09-04,deepseek/deepseek-v4-pro-20260423,deepseek/deepseek-v4-pro,DeepSeek: DeepSeek V4 Pro 0423,deepseek,61073924,1360732062374,55275785068,1416007847442,0.890358,1.780716,1211538.68,98430.47,1309969.15,rankings_day
+2026-09-04,x-ai/grok-4.6-20260810,x-ai/grok-4.6,SpaceXAI: Grok 4.6,x-ai,7131607,349776076273,19434125615,369210201888,2.0,6.0,699552.15,116604.75,816156.9,rankings_day
+2026-09-04,moonshotai/kimi-k2.7-code-20260612,moonshotai/kimi-k2.7-code,MoonshotAI: Kimi K2.7 Code,moonshotai,1260733,48677018825,1228449859,49905468684,0.66,3.4,32126.83,4176.73,36303.56,rankings_day
+2026-09-04,perplexity/sonar-reasoning-pro,perplexity/sonar-reasoning-pro,Perplexity: Sonar Reasoning Pro,perplexity,51541,74648501,45303102,119951603,2.0,8.0,149.3,362.42,511.72,rankings_day
+2026-09-04,qwen/qwen3-235b-a22b-04-28,qwen/qwen3-235b-a22b,Qwen: Qwen3 235B A22B,qwen,399808,1287364016,338249631,1625613647,0.455,1.82,585.75,615.61,1201.36,rankings_day
+2026-09-04,cohere/command-r-plus-08-2024,cohere/command-r-plus-08-2024,Cohere: Command R+ (08-2024),cohere,13275,18900203,1590109,20490312,2.5,10.0,47.25,15.9,63.15,rankings_day
+2026-09-04,aion-labs/aion-rp-llama-3.1-8b,aion-labs/aion-rp-llama-3.1-8b,AionLabs: Aion-RP 1.0 (8B),aion-labs,9857,8155822,1057600,9213422,0.8,1.6,6.52,1.69,8.21,rankings_day
+2026-09-04,openai/gpt-3.5-turbo-16k,openai/gpt-3.5-turbo-16k,OpenAI: GPT-3.5 Turbo 16k,openai,7614,3351148,244006,3595154,3.0,4.0,10.05,0.98,11.03,rankings_day
+2026-09-04,tencent/hy3-20260706,tencent/hy3,Tencent: Hy3,tencent,64383075,4720796952614,74066879850,4794863832464,0.132,0.528,623145.2,39107.31,662252.51,rankings_day
+2026-09-04,mistralai/ministral-14b-2512,mistralai/ministral-14b-2512,Mistral: Ministral 3 14B 2512,mistralai,1023799,2642279514,547422450,3189701964,0.2,0.2,528.46,109.48,637.94,rankings_day
+2026-09-04,krea/krea-2-large-20260720,krea/krea-2-large,Krea: Krea 2 Large,krea,1194,286706,4984950,5271656,,,,,,rankings_day
+2026-09-04,intfloat/multilingual-e5-large,,intfloat/multilingual-e5-large,Intfloat,6,1766,0,1766,,,,,,rankings_day
+2026-09-04,openai/gpt-4,openai/gpt-4,OpenAI: GPT-4,openai,40526,32772495,6521835,39294330,30.0,60.0,983.17,391.31,1374.48,rankings_day
+2026-09-04,qwen/qwen3.7-max-20260520,qwen/qwen3.7-max,Qwen: Qwen3.7 Max,qwen,867106,16501891772,1380165137,17882056909,1.475,4.425,24340.29,6107.23,30447.52,rankings_day
+2026-09-04,microsoft/mai-image-2.5,microsoft/mai-image-2.5,Microsoft: MAI-Image-2.5,microsoft,60540,95222239,60815127,156037366,,,,,,rankings_day
+2026-09-04,openai/gpt-5.4-20260305,openai/gpt-5.4,OpenAI: GPT-5.4,openai,6048793,86572651548,2520792113,89093443661,2.5,15.0,216431.63,37811.88,254243.51,rankings_day
+2026-09-04,voyageai/voyage-4-20260727,voyageai/voyage-4,VoyageAI by MongoDB: voyage-4,voyageai,2119097,3612376353,0,3612376353,,,,,,rankings_day
+2026-09-04,mistralai/voxtral-small-24b-2507,mistralai/voxtral-small-24b-2507,Mistral: Voxtral Small 24B 2507,mistralai,395441,113087523,32982384,146069907,0.1,0.3,11.31,9.89,21.2,rankings_day
+2026-09-04,sakana/namazu-20260811,sakana/sakana-namazu,Sakana: Sakana Namazu,sakana,4454,15927512,16399342,32326854,0.95,4.0,15.13,65.6,80.73,rankings_day
+2026-09-04,openai/gpt-4o-transcribe,openai/gpt-4o-transcribe,OpenAI: GPT-4o Transcribe,openai,85039,21792699,5976056,27768755,,,,,,rankings_day
+2026-09-04,tencent/hy3-preview-20260421,tencent/hy3-preview,Tencent: Hy3 preview,tencent,965710,6106112154,1709067772,7815179926,0.18,0.6,1099.1,1025.44,2124.54,rankings_day
+2026-09-04,perplexity/sonar-pro,perplexity/sonar-pro,Perplexity: Sonar Pro,perplexity,676406,723449255,512944784,1236394039,3.0,15.0,2170.35,7694.17,9864.52,rankings_day
+2026-09-04,anthropic/claude-4.5-opus-20251124,anthropic/claude-opus-4.5,Anthropic: Claude Opus 4.5,anthropic,1612168,17377299089,958597747,18335896836,5.0,25.0,86886.5,23964.94,110851.44,rankings_day
+2026-09-04,perplexity/pplx-embed-v1-0.6B,perplexity/pplx-embed-v1-0.6b,Perplexity: Embed V1 0.6B,perplexity,9134138,47367527484,0,47367527484,,,,,,rankings_day
+2026-09-04,bytedance-seed/seed-2.0-mini-20260224,bytedance-seed/seed-2.0-mini,ByteDance Seed: Seed-2.0-Mini,bytedance-seed,2161088,9864112765,1303836277,11167949042,0.1,0.4,986.41,521.53,1507.94,rankings_day
+2026-09-04,rekaai/reka-flash-3,rekaai/reka-flash-3,Reka Flash 3,rekaai,6937,3280215,30077439,33357654,0.1,0.2,0.33,6.02,6.35,rankings_day
+2026-09-04,mistralai/ministral-3b-2512,mistralai/ministral-3b-2512,Mistral: Ministral 3 3B 2512,mistralai,2074961,1935292692,288883142,2224175834,0.1,0.1,193.53,28.89,222.42,rankings_day
+2026-09-04,amazon/nova-premier-v1,amazon/nova-premier-v1,Amazon: Nova Premier 1.0,amazon,42391,69871252,7822071,77693323,2.5,12.5,174.68,97.78,272.46,rankings_day
+2026-09-04,recraft/recraft-v4.1-utility-pro-20260514,recraft/recraft-v4.1-utility-pro,Recraft: Recraft V4.1 Utility Pro,recraft,430,123444,1816125,1939569,,,,,,rankings_day
+2026-09-04,sesame/csm-1b,sesame/csm-1b,Sesame: CSM 1B,sesame,346,7051,0,7051,,,,,,rankings_day
+2026-09-04,openai/gpt-3.5-turbo-0613,openai/gpt-3.5-turbo-0613,OpenAI: GPT-3.5 Turbo (older v0613),openai,8913,4545697,582687,5128384,1.0,2.0,4.55,1.17,5.72,rankings_day
+2026-09-04,thedrummer/skyfall-36b-v2,thedrummer/skyfall-36b-v2,TheDrummer: Skyfall 36B V2,thedrummer,42996,133573253,11322476,144895729,0.55,0.8,73.47,9.06,82.53,rankings_day
+2026-09-04,xiaomi/mimo-v2.5-pro-20260422,xiaomi/mimo-v2.5-pro,Xiaomi: MiMo-V2.5-Pro,xiaomi,7163742,286373511824,5858263859,292231775683,0.435,0.87,124572.48,5096.69,129669.17,rankings_day
+2026-09-04,baai/bge-base-en-v1.5-20251117,baai/bge-base-en-v1.5,BAAI: bge-base-en-v1.5,baai,688051,481269029,0,481269029,,,,,,rankings_day
+2026-09-04,meituan/longcat-2.0-20260720,meituan/longcat-2.0,Meituan: LongCat 2.0,meituan,233114,5616856528,159864447,5776720975,0.3,1.2,1685.06,191.84,1876.9,rankings_day
+2026-09-04,meta-llama/llama-3.2-3b-instruct,meta-llama/llama-3.2-3b-instruct,Meta: Llama 3.2 3B Instruct,meta-llama,461984,394268262,35723565,429991827,0.05,0.33,19.71,11.79,31.5,rankings_day
+2026-09-04,venice/uncensored,cognitivecomputations/dolphin-mistral-24b-venice-edition,Venice: Uncensored,venice,268993,768614877,67724055,836338932,0.2,0.9,153.72,60.95,214.67,rankings_day
+2026-09-04,qwen/qwen3-coder-flash,qwen/qwen3-coder-flash,Qwen: Qwen3 Coder Flash,qwen,160217,1547356701,26820923,1574177624,0.195,0.975,301.73,26.15,327.88,rankings_day
+2026-09-04,recraft/recraft-v3-20260413,recraft/recraft-v3,Recraft: Recraft V3,recraft,465,53147,1941375,1994522,,,,,,rankings_day
+2026-09-04,qwen/qwen3.5-122b-a10b-20260224,qwen/qwen3.5-122b-a10b,Qwen: Qwen3.5-122B-A10B,qwen,1470689,8327215243,1166886307,9494101550,0.29,2.4,2414.89,2800.53,5215.42,rankings_day
+2026-09-04,sentence-transformers/all-minilm-l6-v2-20251117,sentence-transformers/all-minilm-l6-v2,Sentence Transformers: all-MiniLM-L6-v2,sentence-transformers,867611,1543555189,0,1543555189,,,,,,rankings_day
+2026-09-04,Qwen/Qwen3-Embedding-8B,,Qwen/Qwen3-Embedding-8B,Qwen,70065,3726692,0,3726692,,,,,,rankings_day
+2026-09-04,mistralai/mistral-large-2512,mistralai/mistral-large-2512,Mistral: Mistral Large 3 2512,mistralai,1380735,4610310528,394150468,5004460996,0.5,1.5,2305.16,591.23,2896.39,rankings_day
+2026-09-04,baidu/ernie-4.5-vl-424b-a47b,baidu/ernie-4.5-vl-424b-a47b,Baidu: ERNIE 4.5 VL 424B A47B ,baidu,19702,26667731,8210342,34878073,0.42,1.25,11.2,10.26,21.46,rankings_day
+2026-09-04,meta-llama/llama-3.3-70b-instruct,meta-llama/llama-3.3-70b-instruct,Meta: Llama 3.3 70B Instruct,meta-llama,21145560,28041302604,2451565196,30492867800,0.1,0.32,2804.13,784.5,3588.63,rankings_day
+2026-09-04,google/gemma-3-4b-it,google/gemma-3-4b-it,Google: Gemma 3 4B,google,1488752,968395169,80612676,1049007845,0.05,0.1,48.42,8.06,56.48,rankings_day
+2026-09-04,google/gemini-3.1-pro-preview-customtools-20260219,google/gemini-3.1-pro-preview-customtools,Google: Gemini 3.1 Pro Preview Custom Tools,google,47649,978263635,56213021,1034476656,2.0,12.0,1956.53,674.56,2631.09,rankings_day
+2026-09-04,sentence-transformers/all-minilm-l12-v2-20251117,sentence-transformers/all-minilm-l12-v2,Sentence Transformers: all-MiniLM-L12-v2,sentence-transformers,6020815,88374539,0,88374539,,,,,,rankings_day
+2026-09-04,qwen/qwen3.6-35b-a3b-20260415,qwen/qwen3.6-35b-a3b,Qwen: Qwen3.6 35B A3B,qwen,10391132,39507083802,6594675992,46101759794,0.1,0.9,3950.71,5935.21,9885.92,rankings_day
+2026-09-04,qwen/qwen3.6-max-preview-20260420,qwen/qwen3.6-max-preview,Qwen: Qwen3.6 Max Preview,qwen,36412,243349392,60917972,304267364,1.027,6.162,249.92,375.38,625.3,rankings_day
+2026-09-04,amazon/nova-micro-v1,amazon/nova-micro-v1,Amazon: Nova Micro 1.0,amazon,10247956,23186354333,1170617866,24356972199,0.035,0.14,811.52,163.89,975.41,rankings_day
+2026-09-04,nvidia/llama-nemotron-embed-vl-1b-v2-20260224,nvidia/llama-nemotron-embed-vl-1b-v2,NVIDIA: Llama Nemotron Embed VL 1B V2 (free),nvidia,375401,1004490750,0,1004490750,,,,,,rankings_day
+2026-09-04,mistralai/mistral-nemo,mistralai/mistral-nemo,Mistral: Mistral Nemo,mistralai,29576642,67302247900,4485530514,71787778414,0.019,0.03,1278.74,134.57,1413.31,rankings_day
+2026-09-04,mistralai/voxtral-mini-tts-2603,mistralai/voxtral-mini-tts-2603,Mistral: Voxtral Mini TTS,mistralai,4179,397479,0,397479,,,,,,rankings_day
+2026-09-04,openai/gpt-3.5-turbo-instruct,openai/gpt-3.5-turbo-instruct,OpenAI: GPT-3.5 Turbo Instruct,openai,14749,1748042,2071728,3819770,1.5,2.0,2.62,4.14,6.76,rankings_day
+2026-09-04,moonshotai/kimi-k2-0905,moonshotai/kimi-k2-0905,MoonshotAI: Kimi K2 0905,moonshotai,1005033,3478919842,215970289,3694890131,0.6,2.5,2087.35,539.93,2627.28,rankings_day
+2026-09-04,bytedance-seed/seed-2.0-code-20260730,bytedance-seed/seed-2.0-code,ByteDance Seed: Seed-2.0-Code,bytedance-seed,27631,368012402,39766549,407778951,0.5,3.0,184.01,119.3,303.31,rankings_day
+2026-09-04,nvidia/nemotron-3-embed-1b,,nvidia/nemotron-3-embed-1b,Nvidia,6,6085,0,6085,,,,,,rankings_day
+2026-09-04,minimax/minimax-m2,minimax/minimax-m2,MiniMax: MiniMax M2,minimax,56371,598691545,74243351,672934896,0.255,1.02,152.67,75.73,228.4,rankings_day
+2026-09-04,anthropic/claude-4.7-opus-20260416,anthropic/claude-opus-4.7,Anthropic: Claude Opus 4.7,anthropic,2280616,62439861729,1906078513,64345940242,5.0,25.0,312199.31,47651.96,359851.27,rankings_day
+2026-09-04,nvidia/llama-nemotron-rerank-vl-1b-v2,nvidia/llama-nemotron-rerank-vl-1b-v2,NVIDIA: Llama Nemotron Rerank VL 1B V2 (free),nvidia,100898,2333307711,0,2333307711,,,,,,rankings_day
+2026-09-04,recraft/recraft-v4-20260413,recraft/recraft-v4,Recraft: Recraft V4,recraft,1365,393513,5707225,6100738,,,,,,rankings_day
+2026-09-04,bytedance-seed/seedream-5-0-lite-20260812,bytedance-seed/seedream-5-0-lite,ByteDance Seed: Seedream 5.0 Lite,bytedance-seed,16753,4912995,305172563,310085558,,,,,,rankings_day
+2026-09-04,bytedance/ui-tars-1.5-7b,bytedance/ui-tars-1.5-7b,ByteDance: UI-TARS 7B ,bytedance,85007,205855368,4334369,210189737,0.1,0.2,20.59,0.87,21.46,rankings_day
+2026-09-04,openai/gpt-5.5-20260423,openai/gpt-5.5,OpenAI: GPT-5.5,openai,5953588,86910703132,3986520125,90897223257,5.0,30.0,434553.52,119595.6,554149.12,rankings_day
+2026-09-04,minimax/minimax-m2.5-20260211,minimax/minimax-m2.5,MiniMax: MiniMax M2.5,minimax,1853916,23222573653,883185862,24105759515,0.27,1.08,6270.09,953.84,7223.93,rankings_day
+2026-09-04,nvidia/nemotron-3-embed-1b-20260716,nvidia/nemotron-3-embed-1b,NVIDIA: Nemotron 3 Embed 1B (free),nvidia,260251,1104381021,0,1104381021,,,,,,rankings_day
+2026-09-04,upstage/solar-pro-3,upstage/solar-pro-3,Upstage: Solar Pro 3,upstage,18064,32023165,5704731,37727896,0.15,0.6,4.8,3.42,8.22,rankings_day
+2026-09-04,deepseek/deepseek-r1-distill-llama-70b,deepseek/deepseek-r1-distill-llama-70b,DeepSeek: R1 Distill Llama 70B,deepseek,37795,50962123,32923714,83885837,0.8,0.8,40.77,26.34,67.11,rankings_day
+2026-09-04,mistralai/mixtral-8x22b-instruct,mistralai/mixtral-8x22b-instruct,Mistral: Mixtral 8x22B Instruct,mistralai,76223,113368067,20286690,133654757,2.0,6.0,226.74,121.72,348.46,rankings_day
+2026-09-04,xiaomi/mimo-v2.5-20260422,xiaomi/mimo-v2.5,Xiaomi: MiMo-V2.5,xiaomi,76673632,3148927156237,19558871950,3168486028187,0.14,0.28,440849.8,5476.48,446326.28,rankings_day
+2026-09-04,mistralai/codestral-2508,mistralai/codestral-2508,Mistral: Codestral 2508,mistralai,153056,351167618,26214082,377381700,0.3,0.9,105.35,23.59,128.94,rankings_day
+2026-09-04,z-ai/glm-5v-turbo-20260401,z-ai/glm-5v-turbo,Z.ai: GLM 5V Turbo,z-ai,182755,3877567129,137550502,4015117631,1.2,4.0,4653.08,550.2,5203.28,rankings_day
+2026-09-04,canopylabs/orpheus-3b-0.1-ft,canopylabs/orpheus-3b-0.1-ft,Canopy Labs: Orpheus 3B,canopylabs,4598,63400,0,63400,,,,,,rankings_day
+2026-09-04,openai/gpt-audio-mini,openai/gpt-audio-mini,OpenAI: GPT Audio Mini,openai,356016,237527281,93086592,330613873,0.6,2.4,142.52,223.41,365.93,rankings_day
+2026-09-04,fish-audio/s2.1-pro-free-20260729,fish-audio/s2.1-pro-free,Fish Audio: S2.1 Pro Free (free),fish-audio,93570,13161761,0,13161761,,,,,,rankings_day
