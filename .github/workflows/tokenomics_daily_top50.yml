@@ -1,0 +1,47 @@
+name: Tokenomics Actual Daily Top 50
+on:
+  schedule:
+    - cron: '23 10 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: tokenomics-additive-writers
+  cancel-in-progress: false
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      TARGET_BRANCH: ${{ github.event.repository.default_branch }}
+      COLLECTION_LABEL: actual daily top50
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Collect previous UTC day (up to 3 attempts)
+        run: |
+          for attempt in 1 2 3; do
+            if python tokenomics_data/fetch_daily_top50.py --ranking-unit base_model; then exit 0; fi
+            if [ "$attempt" -lt 3 ]; then sleep 300; fi
+          done
+          exit 1
+      - name: Preserve outputs and push without force
+        run: bash tokenomics_data/push_collected.sh tokenomics_data/daily_top50.csv tokenomics_data/daily_top50_raw
+      - name: Upload preserved outputs if any later step fails
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: daily-top50-preserved-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/tokenomics-preserved/
+            tokenomics_data/daily_top50.csv
+            tokenomics_data/daily_top50_raw/
+          if-no-files-found: warn
+          retention-days: 30
