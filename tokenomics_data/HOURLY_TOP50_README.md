@@ -26,3 +26,14 @@ The workflow runs hourly at minute 14 UTC plus manual dispatch. As with the dail
 ## Commits, storage, rollback
 
 One commit per changed payload, titled "data: hourly day-view snapshot <date>", pushed with the same no-force fetch/rebase helper as the other additive jobs and serialized with them in the same concurrency group. Expect up to roughly one commit per hour while the endpoint updates hourly. `hourly_state.json` records the last payload hash for no-op detection. To stop the job, disable the workflow; to remove it, revert its commit. Neither touches the broad collector or the daily top-50 job.
+
+## Rolling live file and monthly archives
+
+`hourly_top50.csv` keeps only the last 14 days of rows (by `fetched_at_utc`). After each fetch, `rotate_hourly_top50.py` moves older rows into `hourly_archive/hourly_top50_YYYY-MM.csv.gz`, one gzip file per month of fetch time. Nothing is deleted: the full history is the archives plus the live file, and raw payloads stay in `hourly_top50_raw/` and git history.
+
+To rebuild the full history from the repo root:
+
+- R: `source("tokenomics_data/rebuild_hourly_history.R")` creates a data frame called `hourly` (archives plus live file, duplicates removed). `read.csv` reads the `.gz` files directly.
+- Terminal: `bash tokenomics_data/rebuild_hourly_history.sh` writes `tokenomics_data/hourly_top50_full.csv` with one header.
+
+To change the window, edit `KEEP_DAYS` in `rotate_hourly_top50.py`.
