@@ -72,6 +72,8 @@ pacman::p_load(ggplot2, ggthemes, ggdark, rbokeh, maps,
 
 ```
 
+**Libraries to adjust too:** `library(textstem)`
+
 ## Class Schedule
 
 This is tentative and subject to change to maximize learning. The course syllabus has the exact dates and the most up to date topics. Holiday weeks (Presidents' Day and Spring Break) have no class.
