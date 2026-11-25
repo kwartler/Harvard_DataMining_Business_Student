@@ -32,8 +32,10 @@ jobs:
             if [ "$attempt" -lt 2 ]; then sleep 60; fi
           done
           exit 1
+      - name: Move rows older than 14 days into monthly archives
+        run: python tokenomics_data/rotate_hourly_top50.py
       - name: Preserve outputs and push without force
-        run: bash tokenomics_data/push_collected.sh tokenomics_data/hourly_top50.csv tokenomics_data/hourly_top50_raw tokenomics_data/hourly_state.json
+        run: bash tokenomics_data/push_collected.sh tokenomics_data/hourly_top50.csv tokenomics_data/hourly_archive tokenomics_data/hourly_top50_raw tokenomics_data/hourly_state.json
       - name: Upload preserved outputs if any later step fails
         if: failure()
         uses: actions/upload-artifact@v4
@@ -42,6 +44,7 @@ jobs:
           path: |
             ${{ runner.temp }}/tokenomics-preserved/
             tokenomics_data/hourly_top50.csv
+            tokenomics_data/hourly_archive/
             tokenomics_data/hourly_top50_raw/
             tokenomics_data/hourly_state.json
           if-no-files-found: warn
