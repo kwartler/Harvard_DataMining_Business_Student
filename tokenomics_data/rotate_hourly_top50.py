@@ -12,7 +12,7 @@ from pathlib import Path
 
 LIVE = Path('tokenomics_data/hourly_top50.csv')
 ARCH = Path('tokenomics_data/hourly_archive')
-KEEP_DAYS = 14
+KEEP_DAYS = 28
 
 def key(r):
     return (r['fetched_at_utc'], r['source_date'], r['model_permaslug'], r['variant'])
