@@ -29,7 +29,7 @@ One commit per changed payload, titled "data: hourly day-view snapshot <date>", 
 
 ## Rolling live file and monthly archives
 
-`hourly_top50.csv` keeps only the last 14 days of rows (by `fetched_at_utc`). After each fetch, `rotate_hourly_top50.py` moves older rows into `hourly_archive/hourly_top50_YYYY-MM.csv.gz`, one gzip file per month of fetch time. Nothing is deleted: the full history is the archives plus the live file, and raw payloads stay in `hourly_top50_raw/` and git history.
+`hourly_top50.csv` keeps only the last 28 days of rows (by `fetched_at_utc`). After each fetch, `rotate_hourly_top50.py` moves older rows into `hourly_archive/hourly_top50_YYYY-MM.csv.gz`, one gzip file per month of fetch time. Nothing is deleted: the full history is the archives plus the live file, and raw payloads stay in `hourly_top50_raw/` and git history.
 
 To rebuild the full history from the repo root:
 
