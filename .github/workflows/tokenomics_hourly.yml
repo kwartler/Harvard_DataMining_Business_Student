@@ -1,7 +1,8 @@
 name: Tokenomics Hourly Day-View Snapshot
 on:
-  schedule:
-    - cron: '14 * * * *'
+  # schedule disabled 2026-11-26: runs are dispatched manually 4x/day (midnight, 6am, noon, 6pm ET)
+  # schedule:
+  #   - cron: '14 * * * *'
   workflow_dispatch:
 permissions:
   contents: write
