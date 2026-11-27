@@ -1,7 +1,15 @@
-name: Tokenomics Actual Daily Top 50
+name: ARCHIVED - Tokenomics Actual Daily Top 50
+# Archived 2026-11-27: OpenRouter's day view stopped returning previous-day
+# rows around 2026-11-23 (it now serves trailing-24h totals labeled with the
+# current UTC day and ignores a date parameter), so this job's mixed-windows
+# guard fails every run. The daily series continues as
+# tokenomics_data/daily_top50_rolling24h.csv, built from hourly snapshots by
+# tokenomics_data/build_daily_top50_rolling.py inside tokenomics_hourly.yml.
+# This workflow is kept, schedule disabled, as a canary: a manual dispatch
+# succeeds again if OpenRouter ever restores the old day-view behavior.
 on:
-  schedule:
-    - cron: '23 10 * * *'
+  # schedule:
+  #   - cron: '23 10 * * *'
   workflow_dispatch:
 permissions:
   contents: write
