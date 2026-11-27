@@ -1,5 +1,7 @@
 # Separate actual-daily top 50 collection
 
+> **Archived 2026-11-27.** Around 2026-11-23 OpenRouter's day view stopped returning previous-day rows (it now serves trailing-24h totals labeled with the current UTC day and ignores a date parameter), so this job's mixed-windows guard fails every run. The workflow is kept with its schedule disabled as a canary. The daily top-50 series continues in `daily_top50_rolling24h.csv`; see `DAILY_TOP50_ROLLING_README.md`. The text below describes the original job as installed.
+
 This addition does not change `fetch_tokens.py`, `model_tokens.csv`, the registry, or the original `tokenomics_daily.yml` workflow.
 
 ## Daily dataset
